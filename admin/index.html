@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/boxicons/css/boxicons.min.css">
+    <link rel="stylesheet" href="../assets/css/dataTable.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
+</head>
+<body class="__admin">
+    
+  
+        <nav class="navbar navbar-light navbar-expand-lg py-0">
+            <div class="container-fluid px-0">
+                <div class="ps-2 d-flex align-items-center">
+                    <a href="" class="navbar-brand">MCC QUIZ BOWL</a>
+                    <a href="#add-question" class="btn btn-secondary py-1 px-2 rounded-1" data-bs-toggle="modal"><i class="bx bx-plus"></i> Add question</a>
+                </div>
+
+                <ul class="navbar-nav"> 
+                    <li class="nav-item bg-danger dropdown">
+                        <a href="#" class="nav-link text-light dropdown-toggle" data-bs-toggle="dropdown"><i class="bx bx-user"></i> Admin </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a href="" class="dropdown-item"><i class="bx bx-log-out"></i> Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+    
+    <div class="container-fluid py-3">
+
+        <div class="row g-2">   
+            
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="text-muted">Current Question</p>
+                            <p class="text-muted">Category: <span class="badge bg-success">Easy</span></p>
+                        </div>
+
+                       <div class="pt-3">
+                        <div class="text-center mb-5">
+                            <h5>Who is the known as the father of computer?</h5>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-6 position-relative">
+                                <input type="text" class="form-control" value="A. Dennis Ritchie">
+                            </div>
+                            <div class="col-6 position-relative">
+                                <input type="text" class="form-control" value="B. Bill Gates">
+                            </div>
+                            <div class="col-6 position-relative">
+                                <input type="text" class="form-control" value="C. Charlse Babbage">    
+                            </div>
+                            <div class="col-6 position-relative">
+                                <input type="text" class="form-control" value="D. James Gosling">
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-between pt-3">
+                                <p>Correct Answer : A</p>
+                                <p>Time: 1000</p>
+                            </div>
+
+                        </div>
+                       </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-muted">Contestants</p>
+
+                        <table id="table">
+                            <thead>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Year</th>
+                                <th>Status</th>
+                                <th>Average</th>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+
+                <h5 class="my-3">Questions</h5>
+
+                <div class="row g-3" id="questions-row">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="add-question">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-0">
+                <div class="modal-header ">
+                    <h5 class="moda-title">Add Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form name="add-question">
+                        <p class="my-0" id="alert"></p>
+                        <label for="">Question</label>
+                        <textarea name="question" class="form-control my-3" cols="30" rows="5" style="resize: none;" placeholder="Write question..." required></textarea>
+                        <label for="">Choices</label>
+                        <div class="my-3 d-flex align-items-center">
+                            <span class="me-2">A:</span>
+                            <input type="text" class="form-control" name="A" placeholder="First Choice" required>
+                        </div>
+                        <div class="my-3 d-flex align-items-center">
+                            <span class="me-2">B:</span>
+                            <input type="text" class="form-control" name="B" placeholder="Second Choice" required>
+                        </div>
+                        <div class="my-3 d-flex align-items-center">
+                            <span class="me-2">C:</span>
+                            <input type="text" class="form-control" name="C" placeholder="Third Choice" required>
+                        </div>
+                        <div class="my-3 d-flex align-items-center">
+                            <span class="me-2">D:</span>
+                            <input type="text" class="form-control" name="D" placeholder="Fourth Choice" required>
+                        </div>
+                        
+                        <label for="">Correct Answer</label>
+                        <select name="correct" class="form-select my-3" required>
+                            <option value="0">A : First Choice</option>
+                            <option value="1">B : Second Choice</option>
+                            <option value="2">C : Third Choice</option>
+                            <option value="3">D : Fourth Choice</option>
+                        </select>
+
+                        <label for="">Question Category</label>
+                        <select name="category" class="form-select my-3" required>
+                            <option value="0">Easy</option>
+                            <option value="1">Medium</option>
+                            <option value="2">Hard</option>
+                        </select>
+
+                        <button type="submit" class="btn btn-danger w-100 mt-3">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/dataTable.js"></script>
+    <script src="../assets/js/bootstrap.js"></script>
+</body>
+</html>

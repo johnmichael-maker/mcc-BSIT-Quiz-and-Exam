@@ -1,0 +1,300 @@
+:root {
+    --fs-100: 1rem;
+    --fs-200: 1.5rem;
+    --fs-300: 1.7rem;
+    --fs-400: 2rem;
+    --fs-500: 2.5rem;
+    --fs-700: 2.7rem;
+    --fs-900: 3rem;
+    --clr-danger: #dc3545;
+    --clr-light: #f8f9fa;
+    --crl-unselected: #fdd;
+    --crl-hover: hsl(0, 100%, 95%);
+    --clr-disabled: #9999;
+    --clr-overlay: rgba(0, 0, 0, 0.5);
+    --clr-success: #198754;
+    --clr-white: #fff;
+}
+
+body {
+    background: var(--clr-danger) !important;
+}
+
+.h-100-vh{
+    height: 100vh;
+}
+
+.__index {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.__index .question-container {
+    width: 100%;
+    min-height: 80%;
+    padding: 100px;
+    position: relative;
+    z-index: 1;
+}
+
+.__index .question-container img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    z-index: 1;
+}
+
+.__index .card {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border: none;
+}
+
+.__index .card .question-number {
+    position: absolute;
+    top: 30px;
+    left: -50px;
+    padding: 0 50px;
+    transform: rotate(-50deg);
+}
+
+.__index .card .card-body .question {
+    max-width: 70%;
+    margin: 0 auto;
+    padding-top: 20px;
+    font-size: var(--fs-200);
+}
+
+.__index .card .card-body .row .col-6 button {
+    width: 100%;
+    text-align: start;
+    outline: none !important;
+    box-shadow: none;
+    padding: 5px 20px 5px 0;
+    background: var(--crl-unselected);
+    font-size: var(--fs-200);
+    border: 1px solid var(--crl-unselected);
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.__index .card .card-body .row .col-6 button span {
+    background: var(--clr-danger);
+    padding: 7px 15px;
+    color: var(--clr-light);
+    border-radius: 50%;
+    text-align: center;
+    margin-bottom: auto;
+}
+
+.__index .card .card-body .row .col-6 button i {
+    float: right;
+    margin-top: 5px;
+    font-size: var(--fs-200);
+    display: none;
+}
+
+.__index .card .card-body .row .col-6 button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--clr-danger);
+    z-index: -1;
+    transition: transform .7s;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.__index .card .card-body .row .col-6 button:hover {
+    color: var(--clr-light);
+}
+
+.__index .card .card-body .row .col-6 button:hover i {
+    display: block;
+}
+
+.__index .card .card-body .row .col-6 button:hover::before {
+    transform: scaleX(1);
+}
+
+.__index .card .card-body .row .col-6 button.active,
+.__index .card .card-body .row .col-6 button.active::before {
+    color: var(--clr-light);
+    transform: scaleX(1);
+    cursor: not-allowed;
+}
+
+.__index .card .card-body .row .col-6 button.active i {
+    display: block;
+}
+
+.__index .card .card-body .row .col-6 button.disabled {
+    background: var(--clr-disabled);
+    cursor: not-allowed;
+    color: var(--clr-disabled);
+    border: 1px solid var(--clr-disabled);
+}
+
+.__index .card .card-body .row .col-6 button.disabled span {
+    background: none;
+}
+
+.__index .card .card-body .row .col-6 button.disabled:hover {
+    color: var(--clr-disabled);
+}
+
+.__index .card .card-body .row .col-6 button.disabled::before {
+    background: none;
+}
+
+.__index .card .card-body .row .col-6 button.disabled i {
+    display: none;
+}
+
+.alert-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+    background: var(--clr-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alert-modal .card {
+    width: 300px;
+}
+
+.alert-modal .success-icon img {
+    width: var(--fs-900);
+    z-index: 1;
+    filter: drop-shadow(10px 7px 10px rgba(0, 0, 0, 0.2));
+}
+
+.alert-modal #countdown {
+    position: relative;
+    margin: auto;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+}
+
+.alert-modal #countdown-number {
+    color: var(--clr-success);
+    display: inline-block;
+    line-height: 40px;
+}
+
+.alert-modal svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+.alert-modal svg circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    stroke: var(--clr-success);
+    fill: none;
+    animation: countdown 5s linear infinite forwards;
+}
+
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 0px;
+    }
+
+    to {
+        stroke-dashoffset: 113px;
+    }
+}
+
+.alert-modal .error-card .card-body{
+    color: var(--clr-danger) !important;
+}
+
+.alert-modal .error-card img{
+    width: 4rem;
+}
+
+.alert-modal #countdown-error {
+    position: relative;
+    margin: auto;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+}
+
+.alert-modal #countdown-error #countdown-number {
+    color: var(--clr-danger);
+    display: inline-block;
+    line-height: 40px;
+}
+
+.alert-modal #countdown-error svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+.alert-modal #countdown-error svg circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    stroke: var(--clr-danger);
+    fill: none;
+    animation: countdown 5s linear infinite forwards;
+}
+
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 0px;
+    }
+
+    to {
+        stroke-dashoffset: 113px;
+    }
+}
+
+/* .alert-modal .success-card{
+    display: none !important;
+} */
+
+.alert-modal .error-card{
+    display: none !important;
+}
+
+/* ADMIN */
+.__admin{
+    background: #ddd !important; 
+}
+
+.__admin .navbar {
+   background: var(--clr-white);
+}
+
+.__admin .sidebar{
+    background: var(--clr-white);
+    height: calc(100vh - 40px);
+}

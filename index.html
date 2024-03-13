@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCC Competition : QUIZ BOWL</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+</head>
+<body>
+    
+    <div class="container __index">
+       <div class="question-container">
+        
+        
+        <img src="assets/img/logo.png" alt="">
+            <div class="card position-relative pb-5">
+                <div class="question-number bg-danger text-light">
+                    <h5>Quiz #: 1</h5>
+                </div>
+                <div class="card-body py-5">
+                    <div class="question text-center">
+                       
+                       Who is known as the father of computer?
+                    </div>
+
+                    <div class="row g-3 pt-5 px-4">
+                        <div class="col-6">
+                            <button class="w-100 active"><span>A</span> Dennis Ritchie <i class="bx bx-check-circle"></i></button>
+                        </div>
+                        <div class="col-6">
+                            <button class="w-100 disabled"><span>B</span> Bill Gates <i class="bx bx-check-circle"></i></button>
+                        </div>
+                        <div class="col-6">
+                            <button class="w-100 disabled"><span>C</span> Charlse Babbage <i class="bx bx-check-circle"></i></button>
+                        </div>
+                        <div class="col-6">
+                            <button class="w-100 disabled"><span>D</span> James Gosling <i class="bx bx-check-circle"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" position-absolute bottom-0 start-0 d-flex align-items-center p-3 w-100">
+                    <div class="text-center w-100 d-flex justify-content-center">
+                        <span class="me-3">Time : </span><h3 id="timer"></h3>
+                    </div>
+                </div>
+            </div>
+
+       </div>
+    </div>
+
+    <div class="alert-modal">
+        <div class="card position-relative bg-transparent pt-4 border-0 success-card">
+            <div class="position-absolute top-0 text-center w-100 success-icon">
+                <img src="assets/img/check-circle-svgrepo-com.png" alt="Icon-png">
+            </div>
+            <div class="card-body bg-light text-center pt-4 text-success">
+                <h1>Correct</h1>
+                <p>Your answer is correct you will be proceeding to the next round.</p>
+                <div id="countdown">
+                    <div id="countdown-number" class="countdown-number"></div>
+                    <svg>
+                      <circle r="18" cx="20" cy="20"></circle>
+                    </svg>
+                  </div>
+            </div>
+        </div>
+
+        <div class="card position-relative bg-transparent pt-4 border-0 error-card">
+            <div class="position-absolute top-0 text-center w-100 success-icon mb-5">
+                <img src="assets/img/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com (1).png" alt="Icon-png">
+            </div>
+            <div class="card-body bg-light text-center pt-4 text-success">
+                <h1>Incorrect</h1>
+                <p>Your answer is incorrect. Sorry but you are eliminated from the competition.</p>
+                <div id="countdown-error">
+                    <div id="countdown-number" class="countdown-number"></div>
+                    <svg>
+                      <circle r="18" cx="20" cy="20"></circle>
+                    </svg>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+
+    <script>
+        
+
+        let countdownNumberEl = document.querySelectorAll('.countdown-number');
+        let countdown = 5;
+
+        countdownNumberEl.textContent = countdown;
+
+        setInterval(function() {
+        countdown = --countdown <= 0 ? 5 : countdown;
+
+        countdownNumberEl[0].textContent = countdown;
+        countdownNumberEl[1].textContent = countdown;
+        }, 1000);
+        
+        
+
+    </script>
+</body>
+</html>
