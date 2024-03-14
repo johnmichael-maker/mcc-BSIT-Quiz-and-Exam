@@ -1,4 +1,5 @@
 let adminDOM = document.querySelector(".__admin");
+const indexDOM = document.getElementById('__index');
 let submitForm = document.forms["add-question"];
 let timer = document.getElementById("timer");
 const signupForm = document.forms['signup'];
@@ -358,74 +359,75 @@ if (adminDOM) {
   };
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  let alertModal = document.getElementById("alert-modal");
-  let alertMode = alertModal.querySelectorAll(".card");
-  let questionNumber = document.getElementById("question-number");
-  let questionDiv = document.getElementById("question");
-  let choices = document.getElementById("choices");
-  let activeQuestion = getActiveQuestion();
-
-  questionNumber.innerHTML = activeQuestion.id;
-  questionDiv.innerHTML = activeQuestion.question;
-
-  let interval = setInterval(timerMs, 1)
-
-  for (let i = 0; i < activeQuestion.choices.length; i++) {
-    let choice = activeQuestion.choices;
-    let col = document.createElement("div");
-    col.setAttribute("class", "col-6");
-    col.innerHTML = `
-        <button class="w-100"><span>${letters[i]}</span> ${choice[i]} <i class="bx bx-check-circle"></i></button>
-    `;
-    choices.appendChild(col);
-
-    // const time = timer()
-
-    document.querySelectorAll("button")[i].onclick = () => {
-      let data = [choice[i], time]
-      addAnswer(data)
-      if (activeQuestion.answer === i) {
-        alertModal.classList.remove("d-none");
-        alertMode[0].classList.remove("d-none");
-        // countDown(0)
-      }else{
-        alertModal.classList.remove("d-none");
-        alertMode[1].classList.remove("d-none");
-      }
-    };
-  }
-
+if (indexDOM) {
+  indexDOM.onload = () => {
+    let alertModal = document.getElementById("alert-modal");
+    let alertMode = alertModal.querySelectorAll(".card");
+    let questionNumber = document.getElementById("question-number");
+    let questionDiv = document.getElementById("question");
+    let choices = document.getElementById("choices");
+    let activeQuestion = getActiveQuestion();
   
-});
-
-
-signupForm.onsubmit = (e) => {
-  e.preventDefault()
-  let errors = document.querySelectorAll(".errors")
-  const datas = [
-    signupForm['fname'].value,
-    signupForm['lname'].value,
-    signupForm['mname'].value,
-    signupForm['level'].value 
-  ]
+    questionNumber.innerHTML = activeQuestion.id;
+    questionDiv.innerHTML = activeQuestion.question;
   
-  if (datas[0] === '') { 
-    errors[0].classList.remove("d-none")
-    errors[0].innerHTML = "Please fill firstname"
-  }else{
-    errors[0].classList.add("d-none")
+    let interval = setInterval(timerMs, 1)
+  
+    for (let i = 0; i < activeQuestion.choices.length; i++) {
+      let choice = activeQuestion.choices;
+      let col = document.createElement("div");
+      col.setAttribute("class", "col-6");
+      col.innerHTML = `
+          <button class="w-100"><span>${letters[i]}</span> ${choice[i]} <i class="bx bx-check-circle"></i></button>
+      `;
+      choices.appendChild(col);
+  
+      // const time = timer()
+  
+      document.querySelectorAll("button")[i].onclick = () => {
+        let data = [choice[i], time]
+        addAnswer(data)
+        if (activeQuestion.answer === i) {
+          alertModal.classList.remove("d-none");
+          alertMode[0].classList.remove("d-none");
+          // countDown(0)
+        }else{
+          alertModal.classList.remove("d-none");
+          alertMode[1].classList.remove("d-none");
+        }
+      };
+    }
   }
+}
 
-  if (datas[1] === '') {
-    errors[1].classList.remove("d-none")
-    errors[1].innerHTML = "Please fill lastname"
-  }else{
-    errors[1].classList.add("d-none")
+if (signupForm) {
+  signupForm.onsubmit = (e) => {
+    e.preventDefault()
+    let errors = document.querySelectorAll(".errors")
+    const datas = [
+      signupForm['fname'].value,
+      signupForm['lname'].value,
+      signupForm['mname'].value,
+      signupForm['level'].value 
+    ]
+    
+    if (datas[0] === '') { 
+      errors[0].classList.remove("d-none")
+      errors[0].innerHTML = "Please fill firstname"
+    }else{
+      errors[0].classList.add("d-none")
+    }
+  
+    if (datas[1] === '') {
+      errors[1].classList.remove("d-none")
+      errors[1].innerHTML = "Please fill lastname"
+    }else{
+      errors[1].classList.add("d-none")
+    }
+  
+    if (datas[0] !== '' && datas[1] !== '') {
+      signup(datas)
+    }
+  
   }
-
-  if (datas[0] !== '' && datas[1] !== '') {
-    signup(datas)
-  }
-
 }
