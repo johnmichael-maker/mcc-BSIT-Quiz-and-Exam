@@ -1,21 +1,37 @@
 let adminDOM = document.querySelector(".__admin");
-let submitForm = document.forms['add-question'];
+let submitForm = document.forms["add-question"];
 
-const timer = () => {
-  let timer = document.getElementById("timer");
-  let time = 5000;
-  timer.innerHTML = time;
 
-  let interval = setInterval(() => {
-    time -= 4;
-    if (time <= 0) {
-      clearInterval(interval); // Stop the timer when time reaches zero or less
-      timer.innerHTML = "Time's up!";
-    } else {
-      timer.innerHTML = time + "ms";
-    }
-  }, 1);
-};
+let letters = ["A", "B", "C", "D"];
+
+let questions = [
+  {
+    id: 1,
+    question: "It is called as the brain of computer?",
+    choices: [
+      "Mother Board",
+      "Solid State Drive",
+      "Central Processing Unit",
+      "Automatic Voltage Regulator",
+    ],
+    answer: "Central Processing Unit",
+    category: 0,
+    status: 2,
+  },
+  {
+    id: 1,
+    question: "It is called as the brain of computer?",
+    choices: [
+      "Mother Board",
+      "Solid State Drive",
+      "Central Processing Unit",
+      "Automatic Voltage Regulator",
+    ],
+    answer: 2,
+    category: 0,
+    status: 1,
+  },
+];
 
 const activateTooltip = () => {
   let tooltipTriggerList = [].slice.call(
@@ -161,36 +177,19 @@ const categoriesList = () => {
   return categories;
 };
 
-const setQuestionList = (data) => {
-  let datas = [data]
-  return datas
-}
+const updateQuestions = (data) => {
+  questions.push(data);
+};
 
 const questionsList = () => {
-  let questions = {
-    id: 1,
-    question: "It is called as the brain of computer?",
-    choices: [
-      "Mother Board",
-      "Solid State Drive",
-      "Central Processing Unit",
-      "Automatic Voltage Regulator",
-    ],
-    answer: "Central Processing Unit",
-    category: 0,
-    status: 1
-  };
-  questions = setQuestionList(questions)
-  console.log(questions);
   return questions;
 };
 
 const getQuestions = () => {
   let categories = categoriesList();
-  const questions = questionsList();
   const questionRow = document.getElementById("questions-row");
 
-  for(let i = 0; i < questions.length; i++) {
+  for (let i = 0; i < questions.length; i++) {
     let nextQuestion;
     let col = document.createElement("div");
     col.setAttribute("class", "col-3");
@@ -210,8 +209,8 @@ const getQuestions = () => {
 
     if (i === 0) {
       nextQuestion = '<p class="badge bg-danger">Next Question</p>';
-    }else{
-      nextQuestion = ''
+    } else {
+      nextQuestion = "";
     }
 
     if (questions[i].status === 1) {
@@ -234,55 +233,50 @@ const getQuestions = () => {
 };
 
 const hideModal = (id) => {
-  const modalId = document.getElementById(id)
-  const modal = bootstrap.Modal.getInstance(modalId)
-  modal.hide()
-}
+  const modalId = document.getElementById(id);
+  const modal = bootstrap.Modal.getInstance(modalId);
+  modal.hide();
+};
 
 const addQuestion = (form) => {
   const questionRow = document.getElementById("questions-row");
   const categories = categoriesList();
-  
-  let questionList = setQuestionList()
-  let alert = document.getElementById("alert")
-  let datas = [
-    form['question'],
-    form['A'],
-    form['B'],
-    form['C'],
-    form['D'],
-    form['correct'],
-    form['category'],
-    1
-  ]
-  
-  datas.forEach(data => {
-    if (data.value == '') {
-      alert.classList.add('alert', 'alert-danger', 'py-1', 'mb-2')
-      alert.innerHTML = "All fields are required"
-    }
-  })
 
-  hideModal("add-question")
+  // let questionList = setQuestionList()
+  let alert = document.getElementById("alert");
+  let datas = [
+    form["question"],
+    form["A"],
+    form["B"],
+    form["C"],
+    form["D"],
+    form["correct"],
+    form["category"],
+    1,
+  ];
+
+  datas.forEach((data) => {
+    if (data.value == "") {
+      alert.classList.add("alert", "alert-danger", "py-1", "mb-2");
+      alert.innerHTML = "All fields are required";
+    }
+  });
+
+  hideModal("add-question");
 
   // ADD TO DATABASE
-  questionList.push({
+  questions.push({
     id: 5,
     question: datas[0].value,
-    choices: [
-      "RAM",
-      "CPU",
-      "Hard Disk",
-      "CD-ROM",
-    ],
+    choices: ["RAM", "CPU", "Hard Disk", "CD-ROM"],
     answer: "RAM",
     category: 2,
-    status: 1
-  })
+    status: 1,
+  });
 
   // CREATE NEW ELEMENT
 
-  const dataCategory = parseInt(datas[6].value)
+  const dataCategory = parseInt(datas[6].value);
 
   let col = document.createElement("div");
   col.setAttribute("class", "col-3");
@@ -292,17 +286,12 @@ const addQuestion = (form) => {
   }</span>`;
 
   if (dataCategory === 1) {
-    categoryStatus = `<span class="badge bg-warning">${
-      categories[dataCategory]
-    }</span>`;
+    categoryStatus = `<span class="badge bg-warning">${categories[dataCategory]}</span>`;
   } else if (dataCategory === 2) {
-    categoryStatus = `<span class="badge bg-danger">${
-      categories[dataCategory]
-    }</span>`;
+    categoryStatus = `<span class="badge bg-danger">${categories[dataCategory]}</span>`;
   }
 
-  
-    col.innerHTML = `
+  col.innerHTML = `
     <div class="card h-100">
           <div class="card-body">
               <div class="d-flex justify-content-between">
@@ -314,24 +303,88 @@ const addQuestion = (form) => {
           </div>
       </div>
     `;
-    questionRow.appendChild(col);
+  questionRow.appendChild(col);
 
-    form.reset()
-}
+  form.reset();
+};
+
+const getActiveQuestion = () => {
+  let data;
+  questions.forEach((question) => {
+    if (question.status === 1) {
+      data = question;
+    }
+  });
+
+  return data;
+};
 
 if (submitForm) {
   submitForm.onsubmit = () => {
-    const form = document.forms['add-question']
-    event.preventDefault()
-    addQuestion(form)
-  }
+    const form = document.forms["add-question"];
+    event.preventDefault();
+    addQuestion(form);
+  };
 }
 
 if (adminDOM) {
   adminDOM.onload = () => {
-    activateTooltip()
-    activateDataTable()
-    getQuestions()
-  }
+    activateTooltip();
+    activateDataTable();
+    getQuestions();
+  };
 }
 
+
+
+const timer = () => {
+  let timer = document.getElementById("timer");
+  let time = 5000;
+  timer.innerHTML = time;
+
+  let interval = setInterval(() => {
+    time -= 4;
+    if (time <= 0) {
+      clearInterval(interval); // Stop the timer when time reaches zero or less
+      timer.innerHTML = "Time's up!";
+    } else {
+      timer.innerHTML = time + "ms";
+    }
+  }, 1);
+};
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  let alertModal = document.getElementById("alert-modal");
+  let alertMode = alertModal.querySelectorAll(".card");
+  let questionNumber = document.getElementById("question-number");
+  let questionDiv = document.getElementById("question");
+  let choices = document.getElementById("choices");
+  let activeQuestion = getActiveQuestion();
+
+  questionNumber.innerHTML = activeQuestion.id;
+  questionDiv.innerHTML = activeQuestion.question;
+
+  for (let i = 0; i < activeQuestion.choices.length; i++) {
+    let choice = activeQuestion.choices;
+    let col = document.createElement("div");
+    col.setAttribute("class", "col-6");
+    col.innerHTML = `
+        <button class="w-100"><span>${letters[i]}</span> ${choice[i]} <i class="bx bx-check-circle"></i></button>
+    `;
+    choices.appendChild(col);
+
+    document.querySelectorAll("button")[i].onclick = () => {
+      if (activeQuestion.answer === i) {
+        alertModal.classList.remove("d-none");
+        alertMode[0].classList.remove("d-none");
+        countDown(0)
+      }else{
+        alertModal.classList.remove("d-none");
+        alertMode[1].classList.remove("d-none");
+      }
+    };
+  }
+
+  timer()
+});

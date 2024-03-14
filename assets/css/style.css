@@ -183,106 +183,12 @@ body {
     filter: drop-shadow(10px 7px 10px rgba(0, 0, 0, 0.2));
 }
 
-.alert-modal #countdown {
-    position: relative;
-    margin: auto;
-    height: 40px;
-    width: 40px;
-    text-align: center;
-}
-
-.alert-modal #countdown-number {
-    color: var(--clr-success);
-    display: inline-block;
-    line-height: 40px;
-}
-
-.alert-modal svg {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    transform: rotateY(-180deg) rotateZ(-90deg);
-}
-
-.alert-modal svg circle {
-    stroke-dasharray: 113px;
-    stroke-dashoffset: 0px;
-    stroke-linecap: round;
-    stroke-width: 2px;
-    stroke: var(--clr-success);
-    fill: none;
-    animation: countdown 5s linear infinite forwards;
-}
-
-@keyframes countdown {
-    from {
-        stroke-dashoffset: 0px;
-    }
-
-    to {
-        stroke-dashoffset: 113px;
-    }
-}
-
 .alert-modal .error-card .card-body{
     color: var(--clr-danger) !important;
 }
 
 .alert-modal .error-card img{
     width: 4rem;
-}
-
-.alert-modal #countdown-error {
-    position: relative;
-    margin: auto;
-    height: 40px;
-    width: 40px;
-    text-align: center;
-}
-
-.alert-modal #countdown-error #countdown-number {
-    color: var(--clr-danger);
-    display: inline-block;
-    line-height: 40px;
-}
-
-.alert-modal #countdown-error svg {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    transform: rotateY(-180deg) rotateZ(-90deg);
-}
-
-.alert-modal #countdown-error svg circle {
-    stroke-dasharray: 113px;
-    stroke-dashoffset: 0px;
-    stroke-linecap: round;
-    stroke-width: 2px;
-    stroke: var(--clr-danger);
-    fill: none;
-    animation: countdown 5s linear infinite forwards;
-}
-
-@keyframes countdown {
-    from {
-        stroke-dashoffset: 0px;
-    }
-
-    to {
-        stroke-dashoffset: 113px;
-    }
-}
-
-/* .alert-modal .success-card{
-    display: none !important;
-} */
-
-.alert-modal .error-card{
-    display: none !important;
 }
 
 /* ADMIN */
