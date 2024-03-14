@@ -191,6 +191,13 @@ body {
     width: 4rem;
 }
 
+
+/* SIGNUP */
+form[name="signup"]{
+    width: 500px;
+    
+}
+
 /* ADMIN */
 .__admin{
     background: #ddd !important; 
@@ -204,3 +211,4 @@ body {
     background: var(--clr-white);
     height: calc(100vh - 40px);
 }
+

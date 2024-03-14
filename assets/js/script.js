@@ -1,5 +1,10 @@
 let adminDOM = document.querySelector(".__admin");
 let submitForm = document.forms["add-question"];
+let timer = document.getElementById("timer");
+const signupForm = document.forms['signup'];
+let time = 5000;
+let userData = [];
+
 
 
 let letters = ["A", "B", "C", "D"];
@@ -319,6 +324,24 @@ const getActiveQuestion = () => {
   return data;
 };
 
+const timerMs = () => {
+    time -= 4
+    if (time <= 0) {
+      clearInterval(timerMs); // Stop the timer when time reaches zero or less
+      timer.innerHTML = "Time's up!";
+    } else {
+      timer.innerHTML = time + "ms";
+    }
+};
+
+const addAnswer = (data) => {
+  console.log(data);
+}
+
+const signup = (data) => {
+  console.log(data);
+}
+
 if (submitForm) {
   submitForm.onsubmit = () => {
     const form = document.forms["add-question"];
@@ -335,25 +358,6 @@ if (adminDOM) {
   };
 }
 
-
-
-const timer = () => {
-  let timer = document.getElementById("timer");
-  let time = 5000;
-  timer.innerHTML = time;
-
-  let interval = setInterval(() => {
-    time -= 4;
-    if (time <= 0) {
-      clearInterval(interval); // Stop the timer when time reaches zero or less
-      timer.innerHTML = "Time's up!";
-    } else {
-      timer.innerHTML = time + "ms";
-    }
-  }, 1);
-};
-
-
 document.addEventListener("DOMContentLoaded", () => {
   let alertModal = document.getElementById("alert-modal");
   let alertMode = alertModal.querySelectorAll(".card");
@@ -365,6 +369,8 @@ document.addEventListener("DOMContentLoaded", () => {
   questionNumber.innerHTML = activeQuestion.id;
   questionDiv.innerHTML = activeQuestion.question;
 
+  let interval = setInterval(timerMs, 1)
+
   for (let i = 0; i < activeQuestion.choices.length; i++) {
     let choice = activeQuestion.choices;
     let col = document.createElement("div");
@@ -374,11 +380,15 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     choices.appendChild(col);
 
+    // const time = timer()
+
     document.querySelectorAll("button")[i].onclick = () => {
+      let data = [choice[i], time]
+      addAnswer(data)
       if (activeQuestion.answer === i) {
         alertModal.classList.remove("d-none");
         alertMode[0].classList.remove("d-none");
-        countDown(0)
+        // countDown(0)
       }else{
         alertModal.classList.remove("d-none");
         alertMode[1].classList.remove("d-none");
@@ -386,5 +396,36 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  timer()
+  
 });
+
+
+signupForm.onsubmit = (e) => {
+  e.preventDefault()
+  let errors = document.querySelectorAll(".errors")
+  const datas = [
+    signupForm['fname'].value,
+    signupForm['lname'].value,
+    signupForm['mname'].value,
+    signupForm['level'].value 
+  ]
+  
+  if (datas[0] === '') { 
+    errors[0].classList.remove("d-none")
+    errors[0].innerHTML = "Please fill firstname"
+  }else{
+    errors[0].classList.add("d-none")
+  }
+
+  if (datas[1] === '') {
+    errors[1].classList.remove("d-none")
+    errors[1].innerHTML = "Please fill lastname"
+  }else{
+    errors[1].classList.add("d-none")
+  }
+
+  if (datas[0] !== '' && datas[1] !== '') {
+    signup(datas)
+  }
+
+}
