@@ -1,5 +1,6 @@
 <?php 
     require __DIR__ . '/./partials/header.php';
+    // echo password_hash('admin', PASSWORD_DEFAULT);
 ?>
 <body>
     <div class="h-100-vh d-flex align-items-center justify-content-center">
@@ -11,6 +12,10 @@
                         <h5 class="mb-3">Please sign up first</h5>
 
                         <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
+
+                        <label for="">ID Number</label>
+                        <input type="text" class="form-control my-2" placeholder="ID Number" name="id_number">
+                        <p class="errors d-none alert alert-danger py-1"></p>
 
                         <label for="">First Name</label>
                         <input type="text" class="form-control my-2" placeholder="First Name" name="fname">

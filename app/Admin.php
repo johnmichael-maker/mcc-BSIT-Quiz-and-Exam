@@ -111,6 +111,7 @@ class Admin extends Database
                     <div class="ps-2 d-flex align-items-center">
                         <a href="" class="navbar-brand">MCC QUIZ BOWL</a>
                         <a href="#add-question" class="btn btn-secondary py-1 px-2 rounded-1" data-bs-toggle="modal"><i class="bx bx-plus"></i> Add question</a>
+                        <a href="#add-exam" class="btn btn-secondary py-1 px-2 ms-3 rounded-1" data-bs-toggle="modal"><i class="bx bx-plus"></i> Add exam</a>
                     </div>
 
                     <ul class="navbar-nav">
@@ -258,6 +259,42 @@ class Admin extends Database
                                     <option value="1">B : Second Choice</option>
                                     <option value="2">C : Third Choice</option>
                                     <option value="3">D : Fourth Choice</option>
+                                </select>
+
+                                <label for="">Question Category</label>
+                                <select name="category" class="form-select my-3" required>
+                                    <option value="0">Easy</option>
+                                    <option value="1">Medium</option>
+                                    <option value="2">Hard</option>
+                                </select>
+
+                                <button type="submit" class="btn btn-danger w-100 mt-3">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="add-exam">
+                <div class="modal-dialog">
+                    <div class="modal-content rounded-0">
+                        <div class="modal-header ">
+                            <h5 class="moda-title">Add Exam</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form name="add-question">
+                                <p class="my-0" id="alert"></p>
+                                <label for="">Question</label>
+                                <textarea name="question" class="form-control my-3" cols="30" rows="5" style="resize: none;" placeholder="Write question..." required></textarea>
+                                <label for="">Choices</label>
+
+                                <label for="">Exam Type</label>
+                                <select name="correct" class="form-select my-3" required>
+                                    <option value="1">Essay</option>
+                                    <option value="2">Enumeration</option>
+                                    <option value="3">Multiple Choice</option>
+                                    <option value="4">Identification</option>
                                 </select>
 
                                 <label for="">Question Category</label>

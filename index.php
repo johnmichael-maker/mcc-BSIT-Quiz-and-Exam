@@ -1,5 +1,7 @@
 <?php
 require __DIR__ . '/./partials/header.php';
+
+
 ?>
 
 <body id="__index">

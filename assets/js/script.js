@@ -1001,26 +1001,26 @@ if (loginForm) {
 }
 
 if (adminDOM) {
-  adminDOM.onload = () => {
-    activateTooltip();
-    getContestantsData();
-    countMaxQuestion()
-    // getQuestions();
-    getCurrentQuestion()
-    getQuestionFromDB();
-    const interval = setInterval(() => {
-      time -= 4;
-      if (time <= 0) {
-        clearInterval(interval); // Stop the timer when time reaches zero or less
-        timer.innerHTML = "Time's up!";
-        nextBtn.classList.remove("d-none");
-      } else {
-        timer.innerHTML = time + "ms";
-      }
-    }, 1);
+    adminDOM.onload = () => {
+      activateTooltip();
+      getContestantsData();
+      countMaxQuestion()
+      // getQuestions();
+      getCurrentQuestion()
+      getQuestionFromDB();
+      const interval = setInterval(() => {
+        time -= 4;
+        if (time <= 0) {
+          clearInterval(interval); // Stop the timer when time reaches zero or less
+          timer.innerHTML = "Time's up!";
+          nextBtn.classList.remove("d-none");
+        } else {
+          timer.innerHTML = time + "ms";
+        }
+      }, 1);
 
-    // let interval = setInterval(timerMs, 1);
-  };
+      // let interval = setInterval(timerMs, 1);
+    };
 }
 
 if (startBtn) {
