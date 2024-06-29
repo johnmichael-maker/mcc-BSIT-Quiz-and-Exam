@@ -1,41 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCC Competition : QUIZ BOWL</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-</head>
+<?php
+require __DIR__ . '/./partials/header.php';
+?>
+
 <body id="__index">
-    
+
     <div class="container __index">
-       <div class="question-container" id="question-container">
-        
-        
-        <img src="assets/img/logo.png" alt="">
+
+        <div class="position-absolute top-0 start-0 p-2">
+            <h5 class="text-light">Name: <?= $_SESSION['LNAME'].', '.$_SESSION['FNAME'].' '.$_SESSION['MNAME'] ?></h5>
+            <p class="text-light">Year: <?php 
+                switch ($_SESSION['LEVEL']) {
+                    case 1:
+                        echo '1st';
+                        break;
+                    case 2:
+                        echo '2nd';
+                        break;
+                    case 3:
+                        echo '3rd';
+                        break;
+                    case 4:
+                        echo '4th';
+                        break;
+                }
+            ?></p>
+        </div>
+
+        <div class="question-container" id="question-container">
+            <img src="assets/img/logo.png" alt="">
             <div class="card position-relative pb-5">
                 <div class="question-number bg-danger text-light">
                     <h5>Quiz #: <span id="question-number"></span></h5>
                 </div>
                 <div class="card-body py-5">
                     <div class="question text-center" id="question">
-                       Who is known as the father of computer?
+
                     </div>
 
                     <div class="row g-3 pt-5 px-4" id="choices">
                     </div>
                 </div>
 
-                <div class=" position-absolute bottom-0 start-0 d-flex align-items-center p-3 w-100">
+                <div class="d-none position-absolute bottom-0 start-0 d-flex align-items-center p-3 w-100" id="time-div">
                     <div class="text-center w-100 d-flex justify-content-center">
-                        <span class="me-3">Time : </span><h3 id="timer"></h3>
+                        <span class="me-3">Time : </span>
+                        <h3 id="timer"></h3>
                     </div>
                 </div>
             </div>
 
-       </div>
+        </div>
     </div>
 
     <div class="alert-modal d-none" id="alert-modal">
@@ -58,8 +72,18 @@
                 <p>Your answer is incorrect. Sorry but you are eliminated from the competition.</p>
             </div>
         </div>
+
+        <div class="card position-relative bg-transparent pt-4 border-0 disable-card d-none">
+            <div class="position-absolute top-0 text-center w-100 success-icon mb-5">
+                <img src="assets/img/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com (1).png" alt="Icon-png">
+            </div>
+            <div class="card-body bg-light text-center pt-4 text-danger">
+                <h3 class="mt-4">Account Disabled</h3>
+                <p>Sorry but you are eliminated from the competition.</p>
+            </div>
+        </div>
     </div>
 
-    <script src="assets/js/script.js"></script>
-</body>
-</html>
+    <?php $contestantController->checkAccount() ?>
+
+    <?php require __DIR__ . '/./partials/footer.php' ?>

@@ -1,0 +1,5 @@
+SELECT c.contestant_id, c.fname, c.lname, c.mname, c.year, c.status, c.created_at, c.updated_at, SUM(a.check_code) AS total_check_code
+        FROM contestants c
+        INNER JOIN answers a ON c.contestant_id = a.contestant_id
+        WHERE a.check_code = 1
+        GROUP BY c.contestant_id, c.fname, c.lname, c.mname, c.year, c.status, c.created_at, c.updated_at;

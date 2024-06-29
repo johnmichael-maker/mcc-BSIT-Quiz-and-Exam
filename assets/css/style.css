@@ -193,7 +193,7 @@ body {
 
 
 /* SIGNUP */
-form[name="signup"]{
+#signup-card{
     width: 500px;
     
 }
@@ -212,3 +212,20 @@ form[name="signup"]{
     height: calc(100vh - 40px);
 }
 
+
+/* VIEW */
+
+.__view .logo{
+    width: 100px;
+    filter:drop-shadow(10px 10px 10px var(--crl-unselected));
+}
+
+.__view .rank{
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.__view #candidates{
+    height: 400px;
+    overflow-y: auto;
+}

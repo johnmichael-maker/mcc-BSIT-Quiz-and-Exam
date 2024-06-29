@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCC Competition : QUIZ BOWL</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-</head>
+<?php 
+    require __DIR__ . '/./partials/header.php';
+?>
 <body>
-    
     <div class="h-100-vh d-flex align-items-center justify-content-center">
 
         <div class="container">
-            <form name="signup" class="m-auto">
+            <form name="signup" class="m-auto" id="signup-card">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="mb-3">Please sign up first</h5>
+
+                        <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
 
                         <label for="">First Name</label>
                         <input type="text" class="form-control my-2" placeholder="First Name" name="fname">
@@ -37,7 +31,12 @@
                             <option value="4">4th Year</option>
                         </select>
 
-                        <button type="submit" class="w-100 btn btn-danger mt-3">Submit</button>
+                        <button type="submit" name="button" class="w-100 btn btn-danger mt-3">Submit</button>
+                       <div class="text-center d-none" id="loading-signup">
+                       <div class="spinner-border mt-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                        </div>
+                       </div>
 
                     </div>
                 </div>
@@ -45,7 +44,4 @@
         </div>
 
     </div>  
-
-    <script src="assets/js/script.js"></script>
-</body>
-</html>
+<?php require __DIR__ . '/./partials/footer.php' ?>
