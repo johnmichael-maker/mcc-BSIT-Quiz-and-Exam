@@ -9,19 +9,19 @@
                         <a href="" class="nav-link text-dark bg-light"> <i class="bx bx-home"></i> Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link text-light"> <i class="bx bx-question-mark"></i> Quiz</a>
+                        <a href="quiz.php" class="nav-link text-light"> <i class="bx bx-question-mark"></i> Quiz</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link text-light"> <i class="bx bx-file"></i> Exam</a>
+                        <a href="exam.php" class="nav-link text-light"> <i class="bx bx-file"></i> Exam</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link text-light"> <i class="bx bx-user"></i> Examinees</a>
+                        <a href="examinee.php" class="nav-link text-light"> <i class="bx bx-user"></i> Examinees</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link text-light"> <i class="bx bx-user"></i> Contestants</a>
+                        <a href="contestant.php" class="nav-link text-light"> <i class="bx bx-user"></i> Contestants</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link text-light"> <i class="bx bx-log-out"></i> Logout</a>
+                        <a href="?logout" class="nav-link text-light"> <i class="bx bx-log-out"></i> Logout</a>
                     </li>
                 </ul>
 
