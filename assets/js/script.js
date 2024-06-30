@@ -3,6 +3,7 @@ const indexDOM = document.getElementById("__index");
 let submitForm = document.forms["add-question"];
 let timer = document.getElementById("timer");
 const signupForm = document.forms["signup"];
+const signupExamForm = document.forms["signup-exam"];
 const loginForm = document.forms["login"];
 let nextBtn = document.getElementById("next-question");
 const nextQuestionBtn = document.getElementById("next-question-btn");
@@ -711,6 +712,31 @@ const signup = async (data) => {
   }
 };
 
+const signupExam = async (data) => {
+  try {
+    const response = await fetch("./function/Process.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Could not fetch resource");
+    }
+    const dataResponse = await response.text();
+    console.log(dataResponse);
+    if (dataResponse === "success") {
+      setTimeout(() => {
+        window.location.href = "exam.php";
+      }, 6000);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const login = async (data) => {
   try {
     const response = await fetch("../function/Process.php", {
@@ -766,7 +792,7 @@ const startCompetition = async () =>{
   let response = await fetchNoneData("../function/Process.php?start");
   console.log(response);
   if (response === 'success') {
-    window.location.href = "index.php"
+    window.location.href = "dashboard.php"
   }
 }
 
@@ -935,6 +961,8 @@ if (signupForm) {
       lname: signupForm["lname"].value,
       mname: signupForm["mname"].value,
       level: signupForm["level"].value,
+      section: signupForm["section"].value,
+      id_number: signupForm["id_number"].value,
     };
 
     if (datas[0] === "") {
@@ -954,6 +982,48 @@ if (signupForm) {
     if (datas[0] !== "" && datas[1] !== "") {
       signup(datas);
       signupForm["button"].classList.add("disabled");
+      loadingSignup.classList.remove("d-none");
+      setTimeout(() => {
+        loadingSignup.classList.add("d-none");
+        alert.classList.remove("d-none");
+      }, 3000);
+    }
+  };
+}
+
+if (signupExamForm) {
+  signupExamForm.onsubmit = (e) => {
+    e.preventDefault();
+    let errors = document.querySelectorAll(".errors");
+    let loadingSignup = document.getElementById("loading-signup");
+    let alert = document.getElementById("alert-success");
+    const datas = {
+      fname: signupExamForm["fname"].value,
+      lname: signupExamForm["lname"].value,
+      mname: signupExamForm["mname"].value,
+      year_level: signupExamForm["year_level"].value,
+      section: signupExamForm["section"].value,
+      id_number: signupExamForm["id_number"].value,
+      exam_id: signupExamForm["exam_id"].value,
+    };
+
+    if (datas[0] === "") {
+      errors[0].classList.remove("d-none");
+      errors[0].innerHTML = "Please fill firstname";
+    } else {
+      errors[0].classList.add("d-none");
+    }
+
+    if (datas[1] === "") {
+      errors[1].classList.remove("d-none");
+      errors[1].innerHTML = "Please fill lastname";
+    } else {
+      errors[1].classList.add("d-none");
+    }
+
+    if (datas[0] !== "" && datas[1] !== "") {
+      signupExam(datas);
+      signupExamForm["button"].classList.add("disabled");
       loadingSignup.classList.remove("d-none");
       setTimeout(() => {
         loadingSignup.classList.add("d-none");

@@ -20,18 +20,24 @@ class Contestants extends Database
     public function signUpContestant()
     {
         $conn = $this->getConnection();
+        
         $data = [
             $this->passed_data['fname'],
             $this->passed_data['lname'],
             $this->passed_data['mname'],
-            $this->passed_data['level']
+            $this->passed_data['level'],
+            $this->passed_data['id_number'],
+            $this->passed_data['section']
         ];
 
-        $stmt = $conn->prepare("INSERT INTO contestants(fname,lname,mname,year) VALUES(?,?,?,?)");
+        $stmt = $conn->prepare("INSERT INTO contestants(fname,lname,mname,year,id_number,section) VALUES(?,?,?,?,?,?)");
         $name = [
             $data[0],
             $data[1],
-            $data[2]
+            $data[2],
+            $data[3],
+            $data[4],
+            $data[5]
         ];
 
         $count = 0;
@@ -69,6 +75,69 @@ class Contestants extends Database
 
         return $this->message;
     }
+
+    // public function signUpExaminee()
+    // {
+    //     $conn = $this->getConnection();
+        
+    //     $data = [
+    //         $this->passed_data['fname'],
+    //         $this->passed_data['lname'],
+    //         $this->passed_data['mname'],
+    //         $this->passed_data['year_level'],
+    //         $this->passed_data['id_number'],
+    //         $this->passed_data['section'],
+    //         $this->passed_data['exam_id']
+    //     ];
+
+    //     $stmt = $conn->prepare("INSERT INTO examinees(fname,lname,mname,year_level,id_number,section,exam_id) VALUES(?,?,?,?,?,?,?)");
+    //     $name = [
+    //         $data[0],
+    //         $data[1],
+    //         $data[2],
+    //         $data[3],
+    //         $data[4],
+    //         $data[5],
+    //         $data[6]
+    //     ];
+
+    //     $count = 0;
+
+    //     $check = $this->checkExamineeData($name);
+    //     $get_id = $conn->prepare("SELECT id FROM examinees ORDER BY id DESC");
+    //     $get_id->execute();
+    //     if ($get_id->rowCount() > 0) {
+    //         $count = $get_id->rowCount() + 1;
+    //     } else {
+    //         $count = 1;
+    //     }
+
+    //     if ($check->rowCount() > 0) {
+    //         $current_data = $check->fetch();
+    //         $current = [
+    //             $current_data['fname'],
+    //             $current_data['lname'],
+    //             $current_data['mname'],
+    //             $current_data['year_level'],
+    //             $current_data['id'],
+    //             $current_data['exam_id'],
+    //             $current_data['section']
+    //         ];
+    //         $this->activateExamineeSession($current);
+    //         $this->message = "success";
+    //     } else {
+    //         $stmt->execute($data);
+    //         if ($stmt) {
+    //             array_push($data, $count);
+    //             $this->activateExamineeSession($data);
+    //             $this->message = "success";
+    //         } else {
+    //             $this->message = "error";
+    //         }
+    //     }
+
+    //     return $this->message;
+    // }
 
     public function saveAnswer()
     {
@@ -139,10 +208,18 @@ class Contestants extends Database
     private function checkContestantData($value)
     {
         $conn = $this->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM contestants WHERE fname = ? AND lname = ? AND mname = ?");
+        $stmt = $conn->prepare("SELECT * FROM contestants WHERE fname = ? AND lname = ? AND mname = ? AND year = ? AND id_number = ? AND section = ?");
         $stmt->execute($value);
         return $stmt;
     }
+
+    // private function checkExamineeData($value)
+    // {
+    //     $conn = $this->getConnection();
+    //     $stmt = $conn->prepare("SELECT * FROM examinees WHERE fname = ? AND lname = ? AND mname = ? AND year_level = ? AND id_number = ? AND section = ? AND exam_id = ?");
+    //     $stmt->execute($value);
+    //     return $stmt;
+    // }
 
     public function checkAccountStatus()
     {
@@ -155,8 +232,10 @@ class Contestants extends Database
 
             if ($stmt->rowCount() > 0) {
                 $result = $stmt->fetch();
-                if ($result['check_answer'] == 'wrong') {
-                    $this->accountDisable();
+                if ($result['status'] == 1) {
+                    if ($result['check_answer'] == 'wrong') {
+                        $this->accountDisable();
+                    }
                 }
             }
         }
@@ -188,5 +267,9 @@ class Contestants extends Database
 <?php
             }
         }
+    }
+
+    public function logout(){
+
     }
 }

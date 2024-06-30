@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2024 at 04:10 AM
+-- Generation Time: Jun 30, 2024 at 05:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `mcc_quiz_bowl`
+-- Database: `mcc_bsit_quiz_and_exam`
 --
 
 -- --------------------------------------------------------
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `username`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'danilo', '$2y$10$pTqJAYmRuJYzXSwSd4.MGuy2Kq4mHSrEROiSnTrqXcYPqMrw9ytRq', '2024-03-15 15:25:36', '2024-03-16 04:56:39');
+(1, 'admin', '$2y$10$YUg1H1qYcqqfLu1huQRcSO9juip3JHD.IW5mzyhR0HOXUrIOh5QWa', '2024-03-15 15:25:36', '2024-06-29 05:53:36');
 
 -- --------------------------------------------------------
 
@@ -67,13 +67,81 @@ CREATE TABLE `answers` (
 
 CREATE TABLE `contestants` (
   `contestant_id` int(11) NOT NULL,
+  `id_number` varchar(255) NOT NULL,
   `fname` text DEFAULT NULL,
   `lname` text DEFAULT NULL,
   `mname` text DEFAULT NULL,
   `year` int(11) DEFAULT NULL,
+  `section` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `examinees`
+--
+
+CREATE TABLE `examinees` (
+  `id` int(11) NOT NULL,
+  `id_number` varchar(255) NOT NULL,
+  `section` int(11) NOT NULL,
+  `year_level` int(11) NOT NULL,
+  `fname` text NOT NULL,
+  `lname` text NOT NULL,
+  `mname` text DEFAULT NULL,
+  `exam_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `examinee_answers`
+--
+
+CREATE TABLE `examinee_answers` (
+  `id` int(11) NOT NULL,
+  `examinee_id` int(11) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `answer` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exams`
+--
+
+CREATE TABLE `exams` (
+  `id` int(11) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `year_level` int(11) NOT NULL,
+  `section` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `type` int(11) NOT NULL COMMENT '1=essay,2=Enumeration,3=Multiple Choice, 4=Identification',
+  `category` int(11) NOT NULL COMMENT '0=easy,1=medium,2=hard',
+  `time_limit` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_answer`
+--
+
+CREATE TABLE `exam_answer` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(11) DEFAULT NULL,
+  `answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -134,6 +202,31 @@ ALTER TABLE `contestants`
   ADD PRIMARY KEY (`contestant_id`);
 
 --
+-- Indexes for table `examinees`
+--
+ALTER TABLE `examinees`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `examinee_answers`
+--
+ALTER TABLE `examinee_answers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `exams`
+--
+ALTER TABLE `exams`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `exam_answer`
+--
+ALTER TABLE `exam_answer`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `exam_id` (`exam_id`);
+
+--
 -- Indexes for table `points`
 --
 ALTER TABLE `points`
@@ -168,6 +261,30 @@ ALTER TABLE `contestants`
   MODIFY `contestant_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `examinees`
+--
+ALTER TABLE `examinees`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `examinee_answers`
+--
+ALTER TABLE `examinee_answers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `exams`
+--
+ALTER TABLE `exams`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `exam_answer`
+--
+ALTER TABLE `exam_answer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `points`
 --
 ALTER TABLE `points`
@@ -178,6 +295,16 @@ ALTER TABLE `points`
 --
 ALTER TABLE `questions`
   MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `exam_answer`
+--
+ALTER TABLE `exam_answer`
+  ADD CONSTRAINT `exam_answer_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exams` (`id`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

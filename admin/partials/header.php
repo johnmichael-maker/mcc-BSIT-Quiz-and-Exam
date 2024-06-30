@@ -1,8 +1,20 @@
 <?php 
     require __DIR__ . '/../../vendor/autoload.php';
     use App\Admin;
+    use App\DatabaseControl;
+    $databaseController = new DatabaseControl;
     $adminController = new Admin($_POST);
     $adminController->startSession();
+    if ($adminController->checkAdmin()) {
+        header('location: login.php');
+    }
+    if ($adminController->isAdminDashboard()) {
+        if (!$adminController->isActive()) {
+            header('location: login.php');
+        }
+    }
+    $examinees = $adminController->getExaminees();
+    $contestants = $adminController->getContestants();
 ?>
 <!DOCTYPE html>
 <html lang="en">

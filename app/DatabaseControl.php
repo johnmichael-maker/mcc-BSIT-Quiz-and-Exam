@@ -52,4 +52,53 @@ class DatabaseControl extends Database
         }
         return json_encode($result);
     }
+
+    public function sections($id){
+        $sections = [
+            1 => 'North',
+            2 => 'East',
+            3 => 'West',
+            4 => 'South',
+            5 => 'North East',
+            6 => 'South East'
+        ];
+        return $sections[$id];
+    }
+
+    public function getSections(){
+        return [
+            1 => 'North',
+            2 => 'East',
+            3 => 'West',
+            4 => 'South',
+            5 => 'North East',
+            6 => 'South East'
+        ];
+    }
+
+    public function questionTypes(){
+        return [
+            'Essay',
+            'Enumeration',
+            'Multiple Choice',
+            'Identification'
+        ];
+    }
+
+    public function yearLevel(){
+        return [
+            1 => '1st Year',
+            2 => '2nd Year',
+            3 => '3rd Year',
+            4 => '4th Year'
+        ];
+    }
+
+
+    public function getExams(){
+        $conn = $this->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM exams WHERE status = 1");
+        $stmt->execute();
+        return $stmt;
+    }
 }

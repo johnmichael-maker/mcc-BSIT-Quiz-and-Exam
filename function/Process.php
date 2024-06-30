@@ -3,18 +3,25 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\Contestants;
 use App\Admin;
 use App\DatabaseControl;
+use App\Examinee;
 
 $contestantController = new Contestants($_POST);
 $adminController = new Admin($_POST);
+$examineeController = new Examinee($_POST);
 $databaseController = new DatabaseControl();
 $contestantController->startSession();   
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (isset($_POST)) {
     $response = '';
-    if (isset($data['fname'])) {
+    if (isset($data['level'])) {
         $response = $contestantController->signUpContestant();
     }
+
+    if (isset($data['year_level'])) {
+        $response = $examineeController->signUpExaminee();
+    }
+
     if (isset($data['answer'])) {
         $response = $contestantController->saveAnswer();
     }

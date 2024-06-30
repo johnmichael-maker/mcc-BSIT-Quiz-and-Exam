@@ -11,7 +11,7 @@ class Database
     private string $host = "localhost";
     private string $user = "root";
     private string $pass = "";
-    private string $db = "mcc_quiz_bowl";
+    private string $db = "mcc_bsit_quiz_and_exam";
     private ?PDO $conn = null;
 
     public function getConnection(): PDO

@@ -1,11 +1,21 @@
 <?php 
     require __DIR__ . '/../vendor/autoload.php';
     use App\Contestants;
+    use App\DatabaseControl;
+    use App\Examinee;
     $contestantController = new Contestants($_POST);
+    $examineeController = new Examinee($_POST);
     $contestantController->startSession();
     $contestantController->checkSession();
-
+    $databaseController = new DatabaseControl;
     $contestantController->checkAccountStatus();
+    $exams = $databaseController->getExams();
+    if ($examineeController->isStudentDashboard()) {
+        if (!isset($_SESSION['EXAM_ID'])) {
+            header('location: signup.php');
+        }
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">

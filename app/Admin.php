@@ -106,7 +106,7 @@ class Admin extends Database
     {
         if (isset($_SESSION['ADMIN_ACTIVE']) && isset($_SESSION['AUTH_KEY'])) {
 ?>
-            <nav class="navbar navbar-light navbar-expand-lg py-0">
+            <!-- <nav class="navbar navbar-light navbar-expand-lg py-0">
                 <div class="container-fluid px-0">
                     <div class="ps-2 d-flex align-items-center">
                         <a href="" class="navbar-brand">MCC QUIZ BOWL</a>
@@ -125,13 +125,24 @@ class Admin extends Database
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav> -->
 
             <div class="container-fluid py-3">
 
                 <div class="row g-2">
 
-                    <div class="col-6">
+                    <div class="col-12">
+
+                        <div class="d-flex align-items-center gap-2">
+                            <h5 class="my-3">Questions</h5>
+                            <a href="#add-question" class="btn btn-secondary py-1 px-2 rounded-1" data-bs-toggle="modal"><i class="bx bx-plus"></i> Add question</a>
+                        </div>
+
+                        <div class="row g-3" id="questions-row">
+                        </div>
+                    </div>
+
+                    <div class="col-12">
                         <div class="card h-100 " id="current-question">
                             <div class="card-body ">
                                 <div class="d-flex justify-content-between">
@@ -188,9 +199,9 @@ class Admin extends Database
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="card h-100">
-                            <div class="card-body">
+                            <div class="card-body table-responsive">
                                 <p class="text-muted">Contestants</p>
 
                                 <table id="table">
@@ -211,13 +222,7 @@ class Admin extends Database
                         </div>
                     </div>
 
-                    <div class="col-12">
 
-                        <h5 class="my-3">Questions</h5>
-
-                        <div class="row g-3" id="questions-row">
-                        </div>
-                    </div>
 
                 </div>
 
@@ -322,7 +327,7 @@ class Admin extends Database
                     </div>
                 </div>
             </div>
-            
+
         <?php
         } else {
         ?>
@@ -384,8 +389,9 @@ class Admin extends Database
         return $this->message;
     }
 
-    public function hardLevelStart(){
-        $conn = $this->getConnection(); 
+    public function hardLevelStart()
+    {
+        $conn = $this->getConnection();
         $category = 2;
         $status = 3;
 
@@ -397,6 +403,60 @@ class Admin extends Database
                 return true;
             }
         }
+    }
 
+    public function getExaminees()
+    {
+        $conn = $this->getConnection();
+
+        $stmt = $conn->prepare("SELECT 
+            *,
+            CONCAT(fname , ' ', mname, ' ', lname) AS fullname
+        FROM 
+            examinees
+        ");
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function getContestants()
+    {
+        $conn = $this->getConnection();
+
+        $stmt = $conn->prepare("SELECT 
+           *,
+            CONCAT(fname , ' ', mname, ' ', lname) AS fullname
+        FROM 
+            contestants
+        ");
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function isActive()
+    {
+        if (isset($_SESSION['ADMIN_ACTIVE']) && isset($_SESSION['AUTH_KEY'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function checkAdmin()
+    {
+        $url = implode(explode('/quiz_bowl', strtolower($_SERVER['REQUEST_URI'])));
+        if ($url !== '/admin/login.php') {
+            if (!isset($_SESSION['ADMIN_ACTIVE']) && !isset($_SESSION['AUTH_KEY'])) {
+                return true;
+            }
+        }
+    }
+
+    public function isAdminDashboard()
+    {
+        $url = implode(explode('/quiz_bowl', strtolower($_SERVER['REQUEST_URI'])));
+        if (!str_contains('/admin/login.php', $url)) {
+            return true;
+        }
     }
 }

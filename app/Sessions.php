@@ -16,6 +16,16 @@ Trait Sessions{
         $_SESSION['ID'] = $data[4];
     }
 
+    private function activateExamineeSession($data){
+        $_SESSION['FNAME'] = $data[0];
+        $_SESSION['LNAME'] = $data[1];
+        $_SESSION['MNAME'] = $data[2];
+        $_SESSION['LEVEL'] = $data[3];
+        $_SESSION['ID'] = $data[4];
+        $_SESSION['EXAM_ID'] = $data[5];
+        $_SESSION['SECTION'] = $data[6];
+    }
+
     public function accountDisable(){
         $_SESSION['DISABLED'] = 1;
     }
