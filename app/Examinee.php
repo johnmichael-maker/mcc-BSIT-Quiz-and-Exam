@@ -89,7 +89,7 @@ class Examinee extends Database
     }
 
     public function isStudentDashboard(){
-        $url = implode(explode('/quiz_bowl', strtolower($_SERVER['REQUEST_URI'])));
+        $url = implode(explode('/mcc-bsit-quiz-and-exam', strtolower($_SERVER['REQUEST_URI'])));
         if (str_contains('/exam.php', $url)) {
             return true;
         }else{

@@ -444,7 +444,7 @@ class Admin extends Database
 
     public function checkAdmin()
     {
-        $url = implode(explode('/quiz_bowl', strtolower($_SERVER['REQUEST_URI'])));
+        $url = implode(explode('/mcc-bsit-quiz-and-exam', strtolower($_SERVER['REQUEST_URI'])));
         if ($url !== '/admin/login.php') {
             if (!isset($_SESSION['ADMIN_ACTIVE']) && !isset($_SESSION['AUTH_KEY'])) {
                 return true;
@@ -454,7 +454,7 @@ class Admin extends Database
 
     public function isAdminDashboard()
     {
-        $url = implode(explode('/quiz_bowl', strtolower($_SERVER['REQUEST_URI'])));
+        $url = implode(explode('/mcc-bsit-quiz-and-exam', strtolower($_SERVER['REQUEST_URI'])));
         if (!str_contains('/admin/login.php', $url)) {
             return true;
         }
