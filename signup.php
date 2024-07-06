@@ -85,7 +85,7 @@ require __DIR__ . '/./partials/header.php';
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
 
                             <label for="">ID Number</label>
-                            <input type="text" class="form-control my-2" placeholder="ID Number" name="id_number">
+                            <input type="text" class="form-control my-2" placeholder="ID Number" name="id_number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');">
                             <p class="errors d-none alert alert-danger py-1"></p>
 
                             <label for="">First Name</label>
@@ -123,7 +123,7 @@ require __DIR__ . '/./partials/header.php';
                                 foreach($exams as $exam): 
                                     
                                 ?>
-                                    <option value="<?= $i ?>"><?= $databaseController->sections($exam['section']) .' | '. $databaseController->yearLevel()[$exam['year_level']] ?></option>
+                                    <option value="<?= $exam['id'] ?>"><?= $databaseController->sections($exam['section']) .' | '. $databaseController->yearLevel()[$exam['year_level']] ?></option>
                                 <?php endforeach; ?>
                             </select>
                                     

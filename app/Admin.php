@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use \PDO;
 use App\Database;
 use App\Sessions;
 
@@ -199,10 +200,14 @@ class Admin extends Database
                             </div>
                         </div>
                     </div>
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                         <div class="card h-100">
+                                <div class="card-header d-flex  align-items-center justify-content-between">
+                                    <p class="text-muted mb-0">Contestants</p>
+                                    <a href="print-quiz.php" class="btn btn-danger"><i class="bx bx-printer"></i> Print Result</a>
+                                </div>
                             <div class="card-body table-responsive">
-                                <p class="text-muted">Contestants</p>
+                               
 
                                 <table id="table">
                                     <thead>
@@ -220,7 +225,7 @@ class Admin extends Database
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
 
@@ -280,41 +285,7 @@ class Admin extends Database
                 </div>
             </div>
 
-            <div class="modal fade" id="add-exam">
-                <div class="modal-dialog">
-                    <div class="modal-content rounded-0">
-                        <div class="modal-header ">
-                            <h5 class="moda-title">Add Exam</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form name="add-question">
-                                <p class="my-0" id="alert"></p>
-                                <label for="">Question</label>
-                                <textarea name="question" class="form-control my-3" cols="30" rows="5" style="resize: none;" placeholder="Write question..." required></textarea>
-                                <label for="">Choices</label>
 
-                                <label for="">Exam Type</label>
-                                <select name="correct" class="form-select my-3" required>
-                                    <option value="1">Essay</option>
-                                    <option value="2">Enumeration</option>
-                                    <option value="3">Multiple Choice</option>
-                                    <option value="4">Identification</option>
-                                </select>
-
-                                <label for="">Question Category</label>
-                                <select name="category" class="form-select my-3" required>
-                                    <option value="0">Easy</option>
-                                    <option value="1">Medium</option>
-                                    <option value="2">Hard</option>
-                                </select>
-
-                                <button type="submit" class="btn btn-danger w-100 mt-3">Submit</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="alert-modal d-none" id="alert-modal">
                 <div class="card position-relative bg-transparent pt-4 border-0 success-card d-none">
@@ -459,4 +430,251 @@ class Admin extends Database
             return true;
         }
     }
+
+    public function addExam()
+    {
+        $conn = $this->getConnection();
+        $section = $_POST['section'];
+        $year_level = $_POST['year_level'];
+        $semester = $_POST['semester'];
+        $type = $_POST['type'];
+        $category = $_POST['category'];
+        $time_limit = $_POST['time_limit'];
+
+        $stmt = $conn->prepare("INSERT INTO exams(section,year_level,semester,type,category,time_limit) VALUES(:section, :year_level, :semester, :type, :category, :time_limit)");
+
+        if (!empty($section) && !empty($year_level) && !empty($semester) && !empty($category) && !empty($type) && !empty($time_limit)) {
+            $stmt->execute([
+                ':section' => $section,
+                ':year_level' => $year_level,
+                ':semester' => $semester,
+                ':type' => $type,
+                ':category' => $category,
+                ':time_limit' => $time_limit
+            ]);
+
+            if ($stmt) {
+                header("location: add-exam.php?message=Exam added successfully");
+            }
+        }
+    }
+
+    public function editExam()
+    {
+        $conn = $this->getConnection();
+        $id = $_POST['id'];
+        $section = $_POST['section'];
+        $year_level = $_POST['year_level'];
+        $semester = $_POST['semester'];
+        $type = $_POST['type'];
+        $category = $_POST['category'];
+        $time_limit = $_POST['time_limit'];
+
+        $stmt = $conn->prepare("UPDATE exams SET section = :section, year_level = :year_level,semester = :semester, type = :type, category = :category,time_limit = :time_limit WHERE id = :id");
+        $stmt->execute([
+            ':section' => $section,
+            ':year_level' => $year_level,
+            ':semester' => $semester,
+            ':type' => $type,
+            ':category' => $category,
+            ':time_limit' => $time_limit,
+            ':id' => $id
+        ]);
+
+        if ($stmt) {
+            header("location: edit-exam.php?id=$id&message=Exam updated successfully");
+        }
+    }
+
+    public function getExamById()
+    {
+        $id = $_GET['id'];
+        $conn = $this->getConnection();
+
+        $stmt = $conn->prepare("SELECT * FROM exams WHERE id = :id ");
+        $stmt->execute([':id' => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteExam()
+    {
+        $id = $_POST['id'];
+        $conn = $this->getConnection();
+
+        $stmt = $conn->prepare("DELETE FROM exams WHERE id=:id");
+        $stmt->execute([':id' => $id]);
+
+        if ($stmt) {
+            header('location: exam.php?message=Exam removed successfully');
+        }
+    }
+
+    public function getAllContestants(){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT c.*, p.check_code, p.time FROM contestants c LEFT JOIN points p ON c.id_number = p.contestant_id ORDER BY check_code DESC");
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+
+    public function getAllQuestionCount(){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM questions");
+        $result = $stmt->rowCount();
+        return $result;
+    }
+    
+    public function addMultipleChoice(){
+        $conn = $this->getConnection();
+        $exam_id = $_POST['exam_id'];
+        $question = $_POST['question'];
+        $A = $_POST['A'];
+        $B = $_POST['B'];
+        $C = $_POST['C'];
+        $D = $_POST['D'];
+        $answer = $_POST['answer'];
+
+        $stmt = $conn->prepare("INSERT INTO multiple_choice(exam_id,question,A,B,C,D,answer) VALUES(:exam_id,:question,:A, :B, :C, :D, :answer)");
+        
+        $check = $conn->prepare("SELECT * FROM multiple_choice WHERE exam_id = :exam_id AND question = :question");
+
+        if ($check->execute([':exam_id' => $exam_id, ':question' => $question])) {
+            if ($check->rowCount() > 0) {
+                header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
+            }else{
+                $stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':A' => $A, ':B' => $B, ':C' => $C, ':D' => $D, ':answer' => $answer]);
+                header("location: view-exam.php?id=$exam_id&message=Question added successfully");
+            }
+        }
+        
+
+    }
+
+    public function addIdentificationQuestion(){
+        $conn = $this->getConnection();
+        $exam_id = $_POST['exam_id'];
+        $question = $_POST['question'];
+        $count = 1;
+        $stmt = $conn->prepare("INSERT INTO identification(exam_id,question,count) VALUES(:exam_id, :question, :count)");
+        
+        $check_count = $conn->prepare("SELECT * FROM identification WHERE exam_id = :exam_id");
+
+        $check = $conn->prepare("SELECT * FROM identification WHERE exam_id = :exam_id AND question = :question");
+        $check->execute([':exam_id' => $exam_id, ':question' => $question]);
+
+        if ($check) {
+            if ($check->rowCount() > 0) {
+                header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
+            }else{
+                
+                if ($check_count->execute([':exam_id' => $exam_id])) {
+                    if ($check_count->rowCount() > 0) {
+                        $new_count = $check_count->rowCount() + 1;
+                        $stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':count' => $new_count]);
+                    }else{
+                        $stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':count' => $count]);
+                    }
+                }
+                header("location: view-exam.php?id=$exam_id&message=Question added successfully");
+            }
+        }
+
+    }
+
+    public function addIdentificationChoice(){
+        $conn = $this->getConnection();
+        $exam_id = $_POST['exam_id'];
+        $identification_id = $_POST['identification_id'];
+        $answer = $_POST['answer'];
+
+        $stmt = $conn->prepare("INSERT INTO identification_choices(exam_id,identification_id,answer) VALUES(:exam_id, :identification_id,:answer)");
+        
+        $check = $conn->prepare("SELECT * FROM identification_choices WHERE exam_id = :exam_id AND identification_id = :identification_id AND answer = :answer");
+        $check->execute([':exam_id' => $exam_id, ':identification_id' => $identification_id, ':answer' => $answer]);
+
+        if ($check) {
+            if ($check->rowCount() > 0) {
+                header("location: view-exam.php?id=$exam_id&message_error=Choice already exist");
+            }else{
+                $stmt->execute([':exam_id' => $exam_id, ':identification_id' => $identification_id, ':answer' => $answer]);
+                header("location: view-exam.php?id=$exam_id&message=Choice added successfully");
+            }
+        }
+
+    }
+
+    public function addEnumeration(){
+        $conn = $this->getConnection();
+        $exam_id = $_POST['exam_id'];
+        $question = $_POST['question'];
+
+        $enumeration = $conn->prepare("INSERT INTO enumeration(exam_id, question) VALUES(:exam_id, :question)");
+
+        $check = $conn->prepare("SELECT * FROM enumeration WHERE exam_id = :exam_id AND question = :question");
+
+        $check->execute([':exam_id' => $exam_id, ':question' => $question]);
+
+        if ($check->rowCount() > 0) {
+            header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
+        }else{
+            
+            if ($enumeration->execute([':exam_id' => $exam_id, ':question' => $question])) {
+                $get_enumeration = $conn->query("SELECT * FROM enumeration ORDER BY id DESC");
+                $result = $get_enumeration->fetch(PDO::FETCH_ASSOC);
+                $enumeration_id = $result['id'];
+
+                foreach ($_POST['answer'] as $key => $value) {
+                    $answers = $conn->prepare("INSERT INTO enumeration_correct (exam_id, enumeration_id, answer) VALUES(:exam_id, :enumeration_id, :answer)");
+        
+                    $check_answer = $conn->prepare("SELECT * FROM enumeration_correct WHERE exam_id = :exam_id  AND enumeration_id = :enumeration_id AND answer = :answer");
+                    $check_answer->execute([':exam_id' => $exam_id, ':enumeration_id' => $enumeration_id, ':answer' => $value]);
+                    if ($check_answer->rowCount() > 0) {
+                        
+                    }else{
+                        if ($answers->execute([':exam_id' => $exam_id, ':enumeration_id' => $enumeration_id, ':answer' => $value])) {
+                            header("location: view-exam.php?id=$exam_id&message=Question added successfully");
+                        }
+                    }
+                }
+            }
+        }
+       
+
+    }
+
+    public function addEssay(){
+        $conn = $this->getConnection();
+        $exam_id = $_POST['exam_id'];
+        $question = $_POST['question'];
+        $answer = $_POST['answer'];
+
+        $stmt = $conn->prepare("INSERT INTO essay(exam_id,question,answer) VALUES(:exam_id,:question,:answer)");
+        $check = $conn->prepare("SELECT * FROM essay WHERE exam_id = :exam_id AND question = :question");
+        if ($check->execute([':exam_id' => $exam_id, ':question' => $question])) {
+            if ($check->rowCount() > 0) {
+                header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
+            }else{
+                if ($stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':answer' => $answer])) {
+                    header("location: view-exam.php?id=$exam_id&message=Question added successfully");
+                }
+            }
+        }
+
+    }
+
+    public function getExamineesByExam($id)
+    {
+        $conn = $this->getConnection();
+
+        $stmt = $conn->prepare("SELECT 
+            *,
+            CONCAT(fname , ' ', mname, ' ', lname) AS fullname
+        FROM 
+            examinees
+        WHERE exam_id = :id
+        ");
+        $stmt->execute([':id' => $id]);
+        return $stmt;
+    }
+
 }

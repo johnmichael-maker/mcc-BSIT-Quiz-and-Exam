@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2024 at 05:33 PM
+-- Generation Time: Jul 06, 2024 at 10:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -62,6 +62,67 @@ CREATE TABLE `answers` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `answers_enumeration`
+--
+
+CREATE TABLE `answers_enumeration` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `id_number` text NOT NULL,
+  `enumeration_id` int(11) NOT NULL,
+  `answer` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `answers_essay`
+--
+
+CREATE TABLE `answers_essay` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `id_number` text NOT NULL,
+  `essay_id` int(11) NOT NULL,
+  `answer` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `answers_identification`
+--
+
+CREATE TABLE `answers_identification` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `id_number` text NOT NULL,
+  `identification_id` int(11) NOT NULL,
+  `choice_id` int(11) NOT NULL,
+  `answer` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `answers_multiple_choice`
+--
+
+CREATE TABLE `answers_multiple_choice` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `id_number` text NOT NULL,
+  `multiple_choice_id` int(11) NOT NULL,
+  `answer` varchar(1) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contestants`
 --
 
@@ -81,6 +142,44 @@ CREATE TABLE `contestants` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `enumeration`
+--
+
+CREATE TABLE `enumeration` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `question` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enumeration_correct`
+--
+
+CREATE TABLE `enumeration_correct` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `enumeration_id` int(11) NOT NULL,
+  `answer` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `essay`
+--
+
+CREATE TABLE `essay` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `answer` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `examinees`
 --
 
@@ -93,21 +192,7 @@ CREATE TABLE `examinees` (
   `lname` text NOT NULL,
   `mname` text DEFAULT NULL,
   `exam_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `examinee_answers`
---
-
-CREATE TABLE `examinee_answers` (
-  `id` int(11) NOT NULL,
-  `examinee_id` int(11) NOT NULL,
-  `exam_id` int(11) NOT NULL,
-  `answer` text DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -120,28 +205,58 @@ CREATE TABLE `examinee_answers` (
 
 CREATE TABLE `exams` (
   `id` int(11) NOT NULL,
-  `admin_id` int(11) NOT NULL,
-  `year_level` int(11) NOT NULL,
   `section` int(11) NOT NULL,
-  `question` text NOT NULL,
-  `type` int(11) NOT NULL COMMENT '1=essay,2=Enumeration,3=Multiple Choice, 4=Identification',
-  `category` int(11) NOT NULL COMMENT '0=easy,1=medium,2=hard',
-  `time_limit` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `year_level` int(11) NOT NULL,
+  `semester` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `category` int(11) NOT NULL,
+  `time_limit` float NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '1=active,2=disabled',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `exam_answer`
+-- Table structure for table `identification`
 --
 
-CREATE TABLE `exam_answer` (
+CREATE TABLE `identification` (
   `id` int(11) NOT NULL,
-  `exam_id` int(11) DEFAULT NULL,
+  `exam_id` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `identification_choices`
+--
+
+CREATE TABLE `identification_choices` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(1) NOT NULL,
+  `identification_id` int(11) NOT NULL,
   `answer` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `multiple_choice`
+--
+
+CREATE TABLE `multiple_choice` (
+  `id` int(11) NOT NULL,
+  `exam_id` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `answer` varchar(1) NOT NULL,
+  `A` text NOT NULL,
+  `B` text NOT NULL,
+  `C` text NOT NULL,
+  `D` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -196,21 +311,57 @@ ALTER TABLE `answers`
   ADD PRIMARY KEY (`answer_id`);
 
 --
+-- Indexes for table `answers_enumeration`
+--
+ALTER TABLE `answers_enumeration`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `answers_essay`
+--
+ALTER TABLE `answers_essay`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `answers_identification`
+--
+ALTER TABLE `answers_identification`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `answers_multiple_choice`
+--
+ALTER TABLE `answers_multiple_choice`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `contestants`
 --
 ALTER TABLE `contestants`
   ADD PRIMARY KEY (`contestant_id`);
 
 --
--- Indexes for table `examinees`
+-- Indexes for table `enumeration`
 --
-ALTER TABLE `examinees`
+ALTER TABLE `enumeration`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `examinee_answers`
+-- Indexes for table `enumeration_correct`
 --
-ALTER TABLE `examinee_answers`
+ALTER TABLE `enumeration_correct`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `essay`
+--
+ALTER TABLE `essay`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `examinees`
+--
+ALTER TABLE `examinees`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -220,11 +371,22 @@ ALTER TABLE `exams`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `exam_answer`
+-- Indexes for table `identification`
 --
-ALTER TABLE `exam_answer`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `exam_id` (`exam_id`);
+ALTER TABLE `identification`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `identification_choices`
+--
+ALTER TABLE `identification_choices`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `multiple_choice`
+--
+ALTER TABLE `multiple_choice`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `points`
@@ -255,21 +417,57 @@ ALTER TABLE `answers`
   MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `answers_enumeration`
+--
+ALTER TABLE `answers_enumeration`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `answers_essay`
+--
+ALTER TABLE `answers_essay`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `answers_identification`
+--
+ALTER TABLE `answers_identification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `answers_multiple_choice`
+--
+ALTER TABLE `answers_multiple_choice`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `contestants`
 --
 ALTER TABLE `contestants`
   MODIFY `contestant_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `examinees`
+-- AUTO_INCREMENT for table `enumeration`
 --
-ALTER TABLE `examinees`
+ALTER TABLE `enumeration`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `examinee_answers`
+-- AUTO_INCREMENT for table `enumeration_correct`
 --
-ALTER TABLE `examinee_answers`
+ALTER TABLE `enumeration_correct`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `essay`
+--
+ALTER TABLE `essay`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `examinees`
+--
+ALTER TABLE `examinees`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -279,9 +477,21 @@ ALTER TABLE `exams`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `exam_answer`
+-- AUTO_INCREMENT for table `identification`
 --
-ALTER TABLE `exam_answer`
+ALTER TABLE `identification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `identification_choices`
+--
+ALTER TABLE `identification_choices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `multiple_choice`
+--
+ALTER TABLE `multiple_choice`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -295,16 +505,6 @@ ALTER TABLE `points`
 --
 ALTER TABLE `questions`
   MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `exam_answer`
---
-ALTER TABLE `exam_answer`
-  ADD CONSTRAINT `exam_answer_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exams` (`id`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

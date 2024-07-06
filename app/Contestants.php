@@ -6,6 +6,7 @@ namespace App;
 
 use App\Database;
 use App\Sessions;
+use PDO;
 
 class Contestants extends Database
 {
@@ -272,4 +273,6 @@ class Contestants extends Database
     public function logout(){
 
     }
+
+    
 }

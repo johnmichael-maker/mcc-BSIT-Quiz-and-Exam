@@ -356,7 +356,7 @@ const getNextQuestion = async (data) => {
     }
     const dataResponse = await response.text();
     if (dataResponse == 'success') {
-      window.location.href = "index.php"
+      window.location.href = "quiz.php"
     }
   } catch (error) {
     console.error(error);
@@ -388,61 +388,61 @@ const getContestantsData = async () => {
     let contestant_id = [];
     let i = 1;
     
-    if (dataResponse == 0) {
-      getContestants()
-      countMaxQuestion()
-    } else {
-      // Sort dataResponse by latest_time in descending order
-      dataResponse.sort((a, b) => new Date(b.latest_time) - new Date(a.latest_time));
+    // if (dataResponse == 0) {
+    //   getContestants()
+    //   countMaxQuestion()
+    // } else {
+    //   // Sort dataResponse by latest_time in descending order
+    //   // dataResponse.sort((a, b) => new Date(b.latest_time) - new Date(a.latest_time));
 
-      dataResponse.forEach((data) => {
-        let status;
+    //   // dataResponse.forEach((data) => {
+    //   //   let status;
 
-        ids.push(data.contestant_id)
-        if (data.status == 2) {
-          status = `<span class="badge bg-danger">Eliminated</span>`;
-        } else if (data.status == 1) {
-          status = `<span class="badge bg-success">Active</span>`;
-        }
+    //   //   ids.push(data.contestant_id)
+    //   //   if (data.status == 2) {
+    //   //     status = `<span class="badge bg-danger">Eliminated</span>`;
+    //   //   } else if (data.status == 1) {
+    //   //     status = `<span class="badge bg-success">Active</span>`;
+    //   //   }
 
-        tr += `
-              <tr>
-                <td>${i++}</td>
-                <td>${data.fname + " " + data.lname + " " + data.mname}</td>
-                <td>${data.year}</td>
-                <td>${(data.total_check_code == null) ? 0 : data.total_check_code} / <span class="max"></span></td>
-                <td>${data.time}</td>
-                <td>${status}</td>
-              </tr>
-            `;
-        contestant_id.push(data.contestant_id);
-      });
+    //   //   tr += `
+    //   //         <tr>
+    //   //           <td>${i++}</td>
+    //   //           <td>${data.fname + " " + data.lname + " " + data.mname}</td>
+    //   //           <td>${data.year}</td>
+    //   //           <td>${(data.total_check_code == null) ? 0 : data.total_check_code} / <span class="max"></span></td>
+    //   //           <td>${data.time}</td>
+    //   //           <td>${status}</td>
+    //   //         </tr>
+    //   //       `;
+    //   //   contestant_id.push(data.contestant_id);
+    //   // });
 
-      function toObject(id) {
-        let rv = {};
-        for (let i = 0; i < ids.length; ++i)
-          rv[i] = ids[i];
-        return rv;
-      }
+    //   // function toObject(id) {
+    //   //   let rv = {};
+    //   //   for (let i = 0; i < ids.length; ++i)
+    //   //     rv[i] = ids[i];
+    //   //   return rv;
+    //   // }
 
-      let dataIds = { get_average: toObject(ids) };
-      getAverage(dataIds, contestant_id);
+    //   // let dataIds = { get_average: toObject(ids) };
+    //   // getAverage(dataIds, contestant_id);
 
-      tableBody.innerHTML = tr;
+    //   // tableBody.innerHTML = tr;
 
-      $("#table").DataTable({
-        data: datas,
-        columns: [
-          { data: "#" },
-          { data: "Name" },
-          { data: "Year" },
-          { data: 'Average' },
-          { data: "Status" },
-          { data: "Time" },
-        ],
-        pageLength: 5,
-      });
-    }
+    //   // $("#table").DataTable({
+    //   //   data: datas,
+    //   //   columns: [
+    //   //     { data: "#" },
+    //   //     { data: "Name" },
+    //   //     { data: "Year" },
+    //   //     { data: 'Average' },
+    //   //     { data: "Status" },
+    //   //     { data: "Time" },
+    //   //   ],
+    //   //   pageLength: 5,
+    //   // });
+    // }
     
   } catch (error) {
     console.error(error);
@@ -792,7 +792,7 @@ const startCompetition = async () =>{
   let response = await fetchNoneData("../function/Process.php?start");
   console.log(response);
   if (response === 'success') {
-    window.location.href = "dashboard.php"
+    window.location.href = "quiz.php"
   }
 }
 
@@ -1028,43 +1028,6 @@ if (signupExamForm) {
       setTimeout(() => {
         loadingSignup.classList.add("d-none");
         alert.classList.remove("d-none");
-      }, 3000);
-    }
-  };
-}
-
-if (loginForm) {
-  loginForm.onsubmit = (e) => {
-    e.preventDefault();
-    let errors = document.querySelectorAll(".errors");
-    let loadingSignup = document.getElementById("loading-signup");
-    
-    const datas = {
-      uname: loginForm["uname"].value,
-      password: loginForm["password"].value,
-      login: true
-    };
-
-    if (datas.uname == '') {
-      errors[0].classList.remove("d-none");
-      errors[0].innerHTML = "Please fill username";
-    } else {
-      errors[0].classList.add("d-none");
-    }
-
-    if (datas.password == '') {
-      errors[1].classList.remove("d-none");
-      errors[1].innerHTML = "Please fill password";
-    } else {
-      errors[1].classList.add("d-none");
-    }
-
-    if (datas.uname !== "" && datas.password !== "") {
-      login(datas);
-      loginForm["button"].classList.add("disabled");
-      loadingSignup.classList.remove("d-none");
-      setTimeout(() => {
-        loadingSignup.classList.add("d-none");
       }, 3000);
     }
   };

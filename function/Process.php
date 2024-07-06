@@ -74,4 +74,34 @@ if (isset($_GET)) {
     if (isset($_GET['contestantsData'])) {
         echo $databaseController->getContestantsData();
     }
+
+    if (isset($_GET['add-exam'])) {
+        echo $adminController->addExam();
+    }
+
+    if (isset($_GET['edit-exam'])) {
+        echo $adminController->editExam();
+    }
+
+    if (isset($_GET['add-multiple-choice'])) {
+        $adminController->addMultipleChoice();
+    }
+
+    if (isset($_GET['add-identification-question'])) {
+        $adminController->addIdentificationQuestion();
+    }
+
+    if (isset($_GET['add-identification-choice'])) {
+        $adminController->addIdentificationChoice();
+    }
+
+    if (isset($_GET['add-enumeration'])) {
+        $adminController->addEnumeration();
+    }
+
+    if (isset($_GET['add-essay'])) {
+        $adminController->addEssay();
+    }
+
+    
 }

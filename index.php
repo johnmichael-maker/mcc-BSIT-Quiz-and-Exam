@@ -1,7 +1,9 @@
 <?php
 require __DIR__ . '/./partials/header.php';
 
-
+if (isset($_SESSION['EXAM_ID'])) {
+    header('location: exam.php');
+}
 ?>
 
 <body id="__index">

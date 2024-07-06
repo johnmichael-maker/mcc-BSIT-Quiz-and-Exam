@@ -37,7 +37,7 @@
                                                     <td><?= $row['id_number'] ?></td>
                                                     <td><?= $row['fullname'] ?></td>
                                                     <td><?= $databaseController->sections($row['section']) ?></td>
-                                                    <td><?= $row['year_level'] ?></td>
+                                                    <td><?= $databaseController->yearLevel()[$row['year_level']] ?></td>
                                                     <td><?= $row['created_at'] ?></td>
                                                 </tr>
                                             <?php endwhile; ?>
@@ -60,4 +60,11 @@
 
     </div>
 </div>
+
+
 <?php require __DIR__ . '/./partials/footer.php' ?>
+<script>
+    $(document).ready(function(){
+        $("#table").DataTable()
+    })
+</script>

@@ -78,10 +78,18 @@ class DatabaseControl extends Database
 
     public function questionTypes(){
         return [
-            'Essay',
-            'Enumeration',
-            'Multiple Choice',
-            'Identification'
+            1 => 'Essay',
+            2 => 'Enumeration',
+            3 => 'Multiple Choice',
+            4 => 'Identification'
+        ];
+    }
+
+    public function examType(){
+        return [
+            1 => 'Preliminary',
+            2 => 'Midterm',
+            3 => 'Final'
         ];
     }
 
@@ -94,11 +102,92 @@ class DatabaseControl extends Database
         ];
     }
 
+    public function questionDifficulty(){
+        return [
+            'Easy',
+            'Medium',
+            'Hard',
+        ];
+    }
+
+    public function semester(){
+        return [
+            1 => '1st Semester',
+            2 => '2nd Semester',
+            3 => 'Summer',
+        ];
+    }
+
 
     public function getExams(){
         $conn = $this->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM exams WHERE status = 1");
+        $stmt = $conn->prepare("SELECT * FROM exams");
         $stmt->execute();
         return $stmt;
     }
+
+    public function getMultipleChoice($id){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM multiple_choice WHERE exam_id = '$id'");
+        return $stmt;
+    }
+
+    public function getIdentification($id){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM identification WHERE exam_id = '$id'");
+        return $stmt;
+    }
+
+    public function getIdentificationIsNull($id){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT i.*
+        FROM identification i
+        LEFT JOIN identification_choices c ON i.id = c.identification_id
+        WHERE i.exam_id = '$id'
+          AND i.id NOT IN (
+            SELECT identification_id
+            FROM identification_choices
+          );
+        ");
+        return $stmt;
+    }
+
+    public function getEnumeration($id){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM enumeration WHERE exam_id = '$id'");
+        return $stmt;
+    }
+    
+    public function getEnumerationCorrect($id, $enumeration_id){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM enumeration_correct WHERE exam_id = '$id' AND enumeration_id = '$enumeration_id'");
+        return $stmt;
+    }
+
+    public function getEssay($id){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM essay WHERE exam_id = '$id'");
+        return $stmt;
+    }
+
+    public function getIdentificationChoices($id){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM identification_choices WHERE exam_id = '$id'");
+        return $stmt;
+    }
+
+    public function getIdentificationChoicesAdmin($id){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT c.*, i.count FROM identification_choices c LEFT JOIN identification i ON c.identification_id = i.id  WHERE c.exam_id = '$id'");
+        return $stmt;
+    }
+
+    public function identificationChoicesLetters(){
+        $alphabet = [];
+        for ($letter = ord('A'); $letter <= ord('Z'); $letter++) {
+            $alphabet[] = chr($letter);
+        }
+        return $alphabet;
+    }
+    
 }

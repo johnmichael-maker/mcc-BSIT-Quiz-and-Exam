@@ -26,4 +26,16 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <style>
+        @media print{
+            .dont-print{
+                display: none !important;
+            }
+
+            .card{
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
 </head>
