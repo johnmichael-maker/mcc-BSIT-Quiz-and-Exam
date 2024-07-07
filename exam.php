@@ -1,13 +1,14 @@
 <?php
 require __DIR__ . '/./partials/header.php';
 $row = $examineeController->getExamByStudent();
+$examineeController->checkExamineeSession();
 $id = $row['id'];
 
 if (isset($_GET['submit-exam'])) {
     $examineeController->submitAnswer();
 }
 
-if (isset($_SESSION['DISABLED'])) {
+if (!$examineeController->checkExaminee()) {
     header('location: finished.php');
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/./partials/header.php';
 $row = $examineeController->getExamByStudent();
+$examineeController->checkExamineeSession();
 $id = $row['id'];
 $scores = [];
 
@@ -13,20 +14,15 @@ if (!isset($_SESSION['DISABLED'])) {
 }
 
 if (isset($_GET['logout'])) {
-    unset(
-    $_SESSION['FNAME'],
-    $_SESSION['LNAME'],
-    $_SESSION['MNAME'],
-    $_SESSION['LEVEL'],
-    $_SESSION['ID'],
-    $_SESSION['EXAM_ID'],
-    $_SESSION['SECTION']);
+    session_destroy();
     ?>
     <script>
         location.href = "signup.php"
     </script>
     <?php 
 }
+
+// echo $_SESSION['ID'];
 ?>
 
 <style>

@@ -35,9 +35,6 @@ class Examinee extends Database
 
         $stmt = $conn->prepare("INSERT INTO examinees(fname,lname,mname,year_level,id_number,section,exam_id) VALUES(?,?,?,?,?,?,?)");
         $name = [
-            $data[0],
-            $data[1],
-            $data[2],
             $data[3],
             $data[4],
             $data[5],
@@ -62,7 +59,7 @@ class Examinee extends Database
                 $current_data['lname'],
                 $current_data['mname'],
                 $current_data['year_level'],
-                $current_data['id'],
+                $current_data['id_number'],
                 $current_data['exam_id'],
                 $current_data['section']
             ];
@@ -85,7 +82,7 @@ class Examinee extends Database
     private function checkExamineeData($value)
     {
         $conn = $this->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM examinees WHERE fname = ? AND lname = ? AND mname = ? AND year_level = ? AND id_number = ? AND section = ? AND exam_id = ?");
+        $stmt = $conn->prepare("SELECT * FROM examinees WHERE year_level = ? AND id_number = ? AND section = ? AND exam_id = ?");
         $stmt->execute($value);
         return $stmt;
     }
@@ -235,10 +232,37 @@ class Examinee extends Database
     public function updateScore($score){
         $conn = $this->getConnection();
         $student_id = $_SESSION['ID'];
+        $status = 2;
 
-        $stmt = $conn->prepare("UPDATE examinees SET score= :score WHERE id_number = :id_number");
-        $stmt->execute([':score' => $score, ':id_number' => $student_id]);
+        $stmt = $conn->prepare("UPDATE examinees SET score= :score, status = :status WHERE id_number = :id_number");
+        $stmt->execute([':score' => $score, ':status' => $status, ':id_number' => $student_id]);
 
+    }
+
+    public function checkExaminee(){
+        $conn = $this->getConnection();
+        $status = 1;
+        $student_id = $_SESSION['ID'];
+
+        $stmt = $conn->prepare("SELECT * FROM examinees WHERE id_number = :id_number AND status = :status");
+        $stmt->execute([':id_number' => $student_id, ':status' => $status]);
+
+        if ($stmt->rowCount() > 0) {
+            return 1;
+        }else{
+            $_SESSION['DISABLED'] = 1;
+        }
+
+    }
+
+    public function checkExamineeSession(){
+        if (!isset($_SESSION['EXAM_ID'])) {
+            ?>
+            <script>
+                location.href = "index.html"
+            </script>
+            <?php 
+        }
     }
 
 }
