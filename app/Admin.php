@@ -671,7 +671,7 @@ class Admin extends Database
             CONCAT(fname , ' ', mname, ' ', lname) AS fullname
         FROM 
             examinees
-        WHERE exam_id = :id
+        WHERE exam_id = :id ORDER BY lname
         ");
         $stmt->execute([':id' => $id]);
         return $stmt;

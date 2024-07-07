@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 06, 2024 at 10:52 PM
+-- Generation Time: Jul 07, 2024 at 09:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
   `username` varchar(50) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -39,8 +40,8 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `username`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '$2y$10$YUg1H1qYcqqfLu1huQRcSO9juip3JHD.IW5mzyhR0HOXUrIOh5QWa', '2024-03-15 15:25:36', '2024-06-29 05:53:36');
+INSERT INTO `admin` (`admin_id`, `username`, `email`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '', '$2y$10$YUg1H1qYcqqfLu1huQRcSO9juip3JHD.IW5mzyhR0HOXUrIOh5QWa', '2024-03-15 15:25:36', '2024-06-29 05:53:36');
 
 -- --------------------------------------------------------
 
@@ -50,7 +51,7 @@ INSERT INTO `admin` (`admin_id`, `username`, `password`, `created_at`, `updated_
 
 CREATE TABLE `answers` (
   `answer_id` int(11) NOT NULL,
-  `contestant_id` int(11) DEFAULT NULL,
+  `contestant_id` text DEFAULT NULL,
   `question_id` int(11) DEFAULT NULL,
   `answer` text DEFAULT NULL,
   `time` text DEFAULT NULL,
@@ -151,6 +152,14 @@ CREATE TABLE `enumeration` (
   `question` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `enumeration`
+--
+
+INSERT INTO `enumeration` (`id`, `exam_id`, `question`) VALUES
+(1, 1, 'list down 5 computer hardware'),
+(2, 1, 'List down 3 software apps');
+
 -- --------------------------------------------------------
 
 --
@@ -164,6 +173,19 @@ CREATE TABLE `enumeration_correct` (
   `answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `enumeration_correct`
+--
+
+INSERT INTO `enumeration_correct` (`id`, `exam_id`, `enumeration_id`, `answer`) VALUES
+(1, 1, 1, 'RAM'),
+(2, 1, 1, 'Keyboard'),
+(3, 1, 1, 'Hard Disc Drive'),
+(4, 1, 2, 'Google'),
+(5, 1, 2, 'Visual Studio'),
+(6, 1, 2, 'xampp'),
+(7, 1, 1, 'Hello world');
+
 -- --------------------------------------------------------
 
 --
@@ -176,6 +198,13 @@ CREATE TABLE `essay` (
   `question` text NOT NULL,
   `answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `essay`
+--
+
+INSERT INTO `essay` (`id`, `exam_id`, `question`, `answer`) VALUES
+(1, 1, 'Describe CPU?', 'CPU is the central processor of the computer');
 
 -- --------------------------------------------------------
 
@@ -193,6 +222,7 @@ CREATE TABLE `examinees` (
   `mname` text DEFAULT NULL,
   `exam_id` int(11) DEFAULT NULL,
   `score` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -216,6 +246,15 @@ CREATE TABLE `exams` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `exams`
+--
+
+INSERT INTO `exams` (`id`, `section`, `year_level`, `semester`, `type`, `category`, `time_limit`, `status`, `created_at`, `updated_at`) VALUES
+(1, 5, 3, 2, 3, 0, 60, 1, '2024-07-07 06:58:47', '2024-07-03 15:16:00'),
+(6, 6, 4, 3, 3, 2, 30, 1, '2024-07-06 08:12:35', '2024-07-03 15:28:30'),
+(9, 4, 4, 1, 1, 2, 20, 1, '2024-07-06 10:21:58', '2024-07-06 10:21:58');
+
 -- --------------------------------------------------------
 
 --
@@ -229,6 +268,19 @@ CREATE TABLE `identification` (
   `count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `identification`
+--
+
+INSERT INTO `identification` (`id`, `exam_id`, `question`, `count`) VALUES
+(1, 1, 'What type of device is a computer monitor?', 1),
+(4, 1, 'Who is the inventor of computers?', 2),
+(5, 1, 'Which of the following is the most powerful type of computer?', 3),
+(6, 1, 'Meaning Of RAM', 4),
+(7, 1, 'Meaning of PHP\r\n', 5),
+(8, 1, 'Meaning of CPU', 6),
+(9, 1, 'Meaning of GPU', 7);
+
 -- --------------------------------------------------------
 
 --
@@ -241,6 +293,19 @@ CREATE TABLE `identification_choices` (
   `identification_id` int(11) NOT NULL,
   `answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `identification_choices`
+--
+
+INSERT INTO `identification_choices` (`id`, `exam_id`, `identification_id`, `answer`) VALUES
+(1, 1, 1, 'Output'),
+(2, 1, 5, 'Super Computer'),
+(3, 1, 4, 'Charles Babbage'),
+(4, 1, 9, 'graphics processing unit'),
+(5, 1, 7, 'Hyper Preprocessor\r\n'),
+(6, 1, 6, 'Random Access Memory'),
+(7, 1, 8, 'Central Processing Unit');
 
 -- --------------------------------------------------------
 
@@ -259,6 +324,15 @@ CREATE TABLE `multiple_choice` (
   `D` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `multiple_choice`
+--
+
+INSERT INTO `multiple_choice` (`id`, `exam_id`, `question`, `answer`, `A`, `B`, `C`, `D`) VALUES
+(1, 1, 'sdsd', 'A', 'sds', 'dsds', 'dsd', 'sdsds'),
+(2, 1, 'What is software?', 'C', 'clothing designed to be worn by computer users', 'any part of the computer that has a physical structure', 'instructions that tell the hardware what to do', 'flexible parts of a computer case'),
+(3, 1, 'The computer’s main circuit board is called a ________.', 'D', 'Bluetooth card', 'hard drive', 'monitor', 'motherboard');
+
 -- --------------------------------------------------------
 
 --
@@ -267,7 +341,7 @@ CREATE TABLE `multiple_choice` (
 
 CREATE TABLE `points` (
   `point_id` int(11) NOT NULL,
-  `contestant_id` int(11) DEFAULT NULL,
+  `contestant_id` text DEFAULT NULL,
   `time` text DEFAULT NULL,
   `check_answer` text DEFAULT NULL,
   `check_code` int(11) DEFAULT NULL
@@ -450,19 +524,19 @@ ALTER TABLE `contestants`
 -- AUTO_INCREMENT for table `enumeration`
 --
 ALTER TABLE `enumeration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `enumeration_correct`
 --
 ALTER TABLE `enumeration_correct`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `essay`
 --
 ALTER TABLE `essay`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `examinees`
@@ -474,25 +548,25 @@ ALTER TABLE `examinees`
 -- AUTO_INCREMENT for table `exams`
 --
 ALTER TABLE `exams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `identification`
 --
 ALTER TABLE `identification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `identification_choices`
 --
 ALTER TABLE `identification_choices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `multiple_choice`
 --
 ALTER TABLE `multiple_choice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `points`

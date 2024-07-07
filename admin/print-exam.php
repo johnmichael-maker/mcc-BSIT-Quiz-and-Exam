@@ -43,7 +43,7 @@ if (isset($_GET['id'])) {
                                         if ($examinees->rowCount() > 0) {
                                             foreach($examinees as $examinee): ?>
                                                 <tr>
-                                                    <td><?= $examinee['fullname'] ?></td>
+                                                    <td><?= ucfirst($examinee['lname']) . ', ' . ucfirst($examinee['fname']) . ' ' . ucfirst($examinee['mname']) ?></td>
                                                     <td><?= $examinee['score'] ?? 0 ?></td>
                                                     <td><?= date('m-d-Y', strtotime($examinee['created_at'])) ?></td>
                                                 </tr>  
