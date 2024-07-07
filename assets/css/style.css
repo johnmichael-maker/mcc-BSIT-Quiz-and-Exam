@@ -195,7 +195,12 @@ body {
 /* SIGNUP */
 #signup-card{
     width: 500px;
-    
+}
+
+@media (max-width:544px){
+    #signup-card{
+        width: 100% !important; 
+    }
 }
 
 /* ADMIN */

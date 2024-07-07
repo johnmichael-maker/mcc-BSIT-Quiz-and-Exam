@@ -4,7 +4,7 @@ $active = "text-dark bg-light";
 $inactive = "text-light";
 ?>
 
-<div class="col-lg-2 bg-danger px-0 dont-print" style="height: 100vh;">
+<div class="col-lg-2 col-10 d-lg-block d-none bg-danger px-0 dont-print" id="menu" style="height: 100vh;">
     <h5 class="mt-3 text-light mx-3">
         <a href="index.php" class="text-decoration-none text-light">
             <div class="row g-1">
@@ -46,3 +46,4 @@ $inactive = "text-light";
     </ul>
 
 </div>
+

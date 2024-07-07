@@ -4,13 +4,33 @@ require __DIR__ . '/./partials/header.php';
 
 ?>
 
-<body>
-    <div class="h-100-vh d-flex align-items-center justify-content-center">
+<style>
+    @media (max-width: 900px){
+        .choose-card{
+            width: 100% !important;
+           
+        }
 
-        <div class="container">
+        .choose-div{
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 15px;
+            height: 100%;
+            display: grid;
+            place-content: center;
+        }
+    }
+</style>
+
+<body>
+    <div class="h-100-vh d-lg-flex align-items-lg-center justify-content-lg-center position-relative">
+
+        <div class="container py-3">
 
             <?php if (!isset($_GET['signup'])) : ?>
-                <div class="card mx-auto" style="width: 500px;">
+                <div class="choose-div">
+                <div class="card mx-auto choose-card" style="width: 500px;">
                     <div class="card-body text-center p-4">
                         <img src="./assets/img/logo.png" alt="" style="width: 70%;">
                         <h1>Hello <span class="text-danger fw-bold">Welcome!</span></h1>
@@ -20,6 +40,7 @@ require __DIR__ . '/./partials/header.php';
                             <a href="?signup=exam" class="btn btn-danger w-100"><i class="bx bx-file"></i> Exam</a>
                         </div>
                     </div>
+                </div>
                 </div>
             <?php elseif ($_GET['signup'] == 'quiz') : ?>
                 <form name="signup" method="post" class="m-auto" id="signup-card">
@@ -76,7 +97,7 @@ require __DIR__ . '/./partials/header.php';
                 </form>
             <?php elseif ($_GET['signup'] == 'exam') : ?>
                 <form name="signup-exam" class="m-auto" id="signup-card">
-                    <div class="card">
+                    <div class="card ">
                         <div class="card-body">
                             <a href="signup.php" class="btn btn-secondary mb-2"><i class="bx bx-arrow-back"></i></a>
                             <h3 class="text-center fw-bold my-3"><i class="bx bx-file"></i> Exam</h3>
@@ -85,7 +106,7 @@ require __DIR__ . '/./partials/header.php';
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
 
                             <label for="">ID Number</label>
-                            <input type="text" class="form-control my-2" placeholder="ID Number" name="id_number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');">
+                            <input type="text" class="form-control my-2" placeholder="ID Number" name="id_number">
                             <p class="errors d-none alert alert-danger py-1"></p>
 
                             <label for="">First Name</label>

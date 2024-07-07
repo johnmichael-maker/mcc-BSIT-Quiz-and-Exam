@@ -28,19 +28,56 @@
                                 <th>Year</th>
                                 <th>Average</th>
                                 <th>Time</th>
+                                <th>Status</th>
                             </thead>
                             <tbody>
                                 <?php 
                                     $i = 1;
                                     foreach($adminController->getAllContestants() as $contestant):
+                                   
                                 ?>
 
                                     <tr>
-                                        <td><?= $i++ ?></td>
+                                        <td>
+                                            <?php 
+                                                if ($i == 1) {
+                                                    ?>
+                                                    <span class="badge bg-success"><?= $i++ ?></span>
+                                                    <?php 
+                                                }elseif($i == 2){
+                                                    ?>
+                                                    <span class="badge bg-warning text-dark"><?= $i++ ?></span>
+                                                    <?php 
+                                                }else if($i == 3){
+                                                    ?>
+                                                    <span class="badge bg-secondary"><?= $i++ ?></span>
+                                                    <?php 
+                                                }else{
+                                                    ?>
+                                                    <span class="badge bg-light text-dark"><?= $i++ ?></span>
+                                                    <?php
+                                                }
+
+                                                // echo $i++;
+                                            ?>
+                                        </td>
                                         <td><?= ucfirst($contestant->fname .' '. $contestant->mname . ' ' . $contestant->lname) ?></td>
                                         <td><?= $databaseController->yearLevel()[$contestant->year] ?></td>
                                         <td><?= $contestant->check_code . ' / ' . $adminController->getAllQuestionCount() ?></td>
                                         <td><?= $contestant->time ?>ms</td>
+                                        <td>
+                                            <?php 
+                                                if ($contestant->status == 1) {
+                                                    ?>
+                                                    <span class="badge bg-success">Active</span>
+                                                    <?php 
+                                                }else{
+                                                    ?>
+                                                    <span class="badge bg-danger">Eliminated</span>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </td>
                                     </tr>
 
                                 <?php endforeach; ?>

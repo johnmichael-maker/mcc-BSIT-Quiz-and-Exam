@@ -3,7 +3,7 @@ require __DIR__ . '/./partials/header.php';
 $row = $examineeController->getExamByStudent();
 $examineeController->checkExamineeSession();
 $id = $row['id'];
-$scores = [];
+// $scores = [];
 
 if (isset($_GET['time_end'])) {
     $_SESSION['DISABLED'] = 1;
