@@ -677,4 +677,23 @@ class Admin extends Database
         return $stmt;
     }
 
+
+    public function examCount(){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM exams");
+        return $stmt->rowCount();
+    }
+
+    public function contestantsCount(){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM contestants");
+        return $stmt->rowCount();
+    }
+
+    public function examineesCount(){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT * FROM examinees");
+        return $stmt->rowCount();
+    }
+
 }

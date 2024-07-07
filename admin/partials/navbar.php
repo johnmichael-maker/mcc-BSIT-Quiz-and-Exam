@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm dont-print">
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm dont-print" style=" z-index: 1 !important;">
                 <div class="container">
                     
                     <button class="navbar-toggler" id="sidebar-toggler"><i class="navbar-toggler-icon"></i></button>
@@ -13,12 +13,18 @@
             </nav>
 
             <script>
-                let toggle =document.getElementById('sidebar-toggler')
-                let sidebar =document.getElementById('menu')
+                let toggle = document.getElementById('sidebar-toggler')
+                let sidebar = document.getElementById('menu')
+                let close = document.getElementById('close-sidebar')
 
                 toggle.onclick = () => {
-                    sidebar.classList.add('d-fixed', 'start-0')
-                    sidebar.classList.remove('d-none')
+                    sidebar.classList.remove('d-none', 'd-lg-block')
+                    sidebar.classList.add('position-fixed', 'start-0', 'top-0')
+                }
+
+                close.onclick = () => {
+                    sidebar.classList.add('d-none', 'd-lg-block')
+                    sidebar.classList.remove('position-fixed', 'start-0', 'top-0')
                 }
 
             </script>

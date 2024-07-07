@@ -14,7 +14,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <p>Quizzes</p>
-                                <h1>10</h1>
+                                <h1><?= $adminController->getAllQuestionCount() ?></h1>
                             </div>
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <p>Exams</p>
-                                <h1>10</h1>
+                                <h1><?= $adminController->examCount() ?></h1>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <p>Quiz Contestants</p>
-                                <h1>10</h1>
+                                <h1><?= $adminController->contestantsCount() ?></h1>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <p>Examinees</p>
-                                <h1>10</h1>
+                                <h1><?= $adminController->examineesCount() ?></h1>
                             </div>
                         </div>
                     </div>
