@@ -10,7 +10,7 @@
                     <a href="login.php" class="btn btn-secondary mb-3"><i class="bx bx-arrow-back"></i></a>
                     <h5 class="mb-3 text-center">Forgot Password</h5>
 
-                    <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
+                    <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to reset page....</p>
                     <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect username or password</p>
 
                     <label for="">Email</label>

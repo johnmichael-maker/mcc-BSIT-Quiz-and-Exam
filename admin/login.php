@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h5 class="mb-3">Sign In As Admin</h5>
 
-                    <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
+                    <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                     <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect username or password</p>
 
                     <label for="">Username</label>
