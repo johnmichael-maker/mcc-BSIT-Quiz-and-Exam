@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2024 at 09:05 AM
+-- Generation Time: Jul 08, 2024 at 08:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,7 @@ CREATE TABLE `admin` (
   `username` varchar(50) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
+  `verification` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -40,8 +41,8 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `username`, `email`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '', '$2y$10$YUg1H1qYcqqfLu1huQRcSO9juip3JHD.IW5mzyhR0HOXUrIOh5QWa', '2024-03-15 15:25:36', '2024-06-29 05:53:36');
+INSERT INTO `admin` (`admin_id`, `username`, `email`, `password`, `verification`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'johnmichaelrobles813@gmail.com', '$2y$10$8S54n6BnBknWXYxkOxHgx.LUQKIFZCNiDcoe1CuBDhueUMioaPhP6', '668c33785210c', '2024-03-15 15:25:36', '2024-07-08 18:44:43');
 
 -- --------------------------------------------------------
 
@@ -253,7 +254,8 @@ CREATE TABLE `exams` (
 INSERT INTO `exams` (`id`, `section`, `year_level`, `semester`, `type`, `category`, `time_limit`, `status`, `created_at`, `updated_at`) VALUES
 (1, 5, 3, 2, 3, 0, 60, 1, '2024-07-07 06:58:47', '2024-07-03 15:16:00'),
 (6, 6, 4, 3, 3, 2, 30, 1, '2024-07-06 08:12:35', '2024-07-03 15:28:30'),
-(9, 4, 4, 1, 1, 2, 20, 1, '2024-07-06 10:21:58', '2024-07-06 10:21:58');
+(9, 4, 4, 1, 1, 2, 20, 1, '2024-07-06 10:21:58', '2024-07-06 10:21:58'),
+(10, 1, 1, 1, 2, 2, 20, 1, '2024-07-08 10:12:27', '2024-07-08 10:12:11');
 
 -- --------------------------------------------------------
 
@@ -548,7 +550,7 @@ ALTER TABLE `examinees`
 -- AUTO_INCREMENT for table `exams`
 --
 ALTER TABLE `exams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `identification`
