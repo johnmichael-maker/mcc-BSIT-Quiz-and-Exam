@@ -642,7 +642,7 @@ const confirmQuestion = async (data) => {
     }
     const dataResponse = await response.text();
     if (dataResponse === 'success') {
-      window.location.href = "index.php"
+      window.location.href = "home.php"
     }
   } catch (error) {
     console.error(error);
@@ -704,7 +704,7 @@ const signup = async (data) => {
     console.log(dataResponse);
     if (dataResponse === "success") {
       setTimeout(() => {
-        window.location.href = "index.php";
+        window.location.href = "home.php";
       }, 6000);
     }
   } catch (error) {
@@ -729,8 +729,19 @@ const signupExam = async (data) => {
     console.log(dataResponse);
     if (dataResponse === "success") {
       setTimeout(() => {
+        document.getElementById('alert-success').classList.remove("d-none");
+        
+      }, 3000);
+      setTimeout(() => {
         window.location.href = "exam.php";
-      }, 6000);
+      }, 7000);
+    }else if (dataResponse === 'error_incorrect') {
+      setTimeout(() => {
+        document.getElementById('alert-incorrect').classList.remove("d-none")
+      }, 3000);
+      setTimeout(() => {
+        window.location.href = "signup.php?signup=exam";
+      }, 7000);
     }
   } catch (error) {
     console.error(error);
@@ -761,12 +772,13 @@ const login = async (data) => {
         alert.classList.remove("d-none");
       }, 3000);
       setTimeout(() => {
-        window.location.href = "index.php";
+        window.location.href = "home.php";
       }, 6000);
     }else if (dataResponse === 'error') {
       setTimeout(() => {
         alertError.classList.remove("d-none");
       }, 3000);
+      
     }
   } catch (error) {
     console.error(error);
@@ -805,7 +817,7 @@ const logout = async () =>{
     alertModal.classList.remove("d-none");
     alertMode.classList.remove("d-none");
     setTimeout(() => {
-      window.location.href = "index.php"
+      window.location.href = "home.php"
     }, 3000);
 
   }
@@ -1027,7 +1039,7 @@ if (signupExamForm) {
       loadingSignup.classList.remove("d-none");
       setTimeout(() => {
         loadingSignup.classList.add("d-none");
-        alert.classList.remove("d-none");
+       
       }, 3000);
     }
   };

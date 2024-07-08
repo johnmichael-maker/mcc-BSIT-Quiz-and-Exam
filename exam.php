@@ -1,5 +1,7 @@
 <?php
 require __DIR__ . '/./partials/header.php';
+echo $_SESSION['EXAM_ID'];
+
 $row = $examineeController->getExamByStudent();
 $examineeController->checkExamineeSession();
 $id = $row['id'];

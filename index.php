@@ -1,93 +1,129 @@
-<?php
-require __DIR__ . '/./partials/header.php';
+<!DOCTYPE html>
+<html lang="en">
 
-if (isset($_SESSION['EXAM_ID'])) {
-    header('location: exam.php');
-}
-?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCC Competition : QUIZ BOWL</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <style>
+        @media print {
+            .dont-print {
+                display: none !important;
+            }
 
-<body id="__index">
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
 
-    <div class="container __index">
+        header{
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(./assets/img/bg-img.jpg);
+        }
+    </style>
+</head>
 
-        <div class="position-absolute top-0 start-0 p-2">
-            <h5 class="text-light">Name: <?= $_SESSION['LNAME'].', '.$_SESSION['FNAME'].' '.$_SESSION['MNAME'] ?></h5>
-            <p class="text-light">Year: <?php 
-                switch ($_SESSION['LEVEL']) {
-                    case 1:
-                        echo '1st';
-                        break;
-                    case 2:
-                        echo '2nd';
-                        break;
-                    case 3:
-                        echo '3rd';
-                        break;
-                    case 4:
-                        echo '4th';
-                        break;
-                }
-            ?></p>
-        </div>
+<body>
 
-        <div class="question-container" id="question-container">
-            <img src="assets/img/logo.png" alt="">
-            <div class="card position-relative pb-5">
-                <div class="question-number bg-danger text-light">
-                    <h5>Quiz #: <span id="question-number"></span></h5>
+    <header class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <img src="assets/img/logo.png" alt="image" class="w-100">
                 </div>
-                <div class="card-body py-5">
-                    <div class="question text-center" id="question">
-
-                    </div>
-
-                    <div class="row g-3 pt-5 px-4" id="choices">
-                    </div>
-                </div>
-
-                <div class="d-none position-absolute bottom-0 start-0 d-flex align-items-center p-3 w-100" id="time-div">
-                    <div class="text-center w-100 d-flex justify-content-center">
-                        <span class="me-3">Time : </span>
-                        <h3 id="timer"></h3>
-                    </div>
+                <div class="col-lg-8 h-100 my-auto text-light">
+                    <h1>MADRIDEJOS COMMUNITY COLLEGE</h1>
+                    <h3>Quiz Bowl and Exam</h3>
+                    <p>&copy; John Michael Robles 2024</p>
                 </div>
             </div>
-
         </div>
+        <nav class="navbar navbar-expand navbar-dark">
+            <div class="container">
+                <ul class="navbar-nav mx-auto gap-lg-5 gap-3">
+                    <li class="nav-item">
+                        <a href="index.php" class="nav-link border-bottom border-2 border-danger active">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.php" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="signup.php" class="nav-link">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container text-light mt-3 py-3">
+        <h3 class="border-bottom border-2" style="width: fit-content;">About Us</h3>
+        <div>
+            <span class="ms-4">Madridejos</span> Community College (MCC) is a higher education institution located in
+            Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to
+            provide accessible and affordable education to the local community, focusing on developing skilled
+            professionals who can contribute to the region's socioeconomic growth.
+        </div>
+
+        <hr>
+
+        <div class="mt-3">
+            <h5>Vision:</h5>
+            <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent
+            individuals with benevolent character innovative, service-oriented, and highly empowered to meet and exceed
+            challenges as proactive participants in shaping our world's future.
+        </div>
+
+        <div class="mt-3">
+            <h5>Mission:</h5>
+            <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning
+            environment that aims to foster academic and career success through development of critical thinking,
+            creativity, informed research, and social responsibility. Our mission is to deliver academic programs that
+            are timely, appropriate, and transformative in response to the demands of local, national, and international
+            communities in a highly dynamic world.
+        </div>
+
+        <div class="mt-3">
+            <h5>Goals:</h5>
+            <span class="ms-4">Develop </span> globally competitive, value-laden professionals capable of making a
+            positive social, environmental, and economic impact through research and community service.
+        </div>
+
+        <hr>
+
+        <div class="mt-3">
+            <span class="ms-4">Learning </span> Enhancement and Support. Foster student learning and support by
+            leveraging student strengths and meeting their specific needs through targeted success pathways.
+
+            Adaptive
+            to change through innovation. Create an environment that encourages learners to be more innovative and
+            resilient in order to adapt to today's highly dynamic world.
+
+            Well-grounded
+            in research. Conduct extensive research based on facts and sound
+            reasoning to expand the learner's knowledge, promote effective learning, comprehend different concerns and
+            trends, seek the truth, and identify opportunities that lie ahead.
+        </div>
+
+        <div class="mt-3">
+            <span class="ms-4">Inculcate </span>
+            Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and outside the school.
+            Social Responsibility. Ensure the relevance, alignment and support of the community and businesses by providing outreach, bridge programs, and community-focused facilities.
+        </div>
+
     </div>
+    
+    <hr class="text-light">
 
-    <div class="alert-modal d-none" id="alert-modal">
-        <div class="card position-relative bg-transparent pt-4 border-0 success-card d-none">
-            <div class="position-absolute top-0 text-center w-100 success-icon">
-                <img src="assets/img/check-circle-svgrepo-com.png" alt="Icon-png">
-            </div>
-            <div class="card-body bg-light text-center pt-4 text-success">
-                <h1>Correct</h1>
-                <p>Your answer is correct you will be proceeding to the next round.</p>
-            </div>
+    <footer class="h-100">
+        <div class="container py-3 text-center" style="color: hsl(0, 0%, 80%);">
+            <h5>Madridejos Community College</h5>
+            <p class="mb-0">&copy; John Michael Robles 2024</p>
         </div>
+    </footer>
 
-        <div class="card position-relative bg-transparent pt-4 border-0 error-card d-none">
-            <div class="position-absolute top-0 text-center w-100 success-icon mb-5">
-                <img src="assets/img/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com (1).png" alt="Icon-png">
-            </div>
-            <div class="card-body bg-light text-center pt-4 text-success">
-                <h1>Incorrect</h1>
-                <p>Your answer is incorrect. Sorry but you are eliminated from the competition.</p>
-            </div>
-        </div>
+</body>
 
-        <div class="card position-relative bg-transparent pt-4 border-0 disable-card d-none">
-            <div class="position-absolute top-0 text-center w-100 success-icon mb-5">
-                <img src="assets/img/wrong-delete-remove-trash-minus-cancel-close-svgrepo-com (1).png" alt="Icon-png">
-            </div>
-            <div class="card-body bg-light text-center pt-4 text-danger">
-                <h3 class="mt-4">Account Disabled</h3>
-                <p>Sorry but you are eliminated from the competition.</p>
-            </div>
-        </div>
-    </div>
-
-    <?php $contestantController->checkAccount() ?>
-
-    <?php require __DIR__ . '/./partials/footer.php' ?>
+</html>

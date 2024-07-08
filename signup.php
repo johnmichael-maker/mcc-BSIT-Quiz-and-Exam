@@ -105,6 +105,8 @@ require __DIR__ . '/./partials/header.php';
 
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
 
+                            <p class="alert alert-danger py-2 d-none" id="alert-incorrect">Error, Credentials doesn't match</p>
+
                             <label for="">ID Number</label>
                             <input type="text" class="form-control my-2" placeholder="ID Number" name="id_number">
                             <p class="errors d-none alert alert-danger py-1"></p>
@@ -141,8 +143,9 @@ require __DIR__ . '/./partials/header.php';
                             <label for="">Choose Exam</label>
                             <select name="exam_id" class="form-select my-2">
                                 <?php 
+                                $exams = $databaseController->getExams();
                                 foreach($exams as $exam): 
-                                    
+                                   
                                 ?>
                                     <option value="<?= $exam['id'] ?>"><?= $databaseController->sections($exam['section']) .' | '. $databaseController->yearLevel()[$exam['year_level']] ?></option>
                                 <?php endforeach; ?>

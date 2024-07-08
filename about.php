@@ -19,7 +19,10 @@
                 box-shadow: none !important;
             }
         }
-        
+
+        header{
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(./assets/img/bg-img.jpg);
+        }
     </style>
 </head>
 
@@ -31,21 +34,21 @@
                 <div class="col-lg-4">
                     <img src="assets/img/logo.png" alt="image" class="w-100">
                 </div>
-                <div class="col-lg-8 h-100 my-auto">
+                <div class="col-lg-8 h-100 my-auto text-light">
                     <h1>MADRIDEJOS COMMUNITY COLLEGE</h1>
                     <h3>Quiz Bowl and Exam</h3>
                     <p>&copy; John Michael Robles 2024</p>
                 </div>
             </div>
         </div>
-        <nav class="navbar navbar-expand">
+        <nav class="navbar navbar-expand navbar-dark">
             <div class="container">
                 <ul class="navbar-nav mx-auto gap-lg-5 gap-3">
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link border-bottom border-2 border-danger active">Home</a>
+                        <a href="index.php" class="nav-link ">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="about.html" class="nav-link">About</a>
+                        <a href="about.php" class="nav-link border-bottom border-2 border-danger active">About</a>
                     </li>
                     <li class="nav-item">
                         <a href="signup.php" class="nav-link">Login</a>
@@ -55,6 +58,8 @@
         </nav>
     </header>
 
+
+
     <div class="container text-light mt-3 py-3">
         <h3 class="border-bottom border-2" style="width: fit-content;">About Us</h3>
         <div>
@@ -62,6 +67,17 @@
             Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to
             provide accessible and affordable education to the local community, focusing on developing skilled
             professionals who can contribute to the region's socioeconomic growth.
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <img src="assets/img/img-1.jpeg" alt="image" class="w-100">
+            </div>
+            <div class="col-lg-6">
+                <img src="assets/img/img-2.jpeg" alt="image" class="w-100">
+            </div>
         </div>
 
         <hr>

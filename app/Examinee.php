@@ -43,37 +43,41 @@ class Examinee extends Database
 
         $count = 0;
 
-        $check = $this->checkExamineeData($name);
-        $get_id = $conn->prepare("SELECT id FROM examinees ORDER BY id DESC");
-        $get_id->execute();
-        if ($get_id->rowCount() > 0) {
-            $count = $get_id->rowCount() + 1;
-        } else {
-            $count = 1;
-        }
-
-        if ($check->rowCount() > 0) {
-            $current_data = $check->fetch();
-            $current = [
-                $current_data['fname'],
-                $current_data['lname'],
-                $current_data['mname'],
-                $current_data['year_level'],
-                $current_data['id_number'],
-                $current_data['exam_id'],
-                $current_data['section']
-            ];
-            $this->activateExamineeSession($current);
-            $this->message = "success";
-        } else {
-            $stmt->execute($data);
-            if ($stmt) {
-                array_push($data, $count);
-                $this->activateExamineeSession($data);
+        if ($this->validateStudent($data[6])) {
+            $check = $this->checkExamineeData($name);
+            $get_id = $conn->prepare("SELECT id FROM examinees ORDER BY id DESC");
+            $get_id->execute();
+            if ($get_id->rowCount() > 0) {
+                $count = $get_id->rowCount() + 1;
+            } else {
+                $count = 1;
+            }
+    
+            if ($check->rowCount() > 0) {
+                $current_data = $check->fetch();
+                $current = [
+                    $current_data['fname'],
+                    $current_data['lname'],
+                    $current_data['mname'],
+                    $current_data['year_level'],
+                    $current_data['id_number'],
+                    $current_data['exam_id'],
+                    $current_data['section']
+                ];
+                $this->activateExamineeSession($current);
                 $this->message = "success";
             } else {
-                $this->message = "error";
+                $stmt->execute($data);
+                if ($stmt) {
+                    array_push($data, $count);
+                    $this->activateExamineeSession($data);
+                    $this->message = "success";
+                } else {
+                    $this->message = "error";
+                }
             }
+        }else{
+            $this->message = "error_incorrect";
         }
 
         return $this->message;
@@ -263,6 +267,23 @@ class Examinee extends Database
             </script>
             <?php 
         }
+    }
+
+    public function validateStudent(){
+        $exam_id = $this->passed_data['exam_id'];
+        $conn = $this->getConnection();
+
+        $stmt = $conn->query("SELECT * FROM exams WHERE id = '$exam_id'");
+
+        if ($stmt->rowCount() > 0) {
+            $result = $stmt->fetchObject();
+            if ($result->year_level == $this->passed_data['year_level'] && $result->section == $this->passed_data['section']) {
+                return true;
+            }
+
+        }
+
+
     }
 
 }

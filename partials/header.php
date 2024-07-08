@@ -9,7 +9,7 @@
     $contestantController->checkSession();
     $databaseController = new DatabaseControl;
     $contestantController->checkAccountStatus();
-    $exams = $databaseController->getExams();
+    
     if ($examineeController->isStudentDashboard()) {
         if (!isset($_SESSION['EXAM_ID'])) {
             header('location: signup.php');

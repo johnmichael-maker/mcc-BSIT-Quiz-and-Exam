@@ -45,6 +45,14 @@ if (isset($_POST)) {
         $response = $adminController->login();
     }
 
+    if (isset($data['forgot_password'])) {
+        $response = $adminController->forgotPassword();
+    }
+
+    if (isset($data['reset_password'])) {
+        $response = $adminController->resetPassword();
+    }
+
     echo $response;
 }
 

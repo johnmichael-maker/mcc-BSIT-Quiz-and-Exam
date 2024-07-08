@@ -5,8 +5,17 @@ declare(strict_types=1);
 namespace App;
 
 use \PDO;
+
 use App\Database;
 use App\Sessions;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require __DIR__ . "../../phpmailer/src/Exception.php";
+require __DIR__ . "../../phpmailer/src/PHPMailer.php";
+require __DIR__ . "../../phpmailer/src/SMTP.php";
 
 class Admin extends Database
 {
@@ -416,7 +425,7 @@ class Admin extends Database
     public function checkAdmin()
     {
         $url = implode(explode('/mcc-bsit-quiz-and-exam', strtolower($_SERVER['REQUEST_URI'])));
-        if ($url !== '/admin/login.php') {
+        if ($url !== '/admin/login.php' && $url !== '/admin/forgot-password.php' && $url !== '/admin/reset-password.php') {
             if (!isset($_SESSION['ADMIN_ACTIVE']) && !isset($_SESSION['AUTH_KEY'])) {
                 return true;
             }
@@ -426,7 +435,7 @@ class Admin extends Database
     public function isAdminDashboard()
     {
         $url = implode(explode('/mcc-bsit-quiz-and-exam', strtolower($_SERVER['REQUEST_URI'])));
-        if (!str_contains('/admin/login.php', $url)) {
+        if (!str_contains('/admin/login.php', $url) && !str_contains('/admin/forgot-password.php', $url) && !str_contains('/admin/reset-password.php', $url)) {
             return true;
         }
     }
@@ -510,21 +519,24 @@ class Admin extends Database
         }
     }
 
-    public function getAllContestants(){
+    public function getAllContestants()
+    {
         $conn = $this->getConnection();
         $stmt = $conn->query("SELECT c.*, p.check_code, p.time FROM contestants c LEFT JOIN points p ON c.id_number = p.contestant_id ORDER BY check_code DESC");
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }
 
-    public function getAllQuestionCount(){
+    public function getAllQuestionCount()
+    {
         $conn = $this->getConnection();
         $stmt = $conn->query("SELECT * FROM questions");
         $result = $stmt->rowCount();
         return $result;
     }
-    
-    public function addMultipleChoice(){
+
+    public function addMultipleChoice()
+    {
         $conn = $this->getConnection();
         $exam_id = $_POST['exam_id'];
         $question = $_POST['question'];
@@ -535,28 +547,27 @@ class Admin extends Database
         $answer = $_POST['answer'];
 
         $stmt = $conn->prepare("INSERT INTO multiple_choice(exam_id,question,A,B,C,D,answer) VALUES(:exam_id,:question,:A, :B, :C, :D, :answer)");
-        
+
         $check = $conn->prepare("SELECT * FROM multiple_choice WHERE exam_id = :exam_id AND question = :question");
 
         if ($check->execute([':exam_id' => $exam_id, ':question' => $question])) {
             if ($check->rowCount() > 0) {
                 header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
-            }else{
+            } else {
                 $stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':A' => $A, ':B' => $B, ':C' => $C, ':D' => $D, ':answer' => $answer]);
                 header("location: view-exam.php?id=$exam_id&message=Question added successfully");
             }
         }
-        
-
     }
 
-    public function addIdentificationQuestion(){
+    public function addIdentificationQuestion()
+    {
         $conn = $this->getConnection();
         $exam_id = $_POST['exam_id'];
         $question = $_POST['question'];
         $count = 1;
         $stmt = $conn->prepare("INSERT INTO identification(exam_id,question,count) VALUES(:exam_id, :question, :count)");
-        
+
         $check_count = $conn->prepare("SELECT * FROM identification WHERE exam_id = :exam_id");
 
         $check = $conn->prepare("SELECT * FROM identification WHERE exam_id = :exam_id AND question = :question");
@@ -565,45 +576,45 @@ class Admin extends Database
         if ($check) {
             if ($check->rowCount() > 0) {
                 header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
-            }else{
-                
+            } else {
+
                 if ($check_count->execute([':exam_id' => $exam_id])) {
                     if ($check_count->rowCount() > 0) {
                         $new_count = $check_count->rowCount() + 1;
                         $stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':count' => $new_count]);
-                    }else{
+                    } else {
                         $stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':count' => $count]);
                     }
                 }
                 header("location: view-exam.php?id=$exam_id&message=Question added successfully");
             }
         }
-
     }
 
-    public function addIdentificationChoice(){
+    public function addIdentificationChoice()
+    {
         $conn = $this->getConnection();
         $exam_id = $_POST['exam_id'];
         $identification_id = $_POST['identification_id'];
         $answer = $_POST['answer'];
 
         $stmt = $conn->prepare("INSERT INTO identification_choices(exam_id,identification_id,answer) VALUES(:exam_id, :identification_id,:answer)");
-        
+
         $check = $conn->prepare("SELECT * FROM identification_choices WHERE exam_id = :exam_id AND identification_id = :identification_id AND answer = :answer");
         $check->execute([':exam_id' => $exam_id, ':identification_id' => $identification_id, ':answer' => $answer]);
 
         if ($check) {
             if ($check->rowCount() > 0) {
                 header("location: view-exam.php?id=$exam_id&message_error=Choice already exist");
-            }else{
+            } else {
                 $stmt->execute([':exam_id' => $exam_id, ':identification_id' => $identification_id, ':answer' => $answer]);
                 header("location: view-exam.php?id=$exam_id&message=Choice added successfully");
             }
         }
-
     }
 
-    public function addEnumeration(){
+    public function addEnumeration()
+    {
         $conn = $this->getConnection();
         $exam_id = $_POST['exam_id'];
         $question = $_POST['question'];
@@ -616,8 +627,8 @@ class Admin extends Database
 
         if ($check->rowCount() > 0) {
             header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
-        }else{
-            
+        } else {
+
             if ($enumeration->execute([':exam_id' => $exam_id, ':question' => $question])) {
                 $get_enumeration = $conn->query("SELECT * FROM enumeration ORDER BY id DESC");
                 $result = $get_enumeration->fetch(PDO::FETCH_ASSOC);
@@ -625,12 +636,11 @@ class Admin extends Database
 
                 foreach ($_POST['answer'] as $key => $value) {
                     $answers = $conn->prepare("INSERT INTO enumeration_correct (exam_id, enumeration_id, answer) VALUES(:exam_id, :enumeration_id, :answer)");
-        
+
                     $check_answer = $conn->prepare("SELECT * FROM enumeration_correct WHERE exam_id = :exam_id  AND enumeration_id = :enumeration_id AND answer = :answer");
                     $check_answer->execute([':exam_id' => $exam_id, ':enumeration_id' => $enumeration_id, ':answer' => $value]);
                     if ($check_answer->rowCount() > 0) {
-                        
-                    }else{
+                    } else {
                         if ($answers->execute([':exam_id' => $exam_id, ':enumeration_id' => $enumeration_id, ':answer' => $value])) {
                             header("location: view-exam.php?id=$exam_id&message=Question added successfully");
                         }
@@ -638,11 +648,10 @@ class Admin extends Database
                 }
             }
         }
-       
-
     }
 
-    public function addEssay(){
+    public function addEssay()
+    {
         $conn = $this->getConnection();
         $exam_id = $_POST['exam_id'];
         $question = $_POST['question'];
@@ -653,13 +662,12 @@ class Admin extends Database
         if ($check->execute([':exam_id' => $exam_id, ':question' => $question])) {
             if ($check->rowCount() > 0) {
                 header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
-            }else{
+            } else {
                 if ($stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':answer' => $answer])) {
                     header("location: view-exam.php?id=$exam_id&message=Question added successfully");
                 }
             }
         }
-
     }
 
     public function getExamineesByExam($id)
@@ -677,23 +685,115 @@ class Admin extends Database
         return $stmt;
     }
 
-
-    public function examCount(){
+    public function examCount()
+    {
         $conn = $this->getConnection();
         $stmt = $conn->query("SELECT * FROM exams");
         return $stmt->rowCount();
     }
 
-    public function contestantsCount(){
+    public function contestantsCount()
+    {
         $conn = $this->getConnection();
         $stmt = $conn->query("SELECT * FROM contestants");
         return $stmt->rowCount();
     }
 
-    public function examineesCount(){
+    public function examineesCount()
+    {
         $conn = $this->getConnection();
         $stmt = $conn->query("SELECT * FROM examinees");
         return $stmt->rowCount();
     }
 
+    public function forgotPassword()
+    {
+        $conn = $this->getConnection();
+        $email = $this->post_data['email'];
+
+        if (!empty($email)) {
+            $stmt = $conn->prepare("SELECT * FROM admin WHERE email = :email");
+            $stmt->execute([':email' => $email]);
+            $verification = uniqid();
+
+            if ($stmt->rowCount() > 0) {
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $id = $result['admin_id'];
+                $update = $conn->prepare("UPDATE admin SET verification = :verification WHERE admin_id =:id");
+                if ($update->execute([':verification' => $verification, ':id' => $id])) {
+                    $this->message = "success";
+
+                    $mail = new PHPMailer(true);
+                    $mail->SMTPDebug = 0;
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'sshin8859@gmail.com';
+                    $mail->Password = 'trnzsprukfkfzkup';
+                    $mail->Port = 587;
+
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        )
+                    );
+
+                    $mail->setFrom('mccbsitquizandexam@gmail.com', 'Mcc BSIT Quiz and Exam');
+
+                    $mail->addAddress($result['email']);
+                    $mail->Subject = "Reset Password Verification Code";
+                    $mail->Body = "This is your verification code: ". $verification;
+
+                    $mail->send();
+                }
+            } else {
+                $this->message = "error";
+            }
+        } else {
+            $this->message = "error";
+        }
+
+        return $this->message;
+    }
+
+    public function resetPassword(){
+        $conn = $this->getConnection();
+        $email = $this->post_data['email'];
+        $verification = $this->post_data['verification'];
+        $new_pass = $this->post_data['new_pass'];
+        $confirm = $this->post_data['confirm'];
+
+        if (!empty($email)) {
+            $stmt = $conn->prepare("SELECT * FROM admin WHERE email = :email");
+            $stmt->execute([':email' => $email]);
+
+            if ($stmt->rowCount() > 0) {
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $id = $result['admin_id'];
+                $update = $conn->prepare("UPDATE admin SET password = :password WHERE admin_id =:id");
+
+                if ($result['verification'] === $verification) {
+                    if ($new_pass === $confirm) {
+                        $hash = password_hash($confirm, PASSWORD_DEFAULT);
+                        $update->execute([':password'=> $hash, ':id' => $id]);
+                        $this->message = "success";
+
+                    }else{
+                        $this->message = "error_confirm";
+                    }
+                }else{
+                    $this->message = "error_verification";
+                }
+                
+            }else{
+                $this->message = "error";
+            }
+        }else{
+            $this->message = "error";
+        }
+
+        return $this->message;
+    }
 }

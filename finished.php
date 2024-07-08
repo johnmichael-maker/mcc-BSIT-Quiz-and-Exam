@@ -300,7 +300,8 @@ if (isset($_GET['logout'])) {
 
                     <div class="col-12">
                         <h3>Total Score: <?= $score ?> </h3>
-                        <p>Name: <?= ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME'])  ?></p>
+                        <p class="mb-1">Name: <?= ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME'])  ?></p>
+                        <p class="mb-1">Year & Section: <?= $databaseController->yearLevel()[$_SESSION['LEVEL']] ?> <?= $databaseController->sections($_SESSION['SECTION']) ?></p>
                     </div>
 
                     <div class="col-12 d-flex align-items-center mt-3 justify-content-end dont-print">

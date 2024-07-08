@@ -15,10 +15,16 @@
                     <p class="errors d-none alert alert-danger py-1"></p>
 
                     <label for="">Password</label>
+                   <div class="position-relative">
                     <input type="password" class="form-control my-2" placeholder="Password" name="password">
+                    <i class="bx bx-show fs-4 position-absolute top-0 end-0 mt-2 me-2" style="cursor: pointer;" id="show-pass"></i>
+                   </div>
                     <p class="errors d-none alert alert-danger py-1"></p>
 
-                    <button type="submit" name="button" class="w-100 btn btn-danger mt-3">Submit</button>
+                    <button type="submit" name="button" class="w-100 btn btn-danger mt-3 mb-2">Submit</button>
+
+                    <a href="forgot-password.php">Forgot Password?</a>
+
                     <div class="text-center d-none" id="loading-signup">
                         <div class="spinner-border mt-3" role="status">
                             <span class="visually-hidden">Loading...</span>
@@ -63,6 +69,9 @@
                 setTimeout(() => {
                     alertError.classList.remove("d-none");
                 }, 3000);
+                setTimeout(() => {
+                    window.location.href = "login.php";
+                }, 7000);
             }
         } catch (error) {
             console.error(error);
@@ -107,5 +116,17 @@
             }
         };
     
+    let showPass = document.getElementById('show-pass');
+    showPass.onclick = () => {
+        let passwordInp = document.forms['login']['password'];
+        if (passwordInp.getAttribute('type') == 'password') {
+            showPass.classList.replace('bx-show', 'bx-low-vision')
+            
+            passwordInp.setAttribute('type', 'text')
+        }else{
+            showPass.classList.replace('bx-low-vision', 'bx-show')
+            passwordInp.setAttribute('type', 'password')
+        }
+    }
 </script>
 <?php require __DIR__ . '/./partials/footer.php' ?>
