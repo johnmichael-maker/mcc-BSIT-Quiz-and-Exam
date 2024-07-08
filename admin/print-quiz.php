@@ -38,8 +38,8 @@
                                         <td><?= $i++ ?></td>
                                         <td><?= ucfirst($contestant->fname .' '. $contestant->mname . ' ' . $contestant->lname) ?></td>
                                         <td><?= $databaseController->yearLevel()[$contestant->year] ?></td>
-                                        <td><?= $contestant->check_code . ' / ' . $adminController->getAllQuestionCount() ?></td>
-                                        <td><?= $contestant->time ?>ms</td>
+                                        <td><?= $contestant->check_code == null ? 0 : $contestant->check_code ?> <?= ' / ' . $adminController->getAllQuestionCount() ?> </td>
+                                        <td><?= $contestant->time ?? 0 ?>ms</td>
                                     </tr>
 
                                 <?php endforeach; ?>
