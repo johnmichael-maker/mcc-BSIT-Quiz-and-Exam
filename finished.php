@@ -14,12 +14,26 @@ if (!isset($_SESSION['DISABLED'])) {
 }
 
 if (isset($_GET['logout'])) {
-    session_destroy();
-    ?>
+    
+?>
+
     <script>
-        location.href = "signup.php"
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Logged out successfully",
+            showConfirmButton: false,
+            timer: 1500
+            }).then(() => {
+                window.location.href = "index.php"
+            });
     </script>
-    <?php 
+<?php
+session_destroy();
+}
+
+if (isset($_GET['add-feedback'])) {
+    $examineeController->addFeedback();
 }
 
 // echo $_SESSION['ID'];
@@ -46,12 +60,27 @@ if (isset($_GET['logout'])) {
 
             <div class="row">
                 <input type="hidden" name="exam_id" value="<?= $id ?>">
+
                 <div class="col-lg-12 text-center">
                     <img src="./assets/img/logo.png" alt="" style="width: 150px;" class="position-absolute start-0 top-0 mt-3">
                     <h3>Madridejos Community College</h3>
                     <p class="mb-0">Examination of BSIT - <?= $row['year_level'] . ' ' .  $databaseController->sections($row['section']) ?></p>
                     <p>Date: 10/10/2023</p>
                 </div>
+
+                <div class="col-12 dont-print">
+                    <?php
+                    if (isset($_GET['message'])) {
+                    ?>
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <?= isset($_GET['message']) ? $_GET['message'] : '' ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+
 
                 <div class="row mt-3">
 
@@ -66,7 +95,7 @@ if (isset($_GET['logout'])) {
 
                             <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
-                                  
+
                                     <h6 class="mb-0">I. Multiple Choice</h6>
                                 </div>
 
@@ -81,18 +110,18 @@ if (isset($_GET['logout'])) {
                                     ?>
                                             <div class="col-12">
                                                 <span>
-                                                <?php 
+                                                    <?php
                                                     if ($examineeController->checkMultiple($multiple['id'])) {
                                                         $score++;
-                                                        ?>
+                                                    ?>
                                                         <i class="bx bx-check text-success fw-bold"></i>
-                                                        <?php 
-                                                    }else{
-                                                        ?>
+                                                    <?php
+                                                    } else {
+                                                    ?>
                                                         <i class="bx bx-x text-danger fw-bold"></i>
-                                                        <?php 
+                                                    <?php
                                                     }
-                                                ?> 
+                                                    ?>
                                                     <?= $count1++ ?> .</span>
                                                 <span><?= $multiple['question'] ?></span>
                                                 <div class="row g-2">
@@ -141,7 +170,7 @@ if (isset($_GET['logout'])) {
                                     ?>
                                     <div class="col-lg-6">
                                         <div class="d-flex align-items-center gap-2 mb-3">
-                                           
+
                                             <p class="mb-0">Questions</p>
                                         </div>
 
@@ -151,19 +180,20 @@ if (isset($_GET['logout'])) {
                                             foreach ($identifications as $identification) :
 
                                         ?>
-                                                <p> <?php 
+                                                <p> <?php
                                                     if ($examineeController->checkIdentification($identification['id'])) {
                                                         $score++;
-                                                        ?>
+                                                    ?>
                                                         <i class="bx bx-check text-success fw-bold"></i>
-                                                        <?php 
-                                                    }else{
-                                                        ?>
+                                                    <?php
+                                                    } else {
+                                                    ?>
                                                         <i class="bx bx-x text-danger fw-bold"></i>
-                                                        <?php 
+                                                    <?php
                                                     }
-                                                ?> 
-                                                    <?= $count2++ ?>. <?= $identification['question'] ?></p>
+                                                    ?>
+                                                    <?= $count2++ ?>. <?= $identification['question'] ?>
+                                                </p>
 
                                             <?php
                                             endforeach;
@@ -180,7 +210,7 @@ if (isset($_GET['logout'])) {
 
                                     <div class="col-lg-6">
                                         <div class="d-flex align-items-center gap-2 mb-3">
-                                           
+
                                             <p class="mb-0">Choices</p>
                                         </div>
 
@@ -210,7 +240,7 @@ if (isset($_GET['logout'])) {
 
                             <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
-                                  
+
                                     <h6 class="mb-0">III. Enumeration</h6>
                                 </div>
 
@@ -230,19 +260,20 @@ if (isset($_GET['logout'])) {
                                                     ?>
 
                                                         <li>
-                                                        <?php 
+                                                            <?php
                                                             if ($examineeController->checkEnumeration($value['answer'], $enumeration['id'])) {
                                                                 $score++;
-                                                                ?>
+                                                            ?>
                                                                 <i class="bx bx-check text-success fw-bold"></i>
-                                                                <?php 
-                                                            }else{
-                                                                ?>
+                                                            <?php
+                                                            } else {
+                                                            ?>
                                                                 <i class="bx bx-x text-danger fw-bold"></i>
-                                                                <?php 
+                                                            <?php
                                                             }
-                                                        ?> 
-                                                            <?= $value['answer'] ?></li>
+                                                            ?>
+                                                            <?= $value['answer'] ?>
+                                                        </li>
 
                                                     <?php
                                                     }
@@ -266,7 +297,7 @@ if (isset($_GET['logout'])) {
 
                             <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
-                                  
+
                                     <h6 class="mb-0">IV. Essay</h6>
                                 </div>
 
@@ -302,13 +333,38 @@ if (isset($_GET['logout'])) {
                         <h3>Total Score: <?= $score ?> </h3>
                         <p class="mb-1">Name: <?= ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME'])  ?></p>
                         <p class="mb-1">Year & Section: <?= $databaseController->yearLevel()[$_SESSION['LEVEL']] ?> <?= $databaseController->sections($_SESSION['SECTION']) ?></p>
+
                     </div>
 
                     <div class="col-12 d-flex align-items-center mt-3 justify-content-end dont-print">
                         <button type="submit" class="btn btn-danger" onclick="print()"><i class="bx bx-printer"></i> Print</button>
                         <span class="mx-3 h-100 border-end border-secondary"></span>
-                        <a href="?logout" class="btn btn-secondary"> Logout</a>
+                        <a href="#" onclick="return showLogout()" class="btn btn-secondary"> Logout</a>
                     </div>
+
+                    <?php
+                    if (!$examineeController->checkFeedback()) {
+                    ?>
+                        <div class="col-12 dont-print">
+
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h5>Give Feedback</h5>
+
+
+                                    <form action="?add-feedback" method="post">
+                                        <label for="">Name</label>
+                                        <input type="text" class="form-control my-2" name="name" value="<?= ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME']) ?>" readonly>
+                                        <label for="">Feedback</label>
+                                        <textarea name="feedback" rows="5" class="form-control my-2" placeholder="Write something"></textarea>
+                                        <button type="submit" class="btn btn-danger float-end mt-2"> Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
 
                 </div>
 
@@ -320,5 +376,25 @@ if (isset($_GET['logout'])) {
 </div>
 
 <?php $examineeController->updateScore($score) ?>
+
+
+<script>
+    function showLogout() {
+        Swal.fire({
+            title: "<strong>Are you sure you want to logout?</strong>",
+            icon: "info",
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: `Yes`,
+            confirmButtonColor: "#d93645",
+            cancelButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "?logout"
+            }
+        });
+    }
+</script>
 
 <?php require __DIR__ . '/./partials/footer.php' ?>

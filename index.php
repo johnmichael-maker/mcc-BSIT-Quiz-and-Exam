@@ -1,3 +1,10 @@
+<?php 
+     require __DIR__ . '/./vendor/autoload.php';
+     use App\DatabaseControl;
+
+     $databaseController = new DatabaseControl;
+    $feedbacks = $databaseController->getFeedbacks();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +44,7 @@
                 <div class="col-lg-8 h-100 my-auto text-light">
                     <h1>MADRIDEJOS COMMUNITY COLLEGE</h1>
                     <h3>Quiz Bowl and Exam</h3>
-                    <p>&copy; John Michael Robles 2024</p>
+                    <p>&copy; John Michaelle Robles 2024</p>
                 </div>
             </div>
         </div>
@@ -113,6 +120,36 @@
             Social Responsibility. Ensure the relevance, alignment and support of the community and businesses by providing outreach, bridge programs, and community-focused facilities.
         </div>
 
+        <hr>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <h5>STUDENT EXAM FEEDBACKS</h5>
+            </div>
+
+            <?php if($feedbacks->rowCount() > 0): 
+                    $data = $feedbacks->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+                
+                <?php foreach($data as $feedback): ?>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                        <h5 class="fw-bold"><?= $feedback['name'] ?></h5>
+                        <p><?= $databaseController->getSections()[$feedback['section']] ?> - <?= $databaseController->yearLevel()[$feedback['year_level']] ?></p>
+                        <p class="text-center">" <?= $feedback['feedback'] ?> "</p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-12 text-center">
+                        <p>No record found</p>
+                    </div>
+                <?php endif; ?>
+
+        </div>
+
     </div>
     
     <hr class="text-light">
@@ -120,7 +157,7 @@
     <footer class="h-100">
         <div class="container py-3 text-center" style="color: hsl(0, 0%, 80%);">
             <h5>Madridejos Community College</h5>
-            <p class="mb-0">&copy; John Michael Robles 2024</p>
+            <p class="mb-0">&copy; John Michaelle Robles 2024</p>
         </div>
     </footer>
 

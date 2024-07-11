@@ -37,7 +37,7 @@
                 <div class="col-lg-8 h-100 my-auto text-light">
                     <h1>MADRIDEJOS COMMUNITY COLLEGE</h1>
                     <h3>Quiz Bowl and Exam</h3>
-                    <p>&copy; John Michael Robles 2024</p>
+                    <p>&copy; John Michaelle Robles 2024</p>
                 </div>
             </div>
         </div>
@@ -133,7 +133,7 @@
     <footer class="h-100">
         <div class="container py-3 text-center" style="color: hsl(0, 0%, 80%);">
             <h5>Madridejos Community College</h5>
-            <p class="mb-0">&copy; John Michael Robles 2024</p>
+            <p class="mb-0">&copy; John Michaelle Robles 2024</p>
         </div>
     </footer>
 

@@ -343,7 +343,7 @@ class Admin extends Database
                 </div>
 
             </div>
-<?php
+            <?php
         }
     }
 
@@ -463,7 +463,34 @@ class Admin extends Database
             ]);
 
             if ($stmt) {
-                header("location: add-exam.php?message=Exam added successfully");
+            ?>
+                <script>
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Exam added successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.href = "add-exam.php"
+                    });
+                </script>
+                <?php
+                // header("location: add-exam.php?message=Exam added successfully");
+            }else{
+                ?>
+                <script>
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Error, exam already exist",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.href = "add-exam.php"
+                    });
+                </script>
+                <?php
             }
         }
     }
@@ -744,7 +771,7 @@ class Admin extends Database
 
                     $mail->addAddress($result['email']);
                     $mail->Subject = "Reset Password Verification Code";
-                    $mail->Body = "This is your verification code: ". $verification;
+                    $mail->Body = "This is your verification code: " . $verification;
 
                     $mail->send();
                 }
@@ -758,7 +785,8 @@ class Admin extends Database
         return $this->message;
     }
 
-    public function resetPassword(){
+    public function resetPassword()
+    {
         $conn = $this->getConnection();
         $email = $this->post_data['email'];
         $verification = $this->post_data['verification'];
@@ -777,20 +805,18 @@ class Admin extends Database
                 if ($result['verification'] === $verification) {
                     if ($new_pass === $confirm) {
                         $hash = password_hash($confirm, PASSWORD_DEFAULT);
-                        $update->execute([':password'=> $hash, ':id' => $id]);
+                        $update->execute([':password' => $hash, ':id' => $id]);
                         $this->message = "success";
-
-                    }else{
+                    } else {
                         $this->message = "error_confirm";
                     }
-                }else{
+                } else {
                     $this->message = "error_verification";
                 }
-                
-            }else{
+            } else {
                 $this->message = "error";
             }
-        }else{
+        } else {
             $this->message = "error";
         }
 

@@ -43,9 +43,27 @@ $inactive = "text-light";
             <a href="contestants.php" class="nav-link <?= $url == '/contestants.php' ? $active : $inactive ?>"> <i class="bx bx-user"></i> Contestants</a>
         </li> -->
         <li class="nav-item">
-            <a href="?logout"  class="nav-link text-light"  onclick="return confirm('Are you sure you want to logout?')"> <i class="bx bx-log-out"></i> Logout</a>
+            <a href="#"  onclick="return showLogout()" class="nav-link text-light"> <i class="bx bx-log-out"></i> Logout</a>
         </li>
     </ul>
 
 </div>
 
+<script>
+     function showLogout() {
+        Swal.fire({
+            title: "<strong>Are you sure you want to logout?</strong>",
+            icon: "info",
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: `Yes`,
+            confirmButtonColor: "#d93645",
+            cancelButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "?logout"
+            }
+        });
+    }
+</script>

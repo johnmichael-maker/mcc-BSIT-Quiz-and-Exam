@@ -1,4 +1,4 @@
-<div class="alert-modal d-none" id="alert-modal">
+<!-- <div class="alert-modal d-none" id="alert-modal">
     <div class="card position-relative bg-transparent pt-4 border-0 success-card d-none">
         <div class="position-absolute top-0 text-center w-100 success-icon">
             <img src="../assets/img/check-circle-svgrepo-com.png" alt="Icon-png">
@@ -8,8 +8,27 @@
             <p>Your account has been logged out successfully.</p>
         </div>
     </div>
-</div>
+</div> -->
+<?php
+  if (isset($_GET['logout'])) {
+        
+        ?>
 
+    <script>
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Logged out successfully",
+            showConfirmButton: false,
+            timer: 1500
+            }).then(() => {
+                window.location.href = "../index.php"
+            });
+    </script>
+<?php
+session_destroy();
+    }
+    ?>
 
 
 <script src="../assets/js/jquery.min.js"></script>

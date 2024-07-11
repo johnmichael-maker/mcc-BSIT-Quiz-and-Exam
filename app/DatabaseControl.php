@@ -1,6 +1,8 @@
 <?php
 
 namespace App;
+
+use PDO;
 // use App\Database;
 class DatabaseControl extends Database
 {
@@ -128,13 +130,13 @@ class DatabaseControl extends Database
 
     public function getMultipleChoice($id){
         $conn = $this->getConnection();
-        $stmt = $conn->query("SELECT * FROM multiple_choice WHERE exam_id = '$id'");
+        $stmt = $conn->query("SELECT * FROM multiple_choice WHERE exam_id = '$id'  ORDER BY RAND()");
         return $stmt;
     }
 
     public function getIdentification($id){
         $conn = $this->getConnection();
-        $stmt = $conn->query("SELECT * FROM identification WHERE exam_id = '$id'");
+        $stmt = $conn->query("SELECT * FROM identification WHERE exam_id = '$id'  ORDER BY RAND()");
         return $stmt;
     }
 
@@ -154,7 +156,7 @@ class DatabaseControl extends Database
 
     public function getEnumeration($id){
         $conn = $this->getConnection();
-        $stmt = $conn->query("SELECT * FROM enumeration WHERE exam_id = '$id'");
+        $stmt = $conn->query("SELECT * FROM enumeration WHERE exam_id = '$id'  ORDER BY RAND()");
         return $stmt;
     }
     
@@ -166,7 +168,7 @@ class DatabaseControl extends Database
 
     public function getEssay($id){
         $conn = $this->getConnection();
-        $stmt = $conn->query("SELECT * FROM essay WHERE exam_id = '$id'");
+        $stmt = $conn->query("SELECT * FROM essay WHERE exam_id = '$id' ");
         return $stmt;
     }
 
@@ -188,6 +190,12 @@ class DatabaseControl extends Database
             $alphabet[] = chr($letter);
         }
         return $alphabet;
+    }
+
+    public function getFeedbacks(){
+        $conn = $this->getConnection();
+        $stmt = $conn->query("SELECT f.*, e.section, e.semester, e.year_level FROM feedbacks f INNER JOIN exams e ON f.exam_id = e.id ");
+        return $stmt;
     }
     
 }

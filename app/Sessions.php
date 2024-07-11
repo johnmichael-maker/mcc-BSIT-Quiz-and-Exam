@@ -22,8 +22,8 @@ Trait Sessions{
         $_SESSION['MNAME'] = $data[2];
         $_SESSION['LEVEL'] = $data[3];
         $_SESSION['ID'] = $data[4];
-        $_SESSION['EXAM_ID'] = $data[6];
-        $_SESSION['SECTION'] = $data[5];
+        $_SESSION['EXAM_ID'] = $data[5];
+        $_SESSION['SECTION'] = $data[6];
     }
 
     public function accountDisable(){

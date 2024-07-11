@@ -286,4 +286,37 @@ class Examinee extends Database
 
     }
 
+    public function addFeedback(){
+        $conn = $this->getConnection();
+        
+        $name = ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME']);
+        $feedback = $_POST['feedback'];
+        $id_number = $_SESSION['ID'];
+        $exam_id = $_SESSION['EXAM_ID'];
+        
+        $stmt = $conn->prepare("INSERT INTO feedbacks(id_number,exam_id,name,feedback) VALUES(:id_number, :exam_id, :name, :feedback)");
+        // $stmt->bindParam('siss', $id_number, $exam_id, $name, $feedback);
+        $stmt->execute([':name' => $name, ':id_number' => $id_number, ':exam_id' => $exam_id ,':feedback' => $feedback]);
+
+        if ($stmt->execute()) {
+            header('location: finished.php?message=Feedback added successfully');
+        }
+
+    }
+
+    public function checkFeedback(){
+        $conn = $this->getConnection();
+        $name = ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME']);
+        $id_number = $_SESSION['ID'];
+        $exam_id = $_SESSION['EXAM_ID'];
+
+        $stmt = $conn->query("SELECT * FROM feedbacks WHERE id_number = '$id_number' AND exam_id = '$exam_id'");
+
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }
+
+
+    }
+
 }

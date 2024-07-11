@@ -14,10 +14,6 @@
             header('location: login.php');
         }
     }
-    if (isset($_GET['logout'])) {
-        session_destroy();
-        header('location: login.php');
-    }
     $examinees = $adminController->getExaminees();
     $contestants = $adminController->getContestants();
 ?>
@@ -31,6 +27,7 @@
     <link rel="stylesheet" href="../assets/boxicons/css/boxicons.min.css">
     <link rel="stylesheet" href="../assets/css/dataTable.css">
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         @media print{
             .dont-print{

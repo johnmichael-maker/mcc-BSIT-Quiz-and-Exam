@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         @media print{
             .dont-print{
@@ -39,3 +40,5 @@
         }
     </style>
 </head>
+<body>
+
