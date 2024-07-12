@@ -147,7 +147,7 @@ require __DIR__ . '/./partials/header.php';
                                 foreach($exams as $exam): 
                                    
                                 ?>
-                                    <option value="<?= $exam['id'] ?>"><?= $databaseController->sections($exam['section']) .' | '. $databaseController->yearLevel()[$exam['year_level']] ?></option>
+                                    <option value="<?= $exam['id'] ?>"><?= $databaseController->sections($exam['section']) .' | '. $databaseController->yearLevel()[$exam['year_level']] ?> - <?= $databaseController->semester()[$exam['semester']] ?> / <?= $databaseController->examType()[$exam['type']] ?> </option>
                                 <?php endforeach; ?>
                             </select>
                                     

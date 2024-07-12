@@ -61,8 +61,8 @@ class Examinee extends Database
                     $current_data['mname'],
                     $current_data['year_level'],
                     $current_data['id_number'],
+                    $current_data['section'],
                     $current_data['exam_id'],
-                    $current_data['section']
                 ];
                 $this->activateExamineeSession($current);
                 $this->message = "success";
