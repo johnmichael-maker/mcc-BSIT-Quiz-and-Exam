@@ -38,8 +38,9 @@ Trait Sessions{
         }
     }
 
-    private function activeAdminSession($username){
+    private function activeAdminSession($username, $image){
         $_SESSION['AUTH_KEY'] = $username;
+        $_SESSION['AUTH_IMG'] = $image;
         $_SESSION['ADMIN_ACTIVE'] = true;
     }
 

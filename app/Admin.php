@@ -99,7 +99,7 @@ class Admin extends Database
             if ($stmt->rowCount() > 0) {
                 $result = $stmt->fetch();
                 if (password_verify($password, $result['password'])) {
-                    $this->activeAdminSession($result['username']);
+                    $this->activeAdminSession($result['username'], $result['img']);
                     $this->message = "success";
                 } else {
                     $this->message = "error";

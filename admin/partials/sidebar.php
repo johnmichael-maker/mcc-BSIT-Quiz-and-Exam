@@ -19,7 +19,7 @@ $inactive = "text-light";
         </a>
     </h5>
 
-    <a href="#" class="position-absolute top-0 fs-1 end-0 m-3 text-light" id="close-sidebar"><i class="bx bx-x"></i></a>
+    <a href="#" class="position-absolute top-0 fs-1 end-0 m-3 text-light d-lg-none d-block" id="close-sidebar"><i class="bx bx-x"></i></a>
 
     <ul class="nav flex-column mt-4">
         <li class="nav-item">

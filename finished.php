@@ -332,7 +332,7 @@ if (isset($_GET['add-feedback'])) {
                     </div>
 
                     <div class="col-12">
-                        <h3>Total Score: <?= $score ?> </h3>
+                        <h3>Total Score: <?= $score ?> / <?= $databaseController->getMultipleChoice($id)->rowCount() + $databaseController->getIdentification($id)->rowCount() + $databaseController->getEnumeration($id)->rowCount() ?> </h3>
                         <p class="mb-1">Name: <?= ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME'])  ?></p>
                         <p class="mb-1">Year & Section: <?= $databaseController->yearLevel()[$_SESSION['LEVEL']] ?> <?= $databaseController->sections($_SESSION['SECTION']) ?></p>
 
