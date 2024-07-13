@@ -42,7 +42,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `username`, `email`, `password`, `verification`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'johnmichaelrobles813@gmail.com', '$2y$10$8S54n6BnBknWXYxkOxHgx.LUQKIFZCNiDcoe1CuBDhueUMioaPhP6', '668c33785210c', '2024-03-15 15:25:36', '2024-07-08 18:44:43');
+(1, 'admin', 'johnmichaelrobles813@gmail.com', '$2y$10$AkN22we4lTwOIRXPWmqKK.eKpwaJG4fvezcE9G4d0fI4cpzChAZa6', '668c33785210c', '2024-03-15 15:25:36', '2024-07-08 18:44:43');
 
 -- --------------------------------------------------------
 
