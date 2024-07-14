@@ -44,7 +44,7 @@ if (isset($_GET['id'])) {
                                             foreach($examinees as $examinee): ?>
                                                 <tr>
                                                     <td><?= ucfirst($examinee['lname']) . ', ' . ucfirst($examinee['fname']) . ' ' . ucfirst($examinee['mname']) ?></td>
-                                                    <td><?= $examinee['score'] ?? 0 ?></td>
+                                                    <td><?= $examinee['score'] ?? 0 ?> / <?= $databaseController->getMultipleChoice($examinee['id'])->rowCount() + $databaseController->getIdentification($examinee['id'])->rowCount() + $databaseController->getEnumeration($examinee['id'])->rowCount() ?></td>
                                                     <td><?= date('m-d-Y', strtotime($examinee['created_at'])) ?></td>
                                                 </tr>  
                                         <?php 

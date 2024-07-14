@@ -28,6 +28,7 @@
                                             <th>Name</th>
                                             <th>Section</th>
                                             <th>Year Level</th>
+                                            <th>Score</th>
                                             <th>Date</th>
                                         </thead>
 
@@ -38,6 +39,7 @@
                                                     <td><?= $row['fullname'] ?></td>
                                                     <td><?= $databaseController->sections($row['section']) ?></td>
                                                     <td><?= $databaseController->yearLevel()[$row['year_level']] ?></td>
+                                                    <td><?= $row['score'] ?? 0 ?> / <?= $databaseController->getMultipleChoice($row['exam_id'])->rowCount() + $databaseController->getIdentification($row['exam_id'])->rowCount() + $databaseController->getEnumeration($row['exam_id'])->rowCount() ?></td>
                                                     <td><?= $row['created_at'] ?></td>
                                                 </tr>
                                             <?php endwhile; ?>

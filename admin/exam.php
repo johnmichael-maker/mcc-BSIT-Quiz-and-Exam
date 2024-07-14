@@ -46,7 +46,7 @@ if (isset($_GET['message'])) {
                                     <th>Type</th>
                                     <th>Category</th>
                                     <th>Time Limit</th>
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                     <th>Action</th>
                                 </thead>
                                 <tbody>
@@ -62,19 +62,7 @@ if (isset($_GET['message'])) {
                                             
                                             <td><?= $databaseController->questionDifficulty()[$row['category']] ?></td>
                                             <td><?= $row['time_limit'] ?>mins.</td>
-                                            <td>
-                                                <?php 
-                                                    if ($row['status'] == 1) {
-                                                        ?>
-                                                        <span class="badge bg-success">Active</span>
-                                                        <?php 
-                                                    }else{
-                                                        ?>
-                                                        <span class="badge bg-secondary">Disabled</span>
-                                                        <?php
-                                                    }
-                                                ?>
-                                            </td>
+                                            
                                             <td class="dropdown">
                                                 <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">Options</button>
 
