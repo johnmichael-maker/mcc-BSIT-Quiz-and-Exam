@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/./partials/header.php';
-// echo password_hash('admin', PASSWORD_DEFAULT);
+// echo password_hash('1Admin', PASSWORD_DEFAULT);
 
 ?>
 

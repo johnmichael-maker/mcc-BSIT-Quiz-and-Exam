@@ -4,6 +4,7 @@
 
      $databaseController = new DatabaseControl;
     $feedbacks = $databaseController->getFeedbacks();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

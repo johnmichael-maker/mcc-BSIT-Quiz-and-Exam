@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2024 at 07:50 AM
+-- Generation Time: Jul 14, 2024 at 08:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
   `username` varchar(50) DEFAULT NULL,
+  `img` text DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `verification` varchar(255) DEFAULT NULL,
@@ -41,8 +42,8 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `username`, `email`, `password`, `verification`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'johnmichaelrobles813@gmail.com', '$2y$10$8S54n6BnBknWXYxkOxHgx.LUQKIFZCNiDcoe1CuBDhueUMioaPhP6', '668c33785210c', '2024-03-15 15:25:36', '2024-07-08 18:44:43');
+INSERT INTO `admin` (`admin_id`, `username`, `img`, `email`, `password`, `verification`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '../assets/img/logo.png', 'johnmichaelrobles813@gmail.com', '$2y$10$eYFwii7ioi4ndlEFhRc/NetnAz8ZjCagCMQS4oQBJxujy0On..NLW', '668c33785210c', '2024-03-15 15:25:36', '2024-07-14 03:10:52');
 
 -- --------------------------------------------------------
 
