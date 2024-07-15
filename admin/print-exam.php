@@ -5,7 +5,10 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $row = $adminController->getExamById();
     $average = $databaseController->getMultipleChoice($id)->rowCount() + $databaseController->getIdentification($id)->rowCount() + $databaseController->getEnumeration($id)->rowCount();
-    echo $databaseController->getMultipleChoice($id)->rowCount();
+    $multiples = $databaseController->getMultipleChoice($id)->rowCount();
+    foreach($multiples as $multiple){
+        echo $multiple['question'];
+    }
     echo $databaseController->getIdentification($id)->rowCount();
     echo $databaseController->getEnumeration($id)->rowCount();
 }
