@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
                         <div class="row">
 
                             <div class="col-lg-12 text-center">
-                                <img src="../assets/img/logo.png" alt="" style="width: 150px;" class="position-absolute start-0 top-0 mt-3">
+                                <img src="../assets/img/logo.png" alt="" style="width: 150px;" class="position-absolute start-0 top-0 mt-3 d-lg-block d-none">
                                 <h3>Madridejos Community College</h3>
                                 <p class="mb-0">Examination of BSIT - <?= $row['year_level'] . ' ' .  $databaseController->sections($row['section']) . ' - ' . $databaseController->examType()[$row['type']] ?></p>
                                 <p>Date: 10/10/2023</p>
