@@ -26,7 +26,7 @@ $inactive = "text-light";
             <a href="index.php" class="nav-link <?= str_contains($url,'/index.php') ? $active : $inactive ?>"> <i class="bx bx-home"></i> Dashboard</a>
         </li>
         <li class="nav-item">
-            <a href="quiz.php" class="nav-link <?= $url == '/quiz.php' || $url == '/print-quiz.php' ? $active : $inactive ?>"> <i class="bx bx-question-mark"></i> Quiz</a>
+            <a href="quiz.php" class="nav-link <?= str_contains($url, '/quiz.php') || str_contains($url, '/print-quiz.php') ? $active : $inactive ?>"> <i class="bx bx-question-mark"></i> Quiz</a>
         </li>
         <li class="nav-item">
             <a href="exam.php" class="nav-link <?= 
@@ -37,10 +37,10 @@ $inactive = "text-light";
                 ? $active : $inactive ?>"> <i class="bx bx-file"></i> Exam</a>
         </li>
         <li class="nav-item">
-            <a href="examinees.php" class="nav-link <?= $url == '/examinees.php' ? $active : $inactive ?>"> <i class="bx bx-user"></i> Examinees</a>
+            <a href="examinees.php" class="nav-link <?= str_contains($url, '/examinees.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Examinees</a>
         </li>
         <!-- <li class="nav-item">
-            <a href="contestants.php" class="nav-link <?= $url == '/contestants.php' ? $active : $inactive ?>"> <i class="bx bx-user"></i> Contestants</a>
+            <a href="contestants.php" class="nav-link <?= str_contains($url, '/contestants.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Contestants</a>
         </li> -->
         <li class="nav-item">
             <a href="#"  onclick="return showLogout()" class="nav-link text-light"> <i class="bx bx-log-out"></i> Logout</a>
