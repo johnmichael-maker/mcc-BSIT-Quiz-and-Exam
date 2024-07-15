@@ -23,7 +23,7 @@
                         </div>
                         <table id="dataTable">
                             <thead>
-                                <th>#</th>
+                                <th>Rank #</th>
                                 <th>Name</th>
                                 <th>Year</th>
                                 <th>Average</th>
