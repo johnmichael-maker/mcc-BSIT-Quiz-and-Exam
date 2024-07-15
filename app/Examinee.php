@@ -286,37 +286,66 @@ class Examinee extends Database
 
     }
 
-    public function addFeedback(){
+  
+    public function addFeedback() {
         $conn = $this->getConnection();
         
+      
         $name = ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME']);
+        
+      
         $feedback = $_POST['feedback'];
+        
+       
         $id_number = $_SESSION['ID'];
         $exam_id = $_SESSION['EXAM_ID'];
         
-        $stmt = $conn->prepare("INSERT INTO feedbacks(id_number,exam_id,name,feedback) VALUES(:id_number, :exam_id, :name, :feedback)");
-        // $stmt->bindParam('siss', $id_number, $exam_id, $name, $feedback);
-        $stmt->execute([':name' => $name, ':id_number' => $id_number, ':exam_id' => $exam_id ,':feedback' => $feedback]);
-
+       
+        $stmt = $conn->prepare("INSERT INTO feedbacks (id_number, exam_id, name, feedback) VALUES (:id_number, :exam_id, :name, :feedback)");
+        
+       
+        $stmt->bindParam(':id_number', $id_number, PDO::PARAM_STR);
+        $stmt->bindParam(':exam_id', $exam_id, PDO::PARAM_INT);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':feedback', $feedback, PDO::PARAM_STR);
+        
+      
         if ($stmt->execute()) {
+           
             header('location: finished.php?message=Feedback added successfully');
+            exit(); 
+        } else {
+          
+            echo "Error adding feedback.";
         }
-
     }
-
-    public function checkFeedback(){
+    
+    public function checkFeedback() {
         $conn = $this->getConnection();
+        
+       
         $name = ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME']);
         $id_number = $_SESSION['ID'];
         $exam_id = $_SESSION['EXAM_ID'];
-
-        $stmt = $conn->query("SELECT * FROM feedbacks WHERE id_number = '$id_number' AND exam_id = '$exam_id'");
-
+        
+      
+        $stmt = $conn->prepare("SELECT * FROM feedbacks WHERE id_number = :id_number AND exam_id = :exam_id");
+        
+        
+        $stmt->bindParam(':id_number', $id_number, PDO::PARAM_STR);
+        $stmt->bindParam(':exam_id', $exam_id, PDO::PARAM_INT);
+        
+       
+        $stmt->execute();
+        
+       
         if ($stmt->rowCount() > 0) {
             return true;
+        } else {
+            return false;
         }
-
-
     }
+}    
+ 
 
-}
+  
