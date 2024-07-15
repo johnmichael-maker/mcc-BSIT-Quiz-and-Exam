@@ -137,7 +137,6 @@
                     <div class="card">
                         <div class="card-body">
                         <h5 class="fw-bold"><?= $feedback['name'] ?></h5>
-                        <p><?= $databaseController->getSections()[$feedback['section']] ?> - <?= $databaseController->yearLevel()[$feedback['year_level']] ?></p>
                         <p class="text-center">" <?= $feedback['feedback'] ?> "</p>
                         </div>
                     </div>
