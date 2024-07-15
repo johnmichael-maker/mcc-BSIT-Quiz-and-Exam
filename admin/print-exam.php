@@ -5,12 +5,12 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $row = $adminController->getExamById();
     $average = $databaseController->getMultipleChoice($id)->rowCount() + $databaseController->getIdentification($id)->rowCount() + $databaseController->getEnumeration($id)->rowCount();
-    $multiples = $databaseController->getMultipleChoice($id)->rowCount();
+    $multiples = $databaseController->getMultipleChoice($id);
+    $identifications = $databaseController->getIdentification($id);
+    $enumerations = $databaseController->getEnumeration($id);
     foreach($multiples as $multiple){
-        echo $multiple['question'];
+        // echo $multiple['question'];
     }
-    echo $databaseController->getIdentification($id)->rowCount();
-    echo $databaseController->getEnumeration($id)->rowCount();
 }
 ?>
 <div class="container-fluid">
