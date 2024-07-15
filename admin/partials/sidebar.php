@@ -23,7 +23,7 @@ $inactive = "text-light";
 
     <ul class="nav flex-column mt-4">
         <li class="nav-item">
-            <a href="index.php" class="nav-link <?= $url == '/index.php' ? $active : $inactive ?>"> <i class="bx bx-home"></i> Dashboard</a>
+            <a href="index.php" class="nav-link <?= str_contains($url,'/index.php') ? $active : $inactive ?>"> <i class="bx bx-home"></i> Dashboard</a>
         </li>
         <li class="nav-item">
             <a href="quiz.php" class="nav-link <?= $url == '/quiz.php' || $url == '/print-quiz.php' ? $active : $inactive ?>"> <i class="bx bx-question-mark"></i> Quiz</a>
