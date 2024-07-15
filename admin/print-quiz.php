@@ -22,7 +22,7 @@
                         </div>
                         <table class="table table-bordered">
                             <thead>
-                                <th>#</th>
+                                <th>Rank #</th>
                                 <th>Name</th>
                                 <th>Year</th>
                                 <th>Average</th>
