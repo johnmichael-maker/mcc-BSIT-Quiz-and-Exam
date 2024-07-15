@@ -4,6 +4,7 @@ require __DIR__ . '/./partials/header.php';
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $row = $adminController->getExamById();
+    $average = $databaseController->getMultipleChoice($id)->rowCount() + $databaseController->getIdentification($id)->rowCount() + $databaseController->getEnumeration($id)->rowCount();
 }
 ?>
 <div class="container-fluid">
@@ -44,7 +45,7 @@ if (isset($_GET['id'])) {
                                             foreach($examinees as $examinee): ?>
                                                 <tr>
                                                     <td><?= ucfirst($examinee['lname']) . ', ' . ucfirst($examinee['fname']) . ' ' . ucfirst($examinee['mname']) ?></td>
-                                                    <td><?= $examinee['score'] ?? 0 ?> / <?= $databaseController->getMultipleChoice($examinee['id'])->rowCount() + $databaseController->getIdentification($examinee['id'])->rowCount() + $databaseController->getEnumeration($examinee['id'])->rowCount() ?></td>
+                                                    <td><?= $examinee['score'] ?? 0 ?> / <?= $average ?></td>
                                                     <td><?= date('m-d-Y', strtotime($examinee['created_at'])) ?></td>
                                                 </tr>  
                                         <?php 
