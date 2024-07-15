@@ -70,7 +70,7 @@ if (isset($_GET['id'])) {
                     </div>
 
                     <div class="card-footer text-end dont-print">
-                        <a href="print-exam.php" class="btn btn-danger" onclick="print()"><i class="bx bx-printer"></i> Print</a>
+                        <a href="print-quiz.php" class="btn btn-danger" onclick="print()"><i class="bx bx-printer"></i> Print</a>
                     </div>
                 </div>
 
