@@ -45,7 +45,7 @@
                <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <canvas id="myChart" width="400" height="100"></canvas>
+                                <canvas id="myChart" width="400" height="98"></canvas>
                             </div>
                         </div>
                     </div>
