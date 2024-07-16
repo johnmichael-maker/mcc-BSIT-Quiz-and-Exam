@@ -1,5 +1,5 @@
 {
-    "name": "bawig/quiz_bowl",
+    "name": "robles/quiz_bowl",
     "type": "project",
     "autoload": {
         "psr-4": {
