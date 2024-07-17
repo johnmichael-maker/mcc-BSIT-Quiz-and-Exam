@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @media print {
             .dont-print {
@@ -127,29 +128,29 @@
         </div>
 
     </div>
+  
     <hr class="text-light">
-
     <footer class="h-100">
-        <div class="container py-3 text-center" style="color: hsl(0, 0%, 80%);">
-            <h5>Madridejos Community College</h5>
-            <p class="mb-0">7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</p>
-            <p class="mb-0">+639279817079</p>
-            <p class="mb-0">8:00 a.m. – 4:00 p.m.</p>
-            <div class="d-flex justify-content-center mt-2">
-                <a href="https://www.facebook.com/share/gcNmP9AbQT92p6E4/" class="mx-2">
-                    <img src="assets/img/facebook.png" alt="Facebook" style="width: 20px;">
-                </a>
-                <a href="https://www.google.com" class="mx-2">
-                    <img src="assets/img/google.png" alt="Google" style="width: 20px;">
-                </a>
-                <a href="tel:+639279817079" class="mx-2">
-                    <img src="assets/img/call.png" alt="Phone" style="width: 20px;">
-                </a>
-            </div>
-            <p class="mt-3">&copy; John Michaelle Robles 2024</p>
+    <div class="container py-3 text-center" style="color: hsl(0, 0%, 80%);">
+        <h5>Madridejos Community College</h5>
+        <p class="mb-0">7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</p>
+        <p class="mb-0">+639279817079</p>
+        <p class="mb-0">8:00 a.m. – 4:00 p.m.</p>
+        <div class="d-flex justify-content-center mt-2">
+            <a href="https://www.facebook.com/share/gcNmP9AbQT92p6E4/" class="mx-2">
+                <i class="fab fa-facebook" style="font-size: 20px;  color:white;"></i>
+            </a>
+            <a href="https://www.google.com" class="mx-2">
+                <i class="fab fa-google" style="font-size: 20px; color:white;" ></i>
+            </a>
+            <a href="tel:+639279817079" class="mx-2">
+                <i class="fas fa-phone" style="font-size: 20px; color:white;"></i>
+            </a>
         </div>
-    </footer>
+        <p class="mt-3">&copy; John Michaelle Robles 2024</p>
+    </div>
+</footer>
 
 </body>
-
 </html>
+
