@@ -37,8 +37,8 @@
 
                                     <tr>
                                         <td><?= $i++ ?></td>
-                                        <td><?= ucfirst($contestant->fname .' '. $contestant->mname . ' ' . $contestant->lname) ?></td>
-                                        <td><?=databaseController->sections()[$contestant->section]?></td>
+                                       <td><?= ucfirst($contestant->fname .' '. $contestant->mname . ' ' . $contestant->lname) ?></td>
+                                        <td><?= $databaseController->sections($contestant->section) ?></td>
                                         <td><?= $databaseController->yearLevel()[$contestant->year] ?></td>
                                         <td><?= $contestant->check_code == null ? 0 : $contestant->check_code ?> <?= ' / ' . $adminController->getAllQuestionCount() ?> </td>
                                         <td><?= $contestant->time ?? 0 ?>ms</td>
