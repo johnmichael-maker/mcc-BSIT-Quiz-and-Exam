@@ -39,7 +39,10 @@ if (isset($_GET['id'])) {
 
                                 <table class="table table-bordered mt-3">
                                     <thead>
+                                        <th>ID_Number</th>
                                         <th>Name</th>
+                                        <th>Section</th>
+                                        <th>Year</th>
                                         <th>Score</th>
                                         <th>Date</th>
                                     </thead>
@@ -53,7 +56,10 @@ if (isset($_GET['id'])) {
                                                 ?>
                                                 
                                                 <tr>
+                                                    <td><?= $examinee['id_number'] ?></td>
                                                     <td><?= ucfirst($examinee['lname']) . ', ' . ucfirst($examinee['fname']) . ' ' . ucfirst($examinee['mname']) ?></td>
+                                                    <td><?=$databaseController->sections($examinee['section'])?></td>
+                                                    <td><?= $databaseController->yearLevel()[$examinee['year_level']] ?></td>
                                                     <td><?= $examinee['score'] ?? 0 ?> / <?= $average ?></td>
                                                     <td><?= date('m-d-Y', strtotime($examinee['created_at'])) ?></td>
                                                 </tr>  
