@@ -86,7 +86,7 @@ if (isset($_GET['id'])) {
                     </div>
 
                     <div class="card-footer text-end dont-print">
-                        <a href="print-exam.php" class="btn btn-danger" onclick="window.print()"><i class="bx bx-printer"></i> Print</a>
+                        <button type="button" class="btn btn-danger" onclick="window.print()"><i class="bx bx-printer"></i> Print</button>
                     </div>
                 </div>
 
