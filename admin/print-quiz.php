@@ -23,6 +23,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <th>Rank #</th>
+                                <th>ID Number</th>
                                 <th>Name</th>
                                 <th>Section</th>
                                 <th>Year</th>
@@ -37,6 +38,7 @@
 
                                     <tr>
                                         <td><?= $i++ ?></td>
+                                        <td><?= $contestant->id_number ?></td>
                                        <td><?= ucfirst($contestant->fname .' '. $contestant->mname . ' ' . $contestant->lname) ?></td>
                                         <td><?= $databaseController->sections($contestant->section) ?></td>
                                         <td><?= $databaseController->yearLevel()[$contestant->year] ?></td>
