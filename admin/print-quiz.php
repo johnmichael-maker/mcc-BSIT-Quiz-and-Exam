@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="card-footer text-end dont-print">
-                        <a href="print-quiz.php" class="btn btn-danger" onclick="print()"><i class="bx bx-printer"></i> Print</a>
+                        <button type="button" class="btn btn-danger" onclick="print()"><i class="bx bx-printer"></i> Print</button>
                     </div>
 
                 </div>
