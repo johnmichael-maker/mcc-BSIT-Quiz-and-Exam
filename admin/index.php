@@ -72,7 +72,7 @@ const myChart = new Chart(ctx, {
                 'rgba(255, 99, 132, 0.8)',  // Darker red
                 'rgba(54, 162, 235, 0.8)',  // Darker blue
                 'rgba(255, 206, 86, 0.8)',  // Darker yellow
-                'rgba(64, 224, 208, 0.8)'   // Darker red
+                'rgba(57, 255, 20, 0.8)'   // Darker green
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
