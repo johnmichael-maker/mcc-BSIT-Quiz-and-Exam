@@ -29,7 +29,7 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-body">
-                                <p>Quiz Contestants</p>
+                                <p>Student Contestants</p>
                                 <h1><?= $adminController->contestantsCount() ?></h1>
                             </div>
                         </div>
