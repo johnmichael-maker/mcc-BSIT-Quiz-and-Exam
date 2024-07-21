@@ -106,6 +106,7 @@ class DatabaseControl extends Database
 
     public function questionDifficulty(){
         return [
+            '',
             'Easy',
             'Medium',
             'Hard',
