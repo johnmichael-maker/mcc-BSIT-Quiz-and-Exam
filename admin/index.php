@@ -13,7 +13,7 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-body">
-                                <p>Quizzes</p>
+                                 <h5><span style="color:rgba(255, 99, 132, 0.8);">Quizzes</span></h5>
                                 <h1><?= $adminController->getAllQuestionCount() ?></h1>
                             </div>
                         </div>
@@ -21,7 +21,7 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-body">
-                                <p>Exams</p>
+                             <h5><span style="color:rgba(54, 162, 235, 0.8);">Exams</span></h5>
                                 <h1><?= $adminController->examCount() ?></h1>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-body">
-                                <p>Student Contestants</p>
+                               <h5><span style="color:rgba(255, 206, 86, 0.8);">Student Contestants</span></h5>
                                 <h1><?= $adminController->contestantsCount() ?></h1>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-body">
-                                <p>Examinees</p>
+                                <h5><span style="color:rgba(57, 255, 20, 0.8);">Examinees</span></h5>
                                 <h1><?= $adminController->examineesCount() ?></h1>
                             </div>
                         </div>
