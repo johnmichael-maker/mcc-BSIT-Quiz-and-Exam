@@ -108,9 +108,9 @@
 
                     <label for="">Question Category</label>
                     <select name="category" class="form-select my-3" required>
-                        <option value="0">Easy</option>
-                        <option value="1">Medium</option>
-                        <option value="2">Hard</option>
+                        <option value="1">Easy</option>
+                        <option value="2">Medium</option>
+                        <option value="3">Hard</option>
                     </select>
 
                     <label for="">Time Limit</label>
