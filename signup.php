@@ -23,8 +23,8 @@ require __DIR__ . '/./partials/header.php';
     }
 </style>
 
-<body>
-    <div class="h-100-vh d-lg-flex align-items-lg-center justify-content-lg-center position-relative overflow-y-auto" style="max-height: 100vh;">
+<body class="py-5">
+    <div class="d-lg-flex align-items-lg-center justify-content-lg-center position-relative overflow-y-auto" style="max-height: 100vh;">
    
         <div class="container py-3">
 
