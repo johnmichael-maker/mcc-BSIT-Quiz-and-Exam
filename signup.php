@@ -24,9 +24,9 @@ require __DIR__ . '/./partials/header.php';
 </style>
 
 <body >
-    <div class="h-100-vh d-lg-flex align-items-lg-center justify-content-lg-center position-relative" style="max-height: 100vh;">
+    <div class="h-100-vh d-lg-flex align-items-lg-center justify-content-lg-center position-relative my-5" style="max-height: 100vh;">
    
-        <div class="container">
+        <div class="container ">
 
             <?php if (!isset($_GET['signup'])) : ?>
                 <div class="choose-div">
