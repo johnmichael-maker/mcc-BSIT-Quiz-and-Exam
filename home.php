@@ -13,22 +13,7 @@ if (isset($_SESSION['EXAM_ID'])) {
 
         <div class="position-absolute top-0 start-0 p-2">
             <h5 class="text-light">Name: <?= $_SESSION['LNAME'].', '.$_SESSION['FNAME'].' '.$_SESSION['MNAME'] ?></h5>
-            <p class="text-light">Year: <?php 
-                switch ($_SESSION['LEVEL']) {
-                    case 1:
-                        echo '1st';
-                        break;
-                    case 2:
-                        echo '2nd';
-                        break;
-                    case 3:
-                        echo '3rd';
-                        break;
-                    case 4:
-                        echo '4th';
-                        break;
-                }
-            ?></p>
+           <p class="mb-1 text-light">Year & Section: <?= $databaseController->yearLevel()[$_SESSION['LEVEL']] ?> <?= $databaseController->sections($_SESSION['SECTION']) ?></p>
         </div>
 
         <div class="question-container" id="question-container">
