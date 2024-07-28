@@ -44,7 +44,7 @@ class Contestants extends Database
         $count = 0;
 
         $check = $this->checkContestantData($name);
-        $get_id = $conn->prepare("SELECT contestant_id FROM contestants ORDER BY contestant_id DESC");
+        $get_id = $conn->prepare("SELECT * FROM contestants ORDER BY contestant_id DESC");
         $get_id->execute();
         if ($get_id->rowCount() > 0) {
             $count = $get_id->rowCount() + 1;
@@ -60,6 +60,7 @@ class Contestants extends Database
                 $current_data['mname'],
                 $current_data['year'],
                 $current_data['contestant_id'],
+                 $current_data['section']
             ];
             $this->activateContestantSession($current);
             $this->message = "success";
