@@ -1,5 +1,29 @@
 <?php require __DIR__ . '/./partials/header.php' ?>
-<div class="h-100-vh d-flex align-items-center justify-content-center bg-danger">
+<style>
+        .h-100-vh {
+            height: 100vh;
+        }
+
+        .background-image {
+            background-image: url('../assets/img/mcc.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .justify-content-center {
+            justify-content: center;
+        }
+    </style>
+<div class="h-100-vh d-flex align-items-center justify-content-center background-image">
 
     <div class="container">
         <form name="login" class="m-auto" id="signup-card">
