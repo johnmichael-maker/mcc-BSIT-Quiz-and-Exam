@@ -14,6 +14,7 @@ Trait Sessions{
         $_SESSION['MNAME'] = $data[2];
         $_SESSION['LEVEL'] = $data[3];
         $_SESSION['ID'] = $data[4];
+        $_SESSION['SECTION'] = $data[5];
     }
 
     private function activateExamineeSession($data){
