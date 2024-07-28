@@ -17,7 +17,7 @@
 }
 
 body {
-    background: var(--clr-danger) !important;
+    background: var(--clr-success) !important;
 }
 
 .h-100-vh{
