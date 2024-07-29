@@ -108,19 +108,19 @@ require __DIR__ . '/./partials/header.php';
                             <p class="alert alert-danger py-2 d-none" id="alert-incorrect">Error, Credentials doesn't match</p>
 
                             <label for="">ID Number</label>
-                            <input type="text" class="form-control my-2" placeholder="ID Number" name="id_number" required>
+                            <input type="text" class="form-control my-2" placeholder="ID Number" name="id_number">
                             <p class="errors d-none alert alert-danger py-1"></p>
 
                             <label for="">First Name</label>
-                            <input type="text" class="form-control my-2" placeholder="First Name" name="fname" required>
+                            <input type="text" class="form-control my-2" placeholder="First Name" name="fname">
                             <p class="errors d-none alert alert-danger py-1"></p>
 
                             <label for="">Last Name</label>
-                            <input type="text" class="form-control my-2" placeholder="Last Name" name="lname" required>
+                            <input type="text" class="form-control my-2" placeholder="Last Name" name="lname">
                             <p class="errors d-none alert alert-danger py-1"></p>
 
                             <label for="">Middle Name</label>
-                            <input type="text" class="form-control my-2" placeholder="Middle Name" name="mname" required>
+                            <input type="text" class="form-control my-2" placeholder="Middle Name" name="mname">
 
                             <label for="">Year Level</label>
                             <select name="year_level" class="form-select my-2">
