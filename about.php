@@ -38,6 +38,20 @@
 .fade-in-right {
     animation: fadeInRight 1s ease-in-out;
 }
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-80px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-in-left {
+    animation: fadeInLeft 1s ease-in-out;
+}
     </style>
 </head>
 
@@ -51,7 +65,7 @@
                 </div>
                <div class="col-lg-8 h-100 my-auto text-light">
              <h1 class="fade-in-right">MADRIDEJOS COMMUNITY COLLEGE</h1>
-                   <h3>Quiz Bowl and Exam</h3>
+             <h3 class="fade-in-left">Quiz Bowl and Exam</h3>
                     <p>&copy; John Michaelle Robles 2024</p>
                </div>
                 </div>
