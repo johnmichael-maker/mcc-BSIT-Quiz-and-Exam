@@ -35,7 +35,7 @@
           @keyframes fadeInRight {
     from {
         opacity: 0;
-        transform: translateX(50px);
+        transform: translateX(100vh);
     }
     to {
         opacity: 1;
