@@ -52,6 +52,36 @@
 .fade-in-left {
     animation: fadeInLeft 1s ease-in-out;
 }
+     @keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-in-left {
+    animation: fadeInLeft 1s ease-in-out;
+}
+
+.fade-in-right {
+    animation: fadeInRight 1s ease-in-out;
+}
+    
     </style>
 </head>
 
@@ -99,18 +129,18 @@
             professionals who can contribute to the region's socioeconomic growth.
         </div>
 
-        <hr>
+         <hr>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <img src="assets/img/img-1.jpeg" alt="image" class="w-100">
-            </div>
-            <div class="col-lg-6">
-                <img src="assets/img/img-2.jpeg" alt="image" class="w-100">
-            </div>
-        </div>
+<div class="row">
+    <div class="col-lg-6 fade-in-left">
+        <img src="assets/img/img-1.jpeg" alt="image" class="w-100">
+    </div>
+    <div class="col-lg-6 fade-in-right">
+        <img src="assets/img/img-2.jpeg" alt="image" class="w-100">
+    </div>
+</div>
 
-        <hr>
+<hr>
 
         <div class="mt-3">
             <h5>Vision:</h5>
