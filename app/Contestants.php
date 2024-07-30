@@ -231,7 +231,7 @@ class Contestants extends Database
             $contestant_id = $_SESSION['ID'];
             $stmt = $conn->prepare("SELECT * FROM contestants WHERE contestant_id = :id AND status = :stat");
             $stmt->execute([':id' => $contestant_id, ':stat' => $stat]);
-
+              $query = $conn->query("UPDATE contestants SET status = '2' WHERE id_number = '$contestant_id'");
             if ($stmt->rowCount() > 0) {
                 $result = $stmt->fetch();
                 if ($result['status'] == 1) {
