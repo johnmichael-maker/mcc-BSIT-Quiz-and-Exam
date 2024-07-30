@@ -339,7 +339,7 @@ if (isset($_GET['add-feedback'])) {
                     </div>
 
                     <div class="col-12 d-flex align-items-center mt-3 justify-content-end dont-print">
-                        <button type="submit" class="btn btn-danger" onclick="print()"><i class="bx bx-printer"></i> Print</button>
+                       <!-- <button type="submit" class="btn btn-danger" onclick="print()"><i class="bx bx-printer"></i> Print</button>-->
                         <span class="mx-3 h-100 border-end border-secondary"></span>
                         <a href="#" onclick="return showLogout()" class="btn btn-secondary"> Logout</a>
                     </div>
