@@ -845,7 +845,7 @@ if (indexDOM) {
 
       if(dataResponse[0].status === 1) {
         questionDiv.classList.add("pt-5")
-        questionDiv.innerHTML = "Competition is yet to start. Please for the admin to start the competition";
+        questionDiv.innerHTML = "The competition has not started yet. Please wait for the admin to start the competition";
       }else{
 
       for (let i = 0; i < dataResponse.length; i++) {
