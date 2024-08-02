@@ -49,8 +49,8 @@
                         <option value="2">East</option>
                         <option value="3">West</option>
                         <option value="4">South</option>
-                        <option value="5">South East</option>
                         <option value="5">North East</option>
+                        <option value="6">South East</option>
                     </select>
 
                     <label for="">Year Level</label>
