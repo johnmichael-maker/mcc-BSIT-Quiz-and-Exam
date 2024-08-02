@@ -27,8 +27,12 @@ Trait Sessions{
         $_SESSION['SECTION'] = $data[5];
     }
 
-    public function accountDisable(){
+     public function accountDisable(){
         $_SESSION['DISABLED'] = 1;
+        $db = new Database;
+        $conn = $db->getConnection();
+        $contestant_id = $_SESSION['ID'];
+        $query = $conn->query("UPDATE contestants SET status = '2' WHERE id_number = '$contestant_id'");
     }
 
     public function checkSession(){
