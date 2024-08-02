@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App;
+use App\Database;
 
 Trait Sessions{
     public function startSession(){
