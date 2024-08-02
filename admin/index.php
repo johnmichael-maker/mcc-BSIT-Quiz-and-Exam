@@ -59,7 +59,7 @@
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Quizzes', 'Exams', 'Quiz Student', 'Examinees'],
+        labels: ['Quizzes', 'Exams', 'Student Contestant', 'Examinees'],
         datasets: [{
             label: '# of Items',
             data: [
