@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-lg-8 h-100 my-auto text-light">
              <h1 class="fade-in-right">MADRIDEJOS COMMUNITY COLLEGE</h1>
-                    <h3 class="fade-in-left">Quiz Bowl and Exam</h3>
+                    <h3 class="fade-in-left">Pop Quiz and Exam</h3>
                     <p>&copy; John Michaelle Robles 2024</p>
                </div>
                 </div>
