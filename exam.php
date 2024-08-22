@@ -103,7 +103,7 @@ if (!$examineeController->checkExaminee()) {
 
                     </div>
 
-                    <div class="col-12">
+                  <!--  <div class="col-12">
                         <div class=" my-3">
                             <h6 class="mb-0">II. Identification</h6>
 
@@ -169,7 +169,7 @@ if (!$examineeController->checkExaminee()) {
 
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <div class="col-12">
                         <div class="d-flex align-items-center gap-2 my-3">
@@ -215,7 +215,7 @@ if (!$examineeController->checkExaminee()) {
 
                     </div>
 
-                    <div class="col-12">
+                   <!-- <div class="col-12">
                         <div class="d-flex align-items-center gap-2 my-3">
                             <h6 class="mb-0">IV. Essay</h6>
                         </div>
@@ -243,7 +243,7 @@ if (!$examineeController->checkExaminee()) {
                             ?>
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <div class="col-12 text-end">
                         <button type="submit" class="btn btn-danger mt-3">Submit</button>
