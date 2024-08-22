@@ -67,7 +67,7 @@ if (isset($_GET['add-feedback'])) {
                     <img src="./assets/img/logo.png" alt="" style="width: 150px;" class="position-absolute start-0 top-0 mt-3">
                     <h3>Madridejos Community College</h3>
                     <p class="mb-0">Examination of BSIT - <?= $row['year_level'] . ' ' .  $databaseController->sections($row['section']) ?></p>
-                    <p>Date: 10/10/2023</p>
+                    <p>Date: <?= date('Y-m-d')?></p>
                 </div>
 
                 <div class="col-12 dont-print">
@@ -159,7 +159,7 @@ if (isset($_GET['add-feedback'])) {
 
                             </div>
 
-                          <!--  <div class="col-12">
+                            <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
                                     <h6 class="mb-0">II. Identification</h6>
                                 </div>
@@ -238,7 +238,7 @@ if (isset($_GET['add-feedback'])) {
 
                                 </div>
 
-                            </div> -->
+                            </div> 
 
                             <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
@@ -297,7 +297,7 @@ if (isset($_GET['add-feedback'])) {
 
                             </div>
 
-                           <!-- <div class="col-12">
+                            <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
 
                                     <h6 class="mb-0">IV. Essay</h6>
@@ -329,7 +329,7 @@ if (isset($_GET['add-feedback'])) {
                             </div>
 
                         </div>
-                    </div> -->
+                    </div> 
 
                     <div class="col-12">
                         <h3>Total Score: <?= $score ?> / <?= $databaseController->getMultipleChoice($id)->rowCount() + $databaseController->getIdentification($id)->rowCount() + $databaseController->getEnumeration($id)->rowCount() ?> </h3>
