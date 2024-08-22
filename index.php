@@ -60,6 +60,9 @@
 .fade-in-left {
     animation: fadeInLeft 1s ease-in-out;
 }
+ .nav-link{
+    font-size: 20px;
+}        
     </style>
 </head>
 
@@ -89,7 +92,7 @@
                         <a href="about.php" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
-                        <a href="signup.php" class="nav-link">Login</a>
+                        <a href="signup.php" class="nav-link">Sign Up</a>
                     </li>
                 </ul>
             </div>
