@@ -159,7 +159,7 @@ if (isset($_GET['add-feedback'])) {
 
                             </div>
 
-                            <div class="col-12">
+                          <!--  <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
                                     <h6 class="mb-0">II. Identification</h6>
                                 </div>
@@ -238,7 +238,7 @@ if (isset($_GET['add-feedback'])) {
 
                                 </div>
 
-                            </div>
+                            </div> -->
 
                             <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
@@ -297,7 +297,7 @@ if (isset($_GET['add-feedback'])) {
 
                             </div>
 
-                            <div class="col-12">
+                           <!-- <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
 
                                     <h6 class="mb-0">IV. Essay</h6>
@@ -329,7 +329,7 @@ if (isset($_GET['add-feedback'])) {
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-12">
                         <h3>Total Score: <?= $score ?> / <?= $databaseController->getMultipleChoice($id)->rowCount() + $databaseController->getIdentification($id)->rowCount() + $databaseController->getEnumeration($id)->rowCount() ?> </h3>
