@@ -258,6 +258,16 @@ if (!$examineeController->checkExaminee()) {
         </div>
     </div>
 </div>
+<div id="reminderModal" style="display:none; position:fixed; bottom:10%; left:50%; transform:translateX(-50%); background-color:#fff; padding:20px; border-radius:5px; width:80%; max-width:300px; text-align:center; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); z-index:1000;">
+    <h2>Reminder</h2>
+    <p>1 minute left! Please finish up.</p>
+</div>
+
+<audio id="reminderSound">
+    <source src="time.mp3" type="audio/mpeg">
+    <source src="time.ogg" type="audio/ogg">
+</audio>
+
 
 <script>
     function startTimer(duration, display) {
@@ -269,12 +279,25 @@ if (!$examineeController->checkExaminee()) {
 
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
-
+  
             display.textContent = minutes + ":" + seconds;
 
+           
+            if (timer === 60) {
+                var reminderModal = document.getElementById('reminderModal');
+                var reminderSound = document.getElementById('reminderSound');
+                
+                reminderModal.style.display = 'block';
+                reminderSound.play();
+
+              
+                setTimeout(function() {
+                    reminderModal.style.display = 'none';
+                }, 5000); 
+            }
+
             if (--timer < 0) {
-                timer = duration;
-                clearInterval(interval)
+                clearInterval(interval);
                 location.href = 'finished.php?time_end';
             }
         }, 1000);
