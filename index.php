@@ -92,7 +92,7 @@
                         <a href="about.php" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
-                        <a href="signup.php" class="nav-link">Sign Up</a>
+                        <a href="signup.php" class="nav-link">Signup</a>
                     </li>
                 </ul>
             </div>
