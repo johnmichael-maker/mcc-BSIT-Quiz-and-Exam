@@ -22,6 +22,15 @@
         .justify-content-center {
             justify-content: center;
         }
+         .nav-link{
+            text-decoration: none;
+            color: rgb(128, 171, 184);
+            float: right;
+        }
+        .home-link{
+        text-decoration: none;
+        color: rgb(128, 171, 184);
+    }
     </style>
 <div class="h-100-vh d-flex align-items-center justify-content-center background-image">
 
@@ -46,9 +55,10 @@
                     <p class="errors d-none alert alert-danger py-1"></p>
 
                     <button type="submit" name="button" class="w-100 btn btn-danger mt-3 mb-2">Submit</button>
-
-                    <a href="forgot-password.php">Forgot Password?</a>
-
+                        
+                    <a  class="home-link" href="../index.php">Back Home</a>
+                    <a href="forgot-password.php" class="nav-link">Forgot Password?</a>
+                        
                     <div class="text-center d-none" id="loading-signup">
                         <div class="spinner-border mt-3" role="status">
                             <span class="visually-hidden">Loading...</span>
