@@ -1,4 +1,4 @@
-<!--<?php 
+<?php 
      require __DIR__ . '/./vendor/autoload.php';
      use App\DatabaseControl;
 
@@ -208,4 +208,4 @@
 </footer>
 
 </body>
-    -->
+    
