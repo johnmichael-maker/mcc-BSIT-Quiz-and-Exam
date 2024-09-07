@@ -44,27 +44,10 @@ header img {
 .footer-background p {
     color: hsl(0, 0%, 90%); 
 }
-
-
 @keyframes fadeInRight {
     from {
         opacity: 0;
-        transform: translateX(50vh);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.fade-in-right {
-    animation: fadeInRight 1s ease-in-out;
-}
-
-@keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50vh);
+        transform: translateX(50px);
     }
     to {
         opacity: 1;
@@ -76,6 +59,9 @@ header img {
     animation: fadeInLeft 1s ease-in-out;
 }
 
+.fade-in-right {
+    animation: fadeInRight 1s ease-in-out;
+}
 
 @media print {
     .dont-print {
