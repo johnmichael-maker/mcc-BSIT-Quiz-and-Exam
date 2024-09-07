@@ -240,7 +240,9 @@ span {
     color: red;
     border-bottom: 2px solid red;
 }
-
+h5.fw-bold {
+    color: black;
+}
 
     </style>
 </head>
