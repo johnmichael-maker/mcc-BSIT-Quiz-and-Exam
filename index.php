@@ -268,10 +268,10 @@ h5.fw-bold {
                         <a href="index.php" class="nav-link border-bottom border-2 border-danger active">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="about.php" class="nav-link border-bottom border-2 border-danger">About</a>
+                        <a href="about.php" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
-                        <a href="signup.php" class="nav-link  border-bottom border-2 border-danger">Signup</a>
+                        <a href="signup.php" class="nav-link">Signup</a>
                     </li>
                 </ul>
             </div>
