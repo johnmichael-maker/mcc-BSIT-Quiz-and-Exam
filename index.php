@@ -240,7 +240,7 @@ span {
     color: red;
     border-bottom: 2px solid red;
 }
-h5.fw-bold {
+h6.fw-bold {
     color: black;
 }
 
@@ -348,7 +348,7 @@ h5.fw-bold {
                 <div class="col-lg-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="fw-bold"><?= htmlspecialchars($feedback['name']) ?></h5>
+                            <h6 class="fw-bold"><?= htmlspecialchars($feedback['name']) ?></h6>
                             <p class="text-center">" <?= htmlspecialchars($feedback['feedback']) ?> "</p>
                         </div>
                     </div>
