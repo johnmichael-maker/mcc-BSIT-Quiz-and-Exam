@@ -11,7 +11,7 @@
                     <h5 class="mb-3 text-center">Forgot Password</h5>
 
                     <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to reset page....</p>
-                    <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect username or password</p>
+                    <p class="alert alert-danger py-2 d-none" id="alert-error">Error, email address not found.</p>
 
                     <label for="">Email</label>
                     <input type="email" class="form-control my-2" placeholder="Enter email" name="email">
