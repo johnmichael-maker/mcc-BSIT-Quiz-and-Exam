@@ -27,15 +27,20 @@ require __DIR__ . '/./partials/header.php';
         color: rgb(128, 171, 184);
     }
     
+  .animated-image {
+  position: relative; 
+  animation: moveUpDown 2s infinite; 
+}
+
 @keyframes moveUpDown {
   0% {
-    transform: translateY(0);
+    transform: translateY(0); 
   }
   50% {
     transform: translateY(-19px); 
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(0); 
   }
 }
 </style>
