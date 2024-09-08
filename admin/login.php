@@ -31,6 +31,10 @@
         text-decoration: none;
         color: rgb(128, 171, 184);
     }
+        .smoke-color {
+            color: #6f6f6f; 
+           font-family: sans-serif;
+        }
     </style>
 <div class="h-100-vh d-flex align-items-center justify-content-center background-image">
 
@@ -39,7 +43,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="mb-3">Sign In As Admin</h5>
-
+                    <p class="smoke-color">Madridejos Community College</p>
                     <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                     <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect username or password</p>
 
