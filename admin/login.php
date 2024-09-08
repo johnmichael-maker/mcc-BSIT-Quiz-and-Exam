@@ -45,7 +45,7 @@
                     <h5 class="mb-3">Sign In As Admin</h5>
                     <p class="smoke-color">Madridejos Community College</p>
                     <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
-                    <p class="alert alert-danger py-2 d-none" id="alert-error">Error, email address not found.</p>
+                    <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect username or password</p>
 
                     <label for="">Username</label>
                     <input type="text" class="form-control my-2" placeholder="Username" name="uname"required>
