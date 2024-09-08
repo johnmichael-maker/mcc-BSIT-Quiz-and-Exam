@@ -26,6 +26,18 @@ require __DIR__ . '/./partials/header.php';
         padding: 15px 30px;
         color: rgb(128, 171, 184);
     }
+    
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-19px); 
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 </style>
 
 <body class="py-5" style="max-height: 100vh;">
@@ -37,7 +49,7 @@ require __DIR__ . '/./partials/header.php';
                 <div class="choose-div">
                 <div class="card mx-auto choose-card" style="width: 500px;">
                     <div class="card-body text-center p-4">
-                        <img src="./assets/img/logo.png" alt="" style="width: 70%;">
+                        <img src="./assets/img/logo.png" alt="Logo" class="animated-image" style="width: 70%;">
                         <h1>Hello <span class="text-danger fw-bold">Welcome!</span></h1>
                         <p>What do you want to sign up as?</p>
                         <div class="d-flex align-items-center gap-2 mt-4">
