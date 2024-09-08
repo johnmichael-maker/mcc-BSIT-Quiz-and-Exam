@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome CSS (for icons) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
     
@@ -44,7 +48,6 @@ header img {
 .footer-background p {
     color: hsl(0, 0%, 90%); 
 }
-
 
 @keyframes fadeInRight {
     from {
@@ -260,11 +263,90 @@ span {
     color: red;
     border-bottom: 2px solid red;
 }
+h6.fw-bold {
+    color: black; 
+} .navbar-toggler { border: none; }
+        .navbar-toggler-icon { background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30"%3E%3Cpath stroke="%23333" stroke-width="2" d="M5 6h20M5 12h20M5 18h20" /%3E%3C/svg%3E'); }
+        .hidden { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
+        .visible { opacity: 1; transform: translateY(0); }
+        .sticky-active { position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .sticky-inactive { position: static; }
+        .logo-img { max-width: 100%; height: auto; }
+        .navbar-toggler {
+         border: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30"%3E%3Cpath stroke="%23ff0000" stroke-width="2" d="M5 6h20M5 12h20M5 18h20" /%3E%3C/svg%3E');
+    color: crimson; /* Fallback color */
+    size: 15px;
+}
+/* Default link color and font family */
+.navbar-nav .nav-link {
+    color: #000; 
+   font-family: 'Times New Roman', Times, serif;
+    font-size: 20px; 
+    font-weight: normal; 
+    text-transform: none; 
+    letter-spacing: 0; 
+    line-height: 1.5;
+    text-decoration: none; 
+    padding: 0.5rem 1rem; /
+}
+.navbar-nav .nav-item {
+    margin: 0 1rem; 
+}
+
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+    color: red; 
+    font-family: 'Times New Roman', Times, serif;
+    text-decoration: none; 
+}
+
+
+.navbar-nav .nav-link.active {
+    color: red; 
+    font-family: 'Times New Roman', Times, serif;
+    text-decoration: none; 
+}
+
+
+.navbar-toggler {
+    border: none; 
+    padding: 0.5rem; 
+}
+
+.row .col-lg-6 img {
+    border-radius: 10px; 
+}
 
     </style>
 </head>
 
 <body>
+<nav class="navbar navbar-expand-lg" style="background: #fff;">
+    <div class="container-fluid mx-5">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="index.php" class="nav-link ">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.php" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="signup.php" class="nav-link">Signup</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
     <header class="bg-light">
         <div class="container">
             <div class="row">
@@ -278,21 +360,6 @@ span {
                 </div>
             </div>
         </div>
-        <nav class="navbar navbar-expand navbar-dark">
-            <div class="container">
-                <ul class="navbar-nav mx-auto gap-lg-5 gap-3">
-                    <li class="nav-item">
-                        <a href="index.php" class="nav-link ">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="about.php" class="nav-link border-bottom border-2 border-danger active">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="signup.php" class="nav-link ">Signup</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
     </header>
 
     <div class="container text-light mt-3 py-3">
@@ -311,6 +378,7 @@ span {
     <div class="col-lg-6 fade-in-left">
         <img src="assets/img/img-1.jpeg" alt="image" class="w-100">
     </div>
+    <br>
     <div class="col-lg-6 fade-in-right">
         <img src="assets/img/img-2.jpeg" alt="image" class="w-100">
     </div>
