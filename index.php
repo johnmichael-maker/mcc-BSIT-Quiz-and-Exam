@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCC Competition : QUIZ BOWL</title>
+    <title>MCC Competition : POp QUIZ and Exam</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
