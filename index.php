@@ -337,7 +337,7 @@ h6.fw-bold {
         </div>
     </header>
 
-    <div class="container text-light mt-3 py-3">
+    <div class="container text-light mt-3 py-3 animate-on-scroll">
         <h3 class="border-bottom border-2" style="width: fit-content;">About Us</h3>
         <div>
             <span class="ms-4">Madridejos</span> Community College (MCC) is a higher education institution located in
@@ -348,14 +348,14 @@ h6.fw-bold {
 
         <hr>
 
-        <div class="mt-3">
+        <div class="mt-3 animate-on-scroll">
             <h5>Vision:</h5>
             <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent
             individuals with benevolent character innovative, service-oriented, and highly empowered to meet and exceed
             challenges as proactive participants in shaping our world's future.
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3 animate-on-scroll">
             <h5>Mission:</h5>
             <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning
             environment that aims to foster academic and career success through development of critical thinking,
@@ -364,7 +364,7 @@ h6.fw-bold {
             communities in a highly dynamic world.
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3 animate-on-scroll">
             <h5>Goals:</h5>
             <span class="ms-4">Develop </span> globally competitive, value-laden professionals capable of making a
             positive social, environmental, and economic impact through research and community service.
@@ -372,7 +372,7 @@ h6.fw-bold {
 
         <hr>
 
-        <div class="mt-3">
+        <div class="mt-3 animate-on-scroll">
             <span class="ms-4">Learning </span> Enhancement and Support. Foster student learning and support by
             leveraging student strengths and meeting their specific needs through targeted success pathways.
 
@@ -386,7 +386,7 @@ h6.fw-bold {
             trends, seek the truth, and identify opportunities that lie ahead.
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3 animate-on-scroll">
             <span class="ms-4">Inculcate </span>
             Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and outside the school.
             Social Responsibility. Ensure the relevance, alignment and support of the community and businesses by providing outreach, bridge programs, and community-focused facilities.
