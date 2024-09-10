@@ -338,7 +338,7 @@ h6.fw-bold {
     </header>
 
     <div class="container text-light mt-3 py-3">
-        <h3 class="border-bottom border-2" style="width: fit-content;">About Us</h3>
+        <h3 class="border-bottom border-2 animate-on-scroll" style="width: fit-content;">About Us</h3>
         <div>
             <span class="ms-4 animate-on-scroll">Madridejos</span> Community College (MCC) is a higher education institution located in
             Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to
@@ -355,9 +355,9 @@ h6.fw-bold {
             challenges as proactive participants in shaping our world's future.
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3 animate-on-scroll">
             <h5>Mission:</h5>
-            <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning
+            <span class="ms-4 animate-on-scroll">Madridejos </span> Community College is a safe, accessible, and affordable learning
             environment that aims to foster academic and career success through development of critical thinking,
             creativity, informed research, and social responsibility. Our mission is to deliver academic programs that
             are timely, appropriate, and transformative in response to the demands of local, national, and international
