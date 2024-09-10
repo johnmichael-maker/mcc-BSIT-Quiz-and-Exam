@@ -298,6 +298,22 @@ h6.fw-bold {
     border: none; 
     padding: 0.5rem; 
 }
+  .nav-bot {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 15px;
+            color: white;
+            background-color: skyblue; 
+            border: none;
+            border-radius: 50px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-bot:hover {
+            background-color: crimson; 
+        }
 </style>
 </head>
 <body>
@@ -316,7 +332,7 @@ h6.fw-bold {
                     <a href="about.php" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="signup.php" class="nav-link">Signup</a>
+                    <a href="signup.php" class="nav-bot">Signup</a>
                 </li>
             </ul>
         </div>
