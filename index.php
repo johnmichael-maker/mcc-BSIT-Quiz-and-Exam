@@ -337,7 +337,7 @@ h6.fw-bold {
         </div>
     </header>
 
-    <div class="container text-light mt-3 py-3 animate-on-scroll">
+    <div class="container text-light mt-3 py-3">
         <h3 class="border-bottom border-2" style="width: fit-content;">About Us</h3>
         <div>
             <span class="ms-4 animate-on-scroll">Madridejos</span> Community College (MCC) is a higher education institution located in
@@ -355,7 +355,7 @@ h6.fw-bold {
             challenges as proactive participants in shaping our world's future.
         </div>
 
-        <div class="mt-3 animate-on-scroll">
+        <div class="mt-3">
             <h5>Mission:</h5>
             <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning
             environment that aims to foster academic and career success through development of critical thinking,
@@ -373,7 +373,7 @@ h6.fw-bold {
         <hr>
 
         <div class="mt-3 animate-on-scroll">
-            <span class="ms-4">Learning </span> Enhancement and Support. Foster student learning and support by
+            <span class="ms-4 animate-on-scroll">Learning </span> Enhancement and Support. Foster student learning and support by
             leveraging student strengths and meeting their specific needs through targeted success pathways.
 
             Adaptive
@@ -387,7 +387,7 @@ h6.fw-bold {
         </div>
 
         <div class="mt-3 animate-on-scroll">
-            <span class="ms-4">Inculcate </span>
+            <span class="ms-4 animate-on-scroll">Inculcate </span>
             Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and outside the school.
             Social Responsibility. Ensure the relevance, alignment and support of the community and businesses by providing outreach, bridge programs, and community-focused facilities.
         </div>
