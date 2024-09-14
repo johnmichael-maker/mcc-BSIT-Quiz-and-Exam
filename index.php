@@ -404,8 +404,7 @@ h6.fw-bold {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <!-- Modal Body -->
-            <div class="modal-body">
+          <div class="modal-body">
                 <p class="text-center mb-4">Select your role to sign up:</p>
                 <div class="d-flex justify-content-center gap-4">
                     <a href="step_register.php" class="btn btn-role btn-success">Examinee</a>
