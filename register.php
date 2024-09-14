@@ -1,5 +1,5 @@
 <?php
-require_once('./app/Database.php');
+namespace App;
 
 // Initialize variables for messages
 $successMessage = '';
