@@ -332,7 +332,7 @@ h6.fw-bold {
                     <a href="about.php" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="signup.php" class="nav-bot">Signup</a>
+                    <a href="step_register.php" class="nav-bot">Signup</a>
                 </li>
             </ul>
         </div>
