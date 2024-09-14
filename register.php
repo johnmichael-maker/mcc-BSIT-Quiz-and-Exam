@@ -1,5 +1,5 @@
 <?php
-// require_once('./config.php');
+require_once('./app/Database.php');
 
 // Initialize variables for messages
 $successMessage = '';
