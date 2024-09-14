@@ -22,13 +22,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-   
+  
 body {
     color: hsl(0, 0%, 20%); 
 }
 
 header {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./assets/img/mcc-bg.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./assets/img/bg-img.jpg);
     background-size: cover;
     background-position: center;
     padding: 20px 0;
@@ -298,22 +298,77 @@ h6.fw-bold {
     border: none; 
     padding: 0.5rem; 
 }
-  .nav-bot {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 15px;
-            color: white;
-            background-color: skyblue; 
-            border: none;
-            border-radius: 50px;
-            text-align: center;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
+  /* Modal Enhancements */
+  .modal-content {
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa;
+    }
 
-        .nav-bot:hover {
-            background-color: crimson; 
-        }
+    .modal-header {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .modal-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .modal-body {
+        font-size: 18px;
+        color: #555;
+        padding: 20px;
+    }
+
+    /* Role Buttons */
+    .btn-role {
+        border-radius: 30px;
+        padding: 10px 25px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-role:hover {
+        background-color: #0069d9;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Modal backdrop for a sleek effect */
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-signup {
+        border-radius: 50px; /* Makes the button round */
+        padding: 10px 25px; /* Increases button padding */
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Optional: Button hover effect */
+    .btn-signup:hover {
+        background-color: #c82333; /* Slightly darker red on hover */
+    }
 </style>
 </head>
 <body>
@@ -332,12 +387,34 @@ h6.fw-bold {
                     <a href="about.php" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="step_register.php" class="nav-bot">Signup</a>
+                    <button class="btn btn-signup btn-danger" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- Sign Up Modal -->
+<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="signUpModalLabel">Sign Up As</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p class="text-center mb-4">Select your role to sign up:</p>
+                <div class="d-flex justify-content-center gap-4">
+                    <a href="step_register.php" class="btn btn-role btn-success">Examinee</a>
+                    <a href="signup_instructor.php" class="btn btn-role btn-primary">Instructor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <header class="bg-light">
         <div class="container">
             <div class="row">
@@ -351,7 +428,7 @@ h6.fw-bold {
                 </div>
             </div>
         </div>
-    </header>
+    </header>`
 
     <div class="container text-light mt-3 py-3">
         <h3 class="border-bottom border-2" style="width: fit-content;">About Us</h3>
