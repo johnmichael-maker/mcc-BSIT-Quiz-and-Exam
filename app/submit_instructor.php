@@ -210,7 +210,7 @@ try {
                             </div>
                             <button type="submit" class="btn btn-danger w-100">Send Registration Link</button>
                         </form>
-                        <p class="mt-3"><a class="home-link" href="index.php">Back Home</a></p>
+                        <p class="mt-3"><a class="home-link" href="../index.php">Back Home</a></p>
                     </div>
                 </div>
             </div>
