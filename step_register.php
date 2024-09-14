@@ -10,6 +10,7 @@
     <div class="container">
         <img src="./assets/img/logo.png" alt="College Logo" class="logo">
         <div class="form-container">
+         <h1 class="mb-4"><strong>Student Signup</strong></h1>
             <h2>MS 365 Account Verification</h2>
             <p>Enter your MS 365 Username to receive a registration link.</p>
             <form id="registrationForm" action="./app/submit_registration.php" method="post" onsubmit="return validateEmail()">
