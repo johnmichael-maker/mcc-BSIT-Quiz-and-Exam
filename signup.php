@@ -1,15 +1,7 @@
 <?php
-session_start();
-
-// Check if the request is coming from Outlook or another email client
-if (!isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'], 'outlook.com') === false) {
-    // If the referrer is not Outlook, deny access or show an error
-    http_response_code(403); // 403 Forbidden
-    die("Access Denied: This link can only be accessed from an Outlook email.");
-}
-
-// If the request is from Outlook, proceed with the page
 require __DIR__ . '/./partials/header.php';
+// echo password_hash('1Admin', PASSWORD_DEFAULT);
+
 ?>
 
 <style>
