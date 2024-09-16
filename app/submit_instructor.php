@@ -5,11 +5,9 @@ namespace App;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
 require __DIR__ . "/../vendor/phpmailer/phpmailer/src/Exception.php";
 require __DIR__ . "/../vendor/phpmailer/phpmailer/src/PHPMailer.php";
 require __DIR__ . "/../vendor/phpmailer/phpmailer/src/SMTP.php";
-
 require '../vendor/autoload.php';
 
 // Initialize variables for messages
@@ -53,8 +51,8 @@ try {
                 $stmt->bindParam(':expires_at', $expires_at);
 
                 if ($stmt->execute()) {
-                    // Create registration link
-                    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+                    // Create registration link with HTTPS protocol
+                    $protocol = 'https'; // Force HTTPS
                     $host = $_SERVER['HTTP_HOST'];
                     $register_link = "$protocol://$host/register.php?token=$token";
 
