@@ -55,7 +55,8 @@ try {
                     // Create registration link
                     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
                     $host = $_SERVER['HTTP_HOST'];
-                    $register_link = "$protocol://$host/register.php?token=$token";
+                   $register_link = "$protocol://$host/mccbsitquizandexam.com/register.php?token=$token";
+
 
                     // Set up PHPMailer
                     $mail = new PHPMailer(true);
