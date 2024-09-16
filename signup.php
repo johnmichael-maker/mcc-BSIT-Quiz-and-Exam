@@ -58,7 +58,7 @@ require __DIR__ . '/./partials/header.php';
                         <h1>Hello <span class="text-danger fw-bold">Welcome!</span></h1>
                         <p>What do you want to sign up as?</p>
                         <div class="d-flex align-items-center gap-2 mt-4">
-                           <a href="?signup=quiz" class="btn btn-danger w-100"><i class="bx bx-question-mark"></i> Quiz Bowl</a>
+                           <a href="?signup=quiz" class="btn btn-danger w-100"><i class="bx bx-question-mark"></i>Pop Quiz</a>
                             <!--<a href="?signup=exam" class="btn btn-danger w-100"><i class="bx bx-file"></i> Exam</a>-->
                         </div>
                     </div>
@@ -70,7 +70,7 @@ require __DIR__ . '/./partials/header.php';
                     <div class="card">
                         <div class="card-body">
                             <a href="signup.php" class="btn btn-secondary mb-2"><i class="bx bx-arrow-back"></i></a>
-                            <h3 class="text-center fw-bold my-3"><i class="bx bx-question-mark"></i> Quiz Bowl</h3>
+                            <h3 class="text-center fw-bold my-3"><i class="bx bx-question-mark"></i>Pop Quiz</h3>
                             <h5 class="mb-3">Please sign up first</h5>
 
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
