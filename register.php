@@ -1,6 +1,7 @@
 <?php
-namespace App;
+// require_once('./config.php');
 
+// Initialize variables for messages
 $successMessage = '';
 $errorMessage = '';
 
@@ -47,21 +48,18 @@ if ($token) {
                     $stmt = $conn->prepare("INSERT INTO instructors (first_name, middle_name, last_name, email, phone, address) VALUES (?, ?, ?, ?, ?, ?)");
                     $stmt->bind_param('ssssss', $firstName, $middleName, $lastName, $email, $phone, $address);
                     $stmt->execute();
-                    $stmt->close(); // Close the statement after execution
-
-                    // Insert into admin table with userType of 2 (Instructor)
+                    
+                    // Insert into admin table with userType of 2
                     $img = '../assets/img/logo.png'; // Default image
                     $userType = 2; // Set userType for instructor
                     $stmt = $conn->prepare("INSERT INTO admin (username, img, email, password, verification, userType, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
                     $stmt->bind_param('sssssi', $username, $img, $email, $password, $verification, $userType);
                     $stmt->execute();
-                    $stmt->close(); // Close the statement after execution
-
+                    
                     // Remove token from signupinstructors table
                     $stmt = $conn->prepare("DELETE FROM signupinstructors WHERE reset_token_hash = ?");
                     $stmt->bind_param('s', $tokenHash);
                     $stmt->execute();
-                    $stmt->close(); // Close the statement after execution
 
                     // Commit transaction
                     $conn->commit();
@@ -70,7 +68,7 @@ if ($token) {
                 } catch (Exception $e) {
                     // Rollback transaction on error
                     $conn->rollback();
-                    $errorMessage = "Error: " . $e->getMessage(); // Use detailed exception message
+                    $errorMessage = "Error: " . $stmt->error;
                 }
             }
         }
