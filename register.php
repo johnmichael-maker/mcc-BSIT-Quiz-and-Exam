@@ -1,4 +1,5 @@
 <?php
+
 // require_once('./config.php');
 
 // Initialize variables for messages
