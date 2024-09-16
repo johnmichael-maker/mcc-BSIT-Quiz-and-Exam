@@ -3,7 +3,7 @@
 namespace App;
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\Exception as PHPMailerException; // Alias PHPMailer's Exception
 
 require __DIR__ . "/../vendor/phpmailer/phpmailer/src/Exception.php";
 require __DIR__ . "/../vendor/phpmailer/phpmailer/src/PHPMailer.php";
@@ -49,16 +49,12 @@ try {
                 $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':token_hash', $token_hash);
                 $stmt->bindParam(':expires_at', $expires_at);
-if ($stmt->execute()) {
-    // Create registration link with HTTPS protocol and your domain
-    $protocol = 'https'; // Force HTTPS
-    $host = 'mccbsitquizandexam.com';  // Use your actual domain
 
-    // Create the registration link
-    $register_link = "$protocol://$host/register.php?token=$token";
-}
-
-
+                if ($stmt->execute()) {
+                    $protocol = 'https'; // Force HTTPS
+                    $host = 'mccbsitquizandexam.com';  // Use your actual domain
+                    $register_link = "$protocol://$host/register.php?token=$token";
+                    
                     // Set up PHPMailer
                     $mail = new PHPMailer(true);
 
@@ -84,7 +80,7 @@ if ($stmt->execute()) {
                         // Send email
                         $mail->send();
                         $successMessage = "Registration link sent to your email.";
-                    } catch (Exception $e) {
+                    } catch (PHPMailerException $e) {
                         $errorMessage = "Mailer Error: {$mail->ErrorInfo}";
                     }
                 } else {
@@ -97,7 +93,7 @@ if ($stmt->execute()) {
     // Close the database connection
     $database->closeConnection();
 
-} catch (Exception $e) {
+} catch (\Exception $e) { // Use PHP's global Exception class
     $errorMessage = $e->getMessage();
 }
 
