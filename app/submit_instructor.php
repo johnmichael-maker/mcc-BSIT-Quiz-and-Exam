@@ -5,11 +5,7 @@ namespace App;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
-require __DIR__ . "/../vendor/phpmailer/phpmailer/src/Exception.php";
-require __DIR__ . "/../vendor/phpmailer/phpmailer/src/PHPMailer.php";
-require __DIR__ . "/../vendor/phpmailer/phpmailer/src/SMTP.php";
-require '../vendor/autoload.php';
+require '../vendor/autoload.php';  // Let Composer handle autoload
 
 // Initialize variables for messages
 $successMessage = '';
@@ -55,8 +51,13 @@ try {
                     // Create registration link
                     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
                     $host = $_SERVER['HTTP_HOST'];
-                   $register_link = "$protocol://$host/mccbsitquizandexam.com/register.php?token=$token";
-
+                    
+                    // Replace 'localhost' with the actual domain
+                    if ($host === 'localhost') {
+                        $host = 'mccbsitquizandexam.com';  // Use your actual domain name here
+                    }
+                    
+                    $register_link = "$protocol://$host/register.php?token=$token";
 
                     // Set up PHPMailer
                     $mail = new PHPMailer(true);
@@ -67,7 +68,7 @@ try {
                         $mail->Host = 'smtp.gmail.com'; // SMTP server for Gmail
                         $mail->SMTPAuth = true;
                         $mail->Username = 'johnmichaellerobles345@gmail.com'; // Your Gmail address
-                        $mail->Password = 'ybhr uilh htvb xygk'; // Your Gmail App Password
+                        $mail->Password = 'ybhr uilh htvb xygk'; // Your Gmail App Password (consider using environment variables)
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption
                         $mail->Port = 587;
 
@@ -96,11 +97,12 @@ try {
     // Close the database connection
     $database->closeConnection();
 
-} catch (Exception $e) {
+} catch (\Exception $e) {  // Ensure you're catching global Exception for general issues
     $errorMessage = $e->getMessage();
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
