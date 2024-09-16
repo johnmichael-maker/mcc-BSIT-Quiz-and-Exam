@@ -50,11 +50,19 @@ try {
                 $stmt->bindParam(':token_hash', $token_hash);
                 $stmt->bindParam(':expires_at', $expires_at);
 
-                if ($stmt->execute()) {
-                    // Create registration link with HTTPS protocol
-                    $protocol = 'https'; // Force HTTPS
-                    $host = $_SERVER['HTTP_HOST'];
-                    $register_link = "$protocol://$host/register.php?token=$token";
+            if ($stmt->execute()) {
+    // Create registration link with HTTPS protocol
+    $protocol = 'https'; // Force HTTPS
+    $host = $_SERVER['HTTP_HOST'];
+
+    // Check if the host is localhost and replace it with your actual domain
+    if ($host === 'localhost') {
+        $host = 'mccbsitquizandexam.com';  // Replace with your actual domain
+    }
+
+    // Create the registration link
+    $register_link = "$protocol://$host/register.php?token=$token";
+}
 
                     // Set up PHPMailer
                     $mail = new PHPMailer(true);
