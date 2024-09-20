@@ -283,10 +283,9 @@ h6.fw-bold {
 }
 /* Default link color and font family */
 .navbar-nav .nav-link {
-    color: #000; 
-   font-family: 'Times New Roman', Times, serif;
-    font-size: 20px; 
-    font-weight: normal; 
+   color: #555; 
+    font-size: 17px;
+     font-weight: bold;
     text-transform: none; 
     letter-spacing: 0; 
     line-height: 1.5;
@@ -301,14 +300,14 @@ h6.fw-bold {
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
     color: red; 
-    font-family: 'Times New Roman', Times, serif;
+    font-size: 17px;
     text-decoration: none; 
 }
 
 
 .navbar-nav .nav-link.active {
-    color: red; 
-    font-family: 'Times New Roman', Times, serif;
+   color: red; 
+    font-size: 17px;
     text-decoration: none; 
 }
 
