@@ -48,12 +48,12 @@
                     <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect username or password</p>
 
                     <label for="">Email</label>
-                    <input type="email" class="form-control my-2" placeholder="Enter Your Email" name="uname"required>
+                    <input type="email" class="form-control my-2" placeholder="Email" name="uname"required>
                     <p class="errors d-none alert alert-danger py-1"></p>
 
                     <label for="">Password</label>
                    <div class="position-relative">
-                    <input type="password" class="form-control my-2" placeholder="Enter Your Password" name="password"required>
+                    <input type="password" class="form-control my-2" placeholder="Password" name="password"required>
                     <i class="bx bx-show fs-4 position-absolute top-0 end-0 mt-2 me-2" style="cursor: pointer;" id="show-pass"></i>
                    </div>
                     <p class="errors d-none alert alert-danger py-1"></p>
