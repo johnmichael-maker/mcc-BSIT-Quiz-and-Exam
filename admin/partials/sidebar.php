@@ -1,5 +1,4 @@
 <?php
-
 $url = implode(explode('/mcc-bsit-quiz-and-exam/admin', strtolower($_SERVER['REQUEST_URI'])));
 $active = "text-dark bg-light";
 $inactive = "text-light";
@@ -24,16 +23,11 @@ $inactive = "text-light";
 
     <ul class="nav flex-column mt-4">
         <li class="nav-item">
-            <a href="index.php" class="nav-link <?= str_contains($url, '/index.php') ? $active : $inactive ?>"> <i class="bx bx-home"></i> Dashboard</a>
+            <a href="index.php" class="nav-link <?= str_contains($url,'/index.php') ? $active : $inactive ?>"> <i class="bx bx-home"></i> Dashboard</a>
         </li>
-
-        <!-- Conditionally render Exam menu based on AUTH_UTYPE -->
-        <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 1): ?>
-
         <li class="nav-item">
             <a href="quiz.php" class="nav-link <?= str_contains($url, '/quiz.php') || str_contains($url, '/print-quiz.php') ? $active : $inactive ?>"> <i class="bx bx-question-mark"></i> Quiz</a>
         </li>
-        
         <li class="nav-item">
             <a href="exam.php" class="nav-link <?= 
                 $url == '/exam.php' 
@@ -42,25 +36,21 @@ $inactive = "text-light";
                 || str_contains($url, 'view-exam') 
                 ? $active : $inactive ?>"> <i class="bx bx-file"></i> Exam</a>
         </li>
-        <?php endif; ?>
-        
         <li class="nav-item">
             <a href="examinees.php" class="nav-link <?= str_contains($url, '/examinees.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Examinees</a>
         </li>
-
+        <!-- <li class="nav-item">
+            <a href="contestants.php" class="nav-link <?= str_contains($url, '/contestants.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Contestants</a>
+        </li> -->
         <li class="nav-item">
-            <a href="instructors.php" class="nav-link <?= str_contains($url, '/instructors.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Instructors</a>
-        </li>
-
-        <li class="nav-item">
-            <a href="#" onclick="return showLogout()" class="nav-link text-light"> <i class="bx bx-log-out"></i> Logout</a>
+            <a href="#"  onclick="return showLogout()" class="nav-link text-light"> <i class="bx bx-log-out"></i> Logout</a>
         </li>
     </ul>
 
 </div>
 
 <script>
-    function showLogout() {
+     function showLogout() {
         Swal.fire({
             title: "<strong>Are you sure you want to logout?</strong>",
             icon: "info",
