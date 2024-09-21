@@ -31,8 +31,42 @@ header {
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./assets/img/bg-img.jpg);
     background-size: cover;
     background-position: center;
-    padding: 20px 0;
+    padding: 0;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.col-lg-8.h-100.my-auto.text-light {
+    padding-top: 50px; 
+}
+
+
+@media (max-width: 768px) {
+    header {
+        height: auto; 
+        padding: 20px 10px;
+    }
+
+    .col-lg-8.h-100.my-auto.text-light {
+        padding-top: 20px; 
+    }
+
+    h1.fade-in-right {
+        font-size: 24px; 
+    }
+
+    h3.fade-in-left {
+        font-size: 18px; 
+    }
+
+    p {
+        font-size: 14px; 
+    }
+}
+
+
 
 
 header img {
