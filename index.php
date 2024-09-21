@@ -32,7 +32,7 @@ header {
     background-size: cover;
     background-position: center;
     padding: 0;
-    height: 80vh;
+    height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
