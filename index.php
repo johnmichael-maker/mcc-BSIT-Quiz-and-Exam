@@ -275,7 +275,7 @@ span {
 
 .nav-link.active {
     font-weight: bold;
-    color: crimson;
+    color: red;
     border-bottom: 2px solid red;
 }
 h6.fw-bold {
