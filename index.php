@@ -275,7 +275,7 @@ span {
 
 .nav-link.active {
     font-weight: bold;
-    color: red;
+    color: crimson;
     border-bottom: 2px solid red;
 }
 h6.fw-bold {
@@ -314,14 +314,14 @@ h6.fw-bold {
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
-   color: red; 
+   color: crimson; 
     font-size: 17px;
     text-decoration: none; 
 }
 
 
 .navbar-nav .nav-link.active {
-  color: red; 
+  color: crimson; 
     font-size: 17px;
     text-decoration: none; 
 }
