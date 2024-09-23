@@ -103,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instructor Registration</title>
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body{
             background-color:#dc3545;
@@ -123,18 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container mt-5">
         <div class="form-container">
             <h1 class="text-center mb-4" style="color:#fff;">Instructor Registration</h1>
-
-            <!-- Display success or error messages -->
-            <?php if ($successMessage): ?>
-                <div class="alert alert-success">
-                    <?= htmlspecialchars($successMessage) ?>
-                </div>
-            <?php elseif ($errorMessage): ?>
-                <div class="alert alert-danger">
-                    <?= htmlspecialchars($errorMessage) ?>
-                </div>
-            <?php endif; ?>
-
+            
             <!-- Registration form -->
             <form method="POST" action="">
                 <!-- Form fields for registration -->
@@ -174,6 +164,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
+
+    <script>
+        <?php if (!empty($successMessage)): ?>
+            Swal.fire({
+                icon: 'success',
+                title: '<?= addslashes($successMessage) ?>',
+                text: 'You will be redirected shortly.',
+                showConfirmButton: false,
+                timer: 3000
+            }).then(function() {
+                window.location.href = './admin/login.php';
+            });
+        <?php elseif (!empty($errorMessage)): ?>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '<?= addslashes($errorMessage) ?>'
+            });
+        <?php endif; ?>
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
