@@ -7,7 +7,6 @@ $username = "u510162695_bsit_quiz";
 $password = "1Bsit_quiz";
 $dbname = "u510162695_bsit_quiz";
 
-
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -141,35 +140,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Form fields for registration -->
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="firstname" required>
                 </div>
                 <div class="mb-3">
                     <label for="middleName" class="form-label">Middle Name</label>
-                    <input type="text" class="form-control" id="middleName" name="middleName">
+                    <input type="text" class="form-control" id="middleName" name="middleName" placeholder="Middlename">
                 </div>
                 <div class="mb-3">
                     <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Lastname" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone</label>
-                    <input type="text" class="form-control" id="phone" name="phone" required>
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone number" required>
                 </div>
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="address" name="address" required>
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
                 </div>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
