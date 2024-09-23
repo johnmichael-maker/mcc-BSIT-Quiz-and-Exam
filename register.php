@@ -2,10 +2,11 @@
 
 // Database.php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mcc_bsit_quiz_and_exam";
+   private string $host = "localhost";
+    private string $user = "u510162695_bsit_quiz";
+    private string $pass = "1Bsit_quiz";
+    private string $db = "u510162695_bsit_quiz";
+    private ?PDO $conn = null;
 
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
