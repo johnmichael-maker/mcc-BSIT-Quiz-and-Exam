@@ -47,8 +47,8 @@
                     <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                     <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect username or password</p>
 
-                    <label for="">Username</label>
-                    <input type="text" class="form-control my-2" placeholder="Username" name="uname"required>
+                    <label for="">Email</label>
+                    <input type="email" class="form-control my-2" placeholder="Email" name="uname"required>
                     <p class="errors d-none alert alert-danger py-1"></p>
 
                     <label for="">Password</label>
