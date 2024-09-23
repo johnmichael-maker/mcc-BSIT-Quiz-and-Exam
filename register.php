@@ -2,11 +2,11 @@
 
 // Database.php
 
-   private string $host = "localhost";
-    private string $user = "u510162695_bsit_quiz";
-    private string $pass = "1Bsit_quiz";
-    private string $db = "u510162695_bsit_quiz";
-    private ?PDO $conn = null;
+$servername = "localhost";
+$username = "u510162695_bsit_quiz";
+$password = "1Bsit_quiz";
+$dbname = "u510162695_bsit_quiz";
+
 
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
