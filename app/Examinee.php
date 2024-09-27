@@ -24,13 +24,13 @@ class Examinee extends Database
         $conn = $this->getConnection();
         
         $data = [
-            $this->passed_data['fname'],
-            $this->passed_data['lname'],
-            $this->passed_data['mname'],
-            $this->passed_data['year_level'],
-            $this->passed_data['id_number'],
-            $this->passed_data['section'],
-            $this->passed_data['exam_id']
+            htmlspecialchars(strip_tags(trim($this->passed_data['fname']))),
+            htmlspecialchars(strip_tags(trim($this->passed_data['lname']))),
+            htmlspecialchars(strip_tags(trim($this->passed_data['mname']))),
+            intval($this->passed_data['year_level']), // Ensure year_level is an integer
+            htmlspecialchars(strip_tags(trim($this->passed_data['id_number']))),
+            intval($this->passed_data['section']), // Ensure section is an integer
+            htmlspecialchars(strip_tags(trim($this->passed_data['exam_id']))) // Sanitize exam_id
         ];
 
         $stmt = $conn->prepare("INSERT INTO examinees(fname,lname,mname,year_level,id_number,section,exam_id) VALUES(?,?,?,?,?,?,?)");
