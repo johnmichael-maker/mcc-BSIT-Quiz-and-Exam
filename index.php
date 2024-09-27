@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/styless.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome CSS (for icons) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -405,6 +406,16 @@ h6.fw-bold {
 </style>
 </head>
 <body>
+     <div class="loader-wrapper" id="preloader">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+    <link rel="stylesheet" type="text/css" href="assets/css/styless.css"/>
+    <script>
+        var loader = document.getElementById("preloader");
+        window.addEventListener("load", function() {
+            loader.style.display = "none"
+        })
+    </script>
 <nav class="navbar navbar-expand-lg" style="background: #fff;">
     <div class="container-fluid mx-5">
         <a class="navbar-brand" href="#"></a>
