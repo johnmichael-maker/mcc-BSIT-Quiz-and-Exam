@@ -13,9 +13,32 @@ class Contestants extends Database
     use Sessions;
     private $passed_data;
     public $message;
-    public function __construct($passed_data)
+    public function __construct()
     {
-        $this->passed_data = json_decode(file_get_contents("php://input"), true);
+        // Get the JSON input and decode it
+        $jsonInput = file_get_contents("php://input");
+        $this->passed_data = json_decode($jsonInput, true);
+
+        // Check if JSON decoding was successful
+        if (is_null($this->passed_data)) {
+            $this->message = "Invalid JSON input.";
+            return; // Exit if there's an error
+        }
+
+        // Sanitize inputs
+        $this->sanitizeInputs();
+    }
+
+    private function sanitizeInputs()
+    {
+        // Ensure passed_data is an array
+        if (is_array($this->passed_data)) {
+            foreach ($this->passed_data as $key => $value) {
+                $this->passed_data[$key] = htmlspecialchars(strip_tags($value));
+            }
+        } else {
+            $this->message = "Passed data is not an array.";
+        }
     }
 
     public function signUpContestant()
