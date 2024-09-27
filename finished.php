@@ -359,7 +359,7 @@ if (isset($_GET['add-feedback'])) {
                                         <input type="text" class="form-control my-2" name="name" value="<?= ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME']) ?>" readonly>
                                         <label for="">Feedback</label>
                                         <textarea name="feedback" rows="5" class="form-control my-2" placeholder="Write something"></textarea>
-                                        <button type="submit" class="btn btn-danger float-end mt-2"> Submit</button>
+                                        <!--<button type="submit" class="btn btn-danger float-end mt-2"> Submit</button>-->
                                     </form>
                                 </div>
                             </div>
