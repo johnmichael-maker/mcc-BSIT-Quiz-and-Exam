@@ -7,7 +7,6 @@
         <div class="col-lg-10 p-0 overflow-y-auto" style="max-height: 100vh;">
             <?php require __DIR__ . '/./partials/navbar.php'; ?>
 
-
             <div class="w-100 p-3">
                 <div class="card h-100">
                     <div class="card-header dont-print">
@@ -16,7 +15,7 @@
                     <div class="card-body table-responsive">
 
                         <div class="mb-4 text-center">
-                            <h3 clas>MCC Quiz Bowl <?= date('Y') ?></h3>
+                            <h3 class="...">MCC Quiz Bowl <?= date('Y') ?></h3>
                             <h5 class="">Quiz Result</h5>
                             <p>Date: <?= date('Y-m-d') ?></p>
                         </div>
@@ -37,11 +36,11 @@
 
                                     <tr>
                                         <td><?= $i++ ?></td>
-                                       <td><?= ucfirst($contestant->fname .' '. $contestant->mname . ' ' . $contestant->lname) ?></td>
-                                        <td><?= $databaseController->sections($contestant->section) ?></td>
-                                        <td><?= $databaseController->yearLevel()[$contestant->year] ?></td>
-                                        <td><?= $contestant->check_code == null ? 0 : $contestant->check_code ?> <?= ' / ' . $adminController->getAllQuestionCount() ?> </td>
-                                        <td><?= $contestant->time ?? 0 ?>ms</td>
+                                        <td><?= htmlspecialchars(ucfirst($contestant->fname .' '. $contestant->mname . ' ' . $contestant->lname)) ?></td>
+                                        <td><?= htmlspecialchars($databaseController->sections($contestant->section)) ?></td>
+                                        <td><?= htmlspecialchars($databaseController->yearLevel()[$contestant->year]) ?></td>
+                                        <td><?= htmlspecialchars($contestant->check_code == null ? 0 : $contestant->check_code) ?> <?= ' / ' . htmlspecialchars($adminController->getAllQuestionCount()) ?> </td>
+                                        <td><?= htmlspecialchars($contestant->time ?? 0) ?>ms</td>
                                     </tr>
 
                                 <?php endforeach; ?>
