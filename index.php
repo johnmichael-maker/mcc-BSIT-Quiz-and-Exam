@@ -406,10 +406,10 @@ h6.fw-bold {
 </style>
 </head>
 <body>
-     <div class="loader-wrapper" id="preloader">
+   <div class="loader-wrapper" id="preloader">
         <span class="loader"><span class="loader-inner"></span></span>
     </div>
-    <link rel="stylesheet" type="text/css" href="assets/css/styless.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/styless.css" />
     <script>
         var loader = document.getElementById("preloader");
         window.addEventListener("load", function() {
