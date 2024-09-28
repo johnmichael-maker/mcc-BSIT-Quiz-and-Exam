@@ -86,7 +86,7 @@ require __DIR__ . '/./partials/header.php';
           left: calc(50vw - 75px); }
           .loader-wrapper .loader .loader-inner:before {
             content: '';
-            border: 1em solid #34d7e2;
+            border: 1em solid #f0452e;
             border-radius: 50%;
             width: inherit;
             height: inherit;
@@ -100,7 +100,7 @@ require __DIR__ . '/./partials/header.php';
                     animation-delay: 0.5s; }
           .loader-wrapper .loader .loader-inner:after {
             content: '';
-            border: 1em solid #37e0c1;
+            border: 1em solid #f0452e;
             border-radius: 50%;
             width: inherit;
             height: inherit;
