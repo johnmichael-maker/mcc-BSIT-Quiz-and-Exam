@@ -576,11 +576,13 @@ h6.fw-bold {
             <a href="tel:+639279817079" class="mx-2 animate-on-scroll">
                 <i class="fas fa-phone" style="font-size: 20px;"></i>
             </a>
+            <br>
         </div>
-            <p class="mt-3">&copy; John Michaelle Robles 2024</p>
+            <p>Copyright © 2022 Madridejos Community College | Create by Francis Jude Medallo</p>
         </div>
 
     </footer>
+    
     
     
     <script>
