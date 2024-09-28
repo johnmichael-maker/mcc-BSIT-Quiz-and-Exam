@@ -687,7 +687,7 @@ h6.fw-bold {
             </a>
             <br>
         </div>
-            <p>Copyright © 2022 Madridejos Community College | Create by John Michaelle Robles</p>
+            <p>Copyright © 2024 Madridejos Community College | Create by John Michaelle Robles</p>
         </div>
 
     </footer>
