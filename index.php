@@ -404,65 +404,6 @@ h6.fw-bold {
         background-color: #c82333; /* Slightly darker red on hover */
     }
          
-.container {
-    max-width: 960px;
-    margin: 0 auto;
-}
-
-h5 {
-    font-size: 24px;
-    font-weight: bold;
-  
-}
-
-p {
-    text-align: center;
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.col-md-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
-}
-
-.text-left {
-    text-align: left;
-}
-
-.text-md-right {
-    text-align: right;
-}
-
-.d-flex {
-    display: flex;
-    justify-content: center;
-}
-
-a {
-    text-decoration: none;
-    color: #000;
-}
-
-a:hover {
-    color: #001;
-}
-
-.footer-background a i {
-    font-size: 24px;
-    color: #333;
-    transition: color 0.3s ease;
-}
-
-.footer-background a:hover i {
-    color: #001;
-}
 
 </style>
 </head>
@@ -619,38 +560,28 @@ a:hover {
         </div>
     </div>
   
-     <footer class="footer-background">
-    <div class="container py-3">
-        <div class="row">
-            
-            <!-- Left Side: Address and Contact Info -->
-            <div class="col-md-6 text-left animate-on-scroll">
-            <h5>Madridejos Community College</h5>
-            </div>
-
-            <!-- Right Side: College Name -->
-            <div class="col-md-6 text-md-right animate-on-scroll">
-            <p class="mb-0">7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</p>
-                <p class="mb-0">+639279817079</p>
-                <p class="mb-0">8:00 a.m. – 4:00 p.m.</p>
-               
-            </div>
-        </div>
-
+    <footer class="h-100 footer-background">
+    <div class="container py-3 text-center">
+        <h5 class="animate-on-scroll">Madridejos Community College</h5>
+        <p class="mb-0 animate-on-scroll">7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</p>
+        <p class="mb-0 animate-on-scroll">+639279817079</p>
+        <p class="mb-0 animate-on-scroll">8:00 a.m. – 4:00 p.m.</p>
         <div class="d-flex justify-content-center mt-2">
             <a href="https://www.facebook.com/share/gcNmP9AbQT92p6E4/" class="mx-2 animate-on-scroll">
-                <i class="fab fa-facebook" style="font-size: 20px; color:crimson;"></i>
+                <i class="fab fa-facebook" style="font-size: 20px;"></i>
             </a>
             <a href="https://www.google.com" class="mx-2 animate-on-scroll">
-                <i class="fab fa-google" style="font-size: 20px; color:crimson;" ></i>
+                <i class="fab fa-google" style="font-size: 20px;"></i>
             </a>
             <a href="tel:+639279817079" class="mx-2 animate-on-scroll">
-                <i class="fas fa-phone" style="font-size: 20px; color:crimson;"></i>
+                <i class="fas fa-phone" style="font-size: 20px;"></i>
             </a>
         </div>
-        <p class="mt-3">Copyright © 2024 Madridejos Community College | Create by John Michaelle Robles</p>
-    </div>
-</footer>
+            <p class="mt-3">&copy; John Michaelle Robles 2024</p>
+        </div>
+
+    </footer>
+    
     
     <script>
 document.addEventListener("DOMContentLoaded", function() {
