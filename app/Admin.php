@@ -89,8 +89,8 @@ class Admin extends Database
     public function login()
     {
         $conn = $this->getConnection();
-        $uname = $this->post_data['uname'];
-        $password = $this->post_data['password'];
+        $uname = filter_var($this->post_data['uname'], FILTER_SANITIZE_EMAIL);
+        $password = filter_var($this->post_data['password'], FILTER_SANITIZE_STRING);
 
         $stmt = $conn->prepare("SELECT * FROM admin WHERE username = :uname");
         $stmt->execute([':uname' => $uname]);
