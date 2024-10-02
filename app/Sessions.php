@@ -4,8 +4,14 @@ declare(strict_types=1);
 namespace App;
 use App\Database;
 
-Trait Sessions{
-    public function startSession(){
+Trait Sessions {
+    public function startSession() {
+        // Set secure session cookie parameters before starting session
+        session_set_cookie_params([
+            'httponly' => true,
+            'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on', // Ensure it's only sent over HTTPS
+            'samesite' => 'Strict', // Optional: to prevent CSRF attacks
+        ]);
         session_start();
     }
     
