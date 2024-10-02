@@ -4,6 +4,8 @@
     use App\Admin;
     use App\DatabaseControl;
 
+header("Content-Security-Policy: default-src 'self'; script-src 'self' https://code.jquery.com; style-src 'self' https://maxcdn.bootstrapcdn.com;");
+
     // Prevent clickjacking attacks by disallowing your site from being embedded in iframes
 header('X-Frame-Options: SAMEORIGIN');
 
