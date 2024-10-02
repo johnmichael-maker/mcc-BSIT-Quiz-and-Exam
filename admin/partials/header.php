@@ -3,6 +3,7 @@
     require __DIR__ . '../../../function/Process.php';
     use App\Admin;
     use App\DatabaseControl;
+   header("Content-Security-Policy: script-src 'self'; object-src 'none';");
     $databaseController = new DatabaseControl;
     $adminController = new Admin($_POST);
     // $adminController->startSession();
