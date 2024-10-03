@@ -464,7 +464,7 @@ h6.fw-bold {
                 <div class="col-lg-8 h-100 my-auto text-light">
                     <h1 class="fade-in-right">MADRIDEJOS COMMUNITY COLLEGE</h1>
                     <h3 class="fade-in-left">Pop Quiz and Exam</h3>
-                    <p>&copy; John Michaelle Robles 2024</p>
+                    
                 </div>
             </div>
         </div>
@@ -555,7 +555,7 @@ h6.fw-bold {
                 <i class="fas fa-phone" style="font-size: 20px;"></i>
             </a>
         </div>
-            <p class="mt-3">&copy; John Michaelle Robles 2024</p>
+            
         </div>
     </footer>
 
