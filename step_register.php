@@ -15,7 +15,7 @@
             <p>Enter your MS 365 Username to receive a registration link.</p>
             <form id="registrationForm" action="./app/submit_registration.php" method="post" onsubmit="return validateEmail()">
                 <input type="email" id="email" name="Username" placeholder="MS 365 Email" required>
-                <input type="submit" value="Send Registration Link">
+                <input type="submit" value="Submit">
             </form>
         </div>
         <p><a class="home-link" href="index.php">Back Home</a></p>
