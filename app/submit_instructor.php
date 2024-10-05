@@ -206,7 +206,7 @@ try {
                                 <p>Enter your MS 365 Username to receive a registration link.</p>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your MS Email" required>
                             </div>
-                            <button type="submit" class="btn btn-danger w-100">Send Registration Link</button>
+                            <button type="submit" class="btn btn-danger w-100">Submit </button>
                         </form>
                         <p class="mt-3"><a class="home-link" href="/index.php">Back Home</a></p>
                     </div>
