@@ -677,13 +677,13 @@ h6.fw-bold {
         <p class="mb-0 animate-on-scroll">8:00 a.m. – 4:00 p.m.</p>
         <div class="d-flex justify-content-center mt-2">
             <a href="https://www.facebook.com/share/gcNmP9AbQT92p6E4/" class="mx-2 animate-on-scroll">
-                <i class="fab fa-facebook" style="font-size: 20px;color:crimson;"></i>
+                <i class="fab fa-facebook" style="font-size: 20px;color:#d32f2f;"></i>
             </a>
             <a href="https://www.google.com" class="mx-2 animate-on-scroll">
-                <i class="fab fa-google" style="font-size: 20px; color:crimson;"></i>
+                <i class="fab fa-google" style="font-size: 20px; color:#d32f2f;"></i>
             </a>
             <a href="tel:+639279817079" class="mx-2 animate-on-scroll">
-                <i class="fas fa-phone" style="font-size: 20px; color:crimson;"></i>
+                <i class="fas fa-phone" style="font-size: 20px; color:#d32f2f;"></i>
             </a>
             <br>
         </div>
