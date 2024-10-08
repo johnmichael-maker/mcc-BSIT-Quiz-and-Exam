@@ -346,7 +346,7 @@ h2 {
         <div class="mb-3">
               <h1 class="mb-4"><strong>Instructor Signup</strong></h1>
              <p>Enter your MS 365 Username to receive a registration link.</p>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your MS Email" required>
+            <input type="email" class="form-control" id="email" name="email" placeholder="example.juan2@mcclawis.edu.ph" required>
             <button type="submit" class="btn btn-danger w-100">Send Registration Link</button>
             </form>
             <p><a class="home-link" href="../index.php">Back Home</a></p>
