@@ -303,8 +303,8 @@ input[type="submit"]:hover {
     h5 {
         font-size: 14px;
     }
-    input[type="email"], input[type="submit"] {
-        width: calc(100% - 16px); /* Adjusted width for better fit */
+   input[type="email"], input[type="submit"] {
+        width: calc(106% - 0px); /* Adjusted width for better fit */
         padding: 10px;
         margin: 10px 0;
         border-radius: 4px;
