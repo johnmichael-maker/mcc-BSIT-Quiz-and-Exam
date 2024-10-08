@@ -98,99 +98,241 @@ try {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instructor Signup</title>
-    <link rel="stylesheet" href="../assets/css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <title>Instructor | Signup</title>
     <style>
-       body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('../assets/img/mcc.png') no-repeat center center fixed;
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #dc3545;
+            margin: 0;
         }
 
-        .choose-card {
-            width: 500px;
-            max-width: 100%; /* Ensures it doesn't exceed 100% on smaller screens */
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 700px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
         }
 
-        @media (max-width: 900px) {
-            .choose-card {
-                width: 100% !important;
-            }
-
-            .choose-div {
-                padding: 15px;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
+        .container .left-section {
+            background-color: #d32f2f;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35%;
         }
 
-        .home-link {
-            text-decoration: none;
-            padding: 15px 30px;
-            color: rgb(128, 171, 184);
+        .container .left-section img {
+            max-width: 150%;
+            height: auto;
+            display: block;
+           margin: 0 auto 20px;
+          animation: moveUpDown 2s ease-in-out infinite; /* Added animation */
+          }
+           @keyframes moveUpDown {
+          0% {
+          transform: translateY(0);
+      }
+        50% {
+        transform: translateY(-15px); /* Adjust the movement distance as needed */
+        }
+        100% {
+          transform: translateY(0);
+   }
         }
 
-        .animated-image {
-            position: relative;
-            animation: moveUpDown 2s infinite;
+        .container .right-section {
+            padding: 60px 40px;
+            width: 65%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        @keyframes moveUpDown {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-19px);
-            }
-            100% {
-                transform: translateY(0);
-            }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
         }
 
-        .form-label {
-            color: #005a9e;
+        label {
+            font-weight: bold;
+            display: block;
             margin-bottom: 10px;
-            font-size: 24px;
-        }
-
-        /* Responsive form controls */
-        .form-control, .btn {
             width: 100%;
+            color: #333;
+            text-align: left;
         }
 
-        /* Padding adjustment for small screens */
-        @media (max-width: 576px) {
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #d32f2f;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 106%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #b71c1c;
+        }
+
+        .container p {
+            margin-top: 15px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                width: 700px; /* Fixed width for tablets */
+            }
+
+            .container .left-section {
+                padding: 20px;
+            }
+
+            .container .right-section {
+                padding: 40px 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            input[type="email"], button {
+                font-size: 15px;
             }
         }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 500px; /* Fixed width for mobile */
+            }
+
+            .container .right-section {
+                padding: 30px 15px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            input[type="email"], button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                padding: 10px;
+            }
+        }
+        .home-link{
+text-decoration: none;
+padding: 15px 20px;
+color: rgb(128, 171, 184);
+margin-right: 2px;
+}
+input[type="email"]:focus {
+    border-color: crimson;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2); /* Added focus effect */
+}
+input[type="email"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #dddddd;
+    border-radius: 4px;
+    outline: none;
+    font-size: larger;
+}
+input[type="submit"] {
+    width: 106%;
+    max-width: 420px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: larger;
+}
+input[type="submit"]:hover {
+    background-color: #005a9e;
+}
+@media (max-width: 500px) {
+    .container {
+        padding: 10px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    h5 {
+        font-size: 14px;
+    }
+    input[type="email"], input[type="submit"] {
+        width: calc(100% - 16px); /* Adjusted width for better fit */
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+    }
+}
+h2 {
+    color: #005a9e;
+    margin-bottom: 10px;
+    font-size: 24px;
+    
+}
+.mb-4{
+    color: blue;
+}
+
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="py-5" style="max-height: 100vh;">
-    <div class="h-100-vh d-lg-flex align-items-lg-center justify-content-lg-center position-relative">
-        <div class="container pb-5">
-
-            <div class="choose-div">
-                <div class="card mx-auto choose-card" style="width: 500px;">
-                    <div class="card-body text-center p-4">
-                        <img src="../assets/img/logo.png" alt="Logo" class="animated-image" style="width: 70%;">
-                        <h1 class="mb-4"><strong>Instructor Signup</strong></h1>
-
-                        <!-- Display success or error messages -->
-                        <?php if ($successMessage): ?>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <img src="../assets/img/logo.png" alt="Logo"> <!-- Ensure to use your logo here -->
+        </div>
+        <div class="right-section">
+                    <!-- Display success or error messages -->
+                    <?php if ($successMessage): ?>
                             <div class="alert alert-success">
                                 <?= htmlspecialchars($successMessage) ?>
                             </div>
@@ -200,21 +342,19 @@ try {
                             </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="">
-                            <div class="mb-3">
-                            <h5><label for="email" class="form-label"><strong>MS 365 Account Verification</strong></label></h5>
-                                <p>Enter your MS 365 Username to receive a registration link.</p>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your MS Email" required>
-                            </div>
-                            <button type="submit" class="btn btn-danger w-100">Submit </button>
-                        </form>
-                        <p class="mt-3"><a class="home-link" href="/index.php">Back Home</a></p>
-                    </div>
-                </div>
-            </div>
+        <form method="POST" action="">
+        <div class="mb-3">
+              <h1 class="mb-4"><strong>Instructor Signup</strong></h1>
+             <p>Enter your MS 365 Username to receive a registration link.</p>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your MS Email" required>
+            <button type="submit" class="btn btn-danger w-100">Send Registration Link</button>
+            </form>
+            <p><a class="home-link" href="../index.php">Back Home</a></p>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
