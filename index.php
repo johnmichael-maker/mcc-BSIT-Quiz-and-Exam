@@ -578,6 +578,7 @@ h6.fw-bold {
                 <div class="col-lg-8 h-100 my-auto text-light">
                     <h1 class="fade-in-right">MADRIDEJOS COMMUNITY COLLEGE</h1>
                     <h3 class="fade-in-left">Pop Quiz and Exam</h3>
+                     <p>&copy; John Michaelle Robles 2024</p>
                        
                 </div>
             </div>
@@ -687,7 +688,7 @@ h6.fw-bold {
             </a>
             <br>
         </div>
-            <p>Copyright © 2024 Madridejos Community College </p>
+            <p>Copyright © 2024 Madridejos Community College created by | John Michaelle Robles </p>
         </div>
 
     </footer>
