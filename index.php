@@ -12,15 +12,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>MCC Competition : QUIZ BOWL</title>
+    <title>MCC Competition : QUIZ BOWL</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome CSS (for icons) -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
   
 body {
@@ -696,88 +696,6 @@ h6.fw-bold {
     
     
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-    
-    const options = {
-        root: null, 
-        rootMargin: '0px',
-        threshold: 0.1 
-    };
-
-   
-    const handleIntersect = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target); 
-            }
-        });
-    };
-
-   
-    const observer = new IntersectionObserver(handleIntersect, options);
-
-  
-    const elements = document.querySelectorAll('.animate-on-scroll');
-
-    
-    elements.forEach(element => {
-        element.classList.add('hidden'); 
-        observer.observe(element);
-    });
-});
-
-document.addEventListener("scroll", function() {
-    const stickyElement = document.querySelector('.sticky-element');
-    const rect = stickyElement.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom >= 0) {
-        stickyElement.classList.add('sticky-active');
-        stickyElement.classList.remove('sticky-inactive');
-    } else {
-        stickyElement.classList.add('sticky-inactive');
-        stickyElement.classList.remove('sticky-active');
-    }
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.forEach(nav => nav.classList.remove('active')); 
-            link.classList.add('active'); 
-        });
-    });
-});
-// Prevent right-click
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault(); // Disables right-click menu
-});
-
-// Prevent specific key combinations
-document.addEventListener('keydown', function(e) {
-    // Disable specific key combinations such as Ctrl + I, Ctrl + U, Ctrl + J, Ctrl + C, Ctrl + S, F12
-    if (e.ctrlKey || e.metaKey) {
-        if (
-            e.key === 'i' ||  // Ctrl + I (Inspect)
-            e.key === 'u' ||  // Ctrl + U (View Source)
-            e.key === 'j' ||  // Ctrl + J (Console)
-            e.key === 'c' ||  // Ctrl + C (Copy)
-            e.key === 's' ||  // Ctrl + S (Save)
-            e.key === 'k' ||  // Ctrl + K (Search Console)
-            e.key === 'h' ||  // Ctrl + H (History)
-            e.key === 'd' ||  // Ctrl + D (Bookmark)
-            e.key === 'r' ||  // Ctrl + R (Reload)
-            e.key === 'p' ||  // Ctrl + P (Print)
-            e.key === 'f' ||  // Ctrl + F (Find)
-            e.key === 'q' ||  // Ctrl + Q (Quit)
-            e.key === 'F12'   // F12 (Developer Tools)
-        ) {
-            e.preventDefault();  // Prevent default action
-            return false;
-        }
-    }
-});
-
 
 </script>
 </body>
