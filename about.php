@@ -20,7 +20,7 @@ body {
 }
 
 header {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./assets/img/bg-img.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./assets/img/img-1.jpeg);
     background-size: cover;
     background-position: center;
     padding: 20px 0;
