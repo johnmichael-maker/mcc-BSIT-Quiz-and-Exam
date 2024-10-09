@@ -7,10 +7,6 @@
 
 ?>
 
-<?= htmlspecialchars(stripslashes(trim('
-<!DOCTYPE html>
-<html lang="en">'))) ?>
-<?= htmlspecialchars(stripslashes(trim('<head>'))) ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MCC Competition : QUIZ BOWL</title>
@@ -517,7 +513,7 @@ h6.fw-bold {
         color: inherit;
         vertical-align: middle; }
 </style>
-<?= htmlspecialchars(stripslashes(trim('</head>'))) ?>
+</head>
 <body>
    <div class="loader-wrapper" id="preloader">
         <span class="loader"><span class="loader-inner"></span></span>
@@ -782,5 +778,4 @@ document.addEventListener('keydown', function(e) {
 
 </script>
 </body>
-
-<?= htmlspecialchars(stripslashes(trim('</html>'))) ?>
+</html>
