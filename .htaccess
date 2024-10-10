@@ -1,5 +1,5 @@
 RewriteEngine On
 
-# Force redirection to the correct domain (without https check)
-RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
-RewriteRule ^(.*)$ http://mccbsitquizandexam.com/$1 [L,R=302]
+# Comment out these lines to disable redirection
+# RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
+# RewriteRule ^(.*)$ http://mccbsitquizandexam.com/$1 [L,R=302]
