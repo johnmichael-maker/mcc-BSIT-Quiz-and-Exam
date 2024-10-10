@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
+RewriteRule ^(.*)$ http://mccbsitquizandexam.com/$1 [L,R=302]
