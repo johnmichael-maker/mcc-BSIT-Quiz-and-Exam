@@ -1,5 +1,9 @@
 RewriteEngine On
 
-# Comment out these lines to disable redirection
-# RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
-# RewriteRule ^(.*)$ http://mccbsitquizandexam.com/$1 [L,R=301]
+# Force HTTPS redirection if not already using HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=301]
+
+# Redirect to the correct domain (remove 'www' or any other variations)
+RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
+RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=301]
