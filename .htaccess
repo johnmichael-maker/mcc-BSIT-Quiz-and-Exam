@@ -2,4 +2,4 @@ RewriteEngine On
 
 # Comment out these lines to disable redirection
 # RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
-# RewriteRule ^(.*)$ http://mccbsitquizandexam.com/$1 [L,R=302]
+# RewriteRule ^(.*)$ http://mccbsitquizandexam.com/$1 [L,R=301]
