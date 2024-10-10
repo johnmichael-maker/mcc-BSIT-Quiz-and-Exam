@@ -1,9 +1,5 @@
 RewriteEngine On
 
-# Redirect to HTTPS if not already
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Redirect to correct domain if the request doesn't match your main domain
+# Force redirection to the correct domain (without https check)
 RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
-RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=302]
+RewriteRule ^(.*)$ http://mccbsitquizandexam.com/$1 [L,R=302]
