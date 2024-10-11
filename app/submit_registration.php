@@ -19,11 +19,11 @@ function sendRegistrationLink(string $email): string {
     $stmt->bindParam(':email', $email);
     $stmt->execute();
 
-    if ($stmt->rowCount() > 0) {
+   if ($stmt->rowCount() > 0) {
         // Generate a secure unique token
         $token = bin2hex(random_bytes(16));
-        $expiration = date('Y-m-d H:i:s', strtotime('+15 minutes'));
-
+        $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+       
         // Store the token and expiration in the database
         $insertStmt = $pdo->prepare("UPDATE ms_365_users SET token = :token, token_expire = :expiration WHERE Username = :email");
         $insertStmt->bindParam(':token', $token);
