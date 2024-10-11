@@ -515,6 +515,64 @@ h6.fw-bold {
         height: 50px;
         color: inherit;
         vertical-align: middle; }
+
+  .footer-background {
+  background-color: #002e5b; 
+  color: #fff;
+  padding: 50px 0;
+}
+
+.footer-background a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-background a:hover {
+  color: crimson; /* Change to crimson on hover */
+}
+
+.footer-background h5 {
+  font-family: 'Karla', sans-serif;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.footer-background p {
+  font-family: 'Karla', sans-serif;
+  font-weight: 400;
+  margin: 5px 0;
+}
+
+.footer-background .social-icons {
+  margin-top: 20px;
+}
+
+.footer-background .social-icons a {
+  font-size: 20px;
+  margin: 0 10px;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.footer-background .social-icons a:hover {
+  color: #ffffff; 
+}
+
+.footer-background .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .footer-background .container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+
+         
 </style>
 </head>
 <body>
@@ -669,28 +727,34 @@ h6.fw-bold {
         </div>
     </div>
   
-    <footer class="h-100 footer-background">
-    <div class="container py-3 text-center">
-        <h5 class="animate-on-scroll">Madridejos Community College</h5>
-        <p class="mb-0 animate-on-scroll">7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</p>
-        <p class="mb-0 animate-on-scroll">+639279817079</p>
-        <p class="mb-0 animate-on-scroll">8:00 a.m. – 4:00 p.m.</p>
-        <div class="d-flex justify-content-center mt-2">
-            <a href="https://www.facebook.com/share/gcNmP9AbQT92p6E4/" class="mx-2 animate-on-scroll">
-                <i class="fab fa-facebook" style="font-size: 20px;color:crimson;"></i>
-            </a>
-            <a href="https://www.google.com" class="mx-2 animate-on-scroll">
-                <i class="fab fa-google" style="font-size: 20px; color:crimson;"></i>
-            </a>
-            <a href="tel:+639279817079" class="mx-2 animate-on-scroll">
-                <i class="fas fa-phone" style="font-size: 20px; color:crimson;"></i>
-            </a>
-            <br>
-        </div>
-            <p>Copyright © 2024 Madridejos Community College | Create by John Michaelle Robles</p>
-        </div>
+   <footer class="h-100 footer-background">
+  <div class="container">
+      <div class="col-md-4 text-center text-md-left">
+          <h5>Madridejos Community College</h5>
+          <p>7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</p>
+          <p>+639279817079</p>
+          <p>8:00 a.m. – 4:00 p.m.</p>
+      </div>
+      
+      <!-- Social Links -->
+      <div class="col-md-4 text-center social-icons">
+          <a href="https://www.facebook.com/share/gcNmP9AbQT92p6E4/" class="mx-2">
+              <i class="fab fa-facebook"></i>
+          </a>
+          <a href="https://www.google.com" class="mx-2">
+              <i class="fab fa-google"></i>
+          </a>
+          <a href="tel:+639279817079" class="mx-2">
+              <i class="fas fa-phone"></i>
+          </a>
+      </div>
 
-    </footer>
+      <div class="col-md-4 text-center text-md-right">
+          <p>Copyright © 2024 Madridejos Community College</p>
+          <p>Created by John Michaelle Robles</p>
+      </div>
+  </div>
+</footer>
     
     
     
