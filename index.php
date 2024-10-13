@@ -32,7 +32,7 @@ header {
     background-size: cover;
     background-position: center;
     padding: 0;
-    height: 120vh;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -585,7 +585,7 @@ h6.fw-bold {
             loader.style.display = "none"
         })
     </script>
-<nav class="navbar navbar-expand-lg fixed-top" style="background: #fff;">
+<nav class="navbar navbar-expand-lg" style="background: #fff;">
     <div class="container-fluid mx-5">
         <a class="navbar-brand" href="#"></a>
         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
