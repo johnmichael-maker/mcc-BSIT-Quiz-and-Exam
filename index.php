@@ -28,28 +28,15 @@ body {
 }
 
 header {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/img/mcc-bg.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url(./assets/img/mcc-bg.jpg);
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     padding: 0;
     height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: zoomInBackground 10s forwards;
 }
-
-@keyframes zoomInBackground {
-    0% {
-        background-size: 100%;
-    }
-    100% {
-        background-size: 110%;
-    }
-}
-
-
 .col-lg-8.h-100.my-auto.text-light {
     padding-top: 50px; 
 }
