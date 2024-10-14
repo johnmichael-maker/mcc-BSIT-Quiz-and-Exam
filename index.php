@@ -31,6 +31,7 @@ header {
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/img/mcc-bg.jpg);
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     padding: 0;
     height: 80vh;
     display: flex;
