@@ -1,35 +1,9 @@
-<?php
-ob_start(); // Start output buffering
-
-// Check if the request is over HTTPS
-if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
-    header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-    exit();
-}
-
-// Security Headers
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
-header("X-Content-Type-Options: nosniff");
-header("X-Frame-Options: DENY");
-header("X-XSS-Protection: 1; mode=block");
-header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none';");
-header("Referrer-Policy: no-referrer");
-header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-header('Pragma: no-cache');
-header('Expires: 0');
-header('Content-Type: text/html; charset=utf-8');
-
-// Include necessary files and classes
-require __DIR__ . '/../vendor/autoload.php';
-use App\Contestants;
-use App\DatabaseControl;
-use App\Examinee;
-
-session_start();
-ini_set('session.cookie_secure', 1); // Use secure cookies
-ini_set('session.cookie_httponly', 1); // HTTP only cookies
-ini_set('session.use_strict_mode', 1); // Use strict mode for session management
-
+<?php 
+    require __DIR__ . '/../vendor/autoload.php';
+    use App\Contestants;
+    use App\DatabaseControl;
+    use App\Examinee;
+    
     $contestantController = new Contestants($_POST);
     $examineeController = new Examinee($_POST);
     $contestantController->startSession();
