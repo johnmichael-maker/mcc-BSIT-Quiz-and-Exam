@@ -4,6 +4,25 @@
     use App\DatabaseControl;
     use App\Examinee;
 
+
+
+   // Security Headers
+header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
+header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self';");
+header("Referrer-Policy: no-referrer-when-downgrade");
+
+session_start();
+
+
+
+
+
+
+
+
 // Prevent clickjacking attacks by disallowing your site from being embedded in iframes
     header('X-Frame-Options: SAMEORIGIN');
 
