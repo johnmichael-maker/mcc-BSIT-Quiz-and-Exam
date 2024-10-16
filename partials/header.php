@@ -1,27 +1,25 @@
 <?php 
+
+header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
+header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none';");
+header("Referrer-Policy: no-referrer");
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('Expires: 0');
+header('Content-Type: text/html; charset=utf-8');
+
     require __DIR__ . '/../vendor/autoload.php';
     use App\Contestants;
     use App\DatabaseControl;
     use App\Examinee;
 
 session_start();
-ini_set('session.cookie_secure', 1);
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_strict_mode', 1);
-
-// Security Headers
-header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
-header("X-Content-Type-Options: nosniff");
-header("X-Frame-Options: SAMEORIGIN");
-header("X-XSS-Protection: 1; mode=block");
-header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; frame-ancestors 'none';");
-header("Referrer-Policy: no-referrer");
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Pragma: no-cache");
-header("Expires: 0");
-
-// Content-Type and charset for HTML pages
-header('Content-Type: text/html; charset=utf-8');
+ini_set('session.cookie_secure', 1); // Use secure cookies
+ini_set('session.cookie_httponly', 1); // HTTP only cookies
+ini_set('session.use_strict_mode', 1); // Use strict mode for session management
 
 
     $contestantController = new Contestants($_POST);
