@@ -36,10 +36,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                  <h5>Capstone project</h5>
                 <p><strong>Name:</strong> John Michaelle Robles <span id="devName"></span></p>
                 <p><strong>Email:</strong> Johnmichaellerobles@gmail.com<span id="devEmail"></span></p>
                 <p><strong>Contact no:</strong> 09309333290<span id="devContact"></span></p>
-                <h5>Capstone project</h5>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
