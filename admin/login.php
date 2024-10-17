@@ -48,7 +48,7 @@
                     <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect username or password</p>
 
                     <label for="">Email</label>
-                    <input type="text" class="form-control my-2" placeholder="Email" name="uname"required>
+                    <input type="email" class="form-control my-2" placeholder="Email" name="uname"required>
                     <p class="errors d-none alert alert-danger py-1"></p>
 
                     <label for="">Password</label>
