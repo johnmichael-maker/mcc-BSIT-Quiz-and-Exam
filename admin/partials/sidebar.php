@@ -50,9 +50,9 @@ $inactive = "text-light";
             <a href="examinees.php" class="nav-link <?= str_contains($url, '/examinees.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Examinees</a>
         </li>
 
-        <li class="nav-item">
+       <!-- <li class="nav-item">
             <a href="instructors.php" class="nav-link <?= str_contains($url, '/instructors.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Instructors</a>
-        </li>
+        </li>-->
   <li class="nav-item">
             <a href="mc_account.php" class="nav-link <?= str_contains($url, '/ms_account.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i>MS 365 Account</a>
         </li> 
