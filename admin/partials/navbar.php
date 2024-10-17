@@ -37,7 +37,7 @@
             </div>
             <div class="modal-body">
                 <p><strong>Name:</strong> John Michaelle Robles <span id="devName"></span></p>
-                <p><strong>Section:</strong> North<span id="devSection"></span></p>
+                <p><strong>project:</strong> Capstone project<span id="devProjectn"></span></p>
                 <p><strong>Email:</strong> Johnmichaellerobles@gmail.com<span id="devEmail"></span></p>
                 <p><strong>Contact no:</strong> 09309333290<span id="devContact"></span></p>
             </div>
