@@ -53,7 +53,9 @@ $inactive = "text-light";
         <li class="nav-item">
             <a href="instructors.php" class="nav-link <?= str_contains($url, '/instructors.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Instructors</a>
         </li>
-
+  <li class="nav-item">
+            <a href="mc_account.php" class="nav-link <?= str_contains($url, '/ms_account.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i>MS 365 Account</a>
+        </li> 
         <li class="nav-item">
             <a href="#" onclick="return showLogout()" class="nav-link text-light"> <i class="bx bx-log-out"></i> Logout</a>
         </li>
