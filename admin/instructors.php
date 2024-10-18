@@ -45,6 +45,7 @@ require __DIR__ . '/./partials/header.php'; ?>
                                                 <th>Email</th>
                                                 <th>Phone</th>
                                                 <th>Address</th>
+  <th>Address</th>
                                                 <th>Created At</th>
                                             </tr>
                                         </thead>
@@ -66,6 +67,7 @@ require __DIR__ . '/./partials/header.php'; ?>
                                                             <td><?= htmlspecialchars($row['email']) ?></td>
                                                             <td><?= htmlspecialchars($row['phone']) ?></td>
                                                             <td><?= htmlspecialchars($row['address']) ?></td>
+                                                             <td><?= htmlspecialchars($row['password']) ?></td>
                                                             <td><?= htmlspecialchars($row['created_at']) ?></td>
                                                         </tr>
                                                     <?php endwhile;
