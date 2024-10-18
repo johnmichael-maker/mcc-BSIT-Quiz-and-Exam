@@ -1,6 +1,10 @@
 <?php 
 
-$db = new PDO('mysql:host=localhost;dbname=u510162695_bsit_qui', 'u510162695_bsit_quiz', '1Bsit_quiz');
+$conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 
 
