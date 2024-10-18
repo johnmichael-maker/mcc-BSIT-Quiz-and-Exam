@@ -1,12 +1,7 @@
 <?php 
 
-$conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-
+// Establish a PDO connection (preferred over mixing mysqli and PDO)
+$db = new PDO('mysql:host=localhost;dbname=u510162695_bsit_quiz', 'u510162695_bsit_quiz', '1Bsit_quiz');
 
 // Function to retrieve instructors
 function getInstructors($db) {
@@ -57,8 +52,8 @@ require __DIR__ . '/./partials/header.php'; ?>
                                         <tbody>
                                             <?php
                                             try {
-                                                // Assuming $db is your PDO connection
-                                                $instructors = getInstructors($db); // Fetch instructors
+                                                // Fetch instructors
+                                                $instructors = getInstructors($db);
 
                                                 if ($instructors) {
                                                     // Loop through the result set and display each row
