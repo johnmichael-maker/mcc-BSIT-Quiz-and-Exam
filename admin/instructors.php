@@ -1,6 +1,7 @@
 <?php 
 
-$db = new PDO('mysql:host=localhost;dbname=u510162695_bsit_qui', 'u510162695_bsit_quiz', '1Bsit_quiz'); 
+$db = new PDO('mysql:host=localhost;dbname=u510162695_bsit_qui', 'u510162695_bsit_quiz', '1Bsit_quiz');
+
 
 
 // Function to retrieve instructors
