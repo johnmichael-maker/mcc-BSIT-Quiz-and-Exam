@@ -43,19 +43,31 @@ $inactive = "text-light";
                 ? $active : $inactive ?>"> <i class="bx bx-file"></i> Exam</a>
         </li>
         <?php endif; ?>
+        
+        <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
         <li class="nav-item">
-            <a href="quiz.php" class="nav-link <?= str_contains($url, '/quiz.php') || str_contains($url, '/print-quiz.php') ? $active : $inactive ?>"> <i class="bx bx-question-mark"></i> Quiz</a>
+            <a href="quiz.php" class="nav-link <?= str_contains($url, '/quiz.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Quiz</a>
         </li>
+        <?php endif; ?>
         <li class="nav-item">
             <a href="examinees.php" class="nav-link <?= str_contains($url, '/examinees.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Examinees</a>
         </li>
 
-       <!-- <li class="nav-item">
+        <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
+        <li class="nav-item">
             <a href="instructors.php" class="nav-link <?= str_contains($url, '/instructors.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Instructors</a>
-        </li>-->
-  <li class="nav-item">
-            <a href="mc_account.php" class="nav-link <?= str_contains($url, '/ms_account.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i>MS 365 Account</a>
-        </li> 
+        </li>
+        <?php endif; ?>
+
+        <!-- Conditionally render Ms365 Account menu based on AUTH_UTYPE -->
+        <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
+        <li class="nav-item">
+            <a href="ms_account.php" class="nav-link <?= str_contains($url, '/ms_account.php') ? $active : $inactive ?>"> 
+                <i class="bx bx-user"></i> Ms365 Account
+            </a>
+        </li>
+        <?php endif; ?>
+
         <li class="nav-item">
             <a href="#" onclick="return showLogout()" class="nav-link text-light"> <i class="bx bx-log-out"></i> Logout</a>
         </li>
