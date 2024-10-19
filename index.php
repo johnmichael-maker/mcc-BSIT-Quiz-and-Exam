@@ -619,7 +619,7 @@ h6.fw-bold {
           <div class="modal-body">
                 <p class="text-center mb-4">Select your role to sign up:</p>
                 <div class="d-flex justify-content-center gap-4">
-                    <a href="step_register.php" class="btn btn-role btn-success">Examinee</a>
+                    <a href="step_register.php" class="btn btn-role btn-success">Student</a>
                     <a href="./app/submit_instructor.php" class="btn btn-role btn-primary">Instructor</a>
                 </div>
             </div>
