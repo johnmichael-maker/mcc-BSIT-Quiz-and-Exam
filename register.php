@@ -249,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="card-body">
             <!-- Registration form -->
-            <form method="POST" action="">
+            <form id="registrationForm" method="POST" action="">
                 <!-- Form fields for registration -->
                 <div class="col-md-12 mb-2">
                    
@@ -286,40 +286,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="">Username</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                 </div>
+                <!-- Password Field -->
                 <div class="col-md-12 mb-3">
-                <label for="">Password</label>
+                    <label for="">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                 </div>
-                <button type="submit" class="btn btn-danger w-100">Register</button>
+
+                <!-- Confirm Password Field -->
+                <div class="col-md-12 mb-3">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">Register</button>
             </form>
         </div>
     </div>
 </div>
 
+<script> 
+    <?php if (!empty($successMessage)): ?>
+        Swal.fire({
+            icon: 'success',
+            title: '<?= addslashes($successMessage) ?>',
+            text: 'You will be redirected shortly.',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(function() {
+            window.location.href = './admin/login.php';
+        });
+    <?php elseif (!empty($errorMessage)): ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '<?= addslashes($errorMessage) ?>'
+        });
+    <?php endif; ?>
+</script>
 
+<script>
+   document.getElementById('registrationForm').addEventListener('submit', function (e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-
-
-    <script>
-        <?php if (!empty($successMessage)): ?>
-            Swal.fire({
-                icon: 'success',
-                title: '<?= addslashes($successMessage) ?>',
-                text: 'You will be redirected shortly.',
-                showConfirmButton: false,
-                timer: 3000
-            }).then(function() {
-                window.location.href = './admin/login.php';
-            });
-        <?php elseif (!empty($errorMessage)): ?>
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            e.preventDefault(); // Prevent form submission
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: '<?= addslashes($errorMessage) ?>'
+                text: 'Passwords do not match. Please try again.'
             });
-        <?php endif; ?>
-    </script>
+            return;
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        // Check if password meets strong password criteria
+        if (!passwordRegex.test(password)) {
+            e.preventDefault(); // Prevent form submission
+            Swal.fire({
+                icon: 'error',
+                title: 'Weak Password',
+                text: 'Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.'
+            });
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
