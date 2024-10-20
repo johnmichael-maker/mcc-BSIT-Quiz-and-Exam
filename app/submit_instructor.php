@@ -319,7 +319,7 @@ h2 {
     
 }
 .mb-4{
-    color: blue;
+    color: #007bff;
 }
 
     </style>
