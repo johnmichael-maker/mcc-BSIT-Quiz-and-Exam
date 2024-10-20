@@ -10,12 +10,10 @@ $dbname = "u510162695_bsit_quiz";
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-
 // Check the connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 
 // Initialize variables for success and error messages
 $successMessage = '';
@@ -95,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,132 +102,98 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instructor Registration</title>
     <link rel="stylesheet" href="assets/css/bootstrap.css">
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        body{
+        body {
             background: url('./assets/img/mcc.png') no-repeat center center fixed;
-           
         }
-        .form-container {
-            margin: 0 auto;
-            padding: 20px;
-           
-        }
-        .form-label{
-            color: #fff;
-        }
-        .result, .result1{
-            width: 73%;
-            position: absolute;        
-            z-index: 999;
-            top: 100%;
+        .loader-wrapper {
+            position: fixed;
+            z-index: 999999;
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            top: 0;
             left: 0;
         }
-        /* Formatting result items */
-        .result p, .result1 p{
-            margin: 0;
-            padding: 5px 5px;
-            border: 1px solid #CCCCCC;
-            border-top: none;
-            cursor: pointer;
-            background-color: white;
+        .loader {
+            height: 100px;
+            width: 100px;
+            position: fixed;
         }
-        .result p:hover, .result1 p:hover{
-            background: #f2f2f2;
-        }
-        
-    .loader-wrapper {
-      position: fixed;
-      z-index: 999999;
-      background: #fff;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0; }
-      .loader-wrapper .loader {
-        height: 100px;
-        width: 100px;
-        position: fixed; }
-        .loader-wrapper .loader .loader-inner {
-          border: 0 solid transparent;
-          border-radius: 50%;
-          width: 150px;
-          height: 150px;
-          position: absolute;
-          top: calc(50vh - 75px);
-          left: calc(50vw - 75px); }
-          .loader-wrapper .loader .loader-inner:before {
-            content: '';
+        .loader-inner {
+            border: 0 solid transparent;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            top: calc(50vh - 75px);
+            left: calc(50vw - 75px);
             border: 1em solid #34d7e2;
-            border-radius: 50%;
-            width: inherit;
-            height: inherit;
-            position: absolute;
-            top: 0;
-            left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
+            animation: loader 2s linear infinite;
             opacity: 0;
-            -webkit-animation-delay: 0.5s;
-                    animation-delay: 0.5s; }
-          .loader-wrapper .loader .loader-inner:after {
-            content: '';
-            border: 1em solid #37e0c1;
+            animation-delay: 0.5s;
+        }
+        @keyframes loader {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .progressbar {
+            display: flex;
+            justify-content: space-between;
+            list-style-type: none;
+            counter-reset: step;
+            margin-bottom: 30px;
+            padding: 0;
+        }
+        .progressbar li {
+            counter-increment: step;
+            text-align: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        .progressbar li:before {
+            content: counter(step);
+            width: 30px;
+            height: 30px;
+            display: block;
+            background-color: #ddd;
             border-radius: 50%;
-            width: inherit;
-            height: inherit;
+            margin: 0 auto 10px auto;
+            line-height: 30px;
+            text-align: center;
+        }
+        .progressbar li.active:before {
+            background-color: #007bff;
+            color: white;
+        }
+        .progressbar li:after {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
-            opacity: 0; }
-    
-    @-webkit-keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    @keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    .loader-box {
-      height: 150px;
-      text-align: center;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-      vertical-align: middle;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      -webkit-transition: .3s color, .3s border, .3s transform, .3s opacity;
-      transition: .3s color, .3s border, .3s transform, .3s opacity; }
-      .loader-box [class*="loader-"] {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        color: inherit;
-        vertical-align: middle; }
+            width: 100%;
+            height: 2px;
+            background-color: #ddd;
+            top: 15px;
+            left: -50%;
+            z-index: -1;
+        }
+        .progressbar li:first-child:after {
+            content: none;
+        }
+        .progressbar li.active + li:after {
+            background-color: #007bff;
+        }
+        h3{
+            text-align: center;
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
@@ -239,121 +203,207 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         var loader = document.getElementById("preloader");
         window.addEventListener("load", function() {
-            loader.style.display = "none"
-        })
+            loader.style.display = "none";
+        });
     </script>
- <div class="container mt-5" style="max-width: 600px;">
-    <div class="card">
-        <div class="card-header text-center" style="background-color: #007bff; color: #fff;">
-            <h1>Instructor Registration</h1>
+
+    <div class="container mt-5" style="max-width: 600px;">
+        <ul class="progressbar">
+            <li class="active" id="progress1">Step 1</li>
+            <li id="progress2">Step 2</li>
+            <li id="progress3">Step 3</li>
+        </ul>
+
+        <div class="card">
+            <div class="card-body">
+                <!-- Step 1: Personal Info -->
+                <form id="registrationForm" method="POST" action="">
+                    <div id="step1" class="step active">
+                        <h3><b>Instructor Registration</b></h3>
+                        <h4 class="text-center mb-4">Personal Information</h4>
+                        <div class="col-md-12 mb-2">
+                            <label for="firstName">Firstname</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Firstname" required>
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="middleName">Middlename</label>
+                            <input type="text" class="form-control" id="middleName" name="middleName" placeholder="Middlename">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="lastName">Lastname</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Lastname" required>
+                        </div>
+                        <button type="button" class="btn btn-danger w-100 mt-3" id="next1">Next</button>
+                    </div>
+
+                    <!-- Step 2: Contact Info -->
+                    <div id="step2" class="step">
+                        <h4 class="text-center mb-4">Contact Information</h4>
+                        <div class="col-md-12 mb-2">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                          <label for="phone">Phone number</label>
+                         <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone number" maxlength="11" pattern="\d{11}" title="Please enter an 11-digit phone number" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="address">Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" placeholder="Address"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-secondary w-100 mt-3" id="prev1">Previous</button>
+                        <button type="button" class="btn btn-danger w-100 mt-3" id="next2">Next</button>
+                    </div>
+
+                    <!-- Step 3: Account Info -->
+                    <div id="step3" class="step">
+                        <h4 class="text-center mb-4">Account Information</h4>
+                        <div class="col-md-12 mb-2">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                            <input type="checkbox" id="showPassword"> Show Password
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                            <input type="checkbox" id="showConfirmPassword"> Show Password
+                        </div>
+                        <button type="button" class="btn btn-secondary w-100 mt-3" id="prev2">Previous</button>
+                        <button type="submit" class="btn btn-danger w-100 mt-3">Register</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="card-body">
-            <!-- Registration form -->
-            <form id="registrationForm" method="POST" action="">
-                <!-- Form fields for registration -->
-                <div class="col-md-12 mb-2">
-                   
-                <label for="">Firstname</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="firstname" required>
-                </div>
-                <div class="col-md-12 mb-1">
-                 
-                <label for="">Middlename</label>
-                    <input type="text" class="form-control" id="middleName" name="middleName" placeholder="Middlename">
-                </div>
-                <div class="col-md-12 mb-1">
-                  
-                <label for="">Lastname</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Lastname" required>
-                </div>
-                <div class="col-md-12 mb-3">
-                 
-                <label for="">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                </div>
-                <div class="col-md-12 mb-3">
-                   
-                <label for="">Phone number</label>
-                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone number" required>
-                </div>
-                <div class="col-md-12 mb-3">
-                   
-                <label for="">Address</label>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
-                </div>
-                <div class="col-md-12 mb-3">
-                  
-                <label for="">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-                </div>
-                <!-- Password Field -->
-                <div class="col-md-12 mb-3">
-                    <label for="">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                </div>
+       
+        <script>
+        document.getElementById('next1').addEventListener('click', function() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
 
-                <!-- Confirm Password Field -->
-                <div class="col-md-12 mb-3">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-danger w-100">Register</button>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script> 
-    <?php if (!empty($successMessage)): ?>
-        Swal.fire({
-            icon: 'success',
-            title: '<?= addslashes($successMessage) ?>',
-            text: 'You will be redirected shortly.',
-            showConfirmButton: false,
-            timer: 3000
-        }).then(function() {
-            window.location.href = './admin/login.php';
+            // Validate Step 1 fields
+            if (!firstName || !lastName) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Incomplete Information',
+                    text: 'Please fill in all required fields in Step 1.',
+                });
+            } else {
+               
+                showStep(1);
+            }
         });
-    <?php elseif (!empty($errorMessage)): ?>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '<?= addslashes($errorMessage) ?>'
+
+        document.getElementById('next2').addEventListener('click', function() {
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Validate Step 2 fields
+            if (!email || !phone) {
+                let errorMessage = '';
+
+                if (!email) {
+                    errorMessage += '\n';
+                }
+                if (!phone) {
+                    errorMessage += 'Please fill in all required fields in Step 2.\n';
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Incomplete Information',
+                    text: errorMessage,
+                });
+            } else if (phone.length !== 11) {
+               
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Phone Number',
+                    text: 'Phone number must be exactly 11 digits.',
+                });
+            } else {
+               
+                showStep(2);
+            }
         });
-    <?php endif; ?>
-</script>
 
-<script>
-   document.getElementById('registrationForm').addEventListener('submit', function (e) {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        document.getElementById('prev1').addEventListener('click', function() {
+            showStep(0);
+        });
 
-        // Check if passwords match
-        if (password !== confirmPassword) {
-            e.preventDefault(); // Prevent form submission
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Passwords do not match. Please try again.'
+        document.getElementById('prev2').addEventListener('click', function() {
+            showStep(1);
+        });
+
+       
+        function showStep(stepIndex) {
+            const steps = document.querySelectorAll('.step');
+            const progressBar = document.querySelectorAll('.progressbar li');
+
+            steps.forEach((step, index) => {
+                step.classList.remove('active');
+                step.style.display = index === stepIndex ? 'block' : 'none';
+                progressBar[index].classList.toggle('active', index <= stepIndex);
             });
-            return;
         }
 
-        // Check if password meets strong password criteria
-        if (!passwordRegex.test(password)) {
-            e.preventDefault(); // Prevent form submission
-            Swal.fire({
-                icon: 'error',
-                title: 'Weak Password',
-                text: 'Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.'
-            });
-        }
-    });
-</script>
+       
+        document.getElementById('showPassword').addEventListener('change', function() {
+            const passwordField = document.getElementById('password');
+            passwordField.type = this.checked ? 'text' : 'password';
+        });
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        document.getElementById('showConfirmPassword').addEventListener('change', function() {
+            const confirmPasswordField = document.getElementById('confirmPassword');
+            confirmPasswordField.type = this.checked ? 'text' : 'password';
+        });
+
+       
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+           
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Passwords do not match. Please try again.',
+                });
+                return;
+            }
+
+           
+            if (!passwordRegex.test(password)) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Weak Password',
+                    text: 'Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.',
+                });
+            }
+        });
+
+       
+        document.addEventListener('DOMContentLoaded', function() {
+            <?php if (!empty($successMessage)) { ?>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '<?php echo $successMessage; ?>',
+                    icon: 'success'
+                }).then(function() {
+                    window.location.href = './admin/login.php'; 
+                });
+            <?php } elseif (!empty($errorMessage)) { ?>
+                Swal.fire('Error!', '<?php echo $errorMessage; ?>', 'error');
+            <?php } ?>
+        });
+    </script>
+
+    <script src="assets/js/bootstrap.bundle.js"></script>
 </body>
 </html>
