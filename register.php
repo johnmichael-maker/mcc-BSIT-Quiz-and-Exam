@@ -10,11 +10,11 @@ $dbname = "u510162695_bsit_quiz";
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+
 // Check the connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 
 
 // Initialize variables for success and error messages
@@ -107,11 +107,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body{
-            background-color:#dc3545;
-
+            background: url('./assets/img/mcc.png') no-repeat center center fixed;
+           
         }
         .form-container {
-            max-width: 600px;
             margin: 0 auto;
             padding: 20px;
            
@@ -243,49 +242,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loader.style.display = "none"
         })
     </script>
-    <div class="container mt-5">
-        <div class="form-container">
-            <h1 class="text-center mb-4" style="color:#fff;">Instructor Registration</h1>
-            
+ <div class="container mt-5" style="max-width: 600px;">
+    <div class="card">
+        <div class="card-header text-center" style="background-color: #007bff; color: #fff;">
+            <h1>Instructor Registration</h1>
+        </div>
+        <div class="card-body">
             <!-- Registration form -->
             <form method="POST" action="">
                 <!-- Form fields for registration -->
-                <div class="mb-3">
-                    <label for="firstName" class="form-label">First Name</label>
+                <div class="col-md-12 mb-2">
+                   
+                <label for="">Firstname</label>
                     <input type="text" class="form-control" id="firstName" name="firstName" placeholder="firstname" required>
                 </div>
-                <div class="mb-3">
-                    <label for="middleName" class="form-label">Middle Name</label>
+                <div class="col-md-12 mb-1">
+                 
+                <label for="">Middlename</label>
                     <input type="text" class="form-control" id="middleName" name="middleName" placeholder="Middlename">
                 </div>
-                <div class="mb-3">
-                    <label for="lastName" class="form-label">Last Name</label>
+                <div class="col-md-12 mb-1">
+                  
+                <label for="">Lastname</label>
                     <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Lastname" required>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
+                <div class="col-md-12 mb-3">
+                 
+                <label for="">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                 </div>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Phone</label>
+                <div class="col-md-12 mb-3">
+                   
+                <label for="">Phone number</label>
                     <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone number" required>
                 </div>
-                <div class="mb-3">
-                    <label for="address" class="form-label">Address</label>
+                <div class="col-md-12 mb-3">
+                   
+                <label for="">Address</label>
                     <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
                 </div>
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
+                <div class="col-md-12 mb-3">
+                  
+                <label for="">Username</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                <div class="col-md-12 mb-3">
+                <label for="">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
             </form>
         </div>
     </div>
+</div>
+
+
+
+
 
     <script>
         <?php if (!empty($successMessage)): ?>
