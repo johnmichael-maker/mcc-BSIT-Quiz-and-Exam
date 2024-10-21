@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <li id="progress3"><b>Step 3</b></li>
         </ul>
 
-        <div class="card">
+        <div class="card" style="box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);">
             <div class="card-body">
                 <!-- Step 1: Personal Info -->
                 <form id="registrationForm" method="POST" action="">
