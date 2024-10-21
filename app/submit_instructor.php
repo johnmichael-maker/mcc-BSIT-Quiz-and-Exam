@@ -3,7 +3,7 @@
 namespace App;
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception as PHPMailerException; // Alias PHPMailer's Exception
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 require __DIR__ . "/../vendor/phpmailer/phpmailer/src/Exception.php";
 require __DIR__ . "/../vendor/phpmailer/phpmailer/src/PHPMailer.php";
@@ -26,18 +26,21 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
 
+        // Extract username from email for checking
+        $username = strstr($email, '@', true); // Get the part before '@'
+
         // Server-side validation for email domain
         $domain = "@mcclawis.edu.ph";
         if (!str_ends_with($email, $domain)) {
             $errorMessage = "Invalid email address. Only emails ending with $domain are allowed.";
         } else {
-            // Check if the email already exists in the database
-            $stmt = $conn->prepare("SELECT email FROM signupinstructors WHERE email = :email");
-            $stmt->bindParam(':email', $email);
+            // Check if the MS 365 Username exists in the ms_365_instructor table
+            $stmt = $conn->prepare("SELECT * FROM ms_365_instructor WHERE Username = :username");
+            $stmt->bindParam(':username', $username);
             $stmt->execute();
 
-            if ($stmt->rowCount() > 0) {
-                $errorMessage = "This email is already registered. Please check your inbox for the registration link.";
+            if ($stmt->rowCount() === 0) {
+                $errorMessage = "This MS 365 Username does not exist in our records.";
             } else {
                 // Generate a registration token and expiration
                 $token = bin2hex(random_bytes(32));
@@ -45,32 +48,32 @@ try {
                 $token_hash = hash('sha256', $token);
 
                 // Store token and expiration in the database
-                $stmt = $conn->prepare("INSERT INTO signupinstructors (email, reset_token_hash, reset_token_hash_expires_at) VALUES (:email, :token_hash, :expires_at)");
-                $stmt->bindParam(':email', $email);
+                $stmt = $conn->prepare("UPDATE ms_365_instructor SET token = :token_hash, token_expire = :expires_at WHERE Username = :username");
                 $stmt->bindParam(':token_hash', $token_hash);
                 $stmt->bindParam(':expires_at', $expires_at);
+                $stmt->bindParam(':username', $username);
 
                 if ($stmt->execute()) {
-                    $protocol = 'https'; // Force HTTPS
-                    $host = 'mccbsitquizandexam.com';  // Use your actual domain
+                    $protocol = 'https';
+                    $host = 'mccbsitquizandexam.com';
                     $register_link = "$protocol://$host/register.php?token=$token";
-                    
+
                     // Set up PHPMailer
                     $mail = new PHPMailer(true);
 
                     try {
-                        // SMTP server settings for Gmail
+                        // SMTP server settings
                         $mail->isSMTP();
-                        $mail->Host = 'smtp.gmail.com'; // SMTP server for Gmail
+                        $mail->Host = 'smtp.gmail.com';
                         $mail->SMTPAuth = true;
-                        $mail->Username = 'johnmichaellerobles345@gmail.com'; // Your Gmail address
-                        $mail->Password = 'ybhr uilh htvb xygk'; // Your Gmail App Password
-                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption
+                        $mail->Username = 'johnmichaellerobles345@gmail.com';
+                        $mail->Password = 'ybhr uilh htvb xygk'; // Gmail App Password
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                         $mail->Port = 587;
 
                         // Recipients
-                        $mail->setFrom('johnmichaellerobles345@gmail.com', 'MCC-BSIT Quiz and Exam'); // Sender's email and name
-                        $mail->addAddress($email); // Add recipient email
+                        $mail->setFrom('johnmichaellerobles345@gmail.com', 'MCC-BSIT Quiz and Exam');
+                        $mail->addAddress($email);
 
                         // Email content
                         $mail->isHTML(true);
@@ -93,7 +96,7 @@ try {
     // Close the database connection
     $database->closeConnection();
 
-} catch (\Exception $e) { // Use PHP's global Exception class
+} catch (\Exception $e) {
     $errorMessage = $e->getMessage();
 }
 
