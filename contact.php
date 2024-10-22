@@ -490,9 +490,7 @@ h6.fw-bold {
                 <li class="nav-item">
                     <a href="about.php" class="nav-link">About Us</a>
                 </li>
-                <li class="nav-item">
-                    <a href="contact.php" class="nav-link">Contact</a>
-</li>
+                
                 <li class="nav-item">
                     <button class="btn btn-signup btn-danger" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
                 </li>
@@ -547,6 +545,9 @@ h6.fw-bold {
                             <h3>Madridejos community college</h3>
                           <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=Madridejos%20Community%20College&t=m&z=16&output=embed&iwloc=near" title="Madridejos Community College" aria-label="Madridejos Community College"></iframe>
                         </div>
+                       
+<i class="fab fa-email"></i> Email: madridejoscommunitycollege@gmail.com
+</a>
                       </div>
                     </div>
                   </div>
