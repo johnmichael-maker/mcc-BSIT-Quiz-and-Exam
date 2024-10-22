@@ -559,7 +559,7 @@ h6.fw-bold {
               <!-- Links Column -->
               <div class="col-lg-2">
                 <aside id="nav_menu-2" class="widget widget_nav_menu">
-                  <h3 class="widget-title" class="fade-in-left">Links</h3>
+                  <h3 class="widget-title">Links</h3>
                   <div class="menu-main-menu-container">
                     <ul id="menu-main-menu-1" class="menu">
                       <li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home">
@@ -579,7 +579,7 @@ h6.fw-bold {
               <!-- Contact Us Column -->
               <div class="col-lg-4">
                 <aside id="contact-info-widget-2" class="widget contact-info">
-                  <h3 class="widget-title" class="fade-in-left">Contact Us</h3>
+                  <h3 class="widget-title">Contact Us</h3>
                   <div class="contact-info contact-info-block">
                     <ul class="contact-details list list-icons">
                       <li>
