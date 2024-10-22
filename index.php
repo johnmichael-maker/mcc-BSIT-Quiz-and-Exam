@@ -608,6 +608,9 @@ h6.fw-bold {
                 <li class="nav-item">
                     <a href="about.php" class="nav-link">About Us</a>
                 </li>
+		    <li class="nav-item">
+                    <a href="contact.php" class="nav-link">Contact</a>
+                </li>
                 <li class="nav-item">
                     <button class="btn btn-signup btn-danger" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
                 </li>
