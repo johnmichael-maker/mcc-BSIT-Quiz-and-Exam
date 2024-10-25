@@ -44,10 +44,10 @@ $inactive = "text-light";
         </li>
         <?php endif; ?>
         
-        <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
+       <!-- <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
         <li class="nav-item">
             <a href="quiz.php" class="nav-link <?= str_contains($url, '/quiz.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Quiz</a>
-        </li>
+        </li>-->
         <?php endif; ?>
         <li class="nav-item">
             <a href="examinees.php" class="nav-link <?= str_contains($url, '/examinees.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Examinees</a>
