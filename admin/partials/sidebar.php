@@ -42,10 +42,6 @@ $inactive = "text-light";
                 || str_contains($url, 'view-exam') 
                 ? $active : $inactive ?>"> <i class="bx bx-file"></i> Exam</a>
         </li>
-
-    <li class="nav-item">
-            <a href="examinees.php" class="nav-link <?= str_contains($url, '/examinees.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Examinees</a>
-        </li>
         <?php endif; ?>
         
        <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
