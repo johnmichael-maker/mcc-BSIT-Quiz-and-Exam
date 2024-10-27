@@ -123,7 +123,8 @@ try {
         .container {
             display: flex;
             flex-direction: row;
-            width: 700px;
+            width: 1100px;
+            height: 500px; 
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
@@ -143,19 +144,8 @@ try {
             max-width: 150%;
             height: auto;
             display: block;
-           margin: 0 auto 20px;
-          animation: moveUpDown 2s ease-in-out infinite; /* Added animation */
-          }
-           @keyframes moveUpDown {
-          0% {
-          transform: translateY(0);
-      }
-        50% {
-        transform: translateY(-15px); /* Adjust the movement distance as needed */
-        }
-        100% {
-          transform: translateY(0);
-   }
+            margin: 0 auto 20px;
+            animation: moveUpDown 2s ease-in-out infinite; /* Added animation */
         }
 
         .container .right-section {
@@ -164,7 +154,7 @@ try {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
+            align-items: center; /* Center items vertically */
         }
 
         h2 {
@@ -184,13 +174,21 @@ try {
             text-align: left;
         }
 
-        input[type="email"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
+    
+        input[type="email"]:focus {
+            border-color: crimson !important;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) !important; 
+        }
+        
+        input[type="email"],
+        input[type="submit"] {
+            width: 100%; /* Ensure full width for centering */
+            max-width: 400px; /* Set max width to avoid stretching */
+            margin-bottom: 20px; /* Space between input and button */
             border-radius: 5px;
             border: 1px solid #ccc;
             font-size: 16px;
+            padding: 12px; /* Add padding for better appearance */
         }
 
         button {
@@ -210,23 +208,30 @@ try {
         }
 
         .container p {
+          
             margin-top: 15px;
-            color: #666;
+            color: #000;
             text-align: center;
         }
 
         /* Responsive styling */
         @media (max-width: 768px) {
             .container {
-                width: 700px; /* Fixed width for tablets */
+                width: 100%; /* Allow container to take full width */
             }
 
             .container .left-section {
-                padding: 20px;
+                display: none; /* Hide left section */
             }
 
             .container .right-section {
-                padding: 40px 20px;
+                width: 100%; /* Ensure right section takes full width */
+                padding: 40px 20px; /* Adjust padding */
+            }
+
+            input[type="email"],
+            input[type="submit"] {
+                width: calc(100% - 20px); /* Full width minus margins */
             }
 
             h2 {
@@ -260,71 +265,66 @@ try {
                 padding: 10px;
             }
         }
-        .home-link{
-text-decoration: none;
-padding: 15px 20px;
-color: rgb(128, 171, 184);
-margin-right: 2px;
-}
-input[type="email"]:focus {
-    border-color: crimson;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2); /* Added focus effect */
-}
-input[type="email"] {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 2px solid #dddddd;
-    border-radius: 4px;
-    outline: none;
-    font-size: larger;
-}
-input[type="submit"] {
-    width: 106%;
-    max-width: 420px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #dc3545;
-    color: white;
-    font-size: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: larger;
-}
-input[type="submit"]:hover {
-    background-color: #005a9e;
-}
-@media (max-width: 500px) {
-    .container {
-        padding: 10px;
-    }
-    h2 {
-        font-size: 20px;
-    }
-    h5 {
-        font-size: 14px;
-    }
-   input[type="email"], input[type="submit"] {
-        width: calc(106% - 0px); /* Adjusted width for better fit */
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-        box-sizing: border-box;
-    }
-}
-h2 {
-    color: #005a9e;
-    margin-bottom: 10px;
-    font-size: 24px;
-    
-}
-.mb-4{
-    color: #007bff;
-}
 
+        .home-link {
+            text-decoration: none;
+            padding: 15px 20px;
+            color: rgb(128, 171, 184);
+            margin-right: 2px;
+        }
+
+        input[type="email"]:focus {
+            border-color: crimson;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Added focus effect */
+        }
+
+        input[type="submit"] {
+            width: 106%;
+            max-width: 420px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #dc3545;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: larger;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005a9e;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 10px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            h5 {
+                font-size: 14px;
+            }
+            input[type="email"], input[type="submit"] {
+                width: calc(106% - 0px); /* Adjusted width for better fit */
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 4px;
+                border: 1px solid #ddd;
+                box-sizing: border-box;
+            }
+        }
+
+        h2 {
+            color: #005a9e;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .mb-4 {
+            color: #007bff;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -334,23 +334,24 @@ h2 {
             <img src="../assets/img/logo.png" alt="Logo"> <!-- Ensure to use your logo here -->
         </div>
         <div class="right-section">
-                    <!-- Display success or error messages -->
-                    <?php if ($successMessage): ?>
-                            <div class="alert alert-success">
-                                <?= htmlspecialchars($successMessage) ?>
-                            </div>
-                        <?php elseif ($errorMessage): ?>
-                            <div class="alert alert-danger">
-                                <?= htmlspecialchars($errorMessage) ?>
-                            </div>
-                        <?php endif; ?>
+            <!-- Display success or error messages -->
+            <?php if ($successMessage): ?>
+                <div class="alert alert-success">
+                    <?= htmlspecialchars($successMessage) ?>
+                </div>
+            <?php elseif ($errorMessage): ?>
+                <div class="alert alert-danger">
+                    <?= htmlspecialchars($errorMessage) ?>
+                </div>
+            <?php endif; ?>
 
-        <form method="POST" action="">
-        <div class="mb-3">
-              <h1 class="mb-4"><strong>Instructor Signup</strong></h1>
-             <p>Enter your MS 365 Username to receive a registration link.</p>
-            <input type="email" class="form-control" id="email" name="email" placeholder="example.juan2@mcclawis.edu.ph" required>
-            <button type="submit" class="btn btn-danger w-100">Submit</button>
+            <form method="POST" action="">
+                <div class="mb-3">
+                    <h1 class="mb-4"><strong>Instructor Signup</strong></h1>
+                    <p>Enter your MS 365 Username to receive a registration link.</p>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="example.juan2@mcclawis.edu.ph" required>
+                    <input type="submit" class="btn btn-danger w-100" value="Submit">
+                </div>
             </form>
             <p><a class="home-link" href="../index.php">Back Home</a></p>
         </div>
@@ -358,6 +359,3 @@ h2 {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
