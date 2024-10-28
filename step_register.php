@@ -65,11 +65,17 @@
     }
 
     h1 {
-        margin-bottom: 20px;
-        color: #005a9e;
-        font-size: 24px;
-        text-align: center;
-    }
+    margin-bottom: 20px;
+    color: #005a9e;
+    font-size: 45px;
+    text-align: center;
+}
+.prompt-text{
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 20px;
+    text-align: center;
+}
 
     label {
         font-weight: bold;
