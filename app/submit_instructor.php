@@ -281,7 +281,7 @@ try {
 <body>
     <div class="container">
         <div class="left-section">
-            <img src="../assets/img/logo.png" alt="Logo">
+            <img src="../assets/img/bsit-logo.png" alt="Logo">
         </div>
         <div class="right-section">
             <?php if ($successMessage): ?>
