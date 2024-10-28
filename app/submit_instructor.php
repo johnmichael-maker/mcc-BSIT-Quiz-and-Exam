@@ -174,13 +174,18 @@ try {
             align-items: center;
         }
 
-        h1 {
-            margin-bottom: 20px;
-            color: #005a9e;
-            font-size: 24px;
-            text-align: center;
-        }
-
+  h1 {
+  margin-bottom: 20px;
+    color: #005a9e;
+    font-size: 45px;
+    text-align: center;
+     }
+.prompt-text{
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 20px;
+    text-align: center;
+}
         label {
             font-weight: bold;
             display: block;
@@ -296,7 +301,7 @@ try {
 
             <form method="POST" action="">
                 <h1><strong>Instructor Signup</strong></h1>
-                <p>Enter your MS 365 Username to receive a registration link.</p>
+                   <p class="prompt-text">Enter your MS 365 Username to receive a registration link.</p>
                 <input type="email" id="email" name="email" placeholder="example doe.juan@mcclawis.edu.ph" required>
                 <input type="submit" value="Submit">
             </form>
