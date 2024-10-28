@@ -476,7 +476,7 @@ h6.fw-bold {
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg" style="background: #fff;">
+<nav class="navbar navbar-expand-lg" style="background: #f8f9fa;">
     <div class="container-fluid mx-5">
         <a class="navbar-brand" href="#"></a>
         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
