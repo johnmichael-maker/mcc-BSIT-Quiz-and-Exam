@@ -226,25 +226,13 @@ try {
         input[type="submit"]:hover {
             background-color: #b71c1c;
         }
-.link-container {
-    display: flex;               
-    justify-content: center;   
-    width: 100%;                
-    margin-top: 15px;       
-}
 
-.home-link {
-    text-decoration: none;
-    color: rgb(128, 171, 184);
-    padding: 10px 20px;        
-    border-radius: 5px;       
-    background-color: #f0f0f0; 
-    transition: background-color 0.3s; 
-    text-align: center;
-}
-.home-link:hover {
-    background-color: #e0e0e0; 
-}
+        .home-link {
+            text-decoration: none;
+            color: rgb(128, 171, 184);
+            margin-top: 15px;
+            text-align: center; 
+        }
 
         @media (max-width: 768px) {
             .left-section {
@@ -312,10 +300,7 @@ try {
                 <input type="email" id="email" name="email" placeholder="example.juan2@mcclawis.edu.ph" required>
                 <input type="submit" value="Submit">
             </form>
-            <div class="link-container">
-        <a class="home-link" href="../index.php">Back Home</a>
-    </div>
-
+            <p><a class="home-link" href="../index.php">Back Home</a></p>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
