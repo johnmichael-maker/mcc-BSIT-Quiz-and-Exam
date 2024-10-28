@@ -240,6 +240,8 @@ try {
 
             input[type="email"], input[type="submit"] {
                 padding: 10px; 
+                 width: 90%; 
+        margin-right: 13px;
             }
         }
 
