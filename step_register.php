@@ -91,11 +91,17 @@
         padding: 12px; 
         box-sizing: border-box;   
     }
+input[type="email"]:focus {
+            border-color: skyblue;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2); 
+        }
 
-    input[type="email"]:focus {
-        border-color: skyblue;
-        box-shadow: 0 0 5px rgba(0,0,0,0.2); 
-    }
+        input[type="email"] {
+    
+            border: 1px solid #ccc;
+            outline: none;
+            
+        }
 
     input[type="submit"] {
         background-color: #d32f2f;
