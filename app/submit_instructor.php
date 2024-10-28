@@ -149,6 +149,20 @@ try {
             margin: 0 auto 20px;
             animation: moveUpDown 2s ease-in-out infinite;
         }
+        .right-section h1 {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px; 
+    text-align: center;
+}
+
+.right-section p {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px; 
+    text-align: center;
+    margin-right: 30px;
+}
 
         .right-section {
             max-width: 100%; 
@@ -189,8 +203,15 @@ try {
         }
 
         input[type="email"]:focus {
-            border-color: crimson;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border-color: skyblue;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2); 
+        }
+
+        input[type="email"] {
+    
+            border: 1px solid #ccc;
+            outline: none;
+            
         }
 
         input[type="submit"] {
@@ -210,7 +231,7 @@ try {
             text-decoration: none;
             color: rgb(128, 171, 184);
             margin-top: 15px;
-            margin-right: 30px;
+            text-align: center; /* Center the link */
         }
 
         @media (max-width: 768px) {
@@ -237,21 +258,23 @@ try {
             h1 {
                 font-size: 20px; 
             }
-
-            input[type="email"], input[type="submit"] {
+           
+            input[type="email"], 
+            input[type="submit"] {
                 padding: 10px; 
-                 width: 90%; 
-        margin-right: 13px;
+                width: 90%; 
+                margin-right: 13px;
             }
         }
 
-        
         @media (min-width: 769px) {
             input[type="email"],
             input[type="submit"] {
-                max-width: 600px; 
+                max-width: 500px; 
+                width: 100%; 
             }
         }
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -261,7 +284,6 @@ try {
             <img src="../assets/img/logo.png" alt="Logo">
         </div>
         <div class="right-section">
-          
             <?php if ($successMessage): ?>
                 <div class="alert alert-success">
                     <?= htmlspecialchars($successMessage) ?>
