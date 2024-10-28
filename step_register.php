@@ -40,7 +40,7 @@
     }
 
     .left-section img {
-        max-width: 100%; 
+        max-width: 130%; 
         height: auto;
         display: block;
         margin: 0 auto 20px;
