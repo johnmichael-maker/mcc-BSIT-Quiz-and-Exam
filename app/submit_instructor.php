@@ -105,9 +105,9 @@ try {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <title>Instructor|Verification</title>
+    <title>Instructor | Verification</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -118,12 +118,14 @@ try {
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
         .container {
             display: flex;
             flex-direction: row;
-            width: 1100px;
+            width: 90%; 
+            max-width: 1100px; 
             height: 500px; 
             background-color: #fff;
             border-radius: 10px;
@@ -131,37 +133,36 @@ try {
             overflow: hidden;
         }
 
-        .container .left-section {
+        .left-section {
             background-color: #d32f2f;
-            padding: 50px;
+            padding: 20px; 
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 35%;
+            flex: 0 0 35%; 
         }
 
-        .container .left-section img {
-            max-width: 150%;
+        .left-section img {
+            max-width: 100%; 
             height: auto;
             display: block;
             margin: 0 auto 20px;
-            animation: moveUpDown 2s ease-in-out infinite; /* Added animation */
+            animation: moveUpDown 2s ease-in-out infinite;
         }
 
-        .container .right-section {
-            padding: 60px 40px;
-            width: 65%;
+        .right-section {
+            padding: 20px; 
+            flex: 0 0 65%; 
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center; /* Center items vertically */
+            align-items: center;
         }
 
-        h2 {
+        h1 {
             margin-bottom: 20px;
-            color: #333;
-            font-size: 28px;
-            font-weight: 600;
+            color: #005a9e;
+            font-size: 24px;
             text-align: center;
         }
 
@@ -174,156 +175,71 @@ try {
             text-align: left;
         }
 
-    
-        input[type="email"]:focus {
-            border-color: crimson !important;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) !important; 
-        }
-        
         input[type="email"],
         input[type="submit"] {
-            width: 100%; /* Ensure full width for centering */
-            max-width: 400px; /* Set max width to avoid stretching */
-            margin-bottom: 20px; /* Space between input and button */
+            width: 90%; 
+            max-width: 400px; 
+            margin-bottom: 20px;
             border-radius: 5px;
             border: 1px solid #ccc;
             font-size: 16px;
-            padding: 12px; /* Add padding for better appearance */
-        }
-
-        button {
-            background-color: #d32f2f;
-            color: white;
             padding: 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 106%;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #b71c1c;
-        }
-
-        .container p {
-          
-            margin-top: 15px;
-            color: #000;
-            text-align: center;
-        }
-
-        /* Responsive styling */
-        @media (max-width: 768px) {
-            .container {
-                width: 100%; /* Allow container to take full width */
-            }
-
-            .container .left-section {
-                display: none; /* Hide left section */
-            }
-
-            .container .right-section {
-                width: 100%; /* Ensure right section takes full width */
-                padding: 40px 20px; /* Adjust padding */
-            }
-
-            input[type="email"],
-            input[type="submit"] {
-                width: calc(100% - 20px); /* Full width minus margins */
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            input[type="email"], button {
-                font-size: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                width: 500px; /* Fixed width for mobile */
-            }
-
-            .container .right-section {
-                padding: 30px 15px;
-            }
-
-            h2 {
-                font-size: 22px;
-            }
-
-            input[type="email"], button {
-                font-size: 14px;
-                padding: 10px;
-            }
-
-            button {
-                padding: 10px;
-            }
-        }
-
-        .home-link {
-            text-decoration: none;
-            padding: 15px 20px;
-            color: rgb(128, 171, 184);
-            margin-right: 2px;
+            box-sizing: border-box; 
         }
 
         input[type="email"]:focus {
             border-color: crimson;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Added focus effect */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
 
         input[type="submit"] {
-            width: 106%;
-            max-width: 420px;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: #dc3545;
+            background-color: #d32f2f;
             color: white;
-            font-size: 12px;
+            padding: 12px;
+            border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            font-size: larger;
         }
 
         input[type="submit"]:hover {
-            background-color: #005a9e;
+            background-color: #b71c1c;
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: rgb(128, 171, 184);
+            margin-top: 15px;
+        }
+
+       
+        @media (max-width: 768px) {
+            .left-section {
+                display: none; 
+            }
+
+            .right-section {
+                width: 100%; 
+                padding: 20px; 
+            }
         }
 
         @media (max-width: 500px) {
             .container {
-                padding: 10px;
+                flex-direction: column;
+                height: auto; 
             }
-            h2 {
-                font-size: 20px;
+
+            .left-section {
+                display: none; 
             }
-            h5 {
-                font-size: 14px;
+
+            h1 {
+                font-size: 20px; 
             }
+
             input[type="email"], input[type="submit"] {
-                width: calc(106% - 0px); /* Adjusted width for better fit */
-                padding: 10px;
-                margin: 10px 0;
-                border-radius: 4px;
-                border: 1px solid #ddd;
-                box-sizing: border-box;
+                padding: 10px; 
             }
-        }
-
-        h2 {
-            color: #005a9e;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-
-        .mb-4 {
-            color: #007bff;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -331,10 +247,10 @@ try {
 <body>
     <div class="container">
         <div class="left-section">
-            <img src="../assets/img/logo.png" alt="Logo"> <!-- Ensure to use your logo here -->
+            <img src="../assets/img/logo.png" alt="Logo">
         </div>
         <div class="right-section">
-            <!-- Display success or error messages -->
+          
             <?php if ($successMessage): ?>
                 <div class="alert alert-success">
                     <?= htmlspecialchars($successMessage) ?>
@@ -346,12 +262,10 @@ try {
             <?php endif; ?>
 
             <form method="POST" action="">
-                <div class="mb-3">
-                    <h1 class="mb-4"><strong>Instructor Signup</strong></h1>
-                    <p>Enter your MS 365 Username to receive a registration link.</p>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="example.juan2@mcclawis.edu.ph" required>
-                    <input type="submit" class="btn btn-danger w-100" value="Submit">
-                </div>
+                <h1><strong>Instructor Signup</strong></h1>
+                <p>Enter your MS 365 Username to receive a registration link.</p>
+                <input type="email" id="email" name="email" placeholder="example.juan2@mcclawis.edu.ph" required>
+                <input type="submit" value="Submit">
             </form>
             <p><a class="home-link" href="../index.php">Back Home</a></p>
         </div>
