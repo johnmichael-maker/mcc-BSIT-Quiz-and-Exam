@@ -6,232 +6,169 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <title>Student | Verification</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: url('./assets/img/mcc.png') no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+    body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('./assets/img/mcc.png') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
-        .container {
-            display: flex;
-            flex-direction: row;
-            width: 1100px;
-            height: 500px; 
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 90%; 
+    max-width: 1100px; 
+    height: 500px; 
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
 
-        .container .left-section {
-            background-color: #b71c1c;
-            padding: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 35%;
-        }
+.left-section {
+    background-color: #d32f2f;
+    padding: 20px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 35%; 
+}
 
-        .container .left-section img {
-            max-width: 150%;
-            height: auto;
-            display: block;
-            margin: 0 auto 20px;
-            animation: moveUpDown 2s ease-in-out infinite; 
-        }
+.left-section img {
+    max-width: 100%; 
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+    animation: moveUpDown 2s ease-in-out infinite;
+}
 
-        .container .right-section {
-            padding: 60px 40px;
-            width: 65%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+.right-section {
+    max-width: 100%; 
+    padding: 20px; 
+    flex: 0 0 65%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+}
 
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 28px;
-            font-weight: 600;
-            text-align: center;
-        }
+.right-section form {
+    width: 100%; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-            width: 100%;
-            color: #333;
-            text-align: left;
-        }
+h1 {
+    margin-bottom: 20px;
+    color: #005a9e;
+    font-size: 24px;
+    text-align: center;
+}
 
-        button {
-            background-color: #d32f2f;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #333;
+    text-align: left;
+}
 
-        button:hover {
-            background-color: #b71c1c;
-        }
-
-        .container p {
-            font-size: x-large;
-            margin-top: 15px;
-            color: #666;
-            text-align: center;
-        }
-
-        
-        .container .right-section p {
-            width: 100%; 
-            text-align: center; 
-            margin-top: 20px; 
-        }
-
-        .home-link {
-            text-decoration: none;
-            font-size: medium;
-            padding: 15px 20px;
-            color: rgb(128, 171, 184);
-            margin: 0 auto; 
-            display: inline-block; 
-            transition: color 0.3s ease; 
-        }
-
-        .home-link:hover {
-            color: #005a9e; 
-        }
-
-        
-        @media (max-width: 768px) {
-            .container {
-                width: 700px;
-            }
-
-            .container .left-section {
-                display: none; 
-            }
-
-            .container .right-section {
-                width: 100%; 
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            input[type="email"], button {
-                font-size: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                width: 500px; 
-            }
-
-            .container .right-section {
-                padding: 30px 15px;
-            }
-
-            h2 {
-                font-size: 22px;
-            }
-
-            input[type="email"], button {
-                font-size: 14px;
-                padding: 10px;
-            }
-
-            button {
-                padding: 10px;
-            }
-        }
-
-        input[type="email"]:focus {
-            border-color: crimson;
+input[type="email"],
+input[type="submit"] {
+    width: 100%; 
+    max-width: 500px; 
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    padding: 12px; 
+    box-sizing: border-box;
+    
+}
+input[type="email"]:focus {
+            border-color: skyblue;
             box-shadow: 0 0 5px rgba(0,0,0,0.2); 
         }
 
         input[type="email"] {
-            width: 100%;
-            max-width: 400px;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 2px solid #dddddd;
-            border-radius: 4px;
+    
+            border: 1px solid #ccc;
             outline: none;
-            font-size: larger;
+            
         }
 
-        input[type="submit"] {
-            width: 106%;
-            max-width: 420px;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: #dc3545;
-            color: white;
-            font-size: 12px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: larger;
-        }
+input[type="submit"] {
+    background-color: #d32f2f;
+    color: white;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        input[type="submit"]:hover {
-            background-color: #005a9e;
-        }
+input[type="submit"]:hover {
+    background-color: #b71c1c;
+}
 
-        @media (max-width: 500px) {
-            .container {
-                padding: 10px;
-            }
-            h2 {
-                font-size: 20px;
-            }
-            h5 {
-                font-size: 14px;
-            }
-            input[type="email"], input[type="submit"] {
-                width: calc(105% - 16px); 
-                max-width: 400px; 
-                padding: 10px;
-                margin: 10px 0;
-                border-radius: 4px;
-                border: 1px solid #ddd;
-                box-sizing: border-box; 
-            }
-        }
+.home-link {
+    text-decoration: none;
+    color: rgb(128, 171, 184);
+}
 
-        h2 {
-            color: #005a9e;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
+.right-section p {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px; 
+    text-align: center;
+}
 
-        .mb-4 {
-            color: #007bff;
-        }
+@media (max-width: 768px) {
+    .left-section {
+        display: none; 
+    }
 
-        .prompt-text {
-            color: black !important; 
-            font-size: 16px; 
-            margin-bottom: 20px; 
-            font-weight: bold; 
-        }
+    .right-section {
+        width: 100%; 
+        padding: 10px; 
+    }
+}
+
+@media (max-width: 500px) {
+    .container {
+        flex-direction: column;
+        height: auto; 
+    }
+
+    .left-section {
+        display: none; 
+    }
+
+    h1 {
+        font-size: 20px; 
+    }
+
+    input[type="email"], 
+    input[type="submit"] {
+        padding: 10px; 
+        width: 90%; 
+        margin-right: 13px;
+        
+    }
+}
+
+@media (min-width: 769px) {
+    input[type="email"],
+    input[type="submit"] {
+        max-width: 500px; 
+        width: 100%; 
+    }
+}
 
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
