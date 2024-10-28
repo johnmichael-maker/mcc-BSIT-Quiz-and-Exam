@@ -151,6 +151,7 @@ try {
         }
 
         .right-section {
+            max-width: 100%; 
             padding: 20px; 
             flex: 0 0 65%; 
             display: flex;
@@ -178,7 +179,7 @@ try {
         input[type="email"],
         input[type="submit"] {
             width: 90%; 
-            max-width: 400px; 
+            max-width: 500px; 
             margin-bottom: 20px;
             border-radius: 5px;
             border: 1px solid #ccc;
@@ -209,9 +210,9 @@ try {
             text-decoration: none;
             color: rgb(128, 171, 184);
             margin-top: 15px;
+            margin-right: 30px;
         }
 
-       
         @media (max-width: 768px) {
             .left-section {
                 display: none; 
@@ -239,6 +240,14 @@ try {
 
             input[type="email"], input[type="submit"] {
                 padding: 10px; 
+            }
+        }
+
+        
+        @media (min-width: 769px) {
+            input[type="email"],
+            input[type="submit"] {
+                max-width: 600px; 
             }
         }
     </style>
