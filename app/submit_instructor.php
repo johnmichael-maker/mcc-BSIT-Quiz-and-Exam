@@ -208,7 +208,7 @@ try {
         }
 
         input[type="email"]:focus {
-            border-color: skyblue;
+            border-color: #df0100;
             box-shadow: 0 0 5px rgba(0,0,0,0.2); 
         }
 
