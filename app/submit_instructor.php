@@ -302,7 +302,7 @@ try {
             <form method="POST" action="">
                 <h1><strong>Instructor Signup</strong></h1>
                    <p class="prompt-text">Enter your MS 365 Username to receive a registration link.</p>
-                <input type="email" id="email" name="email" placeholder="example doe.juan@mcclawis.edu.ph" required>
+                <input type="email" id="email" name="email" placeholder="Ex:doe.juan@mcclawis.edu.ph" required>
                 <input type="submit" value="Submit">
             </form>
             <p><a class="home-link" href="../index.php">Back Home</a></p>
