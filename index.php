@@ -384,22 +384,25 @@ h6.fw-bold {
         background-color: #0056b3;
     }
 
-    /* Modal backdrop for a sleek effect */
+  
     .modal-backdrop {
         background-color: rgba(0, 0, 0, 0.5);
     }
 
     .btn-signup {
-        border-radius: 50px; /* Makes the button round */
-        padding: 10px 25px; /* Increases button padding */
+	background-color: #df0100;
+        color: #fff;
+        border-radius: 50px; 
+        padding: 10px 25px; 
         font-size: 16px;
         font-weight: bold;
         transition: background-color 0.3s ease;
     }
 
-    /* Optional: Button hover effect */
+   
     .btn-signup:hover {
-        background-color: #c82333; /* Slightly darker red on hover */
+        background-color: #c82333; 
+	color:#fff;
     }
          
   .result, .result1{
@@ -527,7 +530,7 @@ h6.fw-bold {
 }
 
 .footer-background a:hover {
-  color: crimson; /* Change to crimson on hover */
+  color: crimson;
 }
 
 .footer-background h5 {
@@ -574,8 +577,8 @@ h6.fw-bold {
         bottom: 0;
         width: 100%;
         padding: 10px 0;
-        font-size: 14px; /* Adjust font size if needed */
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Slight shadow to distinguish from the rest of the page */
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
     }
 
     .footer-copyright {
