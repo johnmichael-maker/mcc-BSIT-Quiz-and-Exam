@@ -194,6 +194,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
             color: #007bff;
         }
+         .link-primary{
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -272,6 +275,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
                             <input type="checkbox" id="showConfirmPassword"> Show Password
                         </div>
+                        
+                        <div class="fv-row mb-10">
+        <label class="form-check form-check-custom form-check-solid form-check-inline">
+            <input class="form-check-input" type="checkbox" id="toc" name="toc" value="1" required>
+            <span class="form-check-label fw-bold text-gray-700 fs-6">
+                I Agree
+                <a href="#" target="_blank" rel="noopener noreferrer" class="ms-1 link-primary">Terms and Conditions</a>
+            </span>
+        </label>
+    </div>
                         <button type="button" class="btn btn-secondary w-100 mt-3" id="prev2">Previous</button>
                         <button type="submit" class="btn btn-danger w-100 mt-3">Register</button>
                     </div>
