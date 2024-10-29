@@ -188,7 +188,7 @@ input[type="submit"]:hover {
             <h1 class="mb-4"><strong>Student Signup</strong></h1>
             <p class="prompt-text">Enter your MS 365 Username to receive a registration link.</p>
             <form id="registrationForm" action="./app/submit_registration.php" method="post" onsubmit="return validateEmail()">
-                <input type="email" id="email" name="Username" placeholder="example doe.juan@mcclawis.edu.ph" required>
+                <input type="email" id="email" name="Username" placeholder="Ex:doe.juan@mcclawis.edu.ph" required>
                 <input type="submit" value="Submit">
             </form>
             <p><a class="home-link" href="index.php">Back Home</a></p>
