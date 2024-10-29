@@ -30,7 +30,7 @@
 }
 
 .left-section {
-    background-color: #d32f2f;
+    background-color: #df0100;
     padding: 20px; 
     display: flex;
     justify-content: center;
@@ -110,7 +110,7 @@ input[type="email"]:focus {
         }
 
 input[type="submit"] {
-    background-color: #d32f2f;
+    background-color:#df0100;
     color: white;
     padding: 12px;
     border: none;
