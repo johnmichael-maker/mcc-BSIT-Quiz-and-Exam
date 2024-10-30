@@ -103,7 +103,7 @@
             .form-container {
                 max-width: 90%;
                 padding: 10px; 
-                margin-top: 20px;
+                margin-top: 30px;
             }
 
             .logo {
