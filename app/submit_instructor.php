@@ -56,7 +56,7 @@ try {
                 if ($stmt->execute()) {
                     $protocol = 'https';
                     $host = 'mccbsitquizandexam.com';
-                    $register_link = "$protocol://$host/form_register.php?token=$token";
+                    $register_link = "$protocol://$host/..php?token=$token";
 
                     // Set up PHPMailer
                     $mail = new PHPMailer(true);
