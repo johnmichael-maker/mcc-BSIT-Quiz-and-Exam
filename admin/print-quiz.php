@@ -15,11 +15,17 @@
                     </div>
                     <div class="card-body table-responsive">
 
-                        <div class="mb-4 text-center">
-                            <h3 clas>MCC Quiz Bowl <?= date('Y') ?></h3>
-                            <h5 class="">Quiz Result</h5>
-                            <p>Date: <?= date('Y-m-d') ?></p>
-                        </div>
+                    <div class="mb-4 d-flex justify-content-between align-items-center">
+    <img src="../assets/img/bsit-logo.png" alt="Left Logo" style="max-width: 150px; height: auto; margin-right: -20px;">
+    <div class="text-center flex-grow-1">
+        <h3 class="mb-0">MCC Quiz Bowl <?= date('Y') ?></h3> 
+        <h5 class="mb-1">Quiz Result</h5> 
+        <p class="mb-0">Date: <?= date('Y-m-d') ?></p>
+    </div>
+    <img src="../assets/img/logo.png" alt="Right Logo" style="max-width: 150px; height: auto;">
+</div>
+
+
                         <table class="table table-bordered">
                             <thead>
                                 <th>Rank #</th>
