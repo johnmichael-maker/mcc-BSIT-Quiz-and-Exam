@@ -21,14 +21,10 @@ body {
 }
 
 header {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url(./assets/img/mcc-bg.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./assets/img/school.jpg);
     background-size: cover;
     background-position: center;
-    padding: 0;
-    height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 20px 0;
 }
 .col-lg-8.h-100.my-auto.text-light {
     padding-top: 50px; 
