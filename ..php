@@ -6,7 +6,6 @@
     <title>Instructor Registration</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <style>
-      
         html, body {
             margin: 0;
             padding: 0;
@@ -14,7 +13,6 @@
             height: 100%; 
         }
 
-      
         .outer-background {
             background-image: url(./assets/img/mcc.png);
             background-size: cover; 
@@ -27,7 +25,6 @@
             position: relative; 
         }
 
-      
         .form-container {
             background-color: rgba(255, 255, 255, 0.9); 
             width: 90%;
@@ -41,7 +38,8 @@
         }
 
         .logo {
-            width: 250px; 
+            width: 100%; 
+            max-width: 250px; 
             margin-bottom: -30px;
             height: auto;
         }
@@ -52,7 +50,6 @@
             margin-bottom: 20px;
         }
 
-       
         .btn {
             background-color: #00c4ff;
             color: white;
@@ -71,7 +68,6 @@
             background-color: #ccc;
         }
 
-       
         .footer-text {
             margin-top: 15px;
             color: black;
@@ -83,10 +79,9 @@
             font-weight: bold;
         }
 
-        
         @media (max-width: 768px) {
             .form-container {
-                max-width: 350px;
+                max-width: 90%;
                 padding: 15px;
             }
 
@@ -103,19 +98,20 @@
 
         @media (max-width: 480px) {
             .form-container {
-                max-width: 300px;
-                padding: -10px;
+                max-width: 90%;
+                padding: 10px; 
             }
 
             .logo {
-                width: 250px;
-                margin-bottom: 50px;    
+                width: 100%;
+                margin-bottom: 20px;    
             }
-           .madri-dejos{
-                margin-top: -50px;
-           }
 
-           
+            .madri-dejos {
+                margin-top: -20px; 
+                font-size: 28px; 
+            }
+
             .form-title {
                 font-size: 20px;
             }
@@ -126,13 +122,12 @@
             }
 
             .footer-text {
-                font-size: 20px;
+                font-size: 16px; 
             }
         }
     </style>
 </head>
 <body>
-   
     <div class="outer-background">
         <div style="text-align: center; position: absolute; top: 20px; width: 100%;">
             <img src="./assets/img/logo.png" alt="Logo" class="logo">
