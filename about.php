@@ -281,7 +281,7 @@ h6.fw-bold {
     color: crimson; /* Fallback color */
     size: 15px;
 }
-
+/* Default link color and font family */
 .navbar-nav .nav-link {
    color: #555; 
     font-size: 17px;
@@ -336,7 +336,7 @@ h6.fw-bold {
         .nav-bot:hover {
             background-color: crimson; 
         }
-
+/* Modal Enhancements */
 .modal-content {
         border-radius: 15px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -390,36 +390,36 @@ h6.fw-bold {
         background-color: #0056b3;
     }
 
-   
+    /* Modal backdrop for a sleek effect */
     .modal-backdrop {
         background-color: rgba(0, 0, 0, 0.5);
     }
 
     .btn-signup {
-        border-radius: 50px; 
-        padding: 10px 25px; 
+        border-radius: 50px; /* Makes the button round */
+        padding: 10px 25px; /* Increases button padding */
         font-size: 16px;
         font-weight: bold;
         transition: background-color 0.3s ease;
     }
 
-    
+    /* Optional: Button hover effect */
     .btn-signup:hover {
-        background-color: #c82333; 
+        background-color: #c82333; /* Slightly darker red on hover */
     }
   .footer-background {
-  background-color: #002e5b;
-  color: #fff;
+  background-color: #002e5b; /* Dark blue background */
+  color: #fff; /* White text color */
   padding: 50px 0;
 }
 
 .footer-background a {
-  color: #ffffff; 
+  color: #ffffff; /* White text for links */
   text-decoration: none;
 }
 
 .footer-background a:hover {
-  color: crimson; 
+  color: crimson; /* Change to crimson on hover */
 }
 
 .footer-background h5 {
@@ -446,7 +446,7 @@ h6.fw-bold {
 }
 
 .footer-background .social-icons a:hover {
-  color: #ffffff; 
+  color: #ffffff; /* White text on hover */
 }
 
 .footer-background .container {
@@ -465,70 +465,39 @@ h6.fw-bold {
         bottom: 0;
         width: 100%;
         padding: 10px 0;
-        font-size: 14px;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+        font-size: 14px; /* Adjust font size if needed */
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Slight shadow to distinguish from the rest of the page */
     }
 
     .footer-copyright {
-        color: #f8f9fa; 
+        color: #f8f9fa; /* Footer text color */
     }
     </style>
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg" style="background: #fff;">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-            
-            <div class="d-flex align-items-center d-none d-md-flex">
-                <img src="assets/img/logo.png" alt="Logo" style="width: 130px; height: 90px; margin-left: 20px;">
-                <h1 class="header-title text-blue ml-3" style="color: #4d4d4d; font-size: 2rem;">MADRIDEJOS COMMUNITY COLLEGE</h1>
-
-             
-            </div>
-            
-            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="index.php" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="about.php" class="nav-link">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="contact.php" class="nav-link">Contact</a>
-                    </li>
-                    <li class="nav-item">
+    <div class="container-fluid mx-5">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="index.php" class="nav-link ">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.php" class="nav-link">About Us</a>
+                </li>
+                
+                <li class="nav-item">
                     <button class="btn btn-signup btn-danger" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-   <!-- Sign Up Modal -->
-<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                 <h5 class="modal-title" id="signUpModalLabel" style="width: 100%; text-align: center; font-family: 'Arial', sans-serif;">Sign Up As</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-          <div class="modal-body">
-                <p class="text-center mb-4">Select your role to sign up:</p>
-                <div class="d-flex justify-content-center gap-4">
-                    <a href="step_register.php" class="btn btn-role btn-success">Examinee</a>
-                    <a href="./app/submit_instructor.php" class="btn btn-role btn-primary">Instructor</a>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
+</nav>
 
 <!-- Sign Up Modal -->
 <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
