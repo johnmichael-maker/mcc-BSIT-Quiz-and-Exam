@@ -31,7 +31,7 @@ ini_set('session.use_strict_mode', 1); // Use strict mode for session management
     
     if ($examineeController->isStudentDashboard()) {
         if (!isset($_SESSION['EXAM_ID'])) {
-            header('location: signup.php');
+            header('location: student-signup.php');
         }
     }
     
