@@ -597,32 +597,38 @@ h6.fw-bold {
             loader.style.display = "none"
         })
     </script>
-<nav class="navbar navbar-expand-lg" style="background: #f8f9fa;">
-    <div class="container-fluid mx-5">
-        <a class="navbar-brand" href="#"></a>
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a href="index.php" class="nav-link ">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="about.php" class="nav-link">About Us</a>
-                </li>
-		    <li class="nav-item">
-                    <a href="contact.php" class="nav-link">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <button class="btn btn-signup btn-danger" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+ <nav class="navbar navbar-expand-lg" style="background: #fff;">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <!-- Logo and Title (hidden on mobile) -->
+            <div class="d-flex align-items-center d-none d-md-flex">
+                <img src="assets/img/logo.png" alt="Logo" style="width: 130px; height: 90px; margin-left: 20px;">
+                <h1 class="header-title text-blue ml-3">MADRIDEJOS COMMUNITY COLLEGE</h1>
+            </div>
+            
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<!-- Sign Up Modal -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="index.php" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.php" class="nav-link">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.php" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                    <button class="btn btn-signup btn-danger" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+   <!-- Sign Up Modal -->
 <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
