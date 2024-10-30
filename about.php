@@ -490,7 +490,9 @@ h6.fw-bold {
                 <li class="nav-item">
                     <a href="about.php" class="nav-link">About Us</a>
                 </li>
-                
+                <li class="nav-item">
+                    <a href="about.php" class="nav-link">Contact Us</a>
+                </li>
                 <li class="nav-item">
                     <button class="btn btn-signup btn-danger" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
                 </li>
@@ -527,94 +529,145 @@ h6.fw-bold {
                 <img src="assets/img/logo.png" alt="MCC Logo" class="logo-img smooth-move">
                 </div>
                 <div class="col-lg-8 h-100 my-auto text-light">
-    
-                <footer class="h-100 footer-background">
-  <div class="container">
-    <div class="footer-wrapper">
-      <div id="footer" class="footer footer-3">
-        <div class="footer-main">
-          <div class="container">
-            <div class="row">
-              <!-- Google Maps Column -->
-              <div class="col-lg-6">
-                <div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-6fbe358">
-                  <div class="elementor-widget-wrap elementor-element-populated">
-                    <div class="elementor-element elementor-element-22f5606 elementor-widget-google_maps">
-                      <div class="elementor-widget-container">
-                        <div class="elementor-custom-embed">
-                            <h3 class="fade-in-left">Madridejos community college</h3>
-                          <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=Madridejos%20Community%20College&t=m&z=16&output=embed&iwloc=near" title="Madridejos Community College" aria-label="Madridejos Community College"></iframe>
-                        </div>
-<i class="fab fa-envelope" class="fade-in-right"></i> Email: madridejoscommunitycollege@gmail.com
-</a>
-                      </div>
-                    </div>
-                  </div>
+                    
+    <div class="container text-light mt-3 py-3">
+        <h3 class="border-bottom border-2" style="width: fit-content;">About Us</h3>
+        <div>
+            <span class="ms-4">Madridejos</span> Community College (MCC) is a higher education institution located in
+            Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to
+            provide accessible and affordable education to the local community, focusing on developing skilled
+            professionals who can contribute to the region's socioeconomic growth.
+        </div>
+                    
                 </div>
-              </div>
-
-              <!-- Links Column -->
-              <div class="col-lg-2">
-                <aside id="nav_menu-2" class="widget widget_nav_menu">
-                  <h3 class="widget-title">Links</h3>
-                  <div class="menu-main-menu-container">
-                    <ul id="menu-main-menu-1" class="menu">
-                      <li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home">
-                        <a href="https://mccbsitquizandexam.com">Home</a>
-                      </li>
-                      <li id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-13 current_page_item">
-                        <a href="https://mccbsitquizandexam.com/about.php">About us</a>
-                      </li>
-                      <li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page">
-                        <a href="https://mccbsitquizandexam.com/about.php">Contact Us</a>
-                      </li>
-                    </ul>
-                  </div>
-                </aside>
-              </div>
-
-              <!-- Contact Us Column -->
-              <div class="col-lg-4">
-                <aside id="contact-info-widget-2" class="widget contact-info">
-                  <h3 class="widget-title">Contact Us</h3>
-                  <div class="contact-info contact-info-block">
-                    <ul class="contact-details list list-icons">
-                      <li>
-                        <i class="far fa-dot-circle"></i> 
-                        <strong>Address:</strong> 
-                        <span>Madridejos Community College</span>
-                      </li>
-                      <li>
-                        <i class="far fa-dot-circle"></i> 
-                        <span>7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</span>
-                      </li>
-                      <li>
-                        <i class="fab fa-whatsapp"></i> 
-                        <strong>Phone:</strong> 
-                        <span>+639279817079</span>
-                      </li>
-                    </ul>
-                  </div>
-                </aside>
-              </div>
             </div>
-          </div>
+        </div>
+    </header>
+
+    <div class="container text-light mt-3 py-3">
+    <h3 class="border-bottom border-2" style="width: fit-content;">History</h3>
+        <div>
+            <span class="ms-4"></span> Founded in 2005 through a community-led initiative, Madridejos Community College emerged as a beacon of accessible, high-quality education on Bantayan Island. Inspired by the dedication of local leaders and driven by the mission to empower through education.
         </div>
 
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-          <div class="container">
-            <div class="footers text-center">
-              <span class="footer-copyright">
-                Copyright © 2024 Madridejos Community College created by John Michaelle Robles
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+         <hr>
+
+<div class="row">
+    <div class="col-lg-6 fade-in-left">
+        <img src="assets/img/img-1.jpeg" alt="image" class="w-100">
     </div>
-  </div>
-</footer>
+    <br>
+    <div class="col-lg-6 fade-in-right">
+        <img src="assets/img/img-2.jpeg" alt="image" class="w-100">
+    </div>
+</div>
+
+<hr>
+
+<div class="mt-3">
+            <h5>Vision:</h5>
+            <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent
+            individuals with benevolent character innovative, service-oriented, and highly empowered to meet and exceed
+            challenges as proactive participants in shaping our world's future.
+        </div>
+
+        <div class="mt-3">
+            <h5>Mission:</h5>
+            <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning
+            environment that aims to foster academic and career success through development of critical thinking,
+            creativity, informed research, and social responsibility. Our mission is to deliver academic programs that
+            are timely, appropriate, and transformative in response to the demands of local, national, and international
+            communities in a highly dynamic world.
+        </div>
+
+        <div class="mt-3">
+            <h5>Goals:</h5>
+            <span class="ms-4">Develop </span> globally competitive, value-laden professionals capable of making a
+            positive social, environmental, and economic impact through research and community service.
+        </div>
+
+        <hr>
+
+        <div class="mt-3">
+            <span class="ms-4">Learning </span> Enhancement and Support. Foster student learning and support by
+            leveraging student strengths and meeting their specific needs through targeted success pathways.
+
+            Adaptive
+            to change through innovation. Create an environment that encourages learners to be more innovative and
+            resilient in order to adapt to today's highly dynamic world.
+
+            Well-grounded
+            in research. Conduct extensive research based on facts and sound
+            reasoning to expand the learner's knowledge, promote effective learning, comprehend different concerns and
+            trends, seek the truth, and identify opportunities that lie ahead.
+        </div>
+
+        <div class="mt-3">
+            <span class="ms-4">Inculcate </span>
+            Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and outside the school.
+            Social Responsibility. Ensure the relevance, alignment and support of the community and businesses by providing outreach, bridge programs, and community-focused facilities.
+        </div>
+    </div>
+  
+           <footer class="h-100 footer-background">
+  <div class="container">
+<div class="footer-wrapper">
+
+																												
+							<div id="footer" class="footer footer-3"
+>
+			<div class="footer-main">
+			<div class="container">
+				
+									<div class="row">
+														<div class="col-lg-6">
+									<aside id="text-2" class="widget widget_text">			<div class="textwidget"><h3 class="white_text ftr-logo-txt">Madridejos community College</h3>
+<p class="ftr-txt">is a higher education institution located in Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to provide accessible and affordable education to the local community, focusing on developing skilled professionals who can contribute to the region's socioeconomic growth.</p>
+</div>
+		</aside><aside id="follow-us-widget-2" class="widget follow-us">		<div class="share-links">
+        <a href="#" rel="noopener noreferrer" target="_blank" data-toggle="tooltip" data-bs-placement="bottom" title="Facebook" class="share-facebook">
+            <i class="fab fa-facebook"></i> Facebook
+        </a>
+        <a href="#" rel="noopener noreferrer" target="_blank" data-toggle="tooltip" data-bs-placement="bottom" title="YouTube" class="share-youtube">
+            <i class="fab fa-youtube"></i> YouTube
+        </a>
+        <a href="#" rel="noopener noreferrer" target="_blank" data-toggle="tooltip" data-bs-placement="bottom" title="Instagram" class="share-instagram">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
+									</div>
+
+		</aside>								</div>
+																<div class="col-lg-2">
+									<aside id="nav_menu-2" class="widget widget_nav_menu"><h3 class="widget-title">Links</h3><div class="menu-main-menu-container"><ul id="menu-main-menu-1" class="menu"><div id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-22"><a href="https://mccbsitquizandexam.com">Home</a></div>
+<div id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-13 current_page_item menu-item-21"><a href="https://mccbsitquizandexam.com/about.php" aria-current="page">About us</a></div>
+<div id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="https://mccbsitquizandexam.com/about.php">Contact Us</a></div>
+</ul></div></aside>								</div>
+																<div class="col-lg-4">
+									<aside id="contact-info-widget-2" class="widget contact-info"><h3 class="widget-title">Contact Us</h3>		<div class="contact-info contact-info-block">
+						<ul class="contact-details list list-icons">
+									<div><i class="far fa-dot-circle"></i> <strong>Address:</strong> <span>Madridejos community college.</span></li></div>	<div><i class="far fa-dot-circle"></i> <strong></strong> <span>7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</span></li></div>									<div><i class="fab fa-whatsapp"></i> <strong>Phone:</strong> <span>+639279817079</span></div>									</ul>
+					</div>
+
+		</aside>								</div>
+													</div>
+				
+							</div>
+		</div>
+	
+	<div class="footer-bottom">
+	<div class="container">
+		
+    <div class="footers text-center">
+    <span class="footer-copyright">
+        Copyright © 2024 Madridejos Community College created by John Michaelle Robles
+    </span>
+</div>
+
+												
+					
+		</div>
+							
+		</div>	
     <script>
 document.addEventListener("DOMContentLoaded", function() {
     
