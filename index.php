@@ -653,7 +653,7 @@ h6.fw-bold {
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
-                <img src="assets/img/logo.png" alt="MCC Logo" class="logo-img smooth-move">
+                 <img src="assets/img/bsit-logo.png" alt="MCC Logo" class="logo-img smooth-move">
                 </div>
                 <div class="col-lg-8 h-100 my-auto text-light">
                     <h1 class="fade-in-right">Pop Quiz and Exam Grading </h1>
