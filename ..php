@@ -126,7 +126,7 @@
             }
 
             .footer-text {
-                font-size: 12px;
+                font-size: 20px;
             }
         }
     </style>
@@ -142,7 +142,7 @@
         </div>
         <div class="form-container">
             <h2 class="form-title">Instructor Registration</h2>
-             <button onclick="window.location.href='https://mccbsitquizandexam.com/step-123.php'" class="btn btn-danger">Create an Account</button>
+            <button onclick="window.location.href='https://mccbsitquizandexam.com/step-123.php'" class="btn btn-danger">Create an Account</button>
         </div>
     </div>
     <script src="assets/js/bootstrap.bundle.js"></script>
