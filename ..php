@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> 
     <title>Instructor Registration</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <style>
         html, body {
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
-            height: 100%; 
+            overflow: hidden; 
+            height: 100vh; 
+            touch-action: pan-y;
         }
 
         .outer-background {
