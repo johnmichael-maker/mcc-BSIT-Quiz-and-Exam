@@ -140,7 +140,7 @@
             </h1>
         </div>
         <div class="form-container">
-            <h2 class="form-title">Student</h2>
+            <h2 class="form-title">Students</h2>
             <button onclick="window.location.href='https://mccbsitquizandexam.com/student-signup.php'" class="btn btn-danger">Signup now</button>
         </div>
     </div>
