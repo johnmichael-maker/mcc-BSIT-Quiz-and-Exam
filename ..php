@@ -36,7 +36,7 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             color: black;
             z-index: 1;
-            margin-top: 30px; 
+            margin-top: 30px;
         }
 
         .logo {
@@ -85,7 +85,7 @@
             .form-container {
                 max-width: 90%;
                 padding: 15px;
-                margin-top: 20px; 
+                margin-top: 20px;
             }
 
             .form-title {
@@ -103,7 +103,7 @@
             .form-container {
                 max-width: 90%;
                 padding: 10px; 
-                margin-top: 10px; 
+                margin-top: 10px;
             }
 
             .logo {
@@ -112,7 +112,7 @@
             }
 
             .madri-dejos {
-                margin-top: -30px; 
+                margin-top: -20px; 
                 font-size: 28px; 
             }
 
@@ -133,7 +133,7 @@
 </head>
 <body>
     <div class="outer-background">
-        <div style="text-align: center; position: absolute; top: 5px; width: 100%;">
+        <div style="text-align: center; position: absolute; top: 20px; width: 100%;"> 
             <img src="./assets/img/logo.png" alt="Logo" class="logo">
             <h1 class="madri-dejos" style="color: #000; font-size: 40px;">
                 Madridejos Community College
