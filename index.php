@@ -657,7 +657,7 @@ h6.fw-bold {
                 </div>
                 <div class="col-lg-8 h-100 my-auto text-light">
                     <h1 class="fade-in-right">Pop Quiz and Exam Grading </h1>
-                    <h3 class="fade-in-left">Pop Quiz and Exam</h3>
+                    <h3 class="fade-in-left">Join us for a thrilling quiz competition and test your knowledge against the best!</h3>
                        <p>&copy; John Michaelle Robles 2024</p>
                 </div>
             </div>
