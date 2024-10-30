@@ -13,7 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="shortcut icon" href="assets/img/bsit-logo.png" type="">
     <style>
     
 body {
@@ -26,35 +25,6 @@ header {
     background-position: center;
     padding: 20px 0;
 }
-.col-lg-8.h-100.my-auto.text-light {
-    padding-top: 50px; 
-}
-
-
-@media (max-width: 768px) {
-    header {
-        height: auto; 
-        padding: 20px 10px;
-    }
-
-    .col-lg-8.h-100.my-auto.text-light {
-        padding-top: 20px; 
-    }
-
-    h1.fade-in-right {
-        font-size: 24px; 
-    }
-
-    h3.fade-in-left {
-        font-size: 18px; 
-    }
-
-    p {
-        font-size: 14px; 
-    }
-}
-
-
 
 
 header img {
@@ -93,7 +63,6 @@ header img {
 .fade-in-right {
     animation: fadeInRight 1s ease-in-out;
 }
-
 @keyframes fadeInLeft {
     from {
         opacity: 0;
@@ -108,7 +77,35 @@ header img {
 .fade-in-left {
     animation: fadeInLeft 1s ease-in-out;
 }
+     @keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-in-left {
+    animation: fadeInLeft 1s ease-in-out;
+}
+
+.fade-in-right {
+    animation: fadeInRight 1s ease-in-out;
+}
 
 @media print {
     .dont-print {
@@ -229,7 +226,7 @@ span {
     }
 
     .header img {
-        width: 200%; 
+        width: 100%; 
     }
 }
 
@@ -238,7 +235,7 @@ span {
         transform: translateY(0);
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-20px); 
     }
     100% {
         transform: translateY(0); 
@@ -284,9 +281,9 @@ h6.fw-bold {
     color: crimson; /* Fallback color */
     size: 15px;
 }
-/* Default link color and font family */
+
 .navbar-nav .nav-link {
-    color: #555; 
+   color: #555; 
     font-size: 17px;
      font-weight: bold;
     text-transform: none; 
@@ -302,14 +299,14 @@ h6.fw-bold {
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
-   color: crimson; 
+    color: red; 
     font-size: 17px;
     text-decoration: none; 
 }
 
 
 .navbar-nav .nav-link.active {
-  color: crimson; 
+   color: red; 
     font-size: 17px;
     text-decoration: none; 
 }
@@ -319,8 +316,28 @@ h6.fw-bold {
     border: none; 
     padding: 0.5rem; 
 }
-  /* Modal Enhancements */
-  .modal-content {
+
+.row .col-lg-6 img {
+    border-radius: 10px; 
+}
+    .nav-bot {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 15px;
+            color: white;
+            background-color: skyblue; 
+            border: none;
+            border-radius: 50px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-bot:hover {
+            background-color: crimson; 
+        }
+
+.modal-content {
         border-radius: 15px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         background-color: #f8f9fa;
@@ -373,153 +390,36 @@ h6.fw-bold {
         background-color: #0056b3;
     }
 
-    /* Modal backdrop for a sleek effect */
+   
     .modal-backdrop {
         background-color: rgba(0, 0, 0, 0.5);
     }
 
     .btn-signup {
-        background-color: #df0100;
-        color: #fff;
-        border-radius: 50px; /* Makes the button round */
-        padding: 10px 25px; /* Increases button padding */
+        border-radius: 50px; 
+        padding: 10px 25px; 
         font-size: 16px;
         font-weight: bold;
         transition: background-color 0.3s ease;
     }
 
-    /* Optional: Button hover effect */
+    
     .btn-signup:hover {
-        background-color: #c82333; /* Slightly darker red on hover */
-        color: #fff;
+        background-color: #c82333; 
     }
-         
-  .result, .result1{
-            width: 73%;
-            position: absolute;        
-            z-index: 999;
-            top: 100%;
-            left: 0;
-        }
-        /* Formatting result items */
-        .result p, .result1 p{
-            margin: 0;
-            padding: 5px 5px;
-            border: 1px solid #CCCCCC;
-            border-top: none;
-            cursor: pointer;
-            background-color: white;
-        }
-        .result p:hover, .result1 p:hover{
-            background: #f2f2f2;
-        }
-        
-    .loader-wrapper {
-      position: fixed;
-      z-index: 999999;
-      background: #fff;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0; }
-      .loader-wrapper .loader {
-        height: 100px;
-        width: 100px;
-        position: fixed; }
-        .loader-wrapper .loader .loader-inner {
-          border: 0 solid transparent;
-          border-radius: 50%;
-          width: 150px;
-          height: 150px;
-          position: absolute;
-          top: calc(50vh - 75px);
-          left: calc(50vw - 75px); }
-          .loader-wrapper .loader .loader-inner:before {
-            content: '';
-            border: 1em solid #f0452e;
-            border-radius: 50%;
-            width: inherit;
-            height: inherit;
-            position: absolute;
-            top: 0;
-            left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
-            opacity: 0;
-            -webkit-animation-delay: 0.8s;
-                    animation-delay: 0.8s; }
-          .loader-wrapper .loader .loader-inner:after {
-            content: '';
-            border: 1em solid #f0452e;
-            border-radius: 50%;
-            width: inherit;
-            height: inherit;
-            position: absolute;
-            top: 0;
-            left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
-            opacity: 0; }
-    
-    @-webkit-keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    @keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    .loader-box {
-      height: 150px;
-      text-align: center;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-      vertical-align: middle;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      -webkit-transition: .3s color, .3s border, .3s transform, .3s opacity;
-      transition: .3s color, .3s border, .3s transform, .3s opacity; }
-      .loader-box [class*="loader-"] {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        color: inherit;
-        vertical-align: middle; }
-
   .footer-background {
-  background-color: #002e5b; 
+  background-color: #002e5b;
   color: #fff;
   padding: 50px 0;
 }
 
 .footer-background a {
-  color: #ffffff;
+  color: #ffffff; 
   text-decoration: none;
 }
 
 .footer-background a:hover {
-  color: crimson; /* Change to crimson on hover */
+  color: crimson; 
 }
 
 .footer-background h5 {
@@ -561,25 +461,24 @@ h6.fw-bold {
     justify-content: space-between;
   }
 }
-
 .footers {
         bottom: 0;
         width: 100%;
         padding: 10px 0;
-        font-size: 14px; /* Adjust font size if needed */
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Slight shadow to distinguish from the rest of the page */
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
     }
 
     .footer-copyright {
-        color: #f8f9fa; /* Footer text color */
+        color: #f8f9fa; 
     }
     </style>
 </head>
 
 <body>
- <nav class="navbar navbar-expand-lg" style="background: #fff;">
+<nav class="navbar navbar-expand-lg" style="background: #fff;">
         <div class="container-fluid d-flex align-items-center justify-content-between">
-            <!-- Logo and Title (hidden on mobile) -->
+            
             <div class="d-flex align-items-center d-none d-md-flex">
                 <img src="assets/img/logo.png" alt="Logo" style="width: 130px; height: 90px; margin-left: 20px;">
                 <h1 class="header-title text-blue ml-3" style="color: #4d4d4d; font-size: 2rem;">MADRIDEJOS COMMUNITY COLLEGE</h1>
@@ -630,6 +529,28 @@ h6.fw-bold {
         </div>
     </div>
 </div>
+
+<!-- Sign Up Modal -->
+<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                   <h5 class="modal-title" id="signUpModalLabel" style="width: 100%; text-align: center; font-family: 'Arial', sans-serif;">Sign Up As</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p class="text-center mb-4">Select your role to sign up:</p>
+                <div class="d-flex justify-content-center gap-4">
+                    <a href="step_register.php" class="btn btn-role btn-success">Examinee</a>
+                    <a href="./app/submit_instructor.php" class="btn btn-role btn-primary">Instructor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <header class="bg-light">
         <div class="container">
             <div class="row">
@@ -637,145 +558,94 @@ h6.fw-bold {
                 <img src="assets/img/logo.png" alt="MCC Logo" class="logo-img smooth-move">
                 </div>
                 <div class="col-lg-8 h-100 my-auto text-light">
-                    
-    <div class="container text-light mt-3 py-3">
-        <h3 class="border-bottom border-2" style="width: fit-content;">About Us</h3>
-        <div>
-            <span class="ms-4">Madridejos</span> Community College (MCC) is a higher education institution located in
-            Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to
-            provide accessible and affordable education to the local community, focusing on developing skilled
-            professionals who can contribute to the region's socioeconomic growth.
-        </div>
-                    
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="container text-light mt-3 py-3">
-    <h3 class="border-bottom border-2" style="width: fit-content;">History</h3>
-        <div>
-            <span class="ms-4"></span> Founded in 2005 through a community-led initiative, Madridejos Community College emerged as a beacon of accessible, high-quality education on Bantayan Island. Inspired by the dedication of local leaders and driven by the mission to empower through education.
-        </div>
-
-         <hr>
-
-<div class="row">
-    <div class="col-lg-6 fade-in-left">
-        <img src="assets/img/img-1.jpeg" alt="image" class="w-100">
-    </div>
-    <br>
-    <div class="col-lg-6 fade-in-right">
-        <img src="assets/img/img-2.jpeg" alt="image" class="w-100">
-    </div>
-</div>
-
-<hr>
-
-<div class="mt-3">
-            <h5>Vision:</h5>
-            <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent
-            individuals with benevolent character innovative, service-oriented, and highly empowered to meet and exceed
-            challenges as proactive participants in shaping our world's future.
-        </div>
-
-        <div class="mt-3">
-            <h5>Mission:</h5>
-            <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning
-            environment that aims to foster academic and career success through development of critical thinking,
-            creativity, informed research, and social responsibility. Our mission is to deliver academic programs that
-            are timely, appropriate, and transformative in response to the demands of local, national, and international
-            communities in a highly dynamic world.
-        </div>
-
-        <div class="mt-3">
-            <h5>Goals:</h5>
-            <span class="ms-4">Develop </span> globally competitive, value-laden professionals capable of making a
-            positive social, environmental, and economic impact through research and community service.
-        </div>
-
-        <hr>
-
-        <div class="mt-3">
-            <span class="ms-4">Learning </span> Enhancement and Support. Foster student learning and support by
-            leveraging student strengths and meeting their specific needs through targeted success pathways.
-
-            Adaptive
-            to change through innovation. Create an environment that encourages learners to be more innovative and
-            resilient in order to adapt to today's highly dynamic world.
-
-            Well-grounded
-            in research. Conduct extensive research based on facts and sound
-            reasoning to expand the learner's knowledge, promote effective learning, comprehend different concerns and
-            trends, seek the truth, and identify opportunities that lie ahead.
-        </div>
-
-        <div class="mt-3">
-            <span class="ms-4">Inculcate </span>
-            Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and outside the school.
-            Social Responsibility. Ensure the relevance, alignment and support of the community and businesses by providing outreach, bridge programs, and community-focused facilities.
-        </div>
-    </div>
-  
-           <footer class="h-100 footer-background">
+    
+                <footer class="h-100 footer-background">
   <div class="container">
-<div class="footer-wrapper">
+    <div class="footer-wrapper">
+      <div id="footer" class="footer footer-3">
+        <div class="footer-main">
+          <div class="container">
+            <div class="row">
+              <!-- Google Maps Column -->
+              <div class="col-lg-6">
+                <div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-6fbe358">
+                  <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-element-22f5606 elementor-widget-google_maps">
+                      <div class="elementor-widget-container">
+                        <div class="elementor-custom-embed">
+                            <h3 class="fade-in-left">Madridejos community college</h3>
+                          <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=Madridejos%20Community%20College&t=m&z=16&output=embed&iwloc=near" title="Madridejos Community College" aria-label="Madridejos Community College"></iframe>
+                        </div>
+<i class="fab fa-envelope" class="fade-in-right"></i> Email: madridejoscommunitycollege@gmail.com
+</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-																												
-							<div id="footer" class="footer footer-3"
->
-			<div class="footer-main">
-			<div class="container">
-				
-									<div class="row">
-														<div class="col-lg-6">
-									<aside id="text-2" class="widget widget_text">			<div class="textwidget"><h3 class="white_text ftr-logo-txt">Madridejos community College</h3>
-<p class="ftr-txt">is a higher education institution located in Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to provide accessible and affordable education to the local community, focusing on developing skilled professionals who can contribute to the region's socioeconomic growth.</p>
-</div>
-		</aside><aside id="follow-us-widget-2" class="widget follow-us">		<div class="share-links">
-        <a href="#" rel="noopener noreferrer" target="_blank" data-toggle="tooltip" data-bs-placement="bottom" title="Facebook" class="share-facebook">
-            <i class="fab fa-facebook"></i> Facebook
-        </a>
-        <a href="#" rel="noopener noreferrer" target="_blank" data-toggle="tooltip" data-bs-placement="bottom" title="YouTube" class="share-youtube">
-            <i class="fab fa-youtube"></i> YouTube
-        </a>
-        <a href="#" rel="noopener noreferrer" target="_blank" data-toggle="tooltip" data-bs-placement="bottom" title="Instagram" class="share-instagram">
-            <i class="fab fa-instagram"></i> Instagram
-        </a>
-									</div>
+              <!-- Links Column -->
+              <div class="col-lg-2">
+                <aside id="nav_menu-2" class="widget widget_nav_menu">
+                  <h3 class="widget-title">Links</h3>
+                  <div class="menu-main-menu-container">
+                    <ul id="menu-main-menu-1" class="menu">
+                      <li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home">
+                        <a href="https://mccbsitquizandexam.com">Home</a>
+                      </li>
+                      <li id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-13 current_page_item">
+                        <a href="https://mccbsitquizandexam.com/about.php">About us</a>
+                      </li>
+                      <li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page">
+                        <a href="https://mccbsitquizandexam.com/about.php">Contact Us</a>
+                      </li>
+                    </ul>
+                  </div>
+                </aside>
+              </div>
 
-		</aside>								</div>
-																<div class="col-lg-2">
-									<aside id="nav_menu-2" class="widget widget_nav_menu"><h3 class="widget-title">Links</h3><div class="menu-main-menu-container"><ul id="menu-main-menu-1" class="menu"><div id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-22"><a href="https://mccbsitquizandexam.com">Home</a></div>
-<div id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-13 current_page_item menu-item-21"><a href="https://mccbsitquizandexam.com/about.php" aria-current="page">About us</a></div>
-<div id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"><a href="https://mccbsitquizandexam.com/about.php">Contact Us</a></div>
-</ul></div></aside>								</div>
-																<div class="col-lg-4">
-									<aside id="contact-info-widget-2" class="widget contact-info"><h3 class="widget-title">Contact Us</h3>		<div class="contact-info contact-info-block">
-						<ul class="contact-details list list-icons">
-									<div><i class="far fa-dot-circle"></i> <strong>Address:</strong> <span>Madridejos community college.</span></li></div>	<div><i class="far fa-dot-circle"></i> <strong></strong> <span>7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</span></li></div>									<div><i class="fab fa-whatsapp"></i> <strong>Phone:</strong> <span>+639279817079</span></div>									</ul>
-					</div>
+              <!-- Contact Us Column -->
+              <div class="col-lg-4">
+                <aside id="contact-info-widget-2" class="widget contact-info">
+                  <h3 class="widget-title">Contact Us</h3>
+                  <div class="contact-info contact-info-block">
+                    <ul class="contact-details list list-icons">
+                      <li>
+                        <i class="far fa-dot-circle"></i> 
+                        <strong>Address:</strong> 
+                        <span>Madridejos Community College</span>
+                      </li>
+                      <li>
+                        <i class="far fa-dot-circle"></i> 
+                        <span>7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</span>
+                      </li>
+                      <li>
+                        <i class="fab fa-whatsapp"></i> 
+                        <strong>Phone:</strong> 
+                        <span>+639279817079</span>
+                      </li>
+                    </ul>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </div>
 
-		</aside>								</div>
-													</div>
-				
-							</div>
-		</div>
-	
-	<div class="footer-bottom">
-	<div class="container">
-		
-    <div class="footers text-center">
-    <span class="footer-copyright">
-        Copyright © 2024 Madridejos Community College created by John Michaelle Robles
-    </span>
-</div>
-
-												
-					
-		</div>
-							
-		</div>	
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="container">
+            <div class="footers text-center">
+              <span class="footer-copyright">
+                Copyright © 2024 Madridejos Community College created by John Michaelle Robles
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
     <script>
 document.addEventListener("DOMContentLoaded", function() {
     
