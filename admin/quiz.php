@@ -17,7 +17,7 @@
                     <div class="card-body table-responsive">
 
                         <div class="mb-4 text-center">
-                            <h3 clas>MCC Quiz Bowl <?= date('Y') ?></h3>
+                            <h3 clas>MCC Pop Quiz <?= date('Y') ?></h3>
                             <h5 class="">Quiz Result</h5>
                             <p>Date: <?= date('Y-m-d') ?></p>
                         </div>
