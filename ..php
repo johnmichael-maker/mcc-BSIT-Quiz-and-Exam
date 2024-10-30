@@ -41,7 +41,7 @@
         .logo {
             width: 100%; 
             max-width: 250px; 
-            margin-bottom: -20px;
+            margin-bottom: -15px;
             height: auto;
         }
 
@@ -105,11 +105,11 @@
 
             .logo {
                 width: 100%;
-                margin-bottom: 10px;    
+                margin-bottom: 5px;    
             }
 
             .madri-dejos {
-                margin-top: -25px; 
+                margin-top: -30px; 
                 font-size: 28px; 
             }
 
@@ -130,7 +130,7 @@
 </head>
 <body>
     <div class="outer-background">
-        <div style="text-align: center; position: absolute; top: 10px; width: 100%;">
+        <div style="text-align: center; position: absolute; top: 5px; width: 100%;">
             <img src="./assets/img/logo.png" alt="Logo" class="logo">
             <h1 class="madri-dejos" style="color: #000; font-size: 40px;">
                 Madridejos Community College
