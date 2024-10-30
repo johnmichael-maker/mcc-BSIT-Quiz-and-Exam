@@ -35,7 +35,8 @@
             text-align: center;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             color: black;
-            z-index: 1; 
+            z-index: 1;
+            margin-top: 30px; 
         }
 
         .logo {
@@ -84,6 +85,7 @@
             .form-container {
                 max-width: 90%;
                 padding: 15px;
+                margin-top: 20px; 
             }
 
             .form-title {
@@ -101,6 +103,7 @@
             .form-container {
                 max-width: 90%;
                 padding: 10px; 
+                margin-top: 10px; 
             }
 
             .logo {
