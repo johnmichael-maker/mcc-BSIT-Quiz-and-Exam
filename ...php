@@ -141,7 +141,7 @@
         </div>
         <div class="form-container">
             <h2 class="form-title">Student</h2>
-            <button onclick="window.location.href='https://mccbsitquizandexam.com/step-123.php'" class="btn btn-danger">Signup now</button>
+            <button onclick="window.location.href='https://mccbsitquizandexam.com/student-signup.php'" class="btn btn-danger">Signup now</button>
         </div>
     </div>
     <script src="assets/js/bootstrap.bundle.js"></script>
