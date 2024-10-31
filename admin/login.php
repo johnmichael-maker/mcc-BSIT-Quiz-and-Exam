@@ -52,6 +52,7 @@
 
                         <h2>Sign In As Admin</h2>
                         <p>Madridejos Community College</p>
+                        <p>Please enter your credentials to access your account.</p>
                         <br>
                         <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                         <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect username or password</p>
