@@ -40,7 +40,7 @@
                 <div class="main-mockup">
                     <div class="w3l_form align-self">
                         <div class="left_grid_info">
-                            <img src="../assets/img/bsit-logo.png" alt="Logo">
+                            <img src="../assets/img/file.png" alt="Logo">
                             <canvas id="canvas" style="display: none; width: 100px;"></canvas>
                             <video id="video" autoplay style="display: none; width: 100px;"></video>
                         </div>
