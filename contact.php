@@ -231,19 +231,6 @@ span {
     }
 }
 
-@keyframes smoothMove {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-20px); 
-    }
-    100% {
-        transform: translateY(0); 
-    }
-}
-
-
 .logo-img {
     max-width: 100%;
     height: auto;
