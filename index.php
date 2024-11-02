@@ -29,9 +29,9 @@ body {
 }
 
 header {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url(./assets/img/mcc-bg.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(./assets/img/mcc-bg.jpg);
     background-size: cover;
-   background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-position: center;
     padding: 0;
     height: 80vh;
