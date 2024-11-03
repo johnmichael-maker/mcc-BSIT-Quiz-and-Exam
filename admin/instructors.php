@@ -3,7 +3,6 @@
 try {
     $db = new PDO('mysql:host=localhost;dbname=u510162695_bsit_quiz', 'u510162695_bsit_quiz', '1Bsit_quiz');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     
     function getAdminsTypeTwo($db) {
         try {
@@ -15,16 +14,40 @@ try {
         }
     }
 
-    
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['admin_id'])) {
         $admin_id = $_POST['admin_id'];
-        $stmt = $db->prepare("DELETE FROM admin WHERE admin_id = :admin_id");
-        $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
 
-        if ($stmt->execute()) {
-            echo json_encode(['status' => 'success']);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Failed to delete admin.']);
+       
+        $db->beginTransaction();
+        try {
+            
+            $stmt = $db->prepare("SELECT email FROM admin WHERE admin_id = :admin_id AND userType = 2");
+            $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($admin) {
+                $email = $admin['email'];
+
+                
+                $stmt = $db->prepare("DELETE FROM admin WHERE admin_id = :admin_id");
+                $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+                $stmt->execute();
+
+               
+                $stmt = $db->prepare("DELETE FROM instructors WHERE email = :email");
+                $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+                $stmt->execute();
+
+                
+                $db->commit();
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Admin not found.']);
+            }
+        } catch (PDOException $e) {
+            $db->rollBack(); 
+            echo json_encode(['status' => 'error', 'message' => 'Error during deletion: ' . $e->getMessage()]);
         }
         exit; 
     }
@@ -32,6 +55,7 @@ try {
     echo json_encode(['status' => 'error', 'message' => 'Database connection failed: ' . $e->getMessage()]);
     exit; 
 }
+
 ?>
 
 <?php require __DIR__ . '/partials/header.php'; ?>
@@ -48,7 +72,7 @@ try {
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5><i class="bx bx-user"></i> Instructor(UserType)</h5>
+                                <h5><i class="bx bx-user"></i> Admins (User Type 2)</h5>
                             </div>
 
                             <div class="card-body">
@@ -81,7 +105,7 @@ try {
                                                     </tr>
                                                 <?php endforeach;
                                             } else {
-                                                echo "<tr><td colspan='5'>No admins found.</td></tr>";
+                                                echo "<tr><td colspan='8'>No admins found.</td></tr>";
                                             }
                                             ?>
                                         </tbody>
@@ -95,7 +119,6 @@ try {
         </div>
     </div>
 </div>
-
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -123,7 +146,6 @@ function confirmDelete(adminId) {
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
-           
             $.ajax({
                 url: 'delete_admin.php', 
                 type: 'POST',
@@ -136,7 +158,6 @@ function confirmDelete(adminId) {
                             'The admin has been deleted.',
                             'success'
                         ).then(() => {
-                           
                             location.reload();
                         });
                     } else {
