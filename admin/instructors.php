@@ -1,111 +1,163 @@
-<?php 
+<?php
 
-// Establish a PDO connection (preferred over mixing mysqli and PDO)
-$db = new PDO('mysql:host=localhost;dbname=u510162695_bsit_quiz', 'u510162695_bsit_quiz', '1Bsit_quiz');
+try {
+    $db = new PDO('mysql:host=localhost;dbname=u510162695_bsit_quiz', 'u510162695_bsit_quiz', '1Bsit_quiz');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Function to retrieve instructors
-function getInstructors($db) {
-    $stmt = $db->prepare("SELECT * FROM instructors");
-    $stmt->execute();
-    return $stmt;
+    
+    function getAdminsTypeTwo($db) {
+        try {
+            $stmt = $db->prepare("SELECT admin_id, username, email, created_at FROM admin WHERE userType = 2");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return []; 
+        }
+    }
+
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['admin_id'])) {
+        $admin_id = $_POST['admin_id'];
+        $stmt = $db->prepare("DELETE FROM admin WHERE admin_id = :admin_id");
+        $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to delete admin.']);
+        }
+        exit; 
+    }
+} catch (PDOException $e) {
+    echo json_encode(['status' => 'error', 'message' => 'Database connection failed: ' . $e->getMessage()]);
+    exit; 
 }
+?>
 
-require __DIR__ . '/./partials/header.php'; ?>
+<?php require __DIR__ . '/partials/header.php'; ?>
 
 <div class="container-fluid">
     <div class="row">
-
-        <?php require __DIR__ . '/./partials/sidebar.php'; ?>
+        <?php require __DIR__ . '/partials/sidebar.php'; ?>
 
         <div class="col-lg-10 p-0 overflow-y-auto" style="max-height: 100vh;">
-            <?php require __DIR__ . '/./partials/navbar.php'; ?>
-
+            <?php require __DIR__ . '/partials/navbar.php'; ?>
 
             <div class="w-100 p-3">
                 <div class="row g-3">
-
                     <div class="col-12">
-
                         <div class="card">
-
                             <div class="card-header">
-                                <h5><i class="bx bx-user"></i> Instructors</h5>
+                                <h5><i class="bx bx-user"></i> Admins (User Type 2)</h5>
                             </div>
 
                             <div class="card-body">
                                 <div class="table-responsive">
-
-                                    <table id="instructorTable" class="table table-bordered table-striped">
+                                    <table id="adminTypeTwoTable" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>First Name</th>
-                                                <th>Middle Name</th>
-                                                <th>Last Name</th>
+                                                <th>User ID</th>
+                                                <th>Username</th>
                                                 <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>Address</th>
                                                 <th>Created At</th>
+                                                <th>Actions</th>
                                             </tr>
                                         </thead>
-
                                         <tbody>
                                             <?php
-                                            try {
-                                                // Fetch instructors
-                                                $instructors = getInstructors($db);
-
-                                                if ($instructors) {
-                                                    // Loop through the result set and display each row
-                                                    while ($row = $instructors->fetch()): ?>
-                                                        <tr>
-                                                            <td><?= htmlspecialchars($row['id']) ?></td>
-                                                            <td><?= htmlspecialchars($row['first_name']) ?></td>
-                                                            <td><?= htmlspecialchars($row['middle_name']) ?></td>
-                                                            <td><?= htmlspecialchars($row['last_name']) ?></td>
-                                                            <td><?= htmlspecialchars($row['email']) ?></td>
-                                                            <td><?= htmlspecialchars($row['phone']) ?></td>
-                                                            <td><?= htmlspecialchars($row['address']) ?></td>
-                                                            <td><?= htmlspecialchars($row['created_at']) ?></td>
-                                                        </tr>
-                                                    <?php endwhile;
-                                                } else {
-                                                    echo "<tr><td colspan='8'>No instructors found.</td></tr>";
-                                                }
-                                            } catch (Exception $e) {
-                                                echo "<tr><td colspan='8'>Error: " . $e->getMessage() . "</td></tr>";
+                                            $admins = getAdminsTypeTwo($db);
+                                            if ($admins) {
+                                                foreach ($admins as $row): ?>
+                                                    <tr>
+                                                        <td><?= htmlspecialchars($row['admin_id']) ?></td>
+                                                        <td><?= htmlspecialchars($row['username']) ?></td>
+                                                        <td><?= htmlspecialchars($row['email']) ?></td>
+                                                        <td><?= htmlspecialchars($row['created_at']) ?></td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(<?= htmlspecialchars($row['admin_id']) ?>)">
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach;
+                                            } else {
+                                                echo "<tr><td colspan='5'>No admins found.</td></tr>";
                                             }
                                             ?>
                                         </tbody>
-
                                     </table>
-
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
 
-<?php require __DIR__ . '/./partials/footer.php'; ?>
 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).ready(function(){
-        $("#instructorTable").DataTable({
-            "pageLength": 10,    // Display 10 records per page
-            "order": [[0, "asc"]],  // Order by the first column (ID) in ascending order
-            "lengthMenu": [5, 10, 20, 50],  // Pagination options
-            "language": {
-                "emptyTable": "No instructors available"
-            }
-        });
+$(document).ready(function() {
+    $("#adminTypeTwoTable").DataTable({
+        "pageLength": 10,
+        "order": [[0, "asc"]],
+        "lengthMenu": [5, 10, 20, 50],
+        "language": {
+            "emptyTable": "No admins available"
+        },
+        "autoWidth": false 
     });
+});
+
+function confirmDelete(adminId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This action cannot be undone!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+           
+            $.ajax({
+                url: 'delete_admin.php', 
+                type: 'POST',
+                data: { admin_id: adminId },
+                success: function(response) {
+                    const res = JSON.parse(response);
+                    if (res.status === 'success') {
+                        Swal.fire(
+                            'Deleted!',
+                            'The admin has been deleted.',
+                            'success'
+                        ).then(() => {
+                           
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            res.message || 'There was a problem deleting the admin.',
+                            'error'
+                        );
+                    }
+                },
+                error: function() {
+                    Swal.fire(
+                        'Error!',
+                        'There was a problem deleting the admin.',
+                        'error'
+                    );
+                }
+            });
+        }
+    });
+}
 </script>
+
+<?php require __DIR__ . '/partials/footer.php'; ?>
