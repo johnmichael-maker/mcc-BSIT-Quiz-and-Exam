@@ -48,7 +48,7 @@ try {
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5><i class="bx bx-user"></i> Admins (User Type 2)</h5>
+                                <h5><i class="bx bx-user"></i> Instructor(UserType)</h5>
                             </div>
 
                             <div class="card-body">
