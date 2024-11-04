@@ -590,7 +590,7 @@ h6.fw-bold {
             <!-- Logo and Title (hidden on mobile) -->
             <div class="d-flex align-items-center d-none d-md-flex">
                 <img src="assets/img/logo.png" alt="Logo" style="width: 130px; height: 90px; margin-left: 20px;">
-                   <h1 class="header-title text-blue ml-3" style="color: #666666; font-size: 15px;">MADRIDEJOS COMMUNITY COLLEGE</h1>
+                    <h6 class="header-title text-blue ml-3" style="color: #666666; font-size: 15px;">MADRIDEJOS <span style="color:  #c82333;">COMMUNITY COLLEGE</span></h6>
             </div>
             
             <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
