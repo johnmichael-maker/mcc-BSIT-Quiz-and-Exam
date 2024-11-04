@@ -585,17 +585,31 @@ h6.fw-bold {
             loader.style.display = "none"
         })
     </script>
- <nav class="navbar navbar-expand-lg" style="background: #fff;">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-            <!-- Logo and Title (hidden on mobile) -->
-            <div class="d-flex align-items-center d-none d-md-flex">
-                <img src="assets/img/logo.png" alt="Logo" style="width: 130px; height: 90px; margin-left: 20px;">
-                    <h6 class="header-title text-blue ml-3" style="color: #666666; font-size: 15px;">MADRIDEJOS <span style="color:  #c82333;">COMMUNITY COLLEGE</span></h6>
+  <nav class="navbar navbar-expand-lg" style="background: #fff;">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      
+        <div class="d-flex align-items-center">
+           
+            <img src="assets/img/logo.png" alt="Logo" style="width: 130px; height: 90px; margin-left: 20px;">
+            
+           
+            <div class="d-none d-md-block">
+                <h6 class="header-title text-blue ml-3" style="color: #666666; font-size: 15px;">
+                    MADRIDEJOS <span style="color: #c82333;">COMMUNITY COLLEGE</span>
+                </h6>
             </div>
             
-            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="d-block d-md-none" style="margin-left: 10px;">
+                <h6 class="header-title text-blue" style="color: #666666; font-size: 14px;">
+                    MADRIDEJOS <span style="color: #c82333;">COMMUNITY COLLEGE</span>
+                </h6>
+            </div>
+        </div>
+            
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+        style="background-color: #f8f9fa; border-color: #c82333; padding: 8px; border-radius: 4px;">
+    <span class="navbar-toggler-icon"></span>
+</button
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
