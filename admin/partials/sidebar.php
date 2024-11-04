@@ -10,10 +10,10 @@ $inactive = "text-light";
         <a href="index.php" class="text-decoration-none text-light">
             <div class="row g-1">
                 <div class="col-4">
-                    <img src="../assets/img/logo.png" alt="" style="width: 100%;">
+                   <img src="../assets/img/file.png" alt="" style="width: 100%;">
                 </div>
                 <div class="col-8">
-                    MCC
+                    BSIT DEPARTMENT
                     <span class="d-block" style="font-size: 15px;">Quiz and Exam</span>
                 </div>
             </div>
