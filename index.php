@@ -445,8 +445,8 @@ h6.fw-bold {
             -webkit-animation: loader 2s linear infinite;
                     animation: loader 2s linear infinite;
             opacity: 0;
-            -webkit-animation-delay: 0.8s;
-                    animation-delay: 0.8s; }
+            -webkit-animation-delay: 0.5s;
+                    animation-delay: 0.5s; }
           .loader-wrapper .loader .loader-inner:after {
             content: '';
             border: 1em solid #f0452e;
