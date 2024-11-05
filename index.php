@@ -600,11 +600,14 @@ h6.fw-bold {
             </div>
             
             <div class="d-block d-md-none" style="margin-left: -13px;">
-                <h6 class="header-title text-blue" style="color: #666666; font-size: 15px;">
-                    MADRIDEJOS <span style="color: #c82333;">COMMUNITY COLLEGE</span>
-                </h6>
-            </div>
-        </div>
+    <h6 class="header-title text-blue" style="color: #666666; font-size: 12px;">
+        MADRIDEJOS <span style="color: #c82333;">COMMUNITY</span>
+    </h6>
+    <h6 class="header-title text-blue" style="color: #c82333; font-size: 12px; margin-top: -5px;">
+        COLLEGE
+    </h6>
+ </div>
+   </div>
             
        
         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
