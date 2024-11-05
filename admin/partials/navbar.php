@@ -4,9 +4,7 @@
         <button class="navbar-toggler d-lg-none d-lg-block" id="sidebar-toggler">
             <i class="navbar-toggler-icon"></i>
         </button>
- <h4 style="color: #666666; font-family: Arial, sans-serif; font-weight: 400; font-size: 20px;">
-    Madridejos Community College
-</h4>
+  
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
                 <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
