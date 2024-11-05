@@ -600,7 +600,7 @@ h6.fw-bold {
             </div>
             
             <div class="d-block d-md-none" style="margin-left: -13px;">
-                <h6 class="header-title text-blue" style="color: #666666; font-size: 14px;">
+                <h6 class="header-title text-blue" style="color: #666666; font-size: 15px;">
                     MADRIDEJOS <span style="color: #c82333;">COMMUNITY COLLEGE</span>
                 </h6>
             </div>
