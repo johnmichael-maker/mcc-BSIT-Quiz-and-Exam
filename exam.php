@@ -270,6 +270,23 @@ if (!$examineeController->checkExaminee()) {
 
 
 <script>
+      window.addEventListener("keydown", function(event) {
+       
+        if (event.key === "F5") {
+            event.preventDefault();
+        }
+       
+        if (event.ctrlKey && event.key === "r") {
+            event.preventDefault();
+        }
+    });
+
+    
+    window.addEventListener("beforeunload", function(event) {
+        
+        event.returnValue = "Are you sure you want to leave the exam? This may cause you to lose your progress.";
+    });
+
     function startTimer(duration, display) {
         var timer = duration,
             minutes, seconds;
