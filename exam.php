@@ -267,6 +267,59 @@ if (!$examineeController->checkExaminee()) {
     <source src="time.mp3" type="audio/mpeg">
     <source src="time.ogg" type="audio/ogg">
 </audio>
+<script>
+    let warningCount = 0;
+
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            warningCount++;
+            alert(`Warning: You have switched tabs ${warningCount} time(s). Stay on the exam page.`);
+            
+            if (warningCount >= 3) {
+                location.href = 'finished.php?cheating_detected';
+            }
+        }
+    });
+
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+        alert("Right-click is disabled on this page.");
+    });
+
+    document.addEventListener('copy', function(event) {
+        event.preventDefault();
+        alert("Copying text is disabled on this page.");
+    });
+
+    document.addEventListener('cut', function(event) {
+        event.preventDefault();
+        alert("Cutting text is disabled on this page.");
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if ((event.ctrlKey || event.metaKey) && ['c', 'v', 'x'].includes(event.key.toLowerCase())) {
+            event.preventDefault();
+            alert("Copying, pasting, and cutting are disabled on this page.");
+        }
+
+        if (event.altKey && event.key === 'Tab') {
+            event.preventDefault();
+            alert("Switching tabs is restricted during the exam.");
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', function() {
+        if (!document.fullscreenElement) {
+            alert("Please stay in fullscreen mode for the exam.");
+        }
+    });
+</script>
 
 <script>
     function startTimer(duration, display) {
