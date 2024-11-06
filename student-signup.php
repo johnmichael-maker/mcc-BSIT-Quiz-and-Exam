@@ -183,7 +183,6 @@ require __DIR__ . '/./partials/header.php';
                             <a href="?signup=exam" class="btn btn-danger w-100"><i class="bx bx-file"></i> Exam</a>
                         </div>
                     </div>
-                      <p> <a  class="home-link" href="index.php">Back Home</a></p>
                 </div>
                 </div>
             <?php elseif ($_GET['signup'] == 'quiz') : ?>
