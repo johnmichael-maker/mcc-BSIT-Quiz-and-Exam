@@ -197,7 +197,7 @@ require __DIR__ . '/./partials/header.php';
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
 
                             <label for="">ID Number</label>
-                            <input type="text" class="form-control my-2" placeholder="Enter your Number" name="id_number" required>
+                            <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732"  name="id_number" required>
                             <p class="errors d-none alert alert-danger py-1"></p>
 
                             <label for="">First Name</label>
@@ -252,7 +252,7 @@ require __DIR__ . '/./partials/header.php';
                             <p class="alert alert-danger py-2 d-none" id="alert-incorrect">Error, Credentials doesn't match</p>
 
                             <label for="">ID Number</label>
-                            <input type="text" class="form-control my-2" placeholder="ID Number" name="id_number" required>
+                            <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732"  name="id_number" required>
                             <p class="errors d-none alert alert-danger py-1"></p>
 
                             <label for="">First Name</label>
