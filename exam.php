@@ -272,12 +272,6 @@ if (!$examineeController->checkExaminee()) {
     function startTimer(duration, display) {
         var timer = duration,
             minutes, seconds;
-
-        
-        if (localStorage.getItem('remainingTime')) {
-            timer = parseInt(localStorage.getItem('remainingTime'));
-        }
-
         var interval = setInterval(function() {
             minutes = parseInt(timer / 60, 10);
             seconds = parseInt(timer % 60, 10);
@@ -287,9 +281,7 @@ if (!$examineeController->checkExaminee()) {
   
             display.textContent = minutes + ":" + seconds;
 
-            
-            localStorage.setItem('remainingTime', timer);
-
+           
             if (timer === 60) {
                 var reminderModal = document.getElementById('reminderModal');
                 var reminderSound = document.getElementById('reminderSound');
@@ -297,6 +289,7 @@ if (!$examineeController->checkExaminee()) {
                 reminderModal.style.display = 'block';
                 reminderSound.play();
 
+              
                 setTimeout(function() {
                     reminderModal.style.display = 'none';
                 }, 5000); 
@@ -311,8 +304,7 @@ if (!$examineeController->checkExaminee()) {
 
     window.onload = function() {
         var fiveMinutes = 60 * <?= $row['time_limit'] ?>,
-            display = document.querySelector('#timer h1');
-        
+        display = document.querySelector('#timer h1');
         startTimer(fiveMinutes, display);
     };
 </script>
