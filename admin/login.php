@@ -47,7 +47,7 @@
                     </div>
                     <div class="content-wthree">
                 <div style="position: relative; text-align: right;">
-             <i class="fas fa-cog" style="font-size: 24px; color: #000;"></i>
+             <i class="fas fa-cog" style="font-size: 24px; color: #df0100;"></i>
           </div>
 
                         <h2>Sign In As Admin</h2>
