@@ -507,7 +507,7 @@ h6.fw-bold {
         vertical-align: middle; }
 
   .footer-background {
-  background-color: #002e5b; 
+ background-color:#141E30;
   color: #fff;
   padding: 50px 0;
 }
