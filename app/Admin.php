@@ -137,8 +137,7 @@ class Admin extends Database
                 </div>
             </nav> -->
 
-           
-     <div class="container-fluid py-3">
+       <div class="container-fluid py-3">
 
 <div class="row g-2">
 
@@ -150,69 +149,68 @@ class Admin extends Database
         <i class="bx bx-plus"></i> Add question
       </a>
     </div>
-    
     <!-- Questions list (empty state or populated) -->
-    <div class="row g-3" id="questions-row">
-      <!-- Questions will be dynamically injected here -->
-    </div>
-  </div>
+<div class="row g-3" id="questions-row">
+  <!-- Questions will be dynamically injected here -->
+</div>
 
-  <!-- Section for Current Question -->
-  <div class="col-12">
-    <div class="card h-100" id="current-question">
-      <div class="card-body">
-        <div class="d-flex justify-content-between">
-          <p class="text-muted mb-0">Current Question</p>
-          <p class="text-muted mb-0">Category: <span class="badge bg-success" id="current-category">Easy</span></p>
+<!-- Section for Current Question -->
+<div class="col-12">
+  <div class="card h-100" id="current-question">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <p class="text-muted mb-0">Current Question</p>
+        <p class="text-muted mb-0">Category: <span class="badge bg-success" id="current-category">Easy</span></p>
+      </div>
+
+      <!-- Start button (adjust height if needed) -->
+      <div class="d-flex align-items-center justify-content-center" id="start-div" style="height: 120px;">
+        <button type="button" id="start" class="btn btn-danger mb-5">Start Competition</button>
+      </div>
+
+      <!-- Question and Choices -->
+      <div class="pt-3 d-none" id="quest-div" style="min-height: 200px;">
+        <div class="text-center mb-5">
+          <h5 id="question"></h5>
         </div>
 
-        <div class="d-flex align-items-center justify-content-center" id="start-div" style="height: 100px;">
-          <button type="button" id="start" class="btn btn-danger mb-5">Start Competition</button>
-        </div>
-
-        <!-- Question and Choices -->
-        <div class="pt-3 d-none" id="quest-div">
-          <div class="text-center mb-5">
-            <h5 id="question"></h5>
+        <div class="row g-3" id="current-choices">
+          <!-- Choices for A, B, C, D -->
+          <div class="col-12 col-sm-6 col-md-3 position-relative">
+            <input type="text" class="form-control" id="A-choice">
+          </div>
+          <div class="col-12 col-sm-6 col-md-3 position-relative">
+            <input type="text" class="form-control" id="B-choice">
+          </div>
+          <div class="col-12 col-sm-6 col-md-3 position-relative">
+            <input type="text" class="form-control" id="C-choice">
+          </div>
+          <div class="col-12 col-sm-6 col-md-3 position-relative">
+            <input type="text" class="form-control" id="D-choice">
           </div>
 
-          <div class="row g-3" id="current-choices">
-            <!-- Choices for A, B, C, D -->
-            <div class="col-12 col-sm-6 col-md-3 position-relative">
-              <input type="text" class="form-control" id="A-choice">
-            </div>
-            <div class="col-12 col-sm-6 col-md-3 position-relative">
-              <input type="text" class="form-control" id="B-choice">
-            </div>
-            <div class="col-12 col-sm-6 col-md-3 position-relative">
-              <input type="text" class="form-control" id="C-choice">
-            </div>
-            <div class="col-12 col-sm-6 col-md-3 position-relative">
-              <input type="text" class="form-control" id="D-choice">
-            </div>
+          <!-- Timer and Correct Answer Section -->
+          <div class="col-12 d-none justify-content-between pt-3 align-items-center" id="timer-div">
+            <p class="mb-0" id="correct-answer"></p>
+            <p class="mb-0">Time: <span id="timer"></span></p>
+          </div>
 
-            <!-- Timer and Correct Answer Section -->
-            <div class="col-12 d-none justify-content-between pt-3 align-items-center" id="timer-div">
-              <p class="mb-0" id="correct-answer"></p>
-              <p class="mb-0">Time: <span id="timer"></span></p>
-            </div>
-
-            <!-- Button for Next Question -->
-            <div class="col-12 d-flex justify-content-end d-none" id="next-question">
-              <button class="btn btn-danger" id="next-question-btn">Next Question</button>
-            </div>
+          <!-- Button for Next Question -->
+          <div class="col-12 d-flex justify-content-end d-none" id="next-question">
+            <button class="btn btn-danger" id="next-question-btn">Next Question</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Empty State for No Questions -->
-    <div class="d-none h-100 d-flex align-items-center justify-content-center" id="no-record-question">
-      <div>
-        <p class="text-muted">Please add a question</p>
-      </div>
+  <!-- Empty State for No Questions -->
+  <div class="d-none h-100 d-flex align-items-center justify-content-center" id="no-record-question">
+    <div>
+      <p class="text-muted">Please add a question</p>
     </div>
   </div>
+
                     <!-- <div class="col-12">
                         <div class="card h-100">
                                 <div class="card-header d-flex  align-items-center justify-content-between">
