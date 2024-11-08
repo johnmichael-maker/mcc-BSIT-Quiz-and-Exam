@@ -396,7 +396,7 @@ h6.fw-bold {
         background-color: #c82333; 
     }
   .footer-background {
-  background-color:#141E30;
+  background-color: #002e5b; 
   color: #fff; 
   padding: 50px 0;
 }
