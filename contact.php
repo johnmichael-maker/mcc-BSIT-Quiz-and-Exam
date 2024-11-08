@@ -348,7 +348,7 @@ h6.fw-bold {
         padding: 20px;
     }
 
-    /* Role Buttons */
+   
     .btn-role {
         border-radius: 30px;
         padding: 10px 25px;
@@ -384,30 +384,30 @@ h6.fw-bold {
     }
 
     .btn-signup {
-        border-radius: 50px; /* Makes the button round */
-        padding: 10px 25px; /* Increases button padding */
+        border-radius: 50px; 
+        padding: 10px 25px; 
         font-size: 16px;
         font-weight: bold;
         transition: background-color 0.3s ease;
     }
 
-    /* Optional: Button hover effect */
+    
     .btn-signup:hover {
-        background-color: #c82333; /* Slightly darker red on hover */
+        background-color: #c82333; 
     }
   .footer-background {
-  background-color: #002e5b; /* Dark blue background */
-  color: #fff; /* White text color */
+  background-color:#141E30;
+  color: #fff; 
   padding: 50px 0;
 }
 
 .footer-background a {
-  color: #ffffff; /* White text for links */
+  color: #ffffff; 
   text-decoration: none;
 }
 
 .footer-background a:hover {
-  color: crimson; /* Change to crimson on hover */
+  color: crimson; 
 }
 
 .footer-background h5 {
@@ -453,12 +453,12 @@ h6.fw-bold {
         bottom: 0;
         width: 100%;
         padding: 10px 0;
-        font-size: 14px; /* Adjust font size if needed */
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Slight shadow to distinguish from the rest of the page */
+        font-size: 14px; 
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
     }
 
     .footer-copyright {
-        color: #f8f9fa; /* Footer text color */
+        color: #f8f9fa; 
     }
     </style>
 </head>
