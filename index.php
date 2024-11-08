@@ -572,7 +572,10 @@ h6.fw-bold {
     .footer-copyright {
         color: #f8f9fa; /* Footer text color */
     }
-         
+      .right-img {
+    float: right;
+    margin-left: 20px; 
+}     
 </style>
 </head>
 <body>
@@ -654,20 +657,24 @@ h6.fw-bold {
         </div>
     </div>
 </div>
-    <header class="bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                 <img src="assets/img/bsit-logo.png" alt="MCC Logo" class="logo-img smooth-move">
-                </div>
-                <div class="col-lg-8 h-100 my-auto text-light">
-                    <h1 class="fade-in-right">Pop Quiz and Exam Grading </h1>
-                    <h3 class="fade-in-left">Join us for a thrilling quiz competition and test your knowledge against the best!</h3>
-                       <p>&copy; John Michaelle Robles 2024</p>
+   <header class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="assets/img/bsit-logo.png" alt="MCC Logo" class="logo-img smooth-move">
+            </div>
+            <div class="col-lg-8 h-100 my-auto text-light">
+                <div class="content-right">
+                    <h1 class="fade-in-right">Pop Quiz and Exam Grading</h1>
+                    <p>Join us for a thrilling quiz competition and test your knowledge against the best!</p>
+                    <p>&copy; Madridejos Community College created by John Michaelle Robles</p>
+                    <img class="right-img" decoding="async" width="500" height="300" src="https://cdn2.exam.net/website-2024-11-05/wp-content/uploads/2024/03/home-hero-graphic-1-1024x762.png" alt="User Interface of Exam.net">
                 </div>
             </div>
         </div>
-    </header>`
+    </div>
+</header>
+`
 
     <div class="container text-light mt-3 py-3">
         <h3 class="border-bottom border-2" style="width: fit-content;">About Us</h3>
