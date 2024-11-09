@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <img class="wave" src="../assets/img/mcc.png" alt="Wave Image">
+    <img class="wave" src="../assets/img/image-22.png" alt="Wave Image">
 
     <section class="w3l-mockup-form">
         <div class="container">
