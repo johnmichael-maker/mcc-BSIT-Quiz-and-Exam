@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <title>Student | Verification</title>
+    <title>Instructor | Verification</title>
     <style>
     body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -197,70 +197,67 @@ input[type="submit"]:hover {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+ 
     <script>
-        function validateEmail() {
-            const email = document.getElementById('email').value;
-            const domain = "@mcclawis.edu.ph";
+    function validateEmail(event) {
+        event.preventDefault(); 
+        const email = document.getElementById('email').value;
+        const domain = "@mcclawis.edu.ph";
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-            
-            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-            
-            if (!emailPattern.test(email)) {
-                Swal.fire({
-                    title: 'Invalid Email Format',
-                    text: 'Please enter a valid email address.',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                });
-                return false; 
-            }
-
-
-            if (!email.endsWith(domain)) {
-                Swal.fire({
-                    title: 'Invalid Domain',
-                    text: 'Please enter an email address with the ' + domain + ' domain.',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                });
-                return false; 
-            }
-
-            return true; 
-        }
-
-        function showPopup(message, type) {
+        if (!emailPattern.test(email)) {
             Swal.fire({
-                title: message,
-                icon: type,
+                title: 'Invalid Email Format',
+                text: 'Please enter a valid email address.',
+                icon: 'warning',
                 confirmButtonText: 'OK'
             });
+            return false;
         }
 
-        $(document).ready(function () {
-            $('#registrationForm').on('submit', function (e) {
-                e.preventDefault(); 
-
-                $.ajax({
-                    type: 'POST',
-                    url: './app/submit_instructor.php', 
-                    data: $(this).serialize(), 
-                    dataType: 'json', 
-                    success: function (response) {
-                        if (response.status === 'success') {
-                            $('#registrationForm').html('<p>Registration link has been sent successfully .</p>');
-                            showPopup('Thank you! The registration link has been sent to your Outlook email.', 'success');
-                        } else {
-                            showPopup(response.status, 'error');
-                        }
-                    },
-                    error: function () {
-                        showPopup('An error occurred while sending the registration link.', 'error');
-                    }
-                });
+        if (!email.endsWith(domain)) {
+            Swal.fire({
+                title: 'Invalid Domain',
+                text: 'Please enter an email address with the ' + domain + ' domain.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
             });
+            return false; 
+        }
+
+       
+        submitForm();
+        return false; 
+    }
+
+    function submitForm() {
+
+        $.ajax({
+            type: 'POST',
+            url: './app/submit_instructor.php', 
+            data: $('#registrationForm').serialize(),
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'success') {
+                    $('#registrationForm').html('<p>Registration link has been sent successfully.</p>');
+                    showPopup('Thank you! The registration link has been sent to your Outlook email.', 'success');
+                } else {
+                    showPopup(response.status, 'error');
+                }
+            },
+            error: function () {
+                showPopup('An error occurred while sending the registration link.', 'error');
+            }
         });
-    </script>
+    }
+
+    function showPopup(message, type) {
+        Swal.fire({
+            title: message,
+            icon: type,
+            confirmButtonText: 'OK'
+        });
+    }
+    </script>>
 </body>
 </html>
