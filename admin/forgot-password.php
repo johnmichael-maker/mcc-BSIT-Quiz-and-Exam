@@ -1,80 +1,143 @@
-<?php 
-    require __DIR__ . '/./partials/header.php'
-?>
-<div class="h-100-vh d-flex align-items-center justify-content-center bg-danger">
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="container">
-        <form name="forgot-pass" class="m-auto" id="signup-card">
-            <div class="card">
-                <div class="card-body">
-                    <a href="login.php" class="btn btn-secondary mb-3"><i class="bx bx-arrow-back"></i></a>
-                    <h5 class="mb-3 text-center">Forgot Password</h5>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/img/file.png">
+    <title>Forgot Password</title>
+    
+    <link rel="stylesheet" href="../assets/css/bootstrap5.min.css" />
+    <link rel="stylesheet" href=".assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../assets/css/liness.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="assets/css/bootstrap5.min.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
 
-                    <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to reset page....</p>
-                    <p class="alert alert-danger py-2 d-none" id="alert-error">Error, email address not found.</p>
+    <style>
+        .back {
+            font-size: 30px;
+            color: black;
+        }
+        .back:hover {
+            color: gray;
+        }
+        .home-link {
+            text-decoration: none;
+            color: #3b3663;
+        }
+        .home-link:hover {
+            color: crimson;
+        }
+    </style>
+</head>
 
-                    <label for="">Email</label>
-                    <input type="email" class="form-control my-2" placeholder="Enter email" name="email">
-                    <p class="errors d-none alert alert-danger py-1"></p>
+<body style="background-image: url('../assets/img/image-22.png'); background-size: cover; background-position: center; background-attachment: fixed;">
 
-                    <button type="submit" name="button" class="w-100 btn btn-danger mt-3 mb-2">Submit</button>
-
-                   
-
-                    <div class="text-center d-none" id="loading-signup">
-                        <div class="spinner-border mt-3" role="status">
-                            <span class="visually-hidden">Loading...</span>
+    <section class="d-flex mt-1 flex-column justify-content-center align-items-center">
+        <div class="container">
+            <div class="col mx-auto rounded shadow bg-white">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="">
+                            <img src="../assets/img/file.png" alt="logo"
+                                 class="img-fluid d-none d-md-block  p-5" />
                         </div>
                     </div>
+                    <div class="col-sm-12 col-md-6 px-5 " style="margin-top: 60px;">
+                        <div class="mt-3 mb-4">
+                            <center>
+                                <h2 class="m-0 fw-semibold text-danger">
+                                    FORGOT PASSWORD
+                                </h2>
+                                <br>
+                                <p class="fs-5 fw-semibold">Please enter the email address</p>
+                            </center>
+                        </div>
+                       
+                        <form name="forgot-pass" id="forgotPassForm" action="#" method="post" class="needs-validation" novalidate>
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input type="email" id="email" class="form-control" name="email" placeholder="Enter your MS 365 Email" required>
+                                    <label for="email">Email</label>
+                                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                        Please enter your MS 365 Email.
+                                    </div>
+                                    
+                                    <div class="errors d-none text-danger"></div>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 md-3">
+                                <button type="submit" name="button" class="btn btn-danger text-light font-weight-bolder btn-lg">Submit</button>
+                            </div>
 
+                           
+                            <div id="loading-signup" class="d-none text-center mt-3">
+                                <i class="bi bi-arrow-repeat spinner-border text-primary" role="status"></i>
+                                <span>Sending...</span>
+                            </div>
+
+                            <div class="text-start mt-5 fw-bold">
+                                <p>
+                                    <a class="home-link" href="login.php">Back Home</a>
+                                </p>
+                            </div>
+                        </form>
+
+                        
+                        <div id="alert-success" class="alert alert-success d-none mt-3">Password reset link sent successfully!</div>
+                        <div id="alert-error" class="alert alert-danger d-none mt-3">Error, email address not found.</div>
+                    </div>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </section>
 
-</div>
+    
+    <script>
+        const login = async (data) => {
+            try {
+                const response = await fetch("../function/Process.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                    },
+                    body: JSON.stringify(data),
+                });
 
-<script>
-    const login = async (data) => {
-        try {
-            const response = await fetch("../function/Process.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                },
-                body: JSON.stringify(data),
-            });
+                if (!response.ok) {
+                    throw new Error("Could not fetch resource");
+                }
+                const dataResponse = await response.text();
+                console.log(dataResponse);
 
-            if (!response.ok) {
-                throw new Error("Could not fetch resource");
+                let alert = document.getElementById("alert-success");
+                let alertError = document.getElementById("alert-error");
+
+                if (dataResponse === "success") {
+                    setTimeout(() => {
+                        alert.classList.remove("d-none");
+                    }, 3000);
+                    setTimeout(() => {
+                        window.location.href = "reset-password.php";
+                    }, 6000);
+                } else if (dataResponse === 'error') {
+                    setTimeout(() => {
+                        alertError.classList.remove("d-none");
+                    }, 3000);
+                    setTimeout(() => {
+                        window.location.href = "forgot-password.php";
+                    }, 7000);
+                }
+            } catch (error) {
+                console.error(error);
             }
-            const dataResponse = await response.text();
-            console.log(dataResponse);
+        };
 
-            let alert = document.getElementById("alert-success");
-            let alertError = document.getElementById("alert-error");
-
-            if (dataResponse === "success") {
-                setTimeout(() => {
-                    alert.classList.remove("d-none");
-                }, 3000);
-                setTimeout(() => {
-                    window.location.href = "reset-password.php";
-                }, 6000);
-            } else if (dataResponse === 'error') {
-                setTimeout(() => {
-                    alertError.classList.remove("d-none");
-                }, 3000);
-                setTimeout(() => {
-                    window.location.href = "forgot-password.php";
-                }, 7000);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const forgotPassForm = document.forms["forgot-pass"];
+        const forgotPassForm = document.forms["forgot-pass"];
 
         forgotPassForm.onsubmit = (e) => {
             e.preventDefault();
@@ -102,5 +165,28 @@
                 }, 3000);
             }
         };
-</script>
-<?php require __DIR__ . '/./partials/footer.php' ?>
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="assets/js/validation.js"></script>
+    <script src="assets/js/show-hide-password.js"></script>
+    <script src="assets/js/format_number.js"></script>
+    <script src="assets/js/bootstrap5.bundle.min.js"></script>
+    <script src="assets/js/tooltip.js"></script>
+    <script src="assets/js/login.js"></script>
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="assets/js/alertify.min.js"></script>
+    <script src="assets/js/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.0/dist/sweetalert2.all.min.js"></script>
+    <script src="assets/js/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
