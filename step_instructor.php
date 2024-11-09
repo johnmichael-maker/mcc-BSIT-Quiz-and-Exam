@@ -65,7 +65,7 @@
     align-items: center; 
 }
 
-h3 {
+h1 {
     margin-bottom: 20px;
     color: #df0100;
     font-size: 45px;
@@ -186,7 +186,7 @@ input[type="submit"]:hover {
             <img src=".//assets/img/bsit-logo.png" alt="Logo"> 
         </div>
         <div class="right-section">
-            <h3 class="mb-4"><strong>INSTRUCTOR SIGNUP</strong></h3>
+            <h1 class="mb-4"><strong>INSTRUCTOR SIGNUP</strong></h1>
             <p class="prompt-text">Enter your MS 365 Username to receive a registration link.</p>
             <form id="registrationForm" action="./app/submit_instructor.php" method="post" onsubmit="return validateEmail(event)">
     <input type="email" id="email" name="Username" placeholder="example doe.juan@mcclawis.edu.ph" required>
