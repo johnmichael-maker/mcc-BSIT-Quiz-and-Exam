@@ -67,7 +67,7 @@
 
 h1 {
     margin-bottom: 20px;
-    color:  #3b3663;
+    color: #df0100;
     font-size: 45px;
     text-align: center;
 }
