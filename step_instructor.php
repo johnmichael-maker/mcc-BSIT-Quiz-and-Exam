@@ -31,7 +31,7 @@
 }
 
 .left-section {
-    background-color: #df0100;
+    background-color: #fff;
     padding: 20px; 
     display: flex;
     justify-content: center;
