@@ -64,7 +64,7 @@
                                         <div class="form-floating mb-3">
                                              <input type="email" id="email" class="form-control"
                                                   name="Username" placeholder="MS 365 Email" required>
-                                             <label for="email">MS 365 Email</label>
+                                             <label for="email">Enter Your MS 365 Email</label>
                                              <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                                   Please enter your MS 365 Email.
                                              </div>
