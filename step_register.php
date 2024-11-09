@@ -30,7 +30,7 @@
 }
 
 .left-section {
-    background-color:#141E30;
+    background-color: #df0100;
     padding: 20px; 
     display: flex;
     justify-content: center;
