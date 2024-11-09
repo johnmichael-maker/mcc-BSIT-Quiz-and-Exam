@@ -88,7 +88,7 @@
                         </form>
 
                         
-                        <div id="alert-success" class="alert alert-success d-none mt-3">Password reset link sent successfully!</div>
+                        <div id="alert-success" class="alert alert-success d-none mt-3">Success, Proceeding to reset page....</div>
                         <div id="alert-error" class="alert alert-danger d-none mt-3">Error, email address not found.</div>
                     </div>
                 </div>
