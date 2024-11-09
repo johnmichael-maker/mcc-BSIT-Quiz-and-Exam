@@ -9,7 +9,7 @@
     <style>
     body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: url('./assets/img/mcc.png') no-repeat center center fixed;
+    background: url('./assets/img/image-22.png') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -31,7 +31,7 @@
 }
 
 .left-section {
-    background-color: #df0100;
+    background-color:#fff;
     padding: 20px; 
     display: flex;
     justify-content: center;
@@ -67,7 +67,7 @@
 
 h1 {
     margin-bottom: 20px;
-    color: #3b3663;
+    color:  #df0100;
     font-size: 45px;
     text-align: center;
 }
