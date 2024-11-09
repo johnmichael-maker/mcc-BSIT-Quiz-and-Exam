@@ -667,7 +667,7 @@ h6.fw-bold {
                 <div class="content-right">
                     <h1 class="fade-in-right">Pop Quiz and Exam Grading</h1>
                     <h3>Join us for a thrilling quiz competition and test your knowledge against the best!</h3>
-                    <p>&copy;Design By John Michaelle Robles</p>
+                    <p>&copy;Designed By John Michaelle Robles</p>
                     <img class="right-img" decoding="async" width="500" height="300" src="https://cdn2.exam.net/website-2024-11-05/wp-content/uploads/2024/03/home-hero-graphic-1-1024x762.png" alt="User Interface of Exam.net">
                 </div>
             </div>
