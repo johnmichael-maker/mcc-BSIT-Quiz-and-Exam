@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <title>Instructor | Verification</title>
+    <title>Student | Verification</title>
     <style>
     body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -30,7 +30,7 @@
 }
 
 .left-section {
-    background-color: #df0100;
+    background-color:#141E30;
     padding: 20px; 
     display: flex;
     justify-content: center;
@@ -185,12 +185,12 @@ input[type="submit"]:hover {
             <img src=".//assets/img/bsit-logo.png" alt="Logo"> 
         </div>
         <div class="right-section">
-            <h1 class="mb-4"><strong>Instructor Signup</strong></h1>
+            <h1 class="mb-4"><strong>Student Signup</strong></h1>
             <p class="prompt-text">Enter your MS 365 Username to receive a registration link.</p>
-            <form id="registrationForm" action="./app/submit_registration.php" method="post" onsubmit="return validateEmail(event)">
-    <input type="email" id="email" name="Username" placeholder="example doe.juan@mcclawis.edu.ph" required>
-    <input type="submit" value="Submit">
-</form>
+            <form id="registrationForm" action="./app/submit_registration.php" method="post" onsubmit="return validateEmail()">
+                <input type="email" id="email" name="Username" placeholder="example doe.juan@mcclawis.edu.ph" required>
+                <input type="submit" value="Submit">
+            </form>
             <p><a class="home-link" href="index.php">Back Home</a></p>
         </div>
     </div>
@@ -198,65 +198,69 @@ input[type="submit"]:hover {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-    function validateEmail(event) {
-        event.preventDefault(); 
-        const email = document.getElementById('email').value;
-        const domain = "@mcclawis.edu.ph";
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        function validateEmail() {
+            const email = document.getElementById('email').value;
+            const domain = "@mcclawis.edu.ph";
 
-        if (!emailPattern.test(email)) {
-            Swal.fire({
-                title: 'Invalid Email Format',
-                text: 'Please enter a valid email address.',
-                icon: 'warning',
-                confirmButtonText: 'OK'
-            });
-            return false;
-        }
+            
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-        if (!email.endsWith(domain)) {
-            Swal.fire({
-                title: 'Invalid Domain',
-                text: 'Please enter an email address with the ' + domain + ' domain.',
-                icon: 'warning',
-                confirmButtonText: 'OK'
-            });
-            return false; 
-        }
-
-       
-        submitForm();
-        return false; 
-    }
-
-    function submitForm() {
-
-        $.ajax({
-            type: 'POST',
-            url: './app/submit_instructor.php', 
-            data: $('#registrationForm').serialize(),
-            dataType: 'json',
-            success: function (response) {
-                if (response.status === 'success') {
-                    $('#registrationForm').html('<p>Registration link has been sent successfully.</p>');
-                    showPopup('Thank you! The registration link has been sent to your Outlook email.', 'success');
-                } else {
-                    showPopup(response.status, 'error');
-                }
-            },
-            error: function () {
-                showPopup('An error occurred while sending the registration link.', 'error');
+            
+            if (!emailPattern.test(email)) {
+                Swal.fire({
+                    title: 'Invalid Email Format',
+                    text: 'Please enter a valid email address.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return false; 
             }
-        });
-    }
 
-    function showPopup(message, type) {
-        Swal.fire({
-            title: message,
-            icon: type,
-            confirmButtonText: 'OK'
+
+            if (!email.endsWith(domain)) {
+                Swal.fire({
+                    title: 'Invalid Domain',
+                    text: 'Please enter an email address with the ' + domain + ' domain.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return false; 
+            }
+
+            return true; 
+        }
+
+        function showPopup(message, type) {
+            Swal.fire({
+                title: message,
+                icon: type,
+                confirmButtonText: 'OK'
+            });
+        }
+
+        $(document).ready(function () {
+            $('#registrationForm').on('submit', function (e) {
+                e.preventDefault(); 
+
+                $.ajax({
+                    type: 'POST',
+                    url: './app/submit_registration.php', 
+                    data: $(this).serialize(), 
+                    dataType: 'json', 
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            $('#registrationForm').html('<p>Registration link has been sent successfully .</p>');
+                            showPopup('Thank you! The registration link has been sent to your Outlook email.', 'success');
+                        } else {
+                            showPopup(response.status, 'error');
+                        }
+                    },
+                    error: function () {
+                        showPopup('An error occurred while sending the registration link.', 'error');
+                    }
+                });
+            });
         });
-    }
     </script>
 </body>
 </html>
