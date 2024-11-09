@@ -72,7 +72,7 @@
                                    </div>
                                    <div class="d-grid gap-2 md-3">
                                         <button type="submit"  value="Submit"
-                                             class="btn btn-danger text-light font-weight-bolder btn-lg">Submit</button>
+                                             class="btn btn- text-light font-weight-bolder btn-lg" style="background-color: #EF0107;">Submit</button>
                                      </div>
 
 
