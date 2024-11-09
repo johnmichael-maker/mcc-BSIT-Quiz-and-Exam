@@ -9,7 +9,7 @@
     <style>
     body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: url('./assets/img/mcc.png') no-repeat center center fixed;
+    background: url('./assets/img/image-22.png') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     justify-content: center;
