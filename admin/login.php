@@ -10,7 +10,7 @@
     <link href="//fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/main.css" type="text/css" media="all">
     <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
-    <link rel="icon" type="image/png" href="../assets/img/bsit-logo.png">
+    <link rel="icon" type="image/png" href="../assets/img/file.png">
 
     <style>
         .alert-link {
