@@ -18,7 +18,6 @@
 
                         <div class="mb-4 text-center">
                             <h3 clas>Madridejos Community College Pop Quiz <?= date('Y') ?></h3>
-                            <h5 class="">Quiz Result</h5>
                             <p>Date: <?= date('Y-m-d') ?></p>
                         </div>
                         <table id="dataTable">
