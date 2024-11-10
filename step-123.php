@@ -213,9 +213,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="container mt-5" style="max-width: 600px;">
         <ul class="progressbar">
-            <li class="active" id="progress1"><b>Step 1</b></li>
-            <li id="progress2"><b>Step 2</b></li>
-            <li id="progress3"><b>Step 3</b></li>
+            <li class="active" id="progress1" style="color:#fff;"><b>Step 1</b></li>
+            <li id="progress2"style="color:#fff;"><b>Step 2</b></li>
+            <li id="progress3"style="color:#fff;"><b>Step 3</b></li>
         </ul>
 
         <div class="card" style="box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);">
