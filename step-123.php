@@ -1,13 +1,11 @@
 <?php
-
 // Database.php
 
 $servername = "localhost";
-$username = "u510162695_bsit_quiz";
-$password = "1Bsit_quiz";
-$dbname = "u510162695_bsit_quiz";
+$username = "root";
+$password = "";
+$dbname = "mcc_bsit_quiz_and_exam";
 
-// Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check the connection
@@ -94,293 +92,437 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instructor Registration</title>
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" href="./assets/img/file.png">
+    <title>Instructor | Registration</title>
     <style>
-          body {
-            background: url('./assets/img/image-22.png') no-repeat center center fixed;
-            background-size: cover;
-        }
-        .loader-wrapper {
-            position: fixed;
-            z-index: 999999;
-            background: #fff;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-        .loader {
-            height: 100px;
-            width: 100px;
-            position: fixed;
-        }
-        .loader-inner {
-            border: 0 solid transparent;
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            position: absolute;
-            top: calc(50vh - 75px);
-            left: calc(50vw - 75px);
-            border: 1em solid #34d7e2;
-            animation: loader 2s linear infinite;
-            opacity: 0;
-            animation-delay: 0.5s;
-        }
-        @keyframes loader {
-            0% { transform: scale(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: scale(1); opacity: 0; }
-        }
-        .step {
+        #year_levelField {
             display: none;
         }
-        .step.active {
-            display: block;
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
         }
-        .progressbar {
-            display: flex;
-            justify-content: space-between;
-            list-style-type: none;
-            counter-reset: step;
-            margin-bottom: 30px;
-            padding: 0;
+
+        .toggle-password-icon {
+            font-size: 16px;
         }
-        .progressbar li {
-            counter-increment: step;
-            text-align: center;
-            flex-grow: 1;
+
+        .toggle-password:hover .toggle-password-icon {
+            color: #333;
+        }
+
+        .invalid-feedback {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .is-invalid {
+            border: 1px solid red;
+        }
+
+        .field {
+            margin-bottom: 15px;
             position: relative;
         }
-        .progressbar li:before {
-            content: counter(step);
-            width: 30px;
-            height: 30px;
-            display: block;
-            background-color: #ddd;
-            border-radius: 50%;
-            margin: 0 auto 10px auto;
-            line-height: 30px;
-            text-align: center;
-        }
-        .progressbar li.active:before {
-            background-color: #007bff;
-            color: white;
-        }
-        .progressbar li:after {
-            content: '';
+
+        .invalid-feedback {
             position: absolute;
-            width: 100%;
-            height: 2px;
-            background-color: #ddd;
-            top: 15px;
-            left: -50%;
-            z-index: -1;
+            bottom: -20px;
+            left: 0;
+            display: none;
         }
-        .progressbar li:first-child:after {
-            content: none;
+        #warning_message {
+            font-size: 12px;
+            margin-top: -30px;
+            margin-bottom: -10px;
+            display: none;
+            color: red;
         }
-        .progressbar li.active + li:after {
-            background-color: #007bff;
+        #warning_messages {
+            font-size: 12px;
+            margin-top: -30px;
+            margin-bottom: -10px;
+            display: none;
+            color: red;
         }
-        h3{
-            text-align: center;
-            color: #007bff;
+
+         /* Modal styles */
+         .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow-y: auto;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
-         .link-primary{
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 1% auto; /* 5% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 600px;
+        }
+
+        #confirmSignupBtn {
+            padding: 10px;
+            background-color: #F40009;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #confirmSignupBtn:hover,
+        #confirmSignupBtn:focus {
+            background-color: darkred;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .containers {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .containers .card {
+            flex: 1 1 100%;
+            max-width: 100%;
+        }
+
+        @media(min-width: 600px) {
+            .containers .card {
+                flex: 1 1 45%;
+            }
+        }
+
+        @media(min-width: 900px) {
+            .containers .card {
+                flex: 1 1 30%;
+            }
+        }
+        .form-check-label a{
             text-decoration: none;
         }
     </style>
 </head>
-<body>
-    <div class="loader-wrapper" id="preloader">
-        <span class="loader"><span class="loader-inner"></span></span>
-    </div>
-    <script>
-        var loader = document.getElementById("preloader");
-        window.addEventListener("load", function() {
-            loader.style.display = "none";
-        });
-    </script>
-
-    <div class="container mt-5" style="max-width: 600px;">
-        <ul class="progressbar">
-            <li class="active" id="progress1" style="color:#fff;"><b>Step 1</b></li>
-            <li id="progress2"style="color:#fff;"><b>Step 2</b></li>
-            <li id="progress3"style="color:#fff;"><b>Step 3</b></li>
-        </ul>
-
-        <div class="card" style="box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);">
-            <div class="card-body">
-                <!-- Step 1: Personal Info -->
-                <form id="registrationForm" method="POST" action="">
-                    <div id="step1" class="step active">
-                        <h3><b>Instructor Registration</b></h3>
-                        <h4 class="text-center mb-4">Personal Information</h4>
-                        <div class="col-md-12 mb-2">
-                            <label for="firstName">Firstname</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Firstname" required>
-                        </div>
-                        <div class="col-md-12 mb-2">
-                            <label for="middleName">Middlename</label>
-                            <input type="text" class="form-control" id="middleName" name="middleName" placeholder="Middlename">
-                        </div>
-                        <div class="col-md-12 mb-2">
-                            <label for="lastName">Lastname</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Lastname" required>
-                        </div>
-                        <button type="button" class="btn btn-danger w-100 mt-3" id="next1">Next</button>
-                    </div>
-
-                    <!-- Step 2: Contact Info -->
-                    <div id="step2" class="step">
-                        <h4 class="text-center mb-4">Contact Information</h4>
-                        <div class="col-md-12 mb-2">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                          <label for="phone">Phone number</label>
-                         <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone number" maxlength="11" pattern="\d{11}" title="Please enter an 11-digit phone number" required>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <label for="address">Address</label>
-                            <textarea class="form-control" id="address" name="address" rows="3" placeholder="Address"></textarea>
-                        </div>
-                        <button type="button" class="btn btn-secondary w-100 mt-3" id="prev1">Previous</button>
-                        <button type="button" class="btn btn-danger w-100 mt-3" id="next2">Next</button>
-                    </div>
-
-                    <!-- Step 3: Account Info -->
-                    <div id="step3" class="step">
-                        <h4 class="text-center mb-4">Account Information</h4>
-                        <div class="col-md-12 mb-2">
-                            <label for="username">Username</label>
-                            <input type="email" class="form-control" id="username" name="username" placeholder="Username" required>
-                        </div>
-                        <div class="col-md-12 mb-2">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                            <input type="checkbox" id="showPassword"> Show Password
-                        </div>
-                        <div class="col-md-12 mb-2">
-                            <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-                            <input type="checkbox" id="showConfirmPassword"> Show Password
-                        </div>
-                        
-                        <div class="fv-row mb-10">
-        <label class="form-check form-check-custom form-check-solid form-check-inline">
-            <input class="form-check-input" type="checkbox" id="toc" name="toc" value="1" required>
-            <span class="form-check-label fw-bold text-gray-700 fs-6">
-                I Agree
-                <a href="#" rel="noopener noreferrer" class="ms-1 link-primary">Terms and Conditions</a>
-            </span>
-        </label>
-    </div>
-                        <button type="button" class="btn btn-secondary w-100 mt-3" id="prev2">Previous</button>
-                        <button type="submit" class="btn btn-danger w-100 mt-3">Register</button>
-                    </div>
-                </form>
+<link rel="stylesheet" href="../assets/css/alertify.min.css" />
+<link rel="stylesheet" href="../assets/css/alertify.bootstraptheme.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="./assets/css/ms.css">
+<body style="background-image: url('assets/img/image-22.png'); background-size: cover; background-position: center; background-attachment: fixed;">
+    <div class="container">
+        <header>
+            <h5>Instructor<br><span>Registration</span></h5>
+        </header>
+        <header>
+            <p style="color:#3b3663;">Madridejo Community College</p>
+        </header>
+        <div class="form-outer">
+    <form id="registrationForm" method="POST" action="" enctype="multipart/form-data">
+        <!-- Step 1 - Personal Details -->
+        <div class="page slide-page">
+            <div class="title">Personal Information:</div>
+            <div class="field">
+                <div class="label">First Name</div>
+                <input type="text" name="firstName" id="firstName" placeholder="Enter First Name" required />
+            </div>
+            <div class="field">
+                <div class="label">Middle Name</div>
+                <input type="text" name="middleName" id="middleName" placeholder="Enter Middle Name" required />
+            </div>
+            <div class="field">
+                <div class="label">Last Name</div>
+                <input type="text" name="lastName" id="lastName" placeholder="Enter Last Name" required />
+            </div>
+            <div class="field option">
+                <button type="button" class="firstNext next">Next</button>
             </div>
         </div>
-       
-        <script>
-        document.getElementById('next1').addEventListener('click', function() {
+
+        <!-- Step 2 - Contact Information -->
+        <div class="page">
+            <div class="title">Contact Info:</div>
+            <div class="field">
+                <div class="label">Email</div>
+                <input type="email" name="email" id="email" placeholder="MS 365 Email" required />
+            </div>
+            <div class="field">
+                <div class="label">Phone No.</div>
+                <input type="tel" id="phone" name="phone" maxlength="11" placeholder="Enter Phone Number" required pattern="09\d{9}" />
+                <div id="warning_message" style="display: none;">Invalid phone number. It should start with 09 and contain 11 digits.</div>
+            </div>
+            <div class="field">
+                <div class="label">Address</div>
+                <input type="text" name="address" id="address" placeholder="Enter Address" required />
+            </div>
+            <div class="field btns">
+                <button type="button" class="prev-1 prev">Previous</button>
+                <button type="button" class="next-1 next">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3 - Login Details -->
+        <div class="page">
+            <div class="title">Login Details:</div>
+            <div class="field">
+                <div class="label">User Name</div>
+                <input type="email" name="username" id="username" placeholder="Enter Email" required />
+            </div>
+            <div class="field">
+                <div class="label">Password</div>
+                <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required />
+            </div>
+            <div class="field">
+                <div class="label">Confirm Password</div>
+                <input type="password" name="cpassword" id="confirmPasswordInput" placeholder="Enter Password" required />
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                <label class="form-check-label" for="exampleCheck1">I agree to the <a href="#" target="_blank">Terms and Conditions</a></label>
+            </div>
+            <div class="field btns">
+                <button type="button" class="prev-2 prev">Previous</button>
+                <button type="submit" id="confirmSignupBtn">Signup</button>
+            </div>
+        </div>
+    </form>
+</div>
+    <!-- Scripts for Form Validation -->
+    <script src="assets/js/format_number.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/login.js"></script>
+    <script src="assets/js/validation.js"></script>
+    <script src="assets/js/show-hide-password.js"></script>
+    <!-- SweetAlert 2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    
+    function sanitizeInput(value) {
+        
+        const sanitizedValue = value.replace(/<script.*?>.*?<\/script>/gi, "")  // Remove script tags
+                                    .replace(/<.*?>/g, "")  // Remove any other HTML tags
+                                    .replace(/[\x00-\x1F\x7F-\x9F]/g, ""); // Remove non-printable characters
+        return sanitizedValue;
+    }
+
+    // Function to validate all inputs and block malicious content
+    function validateInputs() {
+        const inputs = document.querySelectorAll("input");
+        let isValid = true;
+
+        // Loop through each input and check the value
+        inputs.forEach(function(input) {
+            let value = input.value.trim();
+            value = sanitizeInput(value);  // Sanitize input to remove dangerous content
+            input.value = value;  // Update the input field with sanitized value
+
+            // Validate against certain patterns (you can extend this as needed)
+            if (input.name === "firstName" || input.name === "middleName" || input.name === "lastName") {
+                if (!/^[a-zA-Z\s]+$/.test(value)) {
+                    // SweetAlert2 for invalid name input
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid name entered',
+                        text: 'Only letters and spaces are allowed for names.',
+                    });
+                    isValid = false;
+                }
+            }
+            if (input.name === "email") {
+                // Basic email validation
+                if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid email format',
+                        text: 'Please enter a valid email address.',
+                    });
+                    isValid = false;
+                }
+            }
+            if (input.name === "phone") {
+                // Phone validation for numbers starting with 09 and exactly 11 digits
+                if (!/^09\d{9}$/.test(value)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid phone number',
+                        text: 'Phone number must start with "09" and be 11 digits long.',
+                    });
+                    isValid = false;
+                }
+            }
+        });
+
+        return isValid;
+    }
+
+    // Attach a submit event to the form for validation
+    document.getElementById("registrationForm").addEventListener("submit", function(e) {
+        if (!validateInputs()) {
+            e.preventDefault();  // Prevent form submission if inputs are invalid
+        }
+    });
+
+</script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        <?php if (!empty($successMessage)) { ?>
+            Swal.fire({
+                title: 'Success!',
+                text: '<?php echo $successMessage; ?>',
+                icon: 'success'
+            }).then(function() {
+                // Redirect to the login page after the success message is closed
+                window.location.href = './admin/login.php';
+            });
+        <?php } elseif (!empty($errorMessage)) { ?>
+            Swal.fire({
+                title: 'Error!',
+                text: '<?php echo $errorMessage; ?>',
+                icon: 'error'
+            });
+        <?php } ?>
+    });
+</script>
+    <script>
+        // Step Navigation
+        const slidePage = document.querySelector(".slide-page");
+
+const nextBtnFirst = document.querySelector(".firstNext");
+const prevBtnSec = document.querySelector(".prev-1");
+const nextBtnSec = document.querySelector(".next-1");
+const prevBtnThird = document.querySelector(".prev-2");
+const confirmSignupBtn = document.querySelector("#confirmSignupBtn");
+
+
+        // Regular expressions for validation
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const phonePattern = /^09\d{9}$/; // 11 digits starting with 09
+        const addressPattern = /^[a-zA-Z\s]+,\s[a-zA-Z\s]+,\s[a-zA-Z\s]+$/; // Basic address format (Brgy, Municipality, Province)
+
+        // Step 1 Validation (Personal Details)
+        nextBtnFirst.addEventListener("click", function () {
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
+            const middleName = document.getElementById('middleName').value;
 
-            // Validate Step 1 fields
-            if (!firstName || !lastName) {
+            if (!firstName || !lastName || !middleName) {
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Incomplete Information',
-                    text: 'Please fill in all required fields in Step 1.',
+                    title: "Error!",
+                    text: "Please fill in all fields.",
+                    icon: "error"
                 });
             } else {
-               
-                showStep(1);
+                slidePage.style.marginLeft = "-25%";
             }
         });
 
-        document.getElementById('next2').addEventListener('click', function() {
-            const email = document.getElementById('email').value;
+        // Step 2 Validation (Contact Info)
+        nextBtnSec.addEventListener("click", function () {
             const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
 
-            // Validate Step 2 fields
-            if (!email || !phone) {
-                let errorMessage = '';
-
-                if (!email) {
-                    errorMessage += '\n';
-                }
-                if (!phone) {
-                    errorMessage += 'Please fill in all required fields in Step 2.\n';
-                }
+            if (!phonePattern.test(phone)) {
+                document.getElementById('warning_message').style.display = "block";
+            } else if (!address) {
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Incomplete Information',
-                    text: errorMessage,
-                });
-            } else if (phone.length !== 11) {
-               
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Invalid Phone Number',
-                    text: 'Phone number must be exactly 11 digits.',
+                    title: "Error!",
+                    text: "Please fill in your address.",
+                    icon: "error"
                 });
             } else {
-               
-                showStep(2);
+                document.getElementById('warning_message').style.display = "none";
+                slidePage.style.marginLeft = "-50%";
             }
         });
 
-        document.getElementById('prev1').addEventListener('click', function() {
-            showStep(0);
+        prevBtnSec.addEventListener("click", function () {
+        slidePage.style.marginLeft = "0%"; // Slide back to the first page
+    });
+
+    // Go back from step 3 to step 2
+    prevBtnThird.addEventListener("click", function () {
+        slidePage.style.marginLeft = "-25%"; // Slide back to the second page
+    });
+
+
+        // Step 3 Validation (Login Details)
+        nextBtnThird.addEventListener("click", function () {
+            const password = document.getElementById('passwordInput').value;
+            const confirmPassword = document.getElementById('confirmPasswordInput').value;
+
+            if (password !== confirmPassword) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Passwords do not match.",
+                    icon: "error"
+                });
+            } else if (!passwordPattern.test(password)) {
+                Swal.fire({
+                    title: "Weak Password",
+                    text: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+                    icon: "error"
+                });
+            } else {
+                slidePage.style.marginLeft = "-75%";
+            }
         });
 
-        document.getElementById('prev2').addEventListener('click', function() {
-            showStep(1);
-        });
 
-       
-        function showStep(stepIndex) {
-            const steps = document.querySelectorAll('.step');
-            const progressBar = document.querySelectorAll('.progressbar li');
+        
+        // Final form submit validation
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+            const password = document.getElementById('passwordInput').value;
+            const confirmPassword = document.getElementById('confirmPasswordInput').value;
 
-            steps.forEach((step, index) => {
-                step.classList.remove('active');
-                step.style.display = index === stepIndex ? 'block' : 'none';
-                progressBar[index].classList.toggle('active', index <= stepIndex);
-            });
-        }
-
-       
-        document.getElementById('showPassword').addEventListener('change', function() {
-            const passwordField = document.getElementById('password');
-            passwordField.type = this.checked ? 'text' : 'password';
-        });
-
-        document.getElementById('showConfirmPassword').addEventListener('change', function() {
-            const confirmPasswordField = document.getElementById('confirmPassword');
-            confirmPasswordField.type = this.checked ? 'text' : 'password';
-        });
-
-       
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-           
+            // Password match and strength check
             if (password !== confirmPassword) {
                 e.preventDefault();
                 Swal.fire({
@@ -391,33 +533,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return;
             }
 
-           
-            if (!passwordRegex.test(password)) {
+            if (!passwordPattern.test(password)) {
                 e.preventDefault();
                 Swal.fire({
                     icon: 'error',
                     title: 'Weak Password',
                     text: 'Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.',
                 });
+                return;
             }
-        });
 
-       
-        document.addEventListener('DOMContentLoaded', function() {
-            <?php if (!empty($successMessage)) { ?>
-                Swal.fire({
-                    title: 'Success!',
-                    text: '<?php echo $successMessage; ?>',
-                    icon: 'success'
-                }).then(function() {
-                    window.location.href = './admin/login.php'; 
-                });
-            <?php } elseif (!empty($errorMessage)) { ?>
-                Swal.fire('Error!', '<?php echo $errorMessage; ?>', 'error');
-            <?php } ?>
+            // Success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration Complete',
+                text: 'Your registration was successful!',
+            });
+        });
+        
+        // Validate Phone Number input (allow only numbers)
+        document.getElementById('phone').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '');
         });
     </script>
-
-    <script src="assets/js/bootstrap.bundle.js"></script>
 </body>
 </html>
+
+    
