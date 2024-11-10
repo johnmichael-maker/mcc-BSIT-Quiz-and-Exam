@@ -104,8 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="assets/css/bootstrap.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        body {
+          body {
             background: url('./assets/img/image-22.png') no-repeat center center fixed;
+            background-size: cover;
         }
         .loader-wrapper {
             position: fixed;
