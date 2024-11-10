@@ -15,7 +15,7 @@
         }
 
         .outer-background {
-            background-image: url(./assets/img/mcc.png);
+            background-image: url(./assets/img/image-22.png);
             background-size: cover; 
             background-position: center; 
             width: 100vw;
