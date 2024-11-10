@@ -135,7 +135,7 @@
     <div class="outer-background">
         <div style="text-align: center; position: absolute; top: 20px; width: 100%;"> 
             <img src="./assets/img/logo.png" alt="Logo" class="logo">
-            <h1 class="madri-dejos" style="color: #000; font-size: 40px;">
+            <h1 class="madri-dejos" style="color: #fff; font-size: 40px;">
                 Madridejos Community College
             </h1>
         </div>
