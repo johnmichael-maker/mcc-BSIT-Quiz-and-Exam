@@ -1,21 +1,7 @@
-# Enable Rewrite Engine
-RewriteEngine On
-
 # Force HTTPS redirection if not already using HTTPS
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=301]
 
 # Redirect to the correct domain (remove 'www' or any other variations)
 RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
-RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=301]
-
-# Remove .php from the URL (use folder-based URLs)
-RewriteCond %{REQUEST_URI} !^/assets/     # Ignore assets folder
-RewriteCond %{REQUEST_URI} !\.(css|js|jpg|png|gif|svg|ico|ttf|woff|woff2|eot|otf|mp4|avi|pdf)$  # Ignore non-php resources
-RewriteRule ^([^/]+)/$ /$1/index.php [L,QSA]  # Route to index.php inside each folder (without showing .php in URL)
-
-# Optional: You can handle specific routes as needed, for example:
-# RewriteRule ^step-register/$ /step-register/index.php [L,QSA]  # Optional if specific routing is needed
-
-# If specific routes are needed for forms or actions (e.g., submissions):
-RewriteRule ^submit-registration/$ /app/submit_registration.php [L,QSA]  # Example submission route
+RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=301]   
