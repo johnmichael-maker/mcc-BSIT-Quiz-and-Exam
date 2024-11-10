@@ -8,10 +8,7 @@ RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=301]
 RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
 RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=301]
 
-# Remove .php extension from all URLs (for both files and directories)
+# Remove .php extension from all URLs
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ $1.php [L]
-
-# Redirect requests for .php URLs to the clean URL (remove .php in the browser)
-RewriteRule ^(.*)\.php$ /$1 [L,R=301]
