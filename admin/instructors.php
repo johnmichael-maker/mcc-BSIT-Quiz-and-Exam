@@ -105,7 +105,7 @@ try {
                                                     </tr>
                                                 <?php endforeach;
                                             } else {
-                                                echo "<tr><td colspan='8'>No admins found.</td></tr>";
+                                                echo "<tr><td colspan='8'>No instructor found.</td></tr>";
                                             }
                                             ?>
                                         </tbody>
