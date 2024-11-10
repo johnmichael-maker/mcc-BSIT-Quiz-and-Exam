@@ -264,7 +264,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h4 class="text-center mb-4">Account Information</h4>
                         <div class="col-md-12 mb-2">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                            <input type="email" class="form-control" id="username" name="username" placeholder="Username" required>
                         </div>
                         <div class="col-md-12 mb-2">
                             <label for="password">Password</label>
