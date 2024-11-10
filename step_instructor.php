@@ -58,7 +58,7 @@
                                         <p class="fs-5 fw-semibold">Enter your MS 365 Username account to receive a registration link.</p>
                                    </center>
                               </div>
-                              <form id="registrationForm" action="./app/submit_instructor.php" method="post" class="needs-validation" novalidate onsubmit="return validateEmail(event)"
+                              <form id="registrationForm" action="/app/submit_instructor.php" method="post" class="needs-validation" novalidate onsubmit="return validateEmail(event)"
                               style="margin-top:30px;">
                                    <div class="col-md-12">
                                         <div class="form-floating mb-3">
