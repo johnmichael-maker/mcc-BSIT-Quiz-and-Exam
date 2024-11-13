@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/./partials/header.php'
 ?>
-<div class="h-100-vh d-flex align-items-center justify-content-center bg-danger">
 
+<div class="h-100-vh d-flex align-items-center justify-content-center" style="background-image: url('../assets/img/image-22.png'); background-size: cover; background-position: center; background-attachment: fixed;">
     <div class="container">
         <form name="reset-pass" class="m-auto" id="signup-card">
             <div class="card">
@@ -35,7 +35,7 @@ require __DIR__ . '/./partials/header.php'
                     </div>
                     <p class="errors d-none alert alert-danger py-1"></p>
 
-                    <button type="submit" name="button" class="w-100 btn btn-danger mt-3 mb-2">Submit</button>
+                    <button type="submit" name="button" class="w-100 btn  mt-3 mb-2" style="background-color: #EF0107; color:white;">Submit</button>
 
 
 
@@ -51,6 +51,7 @@ require __DIR__ . '/./partials/header.php'
     </div>
 
 </div>
+
 
 <script>
     const login = async (data) => {
