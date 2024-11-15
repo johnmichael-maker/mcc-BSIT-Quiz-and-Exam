@@ -1,10 +1,10 @@
-# Enable mod_rewrite
+# Enable mod_rewrite for the entire site
 RewriteEngine On
 
 # Remove .php extension from URLs
-RewriteCond %{REQUEST_FILENAME} !-d              # Don't rewrite directories
-RewriteCond %{REQUEST_FILENAME} !-f              # Don't rewrite existing files
-RewriteRule ^(.*?)/$ $1.php [NC,L]               # Append .php internally without showing it in the URL
+RewriteCond %{REQUEST_FILENAME} !-d            # Don't rewrite directories
+RewriteCond %{REQUEST_FILENAME} !-f            # Don't rewrite existing files (only URLs that are not real files)
+RewriteRule ^(index|about|contact)$ $1.php [NC,L]  # Rewrite clean URLs (index, about, contact) to their PHP counterparts
 
 # Redirect old .php URLs to clean URLs (for SEO purposes)
 RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]  # Look for .php in the request URL
