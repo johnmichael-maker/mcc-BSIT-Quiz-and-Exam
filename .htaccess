@@ -2,10 +2,10 @@
 RewriteEngine On
 
 # Remove .php extension from URLs
-RewriteCond %{REQUEST_FILENAME} !-d            # Don't rewrite directories
-RewriteCond %{REQUEST_FILENAME} !-f            # Don't rewrite existing files (only URLs that are not real files)
-RewriteRule ^(index|about|contact)$ $1.php [NC,L]  # Rewrite clean URLs (index, about, contact) to their PHP counterparts
+RewriteCond %{REQUEST_FILENAME} !-d              # Don't rewrite directories
+RewriteCond %{REQUEST_FILENAME} !-f              # Don't rewrite existing files (e.g., images, CSS)
+RewriteRule ^(index|about|contact|step_instructor|step_register|step-123|student-signup)$ $1.php [NC,L]  # Rewrite clean URLs to their PHP counterparts
 
-# Redirect old .php URLs to clean URLs (for SEO purposes)
+# Redirect .php URLs to clean URLs (for SEO purposes)
 RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]  # Look for .php in the request URL
 RewriteRule ^([^/]+)\.php$ /$1 [R=301,L]         # Redirect .php URLs to clean URLs without .php
