@@ -1,7 +1,11 @@
-# Force HTTPS redirection if not already using HTTPS
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=301]
+# Enable mod_rewrite
+RewriteEngine On
 
-# Redirect to the correct domain (remove 'www' or any other variations)
-RewriteCond %{HTTP_HOST} !^mccbsitquizandexam\.com$ [NC]
-RewriteRule ^(.*)$ https://mccbsitquizandexam.com/$1 [L,R=301]   
+# Remove .php extension from URLs
+RewriteCond %{REQUEST_FILENAME} !-d              # Don't rewrite directories
+RewriteCond %{REQUEST_FILENAME} !-f              # Don't rewrite existing files
+RewriteRule ^(.*?)/$ $1.php [NC,L]               # Append .php internally without showing it in the URL
+
+# Redirect old .php URLs to clean URLs (for SEO purposes)
+RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]  # Look for .php in the request URL
+RewriteRule ^([^/]+)\.php$ /$1 [R=301,L]         # Redirect .php URLs to clean URLs without .php
