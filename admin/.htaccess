@@ -1,0 +1,14 @@
+# Enable mod_rewrite engine
+RewriteEngine On
+
+# Do not apply rewrites to existing directories or files
+RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
+RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
+
+# General rewrite rule for 'login' URL without .php extension
+RewriteRule ^login$ login.php [NC,L]
+
+# Redirect .php URLs to clean URLs (for SEO purposes)
+RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]   # Look for .php in the request URL
+RewriteRule ^([^/]+)\.php$ /$1 [R=301,L]           # Redirect .php URLs to clean URLs without .php
+
