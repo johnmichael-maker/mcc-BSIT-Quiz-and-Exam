@@ -1,18 +1,11 @@
 # Enable mod_rewrite engine
 RewriteEngine On
 
-# Prevent direct access to the home page ("/") - COMMENT OUT or REMOVE
-# RewriteCond %{REQUEST_URI} ^/$
-# RewriteRule ^$ - [F,L]
-
 # Do not apply rewrites to existing directories or files
 RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
 RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
 
-# General rewrite rules for URLs that need to be processed as PHP (without .php extension)
-RewriteRule ^(index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg|student-signup|step-123)$ $1.php [NC,L]
-
-# Rewrite rule for files in the 'admin' folder: Remove .php extension for admin files
+# Remove .php extension for 'admin' folder URLs
 RewriteRule ^admin/([a-zA-Z0-9_-]+)$ admin/$1.php [NC,L]
 
 # Redirect .php URLs to clean URLs (for SEO purposes), EXCEPT for admin files
