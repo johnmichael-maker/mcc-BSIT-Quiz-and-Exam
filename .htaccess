@@ -1,6 +1,10 @@
 # Enable mod_rewrite engine
 RewriteEngine On
 
+# Prevent direct access to the home page ("/")
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ - [F,L]
+
 # Do not apply rewrites to existing directories or files
 RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
 RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
@@ -18,3 +22,6 @@ RewriteRule ^admin/([a-zA-Z0-9_-]+)$ admin/$1.php [NC,L]  # General rule to hand
 
 # Ensure that base URLs (e.g., /index, /about) work without the .php extension
 RewriteRule ^(index|about|contact|register_instructor|step_register|login)$ $1.php [NC,L]
+
+# Prevent rewrites for URLs containing '?token='
+RewriteCond %{QUERY_STRING} !token= [NC]
