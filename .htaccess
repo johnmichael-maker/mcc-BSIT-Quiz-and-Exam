@@ -1,0 +1,20 @@
+# Enable mod_rewrite engine
+RewriteEngine On
+
+# Do not apply rewrites to existing directories or files
+RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
+RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
+
+# General rewrite rules for URLs that need to be processed as PHP (without .php extension)
+RewriteRule ^(admin/login|admin/otherpage|app/signup_instructor|app/submit_registration|index|about|contact|register_instructor|step_register|submit_registration|login)$ $1.php [NC,L]
+
+# Redirect .php URLs to clean URLs (for SEO purposes)
+RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]   # Look for .php in the request URL
+RewriteRule ^([^/]+)\.php$ /$1 [R=301,L]           # Redirect .php URLs to clean URLs without .php
+
+# Rewrite for specific files within the 'admin' directory (to remove .php)
+RewriteRule ^admin/login$ admin/login.php [NC,L]     # Rewrite /admin/login to /admin/login.php
+RewriteRule ^admin/([a-zA-Z0-9_-]+)$ admin/$1.php [NC,L]  # General rule to handle all files in the admin folder without .php
+
+# Ensure that base URLs (e.g., /index, /about) work without the .php extension
+RewriteRule ^(index|about|contact|register_instructor|step_register|login)$ $1.php [NC,L]
