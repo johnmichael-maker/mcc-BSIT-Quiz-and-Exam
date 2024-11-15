@@ -1,14 +1,14 @@
 # Enable mod_rewrite engine
 RewriteEngine On
 
-# Remove .php extension from URLs inside the root and subdirectories (e.g., /app, /admin)
-RewriteCond %{REQUEST_FILENAME} !-d              # Don't rewrite directories
-RewriteCond %{REQUEST_FILENAME} !-f              # Don't rewrite existing files (e.g., images, CSS)
+# Remove .php extension from URLs inside the root and subdirectories
+RewriteCond %{REQUEST_FILENAME} !-d                      # Don't rewrite directories
+RewriteCond %{REQUEST_FILENAME} !-f                      # Don't rewrite existing files (e.g., images, CSS)
 RewriteRule ^(app/signup_instructor|app/submit_registration|admin/login|index|about|contact|register_instructor|step_register|step-123|student-signup|signup_instructor|submit_registration|login)$ $1.php [NC,L]
 
 # Redirect .php URLs to clean URLs (for SEO purposes)
-RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]  # Look for .php in the request URL
-RewriteRule ^([^/]+)\.php$ /$1 [R=301,L]         # Redirect .php URLs to clean URLs without .php
+RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]         # Look for .php in the request URL
+RewriteRule ^([^/]+)\.php$ /$1 [R=301,L]                 # Redirect .php URLs to clean URLs without .php
 
 # Handle rewrites for specific subdirectories (app, admin)
 RewriteRule ^app/(signup_instructor|submit_registration)$ app/$1.php [NC,L]
