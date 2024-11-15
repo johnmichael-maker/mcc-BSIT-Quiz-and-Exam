@@ -82,7 +82,7 @@
 
                             <div class="text-start mt-5 fw-bold">
                                 <p>
-                                    <a class="home-link" href="login.php">Back Home</a>
+                                    <a class="home-link" href="login.php">Back to Login</a>
                                 </p>
                             </div>
                         </form>
