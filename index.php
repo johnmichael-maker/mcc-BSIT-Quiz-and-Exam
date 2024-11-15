@@ -413,98 +413,64 @@ h6.fw-bold {
             background: #f2f2f2;
         }
         
-    .loader-wrapper {
-      position: fixed;
-      z-index: 999999;
-      background: #fff;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0; }
-      .loader-wrapper .loader {
-        height: 100px;
-        width: 100px;
-        position: fixed; }
-        .loader-wrapper .loader .loader-inner {
-          border: 0 solid transparent;
-          border-radius: 50%;
-          width: 150px;
-          height: 150px;
-          position: absolute;
-          top: calc(50vh - 75px);
-          left: calc(50vw - 75px); }
-          .loader-wrapper .loader .loader-inner:before {
-            content: '';
-            border: 1em solid #f0452e;
-            border-radius: 50%;
-            width: inherit;
-            height: inherit;
-            position: absolute;
-            top: 0;
-            left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
-            opacity: 0;
-            -webkit-animation-delay: 0.5s;
-                    animation-delay: 0.5s; }
-          .loader-wrapper .loader .loader-inner:after {
-            content: '';
-            border: 1em solid #f0452e;
-            border-radius: 50%;
-            width: inherit;
-            height: inherit;
-            position: absolute;
-            top: 0;
-            left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
-            opacity: 0; }
-    
-    @-webkit-keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    @keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    .loader-box {
-      height: 150px;
-      text-align: center;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-      vertical-align: middle;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      -webkit-transition: .3s color, .3s border, .3s transform, .3s opacity;
-      transition: .3s color, .3s border, .3s transform, .3s opacity; }
-      .loader-box [class*="loader-"] {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        color: inherit;
-        vertical-align: middle; }
+            
+/* Wrapper for the preloader */
+.loader-wrapper {
+    position: fixed;
+    z-index: 999999;
+    background:white;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 1s ease-out; 
+    opacity: 1; 
+}
+
+
+.loader-wrapper.hidden {
+    opacity: 0; 
+}
+
+
+.loader-logo {
+    margin-top: 20px; 
+    width: 120px; 
+    height: auto; 
+    opacity: 0.8; 
+    animation: fadeIn 2s ease-out forwards, flipLogo 2s ease-in-out infinite; 
+    color: white;
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+@keyframes flipLogo {
+    0% {
+        transform: rotateY(0deg); 
+    }
+    50% {
+        transform: rotateY(180deg); 
+    }
+    100% {
+        transform: rotateY(360deg); 
+    }
+}
+
 
   .footer-background {
   background-color: #002e5b; 
@@ -579,15 +545,27 @@ h6.fw-bold {
 </style>
 </head>
 <body>
-   <div class="loader-wrapper" id="preloader">
-        <span class="loader"><span class="loader-inner"></span></span>
+  <div class="loader-wrapper" id="preloader">
+    <div class="loader">
+        <div class="loader-inner"></div>
     </div>
-    <script>
-        var loader = document.getElementById("preloader");
-        window.addEventListener("load", function() {
-            loader.style.display = "none"
-        })
-    </script>
+    
+    <img src="assets/img/bsit-logo.png" alt="Logo" class="loader-logo" />
+</div>
+
+<script>
+   var loader = document.getElementById("preloader");
+window.addEventListener("load", function() {
+
+    setTimeout(function() {
+        loader.classList.add("hidden"); 
+        setTimeout(function() {
+            loader.style.display = "none"; 
+        }, 1000); 
+    }, 5000); 
+});
+
+</script>
   <nav class="navbar navbar-expand-lg" style="background: #fff;">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       
