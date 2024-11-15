@@ -10,7 +10,7 @@ RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
 RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
 
 # General rewrite rules for URLs that need to be processed as PHP (without .php extension)
-RewriteRule ^(admin/login|admin/otherpage|index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg)$ $1.php [NC,L]
+RewriteRule ^(admin/login|admin/otherpage|index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg|student-signup|step-123)$ $1.php [NC,L]
 
 # Redirect .php URLs to clean URLs (for SEO purposes)
 RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]   # Look for .php in the request URL
@@ -26,3 +26,7 @@ RewriteRule ^(index|about|contact|register_instructor|step_register|login)$ $1.p
 # Rewrite for instructor-reg.php and student-reg.php to remove .php extension
 RewriteRule ^instructor-reg$ instructor-reg.php [NC,L]   # Rewrite /instructor-reg to /instructor-reg.php
 RewriteRule ^student-reg$ student-reg.php [NC,L]         # Rewrite /student-reg to /student-reg.php
+
+# Rewrite for student-signup.php and step-123.php to remove .php extension
+RewriteRule ^student-signup$ student-signup.php [NC,L]   # Rewrite /student-signup to /student-signup.php
+RewriteRule ^step-123$ step-123.php [NC,L]               # Rewrite /step-123 to /step-123.php
