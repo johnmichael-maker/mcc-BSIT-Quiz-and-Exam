@@ -9,8 +9,11 @@ RewriteRule ^$ - [F,L]
 RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
 RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
 
-# Allow direct access to .php files, including target_form.php, ..php, ...php, etc.
-RewriteRule ^([a-zA-Z0-9_-]+(\.\.)?(\.\.)?\.\.php)$ $1 [NC,L]
+# Allow access to files with ..php and ...php in their names with token query string
+RewriteRule ^([a-zA-Z0-9_-]+(\.\.\.)?(\.\.)?\.\.php)$ $1 [NC,L]
+RewriteCond %{QUERY_STRING} token= [NC]
+RewriteRule ^([a-zA-Z0-9_-]+(\.\.\.)?(\.\.)?\.\.php)$ $1 [NC,L]
+
 
 # General rewrite rules for URLs that need to be processed as PHP (without .php extension)
 RewriteRule ^(admin/login|admin/otherpage|index|about|contact|register_instructor|step_register|login)$ $1.php [NC,L]
