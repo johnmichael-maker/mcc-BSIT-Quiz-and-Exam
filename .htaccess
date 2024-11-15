@@ -9,14 +9,8 @@ RewriteRule ^$ - [F,L]
 RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
 RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
 
-# Allow access to files with ..php and ...php in their names with token query string
-RewriteRule ^([a-zA-Z0-9_-]+(\.\.\.)?(\.\.)?\.\.php)$ $1 [NC,L]
-RewriteCond %{QUERY_STRING} token= [NC]
-RewriteRule ^([a-zA-Z0-9_-]+(\.\.\.)?(\.\.)?\.\.php)$ $1 [NC,L]
-
-
 # General rewrite rules for URLs that need to be processed as PHP (without .php extension)
-RewriteRule ^(admin/login|admin/otherpage|index|about|contact|register_instructor|step_register|login)$ $1.php [NC,L]
+RewriteRule ^(admin/login|admin/otherpage|index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg)$ $1.php [NC,L]
 
 # Redirect .php URLs to clean URLs (for SEO purposes)
 RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]   # Look for .php in the request URL
@@ -29,4 +23,6 @@ RewriteRule ^admin/([a-zA-Z0-9_-]+)$ admin/$1.php [NC,L]  # General rule to hand
 # Ensure that base URLs (e.g., /index, /about) work without the .php extension
 RewriteRule ^(index|about|contact|register_instructor|step_register|login)$ $1.php [NC,L]
 
-
+# Rewrite for instructor-reg.php and student-reg.php to remove .php extension
+RewriteRule ^instructor-reg$ instructor-reg.php [NC,L]   # Rewrite /instructor-reg to /instructor-reg.php
+RewriteRule ^student-reg$ student-reg.php [NC,L]         # Rewrite /student-reg to /student-reg.php
