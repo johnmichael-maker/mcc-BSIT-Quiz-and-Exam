@@ -9,17 +9,10 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
 RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
 
-# Avoid redirection loop: Skip requests that already have the clean URL
-RewriteCond %{REQUEST_URI} !\.[a-zA-Z]{2,4}$       # Skip URLs with file extensions (e.g., .css, .jpg, etc.)
-
 # General rewrite rules for URLs that need to be processed as PHP (without .php extension)
-RewriteRule ^(index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg|student-signup|step-123)$ $1.php [NC,L]
 RewriteRule ^(admin/([a-zA-Z0-9_-]+))$ admin/$2.php [NC,L]
+RewriteRule ^(index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg|student-signup|step-123)$ $1.php [NC,L]
 
 # Redirect .php URLs to clean URLs (for SEO purposes)
-# Only redirect .php to clean URLs for .php files that exist (we don't want to redirect if already clean)
 RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]
 RewriteRule ^([^/]+)\.php$ /$1 [R=301,L]    # Redirect .php URLs to clean URLs without .php
-
-# Rewrite for specific files within the 'admin' directory (to remove .php extension)
-RewriteRule ^admin/([a-zA-Z0-9_-]+)$ admin/$1.php [NC,L]
