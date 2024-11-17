@@ -69,16 +69,16 @@
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                             <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect email or password</p>
                             <form name="login" class="m-auto" id="loginForm">
-                                <input type="email" class="email" name="uname" placeholder="Enter Your Email" required>
+                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required disabled>
                                 <div style="position: relative;">
-                                    <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required>
+                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required disabled>
                                     <span id="show-pass" class="toggle-password">
                                         <i class="fas fa-eye" id="toggle-icon"></i>
                                     </span>
                                 </div>
                                 <input type="file" id="fileInput" name="image" accept="image/*" style="display: none;">
                                 <div class="g-recaptcha" data-sitekey="6Ld-fYEqAAAAAHbSvaJjesYOnT7kXZWRmQE4njI-" data-callback="enableSubmitBtn"></div>
-                                <button type="submit" name="button" id="mySubmitBtn" disabled="disabled" class="btn w-100 btn-danger mt-3 mb-2">Login</button>
+                                <button type="submit" name="button" id="mySubmitBtn" disabled="disabled" class="btn w-100 btn-danger mt-3 mb-2" disabled>>Login</button>
                                 <p style="float: left; margin-top: 10px;">
                                     <a href="../index.php" style="display: block; text-align: right;">Back Home</a>
                                 </p>
@@ -97,65 +97,52 @@
                 <script src="https://mccbsitquizandexam.com/assets/js/location.js"></script>
 
 <script>
-   function getLocation() {
-    if (navigator.geolocation) {
-        // Ask the browser to get the current position of the user
-        navigator.geolocation.getCurrentPosition(sendLocationData, showError);
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
-}
+    // Select form input elements to disable initially
+    const formInputs = document.querySelectorAll('#email, #password');
+    const loginButton = document.querySelector('#loginButton');
 
-// This function sends the location data (latitude and longitude) to the server
-function sendLocationData(position) {
-    const latitude = position.coords.latitude;  // The latitude of the user's position
-    const longitude = position.coords.longitude;  // The longitude of the user's position
-
-    console.log("Latitude: " + latitude + " Longitude: " + longitude);
-
-    // Perform an AJAX request to send the location data to the server
-    $.ajax({
-        url: BASE_PATH + 'admin/post.php',
-        method: 'POST',
-        data: {
-            type: 'location',
-            latitude: latitude,  // Sending latitude
-            longitude: longitude  // Sending longitude
-        },
-        success: function(response) {
-            let jsonResponse = JSON.parse(response);
-            console.log(jsonResponse);  // Handle the server response
-            // You can display a success message or process the response here
-        },
-        error: function(error) {
-            console.log(error);
-            $('#result').html('Failed to send location data');
+    // Function to request and check location permissions
+    function requestLocation() {
+        if (navigator.geolocation) {
+            // Watch for location changes
+            navigator.geolocation.watchPosition(
+                // Success callback
+                function (position) {
+                    console.log('Location access granted');
+                    // Enable form inputs and button when location is granted
+                    formInputs.forEach(input => input.disabled = false);
+                    loginButton.disabled = false;
+                },
+                // Error callback
+                function (error) {
+                    if (error.code === error.PERMISSION_DENIED) {
+                        alert("Please allow location access to use this login page.");
+                        setTimeout(function() {
+                            window.location.reload(); // Reload page after 5 seconds if denied
+                        }, 1000);
+                    }
+                    // If location access is lost, disable the form inputs and login button again
+                    if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
+                        formInputs.forEach(input => input.disabled = true);
+                        loginButton.disabled = true;
+                        alert("Location access was lost. The form will reload.");
+                        setTimeout(function() {
+                            window.location.reload(); // Reload page after 5 seconds if location is lost
+                        }, 1000);
+                    }
+                }
+            );
+        } else {
+            alert("Geolocation is not supported by this browser.");
         }
-    });
-}
-
-// This function handles any errors that occur while retrieving location
-function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            alert("Please allow location access to use this login page.");
-            break;
-        case error.POSITION_UNAVAILABLE:
-            alert("Location information is unavailable.");
-            break;
-        case error.TIMEOUT:
-            alert("The request to get user location timed out.");
-            break;
-        case error.UNKNOWN_ERROR:
-            alert("An unknown error occurred.");
-            break;
     }
-}
 
-// Call getLocation function when the page loads
-window.onload = function() {
-    getLocation();  // This will attempt to fetch the user's location
-};
+    // Call the function to request location access on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        requestLocation();
+    });
+</script>
+
 
 </script>                                                           
         <script>
