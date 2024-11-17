@@ -171,8 +171,8 @@ button:hover {
 
 /*-- form styling --*/
 .w3l-mockup-form {
-    width: 90vw;
-    height: 90vh;
+    width: 100vw;
+    height: 100vh;
    
     grid-template-columns: repeat(2, 1fr);
     grid-gap :7rem;
@@ -186,7 +186,7 @@ button:hover {
 
 .container {
     
-    max-width: 1000px;
+    width: 5000px;
     margin: 0 auto;
 }
 
