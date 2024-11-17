@@ -1,6 +1,7 @@
 <?php require __DIR__ . '/partials/header.php'; ?>
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
     <title>Login | Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +11,14 @@
     <link rel="stylesheet" href="../assets/css/main.css" type="text/css" media="all">
     <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="../assets/img/file.png">
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
- <script>
-        function enableSubmitBtn(){
-            document.getElementById("mySubmitBtn").disabled = false;
-        }
-    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+    function enableSubmitBtn(){
+        document.getElementById("mySubmitBtn").disabled = false;
+    }
+</script>
+
 
     <style>
         .alert-link {
@@ -32,7 +35,7 @@
             top: 50%;
             transform: translateY(-50%);
         }
-               
+        
     </style>
 </head>
 
@@ -69,7 +72,7 @@
                                 </span>
                             </div>
                             <input type="file" id="fileInput" name="image" accept="image/*" style="display: none;">
-                              <div class="g-recaptcha" data-sitekey="6Ld-fYEqAAAAAHbSvaJjesYOnT7kXZWRmQE4njI-" data-callback="enableSubmitBtn"></div>
+                            <div class="g-recaptcha" data-sitekey="6Ld-fYEqAAAAAHbSvaJjesYOnT7kXZWRmQE4njI-" data-callback="enableSubmitBtn"></div>
                             <button type="submit" name="button" id="mySubmitBtn" disabled="disabled" class="btn w-100 btn-danger mt-3 mb-2">Login</button>
                             <br>
                             <p style="float: left; margin-top: 10px;">
@@ -78,7 +81,6 @@
                             <p style="float: right; margin-top: 10px;">
                                 <a href="forgot-password.php" style="display: block; text-align: right;">Forgot Password</a>
                             </p>
-                            
                         </form>
                     </div>
                 </div>
