@@ -177,6 +177,7 @@ button:hover {
     grid-template-columns: repeat(2, 1fr);
     grid-gap :7rem;
     padding: 0 2rem;
+    display: flex;
     position: relative;
     min-height: 100vh;
     z-index: 0;
