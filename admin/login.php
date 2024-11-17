@@ -35,7 +35,13 @@
             top: 50%;
             transform: translateY(-50%);
         }
-        
+        .g-recaptcha {
+        transform: scale(0.8);
+        transform-origin: 0 0; 
+        width: 100% !important;  /
+        max-width: 400px; 
+        margin: 0 auto;
+    }
     </style>
 </head>
 
