@@ -27,88 +27,11 @@
             top: 50%;
             transform: translateY(-50%);
         }
-        /* Wrapper for the preloader */
-.loader-wrapper {
-    position: fixed;
-    z-index: 999999;
-    background:white;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    transition: opacity 1s ease-out; 
-    opacity: 1; 
-}
-
-
-.loader-wrapper.hidden {
-    opacity: 0; 
-}
-
-
-.loader-logo {
-    margin-top: 20px; 
-    width: 120px; 
-    height: auto; 
-    opacity: 0.8; 
-    animation: fadeIn 2s ease-out forwards, flipLogo 2s ease-in-out infinite; 
-    color: white;
-}
-
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-
-@keyframes flipLogo {
-    0% {
-        transform: rotateY(0deg); 
-    }
-    50% {
-        transform: rotateY(180deg); 
-    }
-    100% {
-        transform: rotateY(360deg); 
-    }
-}
-
+    
     </style>
 </head>
 
 <body>
-    <div class="loader-wrapper" id="preloader">
-    <div class="loader">
-        <div class="loader-inner"></div>
-    </div>
-    
-    <img src="../assets/img/bsit-logo.png" alt="Logo" class="loader-logo" />
-</div>
-
-<script>
-   var loader = document.getElementById("preloader");
-window.addEventListener("load", function() {
-
-    setTimeout(function() {
-        loader.classList.add("hidden"); 
-        setTimeout(function() {
-            loader.style.display = "none"; 
-        }, 1000); 
-    }, 3000); 
-});
-
-</script>
     <img class="wave" src="../assets/img/image-22.png" alt="Wave Image">
 
     <section class="w3l-mockup-form">
