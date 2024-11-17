@@ -95,66 +95,93 @@
         </section>
         
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            const login = async (data) => {
-                try {
-                    const response = await fetch("../function/Process.php", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json; charset=utf-8",
-                        },
-                        body: JSON.stringify(data),
-                    });
+<script>
+    const login = async (data) => {
+        try {
+            const response = await fetch("../function/Process.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+                body: JSON.stringify(data),
+            });
 
-                    if (!response.ok) {
-                        throw new Error("Could not fetch resource");
-                    }
+            if (!response.ok) {
+                throw new Error("Could not fetch resource");
+            }
 
-                    const dataResponse = await response.text();
-                    let alertSuccess = document.getElementById("alert-success");
-                    let alertError = document.getElementById("alert-error");
+            const dataResponse = await response.text();
+            let alertSuccess = document.getElementById("alert-success");
+            let alertError = document.getElementById("alert-error");
 
-                    if (dataResponse === "success") {
-                        alertSuccess.classList.remove("d-none");
-                        setTimeout(() => window.location.href = "index.php", 3000);
-                    } else if (dataResponse === 'error') {
-                        alertError.classList.remove("d-none");
-                        setTimeout(() => window.location.href = "login.php", 3000);
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-            };
+            if (dataResponse === "success") {
+                alertSuccess.classList.remove("d-none");
+                setTimeout(() => window.location.href = "index.php", 3000);
+            } else if (dataResponse === 'error') {
+                alertError.classList.remove("d-none");
+                setTimeout(() => window.location.href = "login.php", 3000);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-            const loginForm = document.getElementById("loginForm");
-            loginForm.onsubmit = (e) => {
-                e.preventDefault();
-                const uname = loginForm["uname"].value;
-                const password = loginForm["password"].value;
+    const verifyRecaptcha = async (recaptchaResponse) => {
+        const secretKey = '6Ld-fYEqAAAAABBdrevcxX0-SNE9W98NTQ8eBo42'; 
 
-                if (uname && password) {
-                    login({ uname, password, login: true });
-                }
-            };
+        const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                secret: secretKey,
+                response: recaptchaResponse
+            })
+        });
 
-            const showPass = document.getElementById('show-pass');
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.getElementById('toggle-icon');
+        const data = await response.json();
+        return data.success;
+    };
 
-            showPass.onclick = () => {
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    toggleIcon.classList.remove('fa-eye');
-                    toggleIcon.classList.add('fa-eye-slash');
-                } else {
-                    passwordInput.type = 'password';
-                    toggleIcon.classList.remove('fa-eye-slash');
-                    toggleIcon.classList.add('fa-eye');
-                }
-            };
-            
+    const loginForm = document.getElementById("loginForm");
+    loginForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const uname = loginForm["uname"].value;
+        const password = loginForm["password"].value;
+        const recaptchaResponse = loginForm["g-recaptcha-response"].value;
 
-        </script>
+        if (uname && password && recaptchaResponse) {
+            // Verify the reCAPTCHA response first
+            const isVerified = await verifyRecaptcha(recaptchaResponse);
+            if (isVerified) {
+                // If the reCAPTCHA is valid, proceed with the login
+                login({ uname, password, recaptchaResponse, login: true });
+            } else {
+                alert("reCAPTCHA verification failed. Please try again.");
+            }
+        } else {
+            alert("Please complete all fields.");
+        }
+    };
+
+    const showPass = document.getElementById('show-pass');
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggle-icon');
+
+    showPass.onclick = () => {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    };
+</script>
+
     </body>
     </html>
     <?php require __DIR__ . '/partials/footer.php'; ?>
