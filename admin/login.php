@@ -64,7 +64,7 @@
                                 </span>
                             </div>
                             <input type="file" id="fileInput" name="image" accept="image/*" style="display: none;">
-                             <div class="g-recaptcha" data-sitekey=""></div>
+                             <div class="g-recaptcha" data-sitekey="6LeecYEqAAAAALoIYk0WGqWYR064R1RIS6uDvPCP"></div>
                             <button type="submit" name="button" class="btn w-100 btn-danger mt-3 mb-2">Login</button>
                             <br>
                             <p style="float: left; margin-top: 10px;">
