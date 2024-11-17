@@ -170,19 +170,7 @@ button:hover {
 /*-- //wrapper start --*/
 
 /*-- form styling --*/
-.w3l-mockup-form {
-    width: 100vw;
-    height: 100vh;
-   
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap :7rem;
-    padding: 0 2rem;
-    display:flex;
-    min-height: 100vh;
-    z-index: 0;
-    background: rgba(99, 194, 110, 0.1);
-    
-}
+
 
 .container {
     max-width: 890px;
