@@ -1,4 +1,5 @@
-<?php
+
+    <?php
 require __DIR__ . '/./partials/header.php';
 // echo password_hash('1Admin', PASSWORD_DEFAULT);
 
@@ -179,7 +180,7 @@ require __DIR__ . '/./partials/header.php';
                         <h1>Hello <span class="text-danger fw-bold">Welcome!</span></h1>
                         <p>What do you want to sign up as?</p>
                         <div class="d-flex align-items-center gap-2 mt-4">
-                           <!--<a href="?signup=quiz" class="btn btn-danger w-100"><i class="bx bx-question-mark"></i>Pop Quiz</a>-->
+                           <a href="?signup=quiz" class="btn btn-danger w-100"><i class="bx bx-question-mark"></i>Pop Quiz</a>
                             <a href="?signup=exam" class="btn btn-danger w-100"><i class="bx bx-file"></i> Exam</a>
                         </div>
                     </div>
@@ -196,7 +197,7 @@ require __DIR__ . '/./partials/header.php';
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
 
                             <label for="">ID Number</label>
-                            <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732"  name="id_number" required>
+                             <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732" name="id_number" required pattern="^\d{4}-\d{4}$" id="id_number">
                             <p class="errors d-none alert alert-danger py-1"></p>
 
                             <label for="">First Name</label>
@@ -251,7 +252,7 @@ require __DIR__ . '/./partials/header.php';
                             <p class="alert alert-danger py-2 d-none" id="alert-incorrect">Error, Credentials doesn't match</p>
 
                             <label for="">ID Number</label>
-                            <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732"  name="id_number" required>
+                             <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732" name="id_number" required pattern="^\d{4}-\d{4}$" id="id_number">
                             <p class="errors d-none alert alert-danger py-1"></p>
 
                             <label for="">First Name</label>
@@ -309,5 +310,32 @@ require __DIR__ . '/./partials/header.php';
         </div>
 
     </div>
-    <?php require __DIR__ . '/./partials/footer.php' ?>
+     <script>
+document.addEventListener("DOMContentLoaded", function() {
+    
+    const idNumberInput = document.getElementById("id_number");
+    const submitButton = document.getElementById("submit-btn");
 
+    const idPattern = /^\d{4}-\d{4}$/;
+
+
+    function checkIdNumber() {
+        const idValue = idNumberInput.value;
+
+        if (idPattern.test(idValue)) {
+            submitButton.disabled = false;  
+        } else {
+            submitButton.disabled = true;   
+        }
+    }
+
+
+    idNumberInput.addEventListener("input", checkIdNumber);
+
+    
+    checkIdNumber();
+});
+
+
+    </script>
+    <?php require __DIR__ . '/./partials/footer.php' ?>
