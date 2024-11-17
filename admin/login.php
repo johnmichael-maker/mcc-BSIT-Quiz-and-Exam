@@ -202,36 +202,7 @@
                     toggleIcon.classList.add('fa-eye');
                 }
             };
-            document.addEventListener('contextmenu', function(e) {
-    e.preventDefault(); 
-});
-
-
-document.addEventListener('keydown', function(e) {
-    
-    if (e.ctrlKey || e.metaKey) {
-        if (
-            e.key === 'i' ||  
-            e.key === 'u' ||  
-            e.key === 'j' ||  
-            e.key === 'c' ||  
-            e.key === 's' ||  
-            e.key === 'k' ||  
-            e.key === 'h' ||  
-            e.key === 'd' ||  
-            e.key === 'r' || 
-            e.key === 'p' ||  
-            e.key === 'f' ||  
-            e.key === 'q' ||  
-            e.key === 'F12'   
-        ) {
-            e.preventDefault();  
-            return false;
-        }
-    }
-});
-
-
+           
         </script>
     </body>
     </html>
