@@ -1,7 +1,10 @@
 <?php require __DIR__ . '/partials/header.php'; ?>
 <!DOCTYPE html>
 <html lang="zxx">
+6Ld-fYEqAAAAAHbSvaJjesYOnT7kXZWRmQE4njI-
 
+Secret
+6Ld-fYEqAAAAABBdrevcxX0-SNE9W98NTQ8eBo42
 <head>
     <title>Login | Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
