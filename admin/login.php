@@ -1,40 +1,4 @@
-<?php 
-require __DIR__ . '/partials/header.php';
-
-// Your reCAPTCHA secret key
-$secretKey = '6Le1d4EqAAAAAGDd5OSNt1YGkEc1wuL6K6NNq7QU';  // Replace with your secret key
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the reCAPTCHA response token from the form
-    $recaptchaResponse = $_POST['recaptcha_response'];
-
-    // Verify the reCAPTCHA response with Google
-    $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$recaptchaResponse");
-    $responseKeys = json_decode($response, true);
-
-    // Check if reCAPTCHA validation was successful
-    if ($responseKeys["success"]) {
-        $score = $responseKeys["score"];
-        
-        if ($score >= 0.5) {
-            // Proceed with normal login logic (validate user credentials, etc.)
-            $uname = $_POST['uname']; // Email
-            $password = $_POST['password']; // Password
-            
-            // You should now validate these credentials in your database
-            // Assuming you're using mysqli or PDO, fetch and validate the user
-            
-            // If login is successful, redirect to the dashboard
-            echo "reCAPTCHA passed with score: $score";
-        } else {
-            echo "Suspicious activity detected. Score: $score";
-        }
-    } else {
-        echo "reCAPTCHA validation failed!";
-    }
-}
-?>
-
+<?php require __DIR__ . '/partials/header.php'; ?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -47,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../assets/css/main.css" type="text/css" media="all">
     <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="../assets/img/file.png">
-    <script src="https://www.google.com/recaptcha/api.js?render=your-recaptcha-site-key"></script> <!-- Add your reCAPTCHA site key here -->
+
     <style>
         .alert-link {
             color: #fff;
@@ -63,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             top: 50%;
             transform: translateY(-50%);
         }
+               
     </style>
 </head>
 
@@ -81,16 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <div class="content-wthree">
-                        <div style="position: relative; text-align: right;">
-                            <i class="fas fa-cog" style="font-size: 24px; color: #df0100;"></i>
-                        </div>
+                <div style="position: relative; text-align: right;">
+             <i class="fas fa-cog" style="font-size: 24px; color: #df0100;"></i>
+          </div>
 
                         <h2>Sign In As Admin</h2>
                         <p>Please enter your credentials to access your account.</p>
                         <br>
                         <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                         <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect email or password</p>
-                        <form name="login" class="m-auto" id="loginForm" method="POST">
+                        <form name="login" class="m-auto" id="loginForm">
                             <input type="email" class="email" name="uname" placeholder="Enter Your Email" required>
                             <div style="position: relative;">
                                 <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required>
@@ -108,13 +73,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <a href="forgot-password.php" style="display: block; text-align: right;">Forgot Password</a>
                                 <a href="change-password.php" style="display: block; text-align: right;">Change Password</a>
                             </p>
+                            
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const login = async (data) => {
@@ -153,18 +119,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const uname = loginForm["uname"].value;
             const password = loginForm["password"].value;
 
-            // Execute reCAPTCHA to get the token
-            grecaptcha.execute('6Le1d4EqAAAAAAbTyUAoZ8GjV8vGcft7fs-5_E-f', { action: 'login' }).then(function(token) {
-                // Append the token to the form
-                var recaptchaResponse = document.createElement('input');
-                recaptchaResponse.setAttribute('type', 'hidden');
-                recaptchaResponse.setAttribute('name', 'recaptcha_response');
-                recaptchaResponse.setAttribute('value', token);
-                loginForm.appendChild(recaptchaResponse);
-
-                // Proceed with form submission
-                login({ uname, password, recaptcha_response: token });
-            });
+            if (uname && password) {
+                login({ uname, password, login: true });
+            }
         };
 
         const showPass = document.getElementById('show-pass');
@@ -182,8 +139,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 toggleIcon.classList.add('fa-eye');
             }
         };
+        
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault(); 
+});
+
+
+document.addEventListener('keydown', function(e) {
+    
+    if (e.ctrlKey || e.metaKey) {
+        if (
+            e.key === 'i' ||  
+            e.key === 'u' ||  
+            e.key === 'j' ||  
+            e.key === 'c' ||  
+            e.key === 's' ||  
+            e.key === 'k' ||  
+            e.key === 'h' ||  
+            e.key === 'd' ||  
+            e.key === 'r' ||  
+            e.key === 'p' ||  
+            e.key === 'f' ||  
+            e.key === 'q' ||  
+            e.key === 'F12'   
+        ) {
+            e.preventDefault();  
+            return false;
+        }
+    }
+});
+
     </script>
 </body>
 </html>
-
 <?php require __DIR__ . '/partials/footer.php'; ?>
