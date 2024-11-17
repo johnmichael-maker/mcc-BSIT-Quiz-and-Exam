@@ -96,52 +96,69 @@
              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script
                 <script src="https://mccbsitquizandexam.com/assets/js/location.js"></script>
 
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Select form input elements to disable initially
+    
     const formInputs = document.querySelectorAll('#email, #password');
     const loginButton = document.querySelector('#loginButton');
 
-    // Function to request and check location permissions
+    
     function requestLocation() {
         if (navigator.geolocation) {
-            // Watch for location changes
+            
             navigator.geolocation.watchPosition(
-                // Success callback
+                
                 function (position) {
                     console.log('Location access granted');
-                    // Enable form inputs and button when location is granted
+                    
                     formInputs.forEach(input => input.disabled = false);
                     loginButton.disabled = false;
                 },
-                // Error callback
+                
                 function (error) {
                     if (error.code === error.PERMISSION_DENIED) {
-                        alert("Please allow location access to use this login page.");
-                        setTimeout(function() {
-                            window.location.reload(); // Reload page after 5 seconds if denied
-                        }, 1000);
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Permission Denied',
+                            text: 'Please allow location access to use this login page.',
+                            background:'darkred',
+                            color: 'white',
+                            confirmButtonText: 'Reload',
+                        }).then(() => {
+                            window.location.reload(); 
+                        });
                     }
-                    // If location access is lost, disable the form inputs and login button again
+                    
                     if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
                         formInputs.forEach(input => input.disabled = true);
                         loginButton.disabled = true;
-                        alert("Location access was lost. The form will reload.");
-                        setTimeout(function() {
-                            window.location.reload(); // Reload page after 5 seconds if location is lost
-                        }, 1000);
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Location Access Lost',
+                            text: 'Location access was lost. The form will reload.',
+                            confirmButtonText: 'Reload',
+                        }).then(() => {
+                            window.location.reload(); 
+                        });
                     }
                 }
             );
         } else {
-            alert("Geolocation is not supported by this browser.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Geolocation Not Supported',
+                text: 'Geolocation is not supported by this browser.',
+            });
         }
     }
 
-    // Call the function to request location access on page load
+    
     document.addEventListener('DOMContentLoaded', function () {
         requestLocation();
     });
 </script>
+
 
 
 </script>                                                           
