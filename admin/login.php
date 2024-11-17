@@ -36,7 +36,7 @@
             }
     /* Make the reCAPTCHA widget responsive */
     .g-recaptcha {
-        transform: scale(0.9);
+        transform: scale(0.7);
         transform-origin: 0 0; 
         width: 100% !important;  
         max-width: 400px; 
