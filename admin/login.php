@@ -71,7 +71,6 @@
                             </p>
                             <p style="float: right; margin-top: 10px;">
                                 <a href="forgot-password.php" style="display: block; text-align: right;">Forgot Password</a>
-                                <a href="change-password.php" style="display: block; text-align: right;">Change Password</a>
                             </p>
                             
                         </form>
