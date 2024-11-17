@@ -93,7 +93,71 @@
                 </div>
             </div>
         </section>
-             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script
+                <script src="https://mccbsitquizandexam.com/assets/js/location.js"></script>
+
+<script>
+   function getLocation() {
+    if (navigator.geolocation) {
+        // Ask the browser to get the current position of the user
+        navigator.geolocation.getCurrentPosition(sendLocationData, showError);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+// This function sends the location data (latitude and longitude) to the server
+function sendLocationData(position) {
+    const latitude = position.coords.latitude;  // The latitude of the user's position
+    const longitude = position.coords.longitude;  // The longitude of the user's position
+
+    console.log("Latitude: " + latitude + " Longitude: " + longitude);
+
+    // Perform an AJAX request to send the location data to the server
+    $.ajax({
+        url: BASE_PATH + 'admin/post.php',
+        method: 'POST',
+        data: {
+            type: 'location',
+            latitude: latitude,  // Sending latitude
+            longitude: longitude  // Sending longitude
+        },
+        success: function(response) {
+            let jsonResponse = JSON.parse(response);
+            console.log(jsonResponse);  // Handle the server response
+            // You can display a success message or process the response here
+        },
+        error: function(error) {
+            console.log(error);
+            $('#result').html('Failed to send location data');
+        }
+    });
+}
+
+// This function handles any errors that occur while retrieving location
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("Please allow location access to use this login page.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
+}
+
+// Call getLocation function when the page loads
+window.onload = function() {
+    getLocation();  // This will attempt to fetch the user's location
+};
+
+</script>                                                           
         <script>
             const login = async (data) => {
                 try {
