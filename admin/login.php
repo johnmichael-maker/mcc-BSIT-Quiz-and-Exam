@@ -27,13 +27,13 @@
             html {
                 scroll-behavior: smooth;
             }
-            .toggle-password {
-                cursor: pointer;
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
+          .g-recaptcha {
+        transform: scale(0.9);
+        transform-origin: 0 0; 
+        width: 100% !important;  
+        max-width: 400px; 
+        margin-top: 0 auto;
+    }
 
         </style>
     </head>
