@@ -212,18 +212,18 @@ document.addEventListener('keydown', function(e) {
     
     if (e.ctrlKey || e.metaKey) {
         if (
-            e.key === 'i' || 
+            e.key === 'i' ||  
             e.key === 'u' ||  
-            e.key === 'j' || 
+            e.key === 'j' ||  
             e.key === 'c' ||  
             e.key === 's' ||  
             e.key === 'k' ||  
-            e.key === 'h' || 
+            e.key === 'h' ||  
             e.key === 'd' ||  
-            e.key === 'r' ||  
-            e.key === 'p' || 
+            e.key === 'r' || 
+            e.key === 'p' ||  
             e.key === 'f' ||  
-            e.key === 'q' || 
+            e.key === 'q' ||  
             e.key === 'F12'   
         ) {
             e.preventDefault();  
