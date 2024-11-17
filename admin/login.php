@@ -1,8 +1,43 @@
-<?php require __DIR__ . '/partials/header.php'; ?>
-6Le1d4EqAAAAAAbTyUAoZ8GjV8vGcft7fs-5_E-f
+<?php 
+require __DIR__ . '/partials/header.php';
+
+// Your reCAPTCHA secret key
+$secretKey = '6Le1d4EqAAAAAGDd5OSNt1YGkEc1wuL6K6NNq7QU';  // Replace with your secret key
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get the reCAPTCHA response token from the form
+    $recaptchaResponse = $_POST['recaptcha_response'];
+
+    // Verify the reCAPTCHA response with Google
+    $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$recaptchaResponse");
+    $responseKeys = json_decode($response, true);
+
+    // Check if reCAPTCHA validation was successful
+    if ($responseKeys["success"]) {
+        $score = $responseKeys["score"];
+        
+        if ($score >= 0.5) {
+            // Proceed with normal login logic (validate user credentials, etc.)
+            $uname = $_POST['uname']; // Email
+            $password = $_POST['password']; // Password
+            
+            // You should now validate these credentials in your database
+            // Assuming you're using mysqli or PDO, fetch and validate the user
+            
+            // If login is successful, redirect to the dashboard
+            echo "reCAPTCHA passed with score: $score";
+        } else {
+            echo "Suspicious activity detected. Score: $score";
+        }
+    } else {
+        echo "reCAPTCHA validation failed!";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="zxx">
-6Le1d4EqAAAAAGDd5OSNt1YGkEc1wuL6K6NNq7QU
+
 <head>
     <title>Login | Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +47,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" type="text/css" media="all">
     <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="../assets/img/file.png">
-
+    <script src="https://www.google.com/recaptcha/api.js?render=your-recaptcha-site-key"></script> <!-- Add your reCAPTCHA site key here -->
     <style>
         .alert-link {
             color: #fff;
@@ -32,7 +67,6 @@
 </head>
 
 <body>
-
     <img class="wave" src="../assets/img/image-22.png" alt="Wave Image">
 
     <section class="w3l-mockup-form">
@@ -65,11 +99,6 @@
                                 </span>
                             </div>
                             <input type="file" id="fileInput" name="image" accept="image/*" style="display: none;">
-                            
-                            <!-- Google reCAPTCHA widget -->
-                          <div class="g-recaptcha" data-sitekey="6LeecYEqAAAAALoIYk0WGqWYR064R1RIS6uDvPCP"></div>
-
-
                             <button type="submit" name="button" class="btn w-100 btn-danger mt-3 mb-2">Login</button>
                             <br>
                             <p style="float: left; margin-top: 10px;">
@@ -86,9 +115,6 @@
         </div>
     </section>
 
-    <!-- Load reCAPTCHA script -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const login = async (data) => {
@@ -126,13 +152,19 @@
             e.preventDefault();
             const uname = loginForm["uname"].value;
             const password = loginForm["password"].value;
-            const recaptchaResponse = grecaptcha.getResponse(); // Get reCAPTCHA response
 
-            if (uname && password && recaptchaResponse) {
-                login({ uname, password, recaptchaResponse, login: true });
-            } else {
-                alert("Please complete the reCAPTCHA");
-            }
+            // Execute reCAPTCHA to get the token
+            grecaptcha.execute('6Le1d4EqAAAAAAbTyUAoZ8GjV8vGcft7fs-5_E-f', { action: 'login' }).then(function(token) {
+                // Append the token to the form
+                var recaptchaResponse = document.createElement('input');
+                recaptchaResponse.setAttribute('type', 'hidden');
+                recaptchaResponse.setAttribute('name', 'recaptcha_response');
+                recaptchaResponse.setAttribute('value', token);
+                loginForm.appendChild(recaptchaResponse);
+
+                // Proceed with form submission
+                login({ uname, password, recaptcha_response: token });
+            });
         };
 
         const showPass = document.getElementById('show-pass');
@@ -150,26 +182,6 @@
                 toggleIcon.classList.add('fa-eye');
             }
         };
-        
-        // Prevent right-click and certain keyboard shortcuts
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-                if (
-                    e.key === 'i' || e.key === 'u' || e.key === 'j' || 
-                    e.key === 'c' || e.key === 's' || e.key === 'k' || 
-                    e.key === 'h' || e.key === 'd' || e.key === 'r' || 
-                    e.key === 'p' || e.key === 'f' || e.key === 'q' || 
-                    e.key === 'F12'
-                ) {
-                    e.preventDefault();
-                    return false;
-                }
-            }
-        });
     </script>
 </body>
 </html>
