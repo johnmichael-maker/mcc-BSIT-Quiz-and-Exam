@@ -34,14 +34,6 @@
                 top: 50%;
                 transform: translateY(-50%);
             }
-    /* Make the reCAPTCHA widget responsive */
-    .g-recaptcha {
-        transform: scale(0.8);
-        transform-origin: 0 0; 
-        width: 100% !important;  /
-        max-width: 400px; 
-        margin-top: 0 auto;
-    }
 
         </style>
     </head>
@@ -79,7 +71,7 @@
                                     </span>
                                 </div>
                                 <input type="file" id="fileInput" name="image" accept="image/*" style="display: none;">
-                             
+                                <div class="g-recaptcha" data-sitekey="6Ld-fYEqAAAAAHbSvaJjesYOnT7kXZWRmQE4njI-" data-callback="enableSubmitBtn"></div>
                                 <button type="submit" name="button" id="mySubmitBtn" disabled="disabled" class="btn w-100 btn-danger mt-3 mb-2">Login</button>
                                 <br>
                                 <p style="float: left; margin-top: 10px;">
