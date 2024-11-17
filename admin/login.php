@@ -79,9 +79,20 @@
             </div>
         </div>
     </section>
-    
+   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        if (isset($_POST['g-recaptcha-response'])) {
+    $recaptcha_secret = '6LeecYEqAAAAAAE0IQcah23QFWOuGNFFAUbdwxWA';
+    $recaptcha_response = $_POST['g-recaptcha-response'];
+    $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptcha_secret&response=$recaptcha_response");
+    $response_keys = json_decode($response, true);
+    if (intval($response_keys["success"]) !== 1) {
+        echo "Please complete the CAPTCHA";
+        exit;
+    }
+}
+
         const login = async (data) => {
             try {
                 const response = await fetch("../function/Process.php", {
