@@ -1,4 +1,5 @@
 <?php require __DIR__ . '/partials/header.php'; ?>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -27,11 +28,11 @@
             top: 50%;
             transform: translateY(-50%);
         }
-    
     </style>
 </head>
 
 <body>
+
     <img class="wave" src="../assets/img/image-22.png" alt="Wave Image">
 
     <section class="w3l-mockup-form">
@@ -46,16 +47,16 @@
                         </div>
                     </div>
                     <div class="content-wthree">
-                <div style="position: relative; text-align: right;">
-             <i class="fas fa-cog" style="font-size: 24px; color: #df0100;"></i>
-          </div>
+                        <div style="position: relative; text-align: right;">
+                            <i class="fas fa-cog" style="font-size: 24px; color: #df0100;"></i>
+                        </div>
 
                         <h2>Sign In As Admin</h2>
                         <p>Please enter your credentials to access your account.</p>
                         <br>
                         <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                         <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect email or password</p>
-                        <form name="login" class="m-auto" id="loginForm">
+                        <form name="login" class="m-auto" id="loginForm" method="POST">
                             <input type="email" class="email" name="uname" placeholder="Enter Your Email" required>
                             <div style="position: relative;">
                                 <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required>
@@ -64,7 +65,10 @@
                                 </span>
                             </div>
                             <input type="file" id="fileInput" name="image" accept="image/*" style="display: none;">
-                             <div class="g-recaptcha" data-sitekey="6LeecYEqAAAAALoIYk0WGqWYR064R1RIS6uDvPCP"></div>
+                            
+                            <!-- Google reCAPTCHA widget -->
+                            <div class="g-recaptcha" data-sitekey="6LeecYEqAAAAALoIYk0WGqWYR064R1RIS6uDvPCP"></div>
+
                             <button type="submit" name="button" class="btn w-100 btn-danger mt-3 mb-2">Login</button>
                             <br>
                             <p style="float: left; margin-top: 10px;">
@@ -72,6 +76,7 @@
                             </p>
                             <p style="float: right; margin-top: 10px;">
                                 <a href="forgot-password.php" style="display: block; text-align: right;">Forgot Password</a>
+                                <a href="change-password.php" style="display: block; text-align: right;">Change Password</a>
                             </p>
                         </form>
                     </div>
@@ -79,20 +84,12 @@
             </div>
         </div>
     </section>
-   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- Load reCAPTCHA script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        if (isset($_POST['g-recaptcha-response'])) {
-    $recaptcha_secret = '6LeecYEqAAAAAAE0IQcah23QFWOuGNFFAUbdwxWA';
-    $recaptcha_response = $_POST['g-recaptcha-response'];
-    $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptcha_secret&response=$recaptcha_response");
-    $response_keys = json_decode($response, true);
-    if (intval($response_keys["success"]) !== 1) {
-        echo "Please complete the CAPTCHA";
-        exit;
-    }
-}
-
         const login = async (data) => {
             try {
                 const response = await fetch("../function/Process.php", {
@@ -128,9 +125,12 @@
             e.preventDefault();
             const uname = loginForm["uname"].value;
             const password = loginForm["password"].value;
+            const recaptchaResponse = grecaptcha.getResponse(); // Get reCAPTCHA response
 
-            if (uname && password) {
-                login({ uname, password, login: true });
+            if (uname && password && recaptchaResponse) {
+                login({ uname, password, recaptchaResponse, login: true });
+            } else {
+                alert("Please complete the reCAPTCHA");
             }
         };
 
@@ -150,36 +150,27 @@
             }
         };
         
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault(); 
-});
+        // Prevent right-click and certain keyboard shortcuts
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
 
-
-document.addEventListener('keydown', function(e) {
-    
-    if (e.ctrlKey || e.metaKey) {
-        if (
-            e.key === 'i' ||  
-            e.key === 'u' ||  
-            e.key === 'j' ||  
-            e.key === 'c' ||  
-            e.key === 's' ||  
-            e.key === 'k' ||  
-            e.key === 'h' ||  
-            e.key === 'd' ||  
-            e.key === 'r' ||  
-            e.key === 'p' ||  
-            e.key === 'f' ||  
-            e.key === 'q' ||  
-            e.key === 'F12'   
-        ) {
-            e.preventDefault();  
-            return false;
-        }
-    }
-});
-
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (
+                    e.key === 'i' || e.key === 'u' || e.key === 'j' || 
+                    e.key === 'c' || e.key === 's' || e.key === 'k' || 
+                    e.key === 'h' || e.key === 'd' || e.key === 'r' || 
+                    e.key === 'p' || e.key === 'f' || e.key === 'q' || 
+                    e.key === 'F12'
+                ) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
     </script>
 </body>
 </html>
+
 <?php require __DIR__ . '/partials/footer.php'; ?>
