@@ -259,12 +259,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 .text-muted {
     font-size: 12px;
 }
-
+.field {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
     </style>
 </head>
 <link rel="stylesheet" href="../assets/css/alertify.min.css" />
 <link rel="stylesheet" href="../assets/css/alertify.bootstraptheme.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/ms.css">
 <body style="background-image: url('assets/img/image-22.png'); background-size: cover; background-position: center; background-attachment: fixed;">
     <div class="container">
@@ -327,14 +350,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="label">User Name</div>
                 <input type="email" name="username" class="email" id="username" placeholder="Enter Email" required />
             </div>
-            <div class="field">
-    <div class="label">Password</div>
-    <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required />
-</div>
+             <div class="field">
+        <div class="label">Password</div>
+        <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required />
+        <span id="show-pass" class="toggle-password">
+            <i class="fas fa-eye" id="toggle-icon-password"></i>  
+        </span>
+    </div>
 <div class="field">
-    <div class="label">Confirm Password</div>
-    <input type="password" name="cpassword" id="confirmPasswordInput" placeholder="Enter Password" required />
-</div>
+        <div class="label">Confirm Password</div>
+        <input type="password" name="cpassword" id="confirmPasswordInput" placeholder="Confirm Password" required />
+        <span id="show-pass-confirm" class="toggle-password">
+            <i class="fas fa-eye" id="toggle-icon-confirm"></i>  
+        </span>
+    </div>
 
 <div id="password-strength" class="d-none">
     <p class="text-muted" id="strength-text"></p>
@@ -362,7 +391,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="assets/js/show-hide-password.js"></script>
     <!-- SweetAlert 2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+        
+        function togglePasswordVisibility(passwordFieldId, iconId) {
+            const passwordField = document.getElementById(passwordFieldId);
+            const toggleIcon = document.getElementById(iconId);
+            
+            if (passwordField.type === "password") {
+                passwordField.type = "text"; 
+                toggleIcon.classList.remove("fa-eye"); 
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";  
+                toggleIcon.classList.remove("fa-eye-slash");  
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
 
+        
+        document.getElementById("show-pass").addEventListener("click", function() {
+            togglePasswordVisibility("passwordInput", "toggle-icon-password");
+        });
+
+        
+        document.getElementById("show-pass-confirm").addEventListener("click", function() {
+            togglePasswordVisibility("confirmPasswordInput", "toggle-icon-confirm");
+        });
+    </script>
     <script>
         
 function validateEmailDomain() {
