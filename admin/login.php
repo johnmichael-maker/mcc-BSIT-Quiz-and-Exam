@@ -27,7 +27,15 @@
             html {
                 scroll-behavior: smooth;
             }
-          .g-recaptcha {
+          .toggle-password {
+                cursor: pointer;
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+    /* Make the reCAPTCHA widget responsive */
+    .g-recaptcha {
         transform: scale(0.9);
         transform-origin: 0 0; 
         width: 100% !important;  
