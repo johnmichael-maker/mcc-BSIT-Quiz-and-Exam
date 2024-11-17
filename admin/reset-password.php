@@ -1,4 +1,3 @@
-
 <?php require __DIR__ . '/./partials/header.php'; ?>
 
 <div class="h-100-vh d-flex align-items-center justify-content-center" style="background-image: url('../assets/img/image-22.png'); background-size: cover; background-position: center; background-attachment: fixed;">
@@ -33,12 +32,12 @@
                     </div>
                     <p class="errors d-none alert alert-danger py-1"></p>
                     <div id="password-strength" class="d-none">
-    <p class="text-muted" id="strength-text"></p>
-    <div class="progress" style="height: 5px;">
-        <div id="strength-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-</div>
-<p class="errors d-none alert alert-danger py-1"></p>
+                        <p class="text-muted" id="strength-text"></p>
+                        <div class="progress" style="height: 5px;">
+                            <div id="strength-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <p class="errors d-none alert alert-danger py-1"></p>
 
                     <!-- Confirm Password Field -->
                     <label for="confirm">Confirm Password</label>
@@ -49,7 +48,7 @@
                     <p class="errors d-none alert alert-danger py-1"></p>
 
                     <!-- Submit Button -->
-                    <button type="submit" name="button" class="w-100 btn mt-3 mb-2" style="background-color: #EF0107; color:white;">Submit</button>
+                    <button type="submit" name="button" class="w-100 btn mt-3 mb-2" id="submit-btn" style="background-color: #EF0107; color:white;" disabled>Submit</button>
 
                     <!-- Loading Spinner -->
                     <div class="text-center d-none" id="loading-signup">
@@ -64,7 +63,7 @@
 </div>
 
 <script>
-    // Regular expression for password strength validation
+// Regular expression for password strength validation
 const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!$%^&*()_+={}\[\]:;,.?/~<>|\\/-])[A-Za-z\d!$%^&*()_+={}\[\]:;,.?/~<>|\\/-]{8,}$/;
 
 document.getElementById('new_pass').addEventListener('input', function() {
@@ -72,6 +71,7 @@ document.getElementById('new_pass').addEventListener('input', function() {
     const strengthText = document.getElementById('strength-text');
     const strengthBar = document.getElementById('strength-bar');
     const strengthIndicator = document.getElementById('password-strength');
+    const submitBtn = document.getElementById('submit-btn');
     
     // Show password strength indicator
     strengthIndicator.classList.remove('d-none');
@@ -86,6 +86,13 @@ document.getElementById('new_pass').addEventListener('input', function() {
 
     // Update the strength text
     strengthText.textContent = strength.message;
+
+    // Enable the submit button only if the password is strong
+    if (strength.percentage === 100) {
+        submitBtn.disabled = false; // Enable Submit button when password is strong
+    } else {
+        submitBtn.disabled = true; // Disable Submit button when password is not strong
+    }
 });
 
 // Function to check password strength
@@ -109,7 +116,7 @@ const checkPasswordStrength = (password) => {
     return strength;
 };
 
-    // Sanitize input to prevent XSS (Cross-Site Scripting) attacks
+// Sanitize input to prevent XSS (Cross-Site Scripting) attacks
 const sanitizeInput = (input) => {
     return input.replace(/<[^>]*>/g, ''); // Remove HTML tags (including script tags)
 };
@@ -173,102 +180,102 @@ resetPasswordForm.onsubmit = async (e) => {
     }
 };
 
-    // Function to validate the form fields
-    const validateFields = (email, verification, new_pass, confirm, errors) => {
-        let isValid = true;
+// Function to validate the form fields
+const validateFields = (email, verification, new_pass, confirm, errors) => {
+    let isValid = true;
 
-        // Clear previous error messages
-        errors.forEach(error => hideError(error));
+    // Clear previous error messages
+    errors.forEach(error => hideError(error));
 
-        // Validate email field
-        if (!email) {
-            showError(errors[0], "Please fill in your email.");
-            isValid = false;
-        }
+    // Validate email field
+    if (!email) {
+        showError(errors[0], "Please fill in your email.");
+        isValid = false;
+    }
 
-        // Validate verification code field
-        if (!verification) {
-            showError(errors[1], "Please fill in your verification code.");
-            isValid = false;
-        }
+    // Validate verification code field
+    if (!verification) {
+        showError(errors[1], "Please fill in your verification code.");
+        isValid = false;
+    }
 
-        // Validate password field
-        if (!new_pass) {
-            showError(errors[2], "Please fill in a new password.");
-            isValid = false;
-        } else if (new_pass !== confirm) {
-            showError(errors[2], "Passwords do not match.");
-            isValid = false;
-        }
+    // Validate password field
+    if (!new_pass) {
+        showError(errors[2], "Please fill in a new password.");
+        isValid = false;
+    } else if (new_pass !== confirm) {
+        showError(errors[2], "Passwords do not match.");
+        isValid = false;
+    }
 
-        // Validate confirm password field
-        if (!confirm) {
-            showError(errors[3], "Please confirm your new password.");
-            isValid = false;
-        }
+    // Validate confirm password field
+    if (!confirm) {
+        showError(errors[3], "Please confirm your new password.");
+        isValid = false;
+    }
 
-        return isValid;
-    };
+    return isValid;
+};
 
-    // Function to show an error message
-    const showError = (errorElement, message) => {
-        errorElement.classList.remove("d-none");
-        errorElement.innerHTML = message;
-    };
+// Function to show an error message
+const showError = (errorElement, message) => {
+    errorElement.classList.remove("d-none");
+    errorElement.innerHTML = message;
+};
 
-    // Function to hide an error message
-    const hideError = (errorElement) => {
-        errorElement.classList.add("d-none");
-    };
+// Function to hide an error message
+const hideError = (errorElement) => {
+    errorElement.classList.add("d-none");
+};
 
-    // Function to handle server response
-    const handleServerResponse = (response) => {
-        const alertSuccess = document.getElementById("alert-success");
-        const alertError = document.getElementById("alert-error");
+// Function to handle server response
+const handleServerResponse = (response) => {
+    const alertSuccess = document.getElementById("alert-success");
+    const alertError = document.getElementById("alert-error");
 
-        // Handle response from the server
-        if (response === "success") {
-            alertSuccess.classList.remove("d-none");
-            setTimeout(() => {
-                window.location.href = "login.php";
-            }, 3000);
-        } else {
-            alertError.classList.remove("d-none");
-            alertError.textContent = getErrorMessage(response);
-        }
-    };
+    // Handle response from the server
+    if (response === "success") {
+        alertSuccess.classList.remove("d-none");
+        setTimeout(() => {
+            window.location.href = "login.php";
+        }, 3000);
+    } else {
+        alertError.classList.remove("d-none");
+        alertError.textContent = getErrorMessage(response);
+    }
+};
 
-    // Function to map server response to error messages
-    const getErrorMessage = (responseCode) => {
-        switch (responseCode) {
-            case 'error':
-                return "Error: Account doesn't exist.";
-            case 'error_confirm':
-                return "Error: Passwords don't match.";
-            case 'error_verification':
-                return "Error: Incorrect verification code.";
-            default:
-                return "An unexpected error occurred.";
-        }
-    };
+// Function to map server response to error messages
+const getErrorMessage = (responseCode) => {
+    switch (responseCode) {
+        case 'error':
+            return "Error: Account doesn't exist.";
+        case 'error_confirm':
+            return "Error: Passwords don't match.";
+        case 'error_verification':
+            return "Error: Incorrect verification code.";
+        default:
+            return "An unexpected error occurred.";
+    }
+};
 
-    // Toggle password visibility
-    document.getElementById('show-pass1').onclick = () => togglePasswordVisibility('new_pass', 'show-pass1');
-    document.getElementById('show-pass2').onclick = () => togglePasswordVisibility('confirm', 'show-pass2');
+// Toggle password visibility
+document.getElementById('show-pass1').onclick = () => togglePasswordVisibility('new_pass', 'show-pass1');
+document.getElementById('show-pass2').onclick = () => togglePasswordVisibility('confirm', 'show-pass2');
 
-    // Function to toggle password visibility
-    const togglePasswordVisibility = (inputName, iconId) => {
-        const input = document.forms['reset-pass'][inputName];
-        const icon = document.getElementById(iconId);
+// Function to toggle password visibility
+const togglePasswordVisibility = (inputName, iconId) => {
+    const input = document.forms['reset-pass'][inputName];
+    const icon = document.getElementById(iconId);
 
-        if (input.getAttribute('type') === 'password') {
-            icon.classList.replace('bx-show', 'bx-low-vision');
-            input.setAttribute('type', 'text');
-        } else {
-            icon.classList.replace('bx-low-vision', 'bx-show');
-            input.setAttribute('type', 'password');
-        }
-    };
+    if (input.getAttribute('type') === 'password') {
+        icon.classList.replace('bx-show', 'bx-low-vision');
+        input.setAttribute('type', 'text');
+    } else {
+        icon.classList.replace('bx-low-vision', 'bx-show');
+        input.setAttribute('type', 'password');
+    }
+};
 </script>
 
 <?php require __DIR__ . '/./partials/footer.php'; ?>
