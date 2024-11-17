@@ -178,7 +178,7 @@ button:hover {
     grid-gap :7rem;
     padding: 0 2rem;
     display: flex;
-    min-height: 100vh;
+    min-height: 90vh;
     z-index: 0;
     background: rgba(99, 194, 110, 0.1);
    
