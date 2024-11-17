@@ -169,6 +169,7 @@ button:hover {
 
 /*-- //wrapper start --*/
 
+
 /*-- form styling --*/
 .w3l-mockup-form {
     width: 100vw;
@@ -178,7 +179,6 @@ button:hover {
     grid-gap :7rem;
     padding: 0 2rem;
     display: flex;
-    position: relative;
     min-height: 100vh;
     z-index: 0;
     background: rgba(99, 194, 110, 0.1);
@@ -186,7 +186,8 @@ button:hover {
 }
 
 .container {
-    max-width: 890px;
+    height: 200px;
+    width: 1000px;
     margin: 0 auto;
 }
 
