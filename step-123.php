@@ -5,48 +5,44 @@ $servername = "localhost";
 $username = "u510162695_bsit_quiz";
 $password = "1Bsit_quiz";
 $dbname = "u510162695_bsit_quiz";
-
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check the connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Initialize variables for success and error messages
 $successMessage = '';
 $errorMessage = '';
 
-// Function to generate a random verification string
 function generateVerificationCode($length = 20) {
-    return bin2hex(random_bytes($length / 2)); // Generates a random string of specified length
+    return bin2hex(random_bytes($length / 2));
 }
 
-// Function to validate form inputs
 function validateFormInput($input) {
     return trim(htmlspecialchars($input));
 }
 
-// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Collect and validate form data
+
+   
     $firstName = validateFormInput($_POST['firstName']);
     $middleName = validateFormInput($_POST['middleName']);
     $lastName = validateFormInput($_POST['lastName']);
     $email = validateFormInput($_POST['email']);
-    $phone = validateFormInput($_POST['phone']);
+    $phone = validateFormInput($_POST['phone']);  
     $address = validateFormInput($_POST['address']);
     $username = validateFormInput($_POST['username']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
 
-    // Generate a random verification code
     $verification = generateVerificationCode();
 
-    // Validate email
+   
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errorMessage = "Invalid email address.";
     } else {
-        // Check if username or email already exists in the admin table
+
+        
         if ($stmt = $conn->prepare("SELECT admin_id FROM admin WHERE email = ? OR username = ?")) {
             $stmt->bind_param('ss', $email, $username);
             $stmt->execute();
@@ -55,35 +51,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->num_rows > 0) {
                 $errorMessage = "An account with this email or username already exists.";
             } else {
-                // Start a transaction to ensure both inserts happen
+
+               
                 $conn->begin_transaction();
                 try {
-                    // Insert into instructors table
-                    if ($stmt = $conn->prepare("INSERT INTO instructors (first_name, middle_name, last_name, email, phone, address) VALUES (?, ?, ?, ?, ?, ?)")) {
-                        $stmt->bind_param('ssssss', $firstName, $middleName, $lastName, $email, $phone, $address);
+
+                    
+                    $img = '../assets/img/logo.png'; 
+                    $userType = 2;  
+
+                    
+                    if ($stmt = $conn->prepare("INSERT INTO admin (username, img, email, firstName, middleName, lastName, phone, address, password, verification, userType, created_at) 
+                                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())")) {
+                        
+                        $stmt->bind_param('sssssssssss', $username, $img, $email, $firstName, $middleName, $lastName, $phone, $address, $password, $verification, $userType);
                         $stmt->execute();
                     } else {
-                        throw new Exception($conn->error);
+                        throw new Exception($conn->error); 
                     }
 
-                    // Insert into admin table with userType = 2 (Instructor)
-                    $img = '../assets/img/logo.png'; // Default image
-                    $userType = 2; // Set userType for instructor
-                    if ($stmt = $conn->prepare("INSERT INTO admin (username, img, email, password, verification, userType, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())")) {
-                        $stmt->bind_param('sssssi', $username, $img, $email, $password, $verification, $userType);
-                        $stmt->execute();
-                    } else {
-                        throw new Exception($conn->error);
-                    }
-
-                    // Commit the transaction
+                    
                     $conn->commit();
                     $successMessage = "Registration successful!";
                 } catch (Exception $e) {
-                    // Rollback transaction in case of error
+                    
                     $conn->rollback();
-                    error_log($e->getMessage(), 3, 'errors.log'); // Log error to a file
-                    $errorMessage = "An error occurred during registration. Please try again.";
+                    error_log($e->getMessage(), 3, 'errors.log'); 
+                    $errorMessage = "An error occurred during registration. Please try again. Error: " . $e->getMessage();
                 }
             }
         } else {
