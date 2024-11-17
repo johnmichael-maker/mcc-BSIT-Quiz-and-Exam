@@ -186,7 +186,7 @@ button:hover {
 
 .container {
     max-width: 890px; /* Set a max width for the form */
-    margin: -30px auto 0; /* Horizontally center */
+    margin: -50px auto 0; /* Horizontally center */
     padding: 20px; /* Add some padding around the form */
     width: 100%; /* Ensure the container takes full width within max-width */
 }
