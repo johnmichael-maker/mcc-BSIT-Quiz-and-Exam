@@ -250,6 +250,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-check-label a{
             text-decoration: none;
         }
+        #password-strength {
+    margin-top: 10px;
+}
+
+#strength-bar {
+    transition: width 0.3s ease;
+}
+
+.d-none {
+    display: none;
+}
+
+.text-muted {
+    font-size: 12px;
+}
+
     </style>
 </head>
 <link rel="stylesheet" href="../assets/css/alertify.min.css" />
@@ -290,13 +306,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="page">
             <div class="title">Contact Info:</div>
             <div class="field">
-                <div class="label">Email</div>
-                <input type="email" name="email" id="email" placeholder="MS 365 Email" required />
-            </div>
+    <div class="label">Email</div>
+    <input type="email" name="email" id="email" placeholder="MS 365 Email" required />
+    <span id="email-error" style="color: red; display: none; font-size: 12px;">Invalid email format. Please use a valid email from mcclawis.edu.ph domain.</span>
+</div>
+
             <div class="field">
                 <div class="label">Phone No.</div>
                 <input type="tel" id="phone" name="phone" maxlength="11" placeholder="Enter Phone Number" required pattern="09\d{9}" />
-                <div id="warning_message" style="display: none;">Invalid phone number. It should start with 09 and contain 11 digits.</div>
+                <div id="warning_message" style="display: none; margin-top:5px;">Invalid phone number. It should start with 09 and contain 11 digits.</div>
             </div>
             <div class="field">
                 <div class="label">Address</div>
@@ -313,16 +331,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="title">Login Details:</div>
             <div class="field">
                 <div class="label">User Name</div>
-                <input type="email" name="username" id="username" placeholder="Enter Email" required />
+                <input type="email" name="username" class="email" id="username" placeholder="Enter Email" required />
             </div>
             <div class="field">
-                <div class="label">Password</div>
-                <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required />
-            </div>
-            <div class="field">
-                <div class="label">Confirm Password</div>
-                <input type="password" name="cpassword" id="confirmPasswordInput" placeholder="Enter Password" required />
-            </div>
+    <div class="label">Password</div>
+    <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required />
+</div>
+<div class="field">
+    <div class="label">Confirm Password</div>
+    <input type="password" name="cpassword" id="confirmPasswordInput" placeholder="Enter Password" required />
+</div>
+
+<div id="password-strength" class="d-none">
+    <p class="text-muted" id="strength-text"></p>
+    <div class="progress" style="height: 5px;">
+        <div id="strength-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+</div>
+
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
                 <label class="form-check-label" for="exampleCheck1">I agree to the <a href="#" target="_blank">Terms and Conditions</a></label>
@@ -344,30 +370,132 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        
+function validateEmailDomain() {
+    const emailInput = document.getElementById("email");
+    const email = emailInput.value;
+    const errorSpan = document.getElementById("email-error");
+
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@mcclawis\.edu\.ph$/;
+
+    
+    if (emailPattern.test(email)) {
+        
+        errorSpan.style.display = "none";
+        return true;
+    } else {
+        
+        errorSpan.style.display = "block";
+        return false;
+    }
+}
+
+
+document.getElementById("email").addEventListener("input", validateEmailDomain);
+
+
+        
+function checkPasswordStrength(password) {
+    let strength = 0;
+
+    
+    const patterns = [
+        /[a-z]/,  
+        /[A-Z]/,  
+        /[0-9]/,  
+        /[^A-Za-z0-9]/,  
+    ];
+
+    
+    patterns.forEach(pattern => {
+        if (pattern.test(password)) {
+            strength += 25;
+        }
+    });
+
+    
+    if (password.length >= 8) {
+        strength += 10;
+    }
+
+    return strength;
+}
+
+
+function updatePasswordStrength(password) {
+    const strength = checkPasswordStrength(password);
+    const strengthText = document.getElementById("strength-text");
+    const strengthBar = document.getElementById("strength-bar");
+    const passwordStrengthDiv = document.getElementById("password-strength");
+
+    
+    if (password.length > 0) {
+        passwordStrengthDiv.classList.remove("d-none");
+    } else {
+        passwordStrengthDiv.classList.add("d-none");
+        return;
+    }
+
+    
+    strengthBar.style.width = `${strength}%`;
+    strengthBar.setAttribute("aria-valuenow", strength);
+
+
+    if (strength < 30) {
+        strengthText.textContent = "Weak Password";
+        strengthBar.classList.remove("bg-success", "bg-warning", "bg-danger");
+        strengthBar.classList.add("bg-danger");
+    } else if (strength < 60) {
+        strengthText.textContent = "Moderate Password";
+        strengthBar.classList.remove("bg-success", "bg-danger", "bg-warning");
+        strengthBar.classList.add("bg-warning");
+    } else {
+        strengthText.textContent = "Strong Password";
+        strengthBar.classList.remove("bg-warning", "bg-danger", "bg-success");
+        strengthBar.classList.add("bg-success");
+    }
+}
+
+document.getElementById("passwordInput").addEventListener("input", function() {
+    const password = this.value;
+    updatePasswordStrength(password);
+});
+
+
+document.getElementById("confirmPasswordInput").addEventListener("input", function() {
+    const password = document.getElementById("passwordInput").value;
+    const confirmPassword = this.value;
+    if (confirmPassword && confirmPassword !== password) {
+        this.setCustomValidity("Passwords do not match");
+    } else {
+        this.setCustomValidity("");
+    }
+});
+
     
     function sanitizeInput(value) {
         
-        const sanitizedValue = value.replace(/<script.*?>.*?<\/script>/gi, "")  // Remove script tags
-                                    .replace(/<.*?>/g, "")  // Remove any other HTML tags
-                                    .replace(/[\x00-\x1F\x7F-\x9F]/g, ""); // Remove non-printable characters
+        const sanitizedValue = value.replace(/<script.*?>.*?<\/script>/gi, "")  
+                                    .replace(/<.*?>/g, "")  
+                                    .replace(/[\x00-\x1F\x7F-\x9F]/g, ""); 
         return sanitizedValue;
     }
 
-    // Function to validate all inputs and block malicious content
+    
     function validateInputs() {
         const inputs = document.querySelectorAll("input");
         let isValid = true;
 
-        // Loop through each input and check the value
         inputs.forEach(function(input) {
             let value = input.value.trim();
-            value = sanitizeInput(value);  // Sanitize input to remove dangerous content
-            input.value = value;  // Update the input field with sanitized value
+            value = sanitizeInput(value);  
+            input.value = value;  
 
-            // Validate against certain patterns (you can extend this as needed)
+            
             if (input.name === "firstName" || input.name === "middleName" || input.name === "lastName") {
                 if (!/^[a-zA-Z\s]+$/.test(value)) {
-                    // SweetAlert2 for invalid name input
+                   
                     Swal.fire({
                         icon: 'error',
                         title: 'Invalid name entered',
@@ -377,7 +505,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
             if (input.name === "email") {
-                // Basic email validation
+        
                 if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
                     Swal.fire({
                         icon: 'error',
@@ -388,7 +516,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
             if (input.name === "phone") {
-                // Phone validation for numbers starting with 09 and exactly 11 digits
+             
                 if (!/^09\d{9}$/.test(value)) {
                     Swal.fire({
                         icon: 'error',
@@ -403,10 +531,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return isValid;
     }
 
-    // Attach a submit event to the form for validation
+    
     document.getElementById("registrationForm").addEventListener("submit", function(e) {
         if (!validateInputs()) {
-            e.preventDefault();  // Prevent form submission if inputs are invalid
+            e.preventDefault();
         }
     });
 
@@ -419,7 +547,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 text: '<?php echo $successMessage; ?>',
                 icon: 'success'
             }).then(function() {
-                // Redirect to the login page after the success message is closed
+            
                 window.location.href = './admin/login.php';
             });
         <?php } elseif (!empty($errorMessage)) { ?>
@@ -432,7 +560,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 </script>
     <script>
-        // Step Navigation
+        
         const slidePage = document.querySelector(".slide-page");
 
 const nextBtnFirst = document.querySelector(".firstNext");
@@ -442,12 +570,12 @@ const prevBtnThird = document.querySelector(".prev-2");
 const confirmSignupBtn = document.querySelector("#confirmSignupBtn");
 
 
-        // Regular expressions for validation
+        
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        const phonePattern = /^09\d{9}$/; // 11 digits starting with 09
-        const addressPattern = /^[a-zA-Z\s]+,\s[a-zA-Z\s]+,\s[a-zA-Z\s]+$/; // Basic address format (Brgy, Municipality, Province)
+        const phonePattern = /^09\d{9}$/; 
+        const addressPattern = /^[a-zA-Z\s]+,\s[a-zA-Z\s]+,\s[a-zA-Z\s]+$/; 
 
-        // Step 1 Validation (Personal Details)
+        
         nextBtnFirst.addEventListener("click", function () {
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
@@ -464,7 +592,7 @@ const confirmSignupBtn = document.querySelector("#confirmSignupBtn");
             }
         });
 
-        // Step 2 Validation (Contact Info)
+    
         nextBtnSec.addEventListener("click", function () {
             const phone = document.getElementById('phone').value;
             const address = document.getElementById('address').value;
@@ -484,16 +612,15 @@ const confirmSignupBtn = document.querySelector("#confirmSignupBtn");
         });
 
         prevBtnSec.addEventListener("click", function () {
-        slidePage.style.marginLeft = "0%"; // Slide back to the first page
+        slidePage.style.marginLeft = "0%"; 
     });
 
-    // Go back from step 3 to step 2
     prevBtnThird.addEventListener("click", function () {
-        slidePage.style.marginLeft = "-25%"; // Slide back to the second page
+        slidePage.style.marginLeft = "-25%"; 
     });
 
 
-        // Step 3 Validation (Login Details)
+        
         nextBtnThird.addEventListener("click", function () {
             const password = document.getElementById('passwordInput').value;
             const confirmPassword = document.getElementById('confirmPasswordInput').value;
@@ -516,13 +643,11 @@ const confirmSignupBtn = document.querySelector("#confirmSignupBtn");
         });
 
 
-        
-        // Final form submit validation
         document.getElementById('registrationForm').addEventListener('submit', function (e) {
             const password = document.getElementById('passwordInput').value;
             const confirmPassword = document.getElementById('confirmPasswordInput').value;
 
-            // Password match and strength check
+            
             if (password !== confirmPassword) {
                 e.preventDefault();
                 Swal.fire({
@@ -543,7 +668,7 @@ const confirmSignupBtn = document.querySelector("#confirmSignupBtn");
                 return;
             }
 
-            // Success message
+            
             Swal.fire({
                 icon: 'success',
                 title: 'Registration Complete',
@@ -551,12 +676,14 @@ const confirmSignupBtn = document.querySelector("#confirmSignupBtn");
             });
         });
         
-        // Validate Phone Number input (allow only numbers)
+        
         document.getElementById('phone').addEventListener('input', function () {
             this.value = this.value.replace(/\D/g, '');
         });
     </script>
 </body>
 </html>
+
+    
 
     
