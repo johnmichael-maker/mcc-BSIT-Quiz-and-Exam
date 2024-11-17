@@ -2,17 +2,12 @@ html {
     scroll-behavior: smooth;
 }
 
-html, body {
+body,
+html {
     margin: 0;
     padding: 0;
-    height: 100%;
     font-family: 'Poppins', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
 }
-
 
 .wave{
     position: fixed;
@@ -174,25 +169,23 @@ button:hover {
 
 /*-- //wrapper start --*/
 
-
 /*-- form styling --*/
 .w3l-mockup-form {
     width: 100vw;
     height: 100vh;
    
     grid-template-columns: repeat(2, 1fr);
-    grid-gap :10rem;
+    grid-gap :7rem;
     padding: 0 2rem;
-    display: flex;
+    position: relative;
     min-height: 100vh;
     z-index: 0;
     background: rgba(99, 194, 110, 0.1);
-    
+    padding: 40px 40px;
 }
 
 .container {
-    height: 200px;
-    width: 1000px;
+    max-width: 890px;
     margin: 0 auto;
 }
 
