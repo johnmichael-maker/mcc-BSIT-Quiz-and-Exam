@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Admin | Access of mccbistquiandexam</title>
-    
+
     <!-- Include Google Fonts and Font Awesome (for spinner) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Add Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
         /* Global Styling */
@@ -85,22 +85,22 @@
         }
 
         /* Buttons */
-         .btn {
-    background-color: #F40009;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 106%;
-    transition: background-color 0.3s, transform 0.2s;
-}
+        .btn {
+            background-color: #F40009;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 106%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
 
-.btn:hover {
-    background-color:darkred;
-    transform: scale(1.05); /* Adds a slight zoom effect */
-}
+        .btn:hover {
+            background-color: darkred;
+            transform: scale(1.05); /* Adds a slight zoom effect */
+        }
 
         /* Message Area */
         .help-block {
@@ -145,13 +145,53 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .lockscreen-wrapper {
+                padding-top: 50px;
+            }
+
+            .verification-input {
+                width: 40px;
+                font-size: 20px;
+                padding: 8px;
+            }
+
+            .verification-table {
+                width: 100%;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lockscreen-wrapper {
+                padding-top: 80px;
+            }
+
+            .verification-input {
+                width: 45px;
+                font-size: 22px;
+                padding: 9px;
+            }
+
+            .btn {
+                font-size: 15px;
+                padding: 9px 18px;
+            }
+        }
+
     </style>
 </head>
 <body class="hold-transition lockscreen">
 
     <div class="lockscreen-wrapper">
         <div class="lockscreen-logo">
-             <a style="color: #f4f6f9;"><b>Admin</b> Access Control</a>
+            <a style="color: #f4f6f9;"><b>Admin</b> Access Control</a>
         </div>
         <div class="lockscreen-name">
             BSIT QUIZ AND EXAM
@@ -168,7 +208,7 @@
 
                 <!-- Code Form (Table format) -->
                 <form id="code-form" style="display: none;">
-                    <table class="verification-table">
+                    <table class="verification-table" style="width: 100%; table-layout: fixed; margin: 0 auto;">
                         <tr>
                             <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
                             <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
@@ -188,7 +228,6 @@
         <div class="lockscreen-footer text-center">
             Copyright &copy; 2024-2025 <b><a href="" class="text-black"></a>Madridejos Community College</b><br>
             created by John Michaelle Robles
-          
         </div>
     </div>
 
