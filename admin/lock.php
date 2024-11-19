@@ -44,4 +44,4 @@ if (isset($_POST['email'])) {
 
 // Close connection
 $conn->close();
-?>
+?>  
