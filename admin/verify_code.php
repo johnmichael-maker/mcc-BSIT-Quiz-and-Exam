@@ -1,17 +1,12 @@
 <?php
+// Database connection
+$conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mcc_bsit_quiz_and_exam";
-
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+
 // Check if code and email are provided
 if (isset($_POST['code']) && isset($_POST['email'])) {
     $code = $_POST['code'];
