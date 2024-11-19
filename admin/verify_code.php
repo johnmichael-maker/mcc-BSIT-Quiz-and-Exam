@@ -40,4 +40,4 @@ if (isset($_POST['code']) && isset($_POST['email'])) {
 
 // Close the connection
 $conn->close();
-?>
+?>  
