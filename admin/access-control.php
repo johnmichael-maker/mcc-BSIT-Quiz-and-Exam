@@ -151,7 +151,7 @@
 
     <div class="lockscreen-wrapper">
         <div class="lockscreen-logo">
-            <a href="#"><b>Admin</b> Access Control</a>
+             <a style="color: #f4f6f9;"><b>Admin</b> Access Control</a>
         </div>
         <div class="lockscreen-name">
             BSIT QUIZ AND EXAM
