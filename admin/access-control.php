@@ -85,20 +85,22 @@
         }
 
         /* Buttons */
-        .btn {
-            background-color: #3c8dbc;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
+         .btn {
+    background-color: #F40009;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 106%;
+    transition: background-color 0.3s, transform 0.2s;
+}
 
-        .btn:hover {
-            background-color: #367fa9;
-        }
+.btn:hover {
+    background-color:darkred;
+    transform: scale(1.05); /* Adds a slight zoom effect */
+}
 
         /* Message Area */
         .help-block {
