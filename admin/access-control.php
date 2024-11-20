@@ -21,29 +21,7 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
-input[type="email"] {
-    border: 1px solid #ddd; /* Default border color */
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 4px;
-    transition: border-color 0.3s ease; /* Smooth transition for border color change */
-}
 
-/* When the email input is focused */
-input[type="email"]:focus {
-    border-color: #3c8dbc; /* Change border color to blue when focused */
-    box-shadow: 0 0 5px rgba(60, 141, 188, 0.5); /* Optional: Add a subtle glow effect */
-}
-
-/* On valid input, the border will turn green */
-input[type="email"]:valid {
-    border-color: #28a745; /* Green border on valid email */
-}
-
-/* On invalid input, the border will turn red */
-input[type="email"]:invalid {
-    border-color: #dc3545; /* Red border on invalid email */
-}
         .lockscreen-wrapper {
             width: 100%;
             max-width: 400px;
