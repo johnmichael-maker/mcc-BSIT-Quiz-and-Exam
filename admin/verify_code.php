@@ -1,8 +1,4 @@
 <?php
-// Start session to manage user data
-session_start();
-
-// Database connection
 $conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
 
 if ($conn->connect_error) {
@@ -12,9 +8,6 @@ if ($conn->connect_error) {
 if (isset($_POST['code']) && isset($_POST['email'])) {
     $code = $_POST['code'];
     $email = $_POST['email'];
-
-    // Sanitize email to prevent SQL injection
-    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
     // Check if email exists and if the code matches
     $query = "SELECT * FROM admin WHERE email = ?";
@@ -28,22 +21,13 @@ if (isset($_POST['code']) && isset($_POST['email'])) {
         // Compare the entered code with the stored verification code
         if ($user['verification'] == $code) {
             // Clear the verification code after successful verification
-            $updateQuery = "UPDATE admin SET verification = NULL, email_verified = 1 WHERE email = ?";
+            $updateQuery = "UPDATE admin SET verification = NULL WHERE email = ?";
             $updateStmt = $conn->prepare($updateQuery);
             $updateStmt->bind_param("s", $email); // Bind the email parameter
-            if ($updateStmt->execute()) {
-                // Set session to reflect email is verified
-                $_SESSION['email_verified'] = true;
+            $updateStmt->execute();
 
-                // Return success response and perform server-side redirect
-                echo json_encode([
-                    'success' => true,
-                    'message' => 'Verification successful. Redirecting...',
-                    'redirect' => 'login.php'
-                ]);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Error updating verification status.']);
-            }
+            // Return success response and perform redirect
+            echo json_encode(['success' => true, 'message' => 'Verification successful. Redirecting...', 'redirect' => 'login.php']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Invalid verification code.']);
         }
@@ -56,4 +40,4 @@ if (isset($_POST['code']) && isset($_POST['email'])) {
 
 // Close the connection
 $conn->close();
-?>
+?>  
