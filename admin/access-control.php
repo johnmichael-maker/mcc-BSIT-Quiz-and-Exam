@@ -5,13 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Admin | Access of mccbistquiandexam</title>
-      <link rel="icon" href="../assets/img/file.png">
+    <link rel="icon" href="../assets/img/file.png">
 
     <!-- Include Google Fonts and Font Awesome (for spinner) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <style>
         /* Global Styling */
@@ -66,21 +64,6 @@
         .form-control:focus {
             border-color: #3c8dbc;
             box-shadow: 0 0 5px rgba(60, 141, 188, 0.5);
-        }
-
-        .verification-input {
-            text-align: center;
-            width: 50px;
-            margin: 0 5px;
-            font-size: 24px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .verification-input:focus {
-            border-color: #3c8dbc;
-            outline: none;
         }
 
         /* Buttons */
@@ -151,36 +134,9 @@
                 padding-top: 50px;
             }
 
-            .verification-input {
-                width: 40px;
-                font-size: 20px;
-                padding: 8px;
-            }
-
-            .verification-table {
-                width: 100%;
-            }
-
             .btn {
                 font-size: 14px;
                 padding: 8px 16px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .lockscreen-wrapper {
-                padding-top: 80px;
-            }
-
-            .verification-input {
-                width: 45px;
-                font-size: 22px;
-                padding: 9px;
-            }
-
-            .btn {
-                font-size: 15px;
-                padding: 9px 18px;
             }
         }
 
@@ -217,11 +173,6 @@
                 <form id="email-form">
                     <div class="input-group" style="flex-direction: column; align-items: center;">
                         <input type="email" class="form-control" name="email" placeholder="Send Email for Verification Code" required>
-                        
-                        <!-- reCAPTCHA Widget -->
-                        <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
-
-                        <button type="submit" class="btn" style="margin-top: 10px;">Get</button>
                     </div>
                 </form>
 
@@ -248,18 +199,16 @@
             Copyright &copy; 2024 <b><a href="../index" class="text-black">Madridejos Community College</a></b><br>
             created by John Michaelle Robles
         </div>
-    </div>
+    </div>    
 
-    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-     <script>
+    <script>
     $(function () {
         // Handle email form submission
         $('#email-form').on('submit', function (e) {
             e.preventDefault();
 
             var email = $('input[name="email"]').val();
-            var recaptchaResponse = grecaptcha.getResponse();
 
             // Validate email format
             if (!validateEmail(email)) {
@@ -268,17 +217,11 @@
                 return;
             }
 
-            if (recaptchaResponse.length === 0) {
-                $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
-                speak("Please complete the reCAPTCHA."); // AI voice feedback
-                return;
-            }
-
             // AJAX call to verify email
             $.ajax({
                 url: 'lock.php',  // PHP script to handle email verification
                 method: 'POST',
-                data: { email: email, recaptcha_response: recaptchaResponse },
+                data: { email: email },
                 dataType: 'json',  // Expecting JSON response
                 beforeSend: function () {
                     $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
@@ -311,7 +254,7 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // Set up Speech Recognition for "authorize" command (as previously explained)
+        // Set up Speech Recognition for "authorize" command
         var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
         recognition.lang = 'en-US';
         recognition.continuous = false;
@@ -340,6 +283,6 @@
             speak("There was an error with voice recognition."); // AI voice feedback
         };
     });
-</script>
+    </script>
 </body>
 </html>
