@@ -215,7 +215,7 @@
                 <!-- Email Form -->
                 <form id="email-form">
                     <div class="input-group" style="flex-direction: column; align-items: center;">
-                        <input type="email" class="form-control" name="email" placeholder="Send Email for Verification code" required>
+                        <input type="email" class="form-control" name="email" placeholder="Send Email for Verification Code" required>
                         
                         <!-- reCAPTCHA Widget -->
                         <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
