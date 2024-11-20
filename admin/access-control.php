@@ -16,10 +16,7 @@
             background-color: #f4f6f9;
             font-family: 'Source Sans Pro', sans-serif;
             overflow-y: hidden;
-            background-image: url(../assets/img/image-22.png);
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+          
         }
 
         .lockscreen-wrapper {
@@ -190,10 +187,10 @@
 
     <div class="lockscreen-wrapper">
         <div class="lockscreen-logo">
-            <a style="color: #f4f6f9;"><b>Admin</b> Access Control</a>
+            <a style="color: #F40009; font-size:30px;"><b>Admin</b> Access Control</a>
         </div>
         <div class="lockscreen-name">
-            <b>BSIT QUIZ AND EXAM</b>
+           <b> BSIT QUIZ AND EXAM</b>
         </div>
         <div class="lockscreen-item">
             <div class="lockscreen-credentials">
@@ -225,7 +222,7 @@
             </div>
         </div>
         <div class="lockscreen-footer text-center">
-            Copyright &copy; 2024 <b><a href="#" class="text-black">Madridejos Community College</a></b><br>
+            Copyright &copy; 2024-2025 <b><a href="#" class="text-black">Madridejos Community College</a></b><br>
             created by John Michaelle Robles
         </div>
     </div>
