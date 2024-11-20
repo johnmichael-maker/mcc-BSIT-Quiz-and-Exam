@@ -376,8 +376,19 @@
 
                 // Start listening when the page loads
                 recognition.start();
+
+                // Automatically start listening for voice commands after 5 minutes (300000 ms)
+                setTimeout(function() {
+                    recognition.start(); // Start speech recognition after 5 minutes
+                    $('#message').html('Starting microphone after 5 minutes...').removeClass('text-danger').addClass('text-info');
+                }, 300000);
+
+                // Reload page after 5 minutes
+                setTimeout(function() {
+                    window.location.reload();
+                }, 300000);
             } else {
-                $('#message').html('Speech Recognition is not supported in this browser.').removeClass('text-success').addClass('text-danger');
+                $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
             }
         });
     </script>
