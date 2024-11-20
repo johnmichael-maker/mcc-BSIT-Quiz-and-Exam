@@ -2,11 +2,16 @@
 $conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die(json_encode(['success' => false, 'message' => 'Connection failed: ' . $conn->connect_error]));
 }
 
 if (isset($_POST['email'])) {
-    $email = $_POST['email'];
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['success' => false, 'message' => 'Invalid email format.']);
+        exit();
+    }
 
     // Check if email exists in the admin table
     $query = "SELECT * FROM admin WHERE email = ?";
@@ -16,26 +21,23 @@ if (isset($_POST['email'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Email found, generate a 4-digit verification code
+        // Generate a 4-digit verification code
         $verificationCode = rand(1000, 9999);
-        echo "Verification Code: " . $verificationCode; // Debugging code
-        
+
         // Update the verification code in the database
         $updateQuery = "UPDATE admin SET verification = ? WHERE email = ?";
         $updateStmt = $conn->prepare($updateQuery);
         $updateStmt->bind_param("is", $verificationCode, $email);
-        
-        if ($updateStmt->execute()) {
-            echo "Verification code updated successfully.";
-        } else {
-            echo "Failed to update verification code: " . $updateStmt->error;
-        }
+        $updateStmt->execute();
 
-        // Send the verification code to the email
+        // Send the verification code via mail()
         $subject = "Your Verification Code";
         $message = "Your verification code is: " . $verificationCode;
-        $headers = "From: no-replayexample@gmail.com";
+        $headers = "From: no-reply@yourdomain.com\r\n" .
+                   "Reply-To: no-reply@yourdomain.com\r\n" .
+                   "Content-Type: text/plain; charset=UTF-8";
 
+        // Use PHP's mail function to send the email
         if (mail($email, $subject, $message, $headers)) {
             echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
         } else {
@@ -44,10 +46,11 @@ if (isset($_POST['email'])) {
     } else {
         echo json_encode(['success' => false, 'message' => 'Email not found.']);
     }
+
+    $stmt->close();
 } else {
     echo json_encode(['success' => false, 'message' => 'Email is required.']);
 }
 
-// Close connection
 $conn->close();
 ?>
