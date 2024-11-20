@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Admin | Access of mccbistquiandexam</title>
-    <link rel="icon" href="../assets/img/file.png">
+      <link rel="icon" href="../assets/img/file.png">
 
     <!-- Include Google Fonts and Font Awesome (for spinner) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -14,7 +14,8 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <style>
-           body {
+        /* Global Styling */
+        body {
             background-color: #f4f6f9;
             font-family: 'Source Sans Pro', sans-serif;
             overflow-y: hidden;
@@ -219,6 +220,8 @@
                         
                         <!-- reCAPTCHA Widget -->
                         <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
+
+                        
                     </div>
                 </form>
 
@@ -271,10 +274,10 @@
 
                 // AJAX call to verify email
                 $.ajax({
-                    url: 'lock.php',
+                    url: 'lock.php',  // PHP script to handle email verification
                     method: 'POST',
                     data: { email: email, recaptcha_response: recaptchaResponse },
-                    dataType: 'json',
+                    dataType: 'json',  // Expecting JSON response
                     beforeSend: function () {
                         $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
                     },
@@ -303,7 +306,7 @@
                     code += $(this).val();
                 });
 
-                if (code.length !== 4) {
+                if (code.length !== 4) { // Ensure the code has 4 digits
                     $('#message').html('Please enter the full verification code.').removeClass('text-success').addClass('text-danger');
                     return;
                 }
@@ -312,7 +315,7 @@
 
                 // AJAX call to verify the code
                 $.ajax({
-                    url: 'verify_code.php',
+                    url: 'verify_code.php',  // PHP script that verifies the code
                     method: 'POST',
                     data: { email: email, code: code },
                     dataType: 'json',
@@ -335,8 +338,8 @@
                 });
             });
 
-            // Email validation function
-            function validateEmail(email) {
+           // Email validation function
+           function validateEmail(email) {
                 var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                 return re.test(email);
             }
