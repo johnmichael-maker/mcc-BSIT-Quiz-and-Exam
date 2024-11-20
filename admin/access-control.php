@@ -7,7 +7,6 @@
     <title>Admin | Access of mccbistquiandexam</title>
     <link rel="icon" href="../assets/img/file.png">
 
-    <!-- Include Google Fonts and Font Awesome (for spinner) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -64,6 +63,21 @@
         .form-control:focus {
             border-color: #3c8dbc;
             box-shadow: 0 0 5px rgba(60, 141, 188, 0.5);
+        }
+
+        .verification-input {
+            text-align: center;
+            width: 50px;
+            margin: 0 5px;
+            font-size: 24px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .verification-input:focus {
+            border-color: #3c8dbc;
+            outline: none;
         }
 
         /* Buttons */
@@ -134,9 +148,36 @@
                 padding-top: 50px;
             }
 
+            .verification-input {
+                width: 40px;
+                font-size: 20px;
+                padding: 8px;
+            }
+
+            .verification-table {
+                width: 100%;
+            }
+
             .btn {
                 font-size: 14px;
                 padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lockscreen-wrapper {
+                padding-top: 80px;
+            }
+
+            .verification-input {
+                width: 45px;
+                font-size: 22px;
+                padding: 9px;
+            }
+
+            .btn {
+                font-size: 15px;
+                padding: 9px 18px;
             }
         }
 
@@ -182,7 +223,6 @@
                     <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
                 </form>
 
-                <!-- Code Form (Table format) -->
                 <form id="code-form" style="display: none;">
                     <table class="verification-table" style="width: 100%; table-layout: fixed; margin: 0 auto;">
                         <tr>
@@ -220,14 +260,14 @@
             // Validate email format
             if (!validateEmail(email)) {
                 $('#message').html('Please enter a valid email address.').removeClass('text-success').addClass('text-danger');
-                speak("Please enter a valid email address."); // AI voice feedback
+                speak("Please enter a valid email address.");
                 return;
             }
 
             // Validate reCAPTCHA
             if (recaptchaResponse.length == 0) {
                 $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
-                speak("Please complete the reCAPTCHA."); // AI voice feedback
+                speak("Please complete the reCAPTCHA.");
                 return;
             }
 
@@ -266,6 +306,34 @@
             var utterance = new SpeechSynthesisUtterance(message);
             utterance.lang = 'en-US'; // Set language to English (US)
             window.speechSynthesis.speak(utterance);
+        }
+
+        // Voice Command Listener
+        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+            var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US'; // Set language for recognition
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            // Start listening when the page loads
+            recognition.start();
+
+            recognition.onresult = function (event) {
+                var command = event.results[0][0].transcript.toLowerCase();
+
+                // Check for the "send verification code" command
+                if (command.includes('send verification code')) {
+                    $('#email-form').submit();
+                    speak("Verification code is being sent.");
+                    console.log("Verification code triggered by voice command.");
+                }
+            };
+
+            recognition.onerror = function (event) {
+                console.log("Speech recognition error: " + event.error);
+            };
+        } else {
+            console.log("Speech recognition is not supported by this browser.");
         }
     });
     </script>
