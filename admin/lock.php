@@ -5,11 +5,24 @@ if ($conn->connect_error) {
     die(json_encode(['success' => false, 'message' => 'Connection failed: ' . $conn->connect_error]));
 }
 
-if (isset($_POST['email'])) {
+if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $recaptchaResponse = $_POST['recaptcha_response'];
 
+    // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode(['success' => false, 'message' => 'Invalid email format.']);
+        exit();
+    }
+
+    // Verify reCAPTCHA response
+    $recaptchaSecret = '6LcgCYQqAAAAAF2I3spmD66uqtH8tm7ionOFqxUf';  // Replace with your reCAPTCHA secret key
+    $recaptchaUrl = "https://www.google.com/recaptcha/api/siteverify";
+    $response = file_get_contents($recaptchaUrl . "?secret=" . $recaptchaSecret . "&response=" . $recaptchaResponse);
+    $responseKeys = json_decode($response, true);
+
+    if (intval($responseKeys["success"]) !== 1) {
+        echo json_encode(['success' => false, 'message' => 'reCAPTCHA verification failed.']);
         exit();
     }
 
@@ -30,7 +43,7 @@ if (isset($_POST['email'])) {
         $updateStmt->bind_param("is", $verificationCode, $email);
         $updateStmt->execute();
 
-        // Send the verification code via mail()
+        // Send the verification code via email
         $subject = "Your Verification Code";
         $message = "Your verification code is: " . $verificationCode;
         $headers = "From: no-reply@yourdomain.com\r\n" .
@@ -49,7 +62,7 @@ if (isset($_POST['email'])) {
 
     $stmt->close();
 } else {
-    echo json_encode(['success' => false, 'message' => 'Email is required.']);
+    echo json_encode(['success' => false, 'message' => 'Email and reCAPTCHA response are required.']);
 }
 
 $conn->close();
