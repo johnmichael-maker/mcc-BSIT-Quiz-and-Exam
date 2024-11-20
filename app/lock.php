@@ -1,5 +1,5 @@
 <?php
-
+namespace App;
 // Include PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -11,11 +11,6 @@ require __DIR__ . "/../vendor/phpmailer/phpmailer/src/SMTP.php";
 
 require '/../vendor/autoload.php';  // If you're using Composer. If not, include PHPMailer files manually.
 
-$conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
