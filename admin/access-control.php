@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <style>
         /* Global Styling */
         body {
             background-color: #f4f6f9;
             font-family: 'Source Sans Pro', sans-serif;
             overflow-y: hidden;
-          
         }
 
         .lockscreen-wrapper {
@@ -181,44 +182,40 @@
                 padding: 9px 18px;
             }
         }
-        
-input[type="email"] {
-    width: 100%;                   
-    padding: 12px 15px;             
-    font-size: 16px;              
-    border: 1px solid #ddd;        
-    border-radius: 5px;             
-    background-color: #fff;        
-    box-sizing: border-box;       
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
-}
-/* On focus: Change border color and add shadow */
-input[type="email"]:focus {
-    border-color: #3c8dbc;         
-    box-shadow: 0 0 8px rgba(60, 141, 188, 0.5); 
-    outline: none;                 
-}
 
+        input[type="email"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
 
-input[type="email"]:valid {
-    border-color: #28a745;          
-}
+        input[type="email"]:focus {
+            border-color: #3c8dbc;
+            box-shadow: 0 0 8px rgba(60, 141, 188, 0.5);
+            outline: none;
+        }
 
+        input[type="email"]:valid {
+            border-color: #28a745;
+        }
 
-input[type="email"]:invalid {
-    border-color: #dc3545;          
-}
+        input[type="email"]:invalid {
+            border-color: #dc3545;
+        }
 
+        input[type="email"]::placeholder {
+            color: #999;
+            font-style: italic;
+        }
 
-input[type="email"]::placeholder {
-    color: #999;                    
-    font-style: italic;          
-}
-
-
-input[type="email"]:hover {
-    border-color: #3c8dbc;         
-}
+        input[type="email"]:hover {
+            border-color: #3c8dbc;
+        }
     </style>
 </head>
 <body class="hold-transition lockscreen">
@@ -236,6 +233,10 @@ input[type="email"]:hover {
                 <form id="email-form">
                     <div class="input-group" style="flex-direction: column; align-items: center;">
                         <input type="email" class="form-control" name="email" placeholder="johndoe@example.com" required>
+                        
+                        <!-- reCAPTCHA Widget -->
+                        <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
+
                         <button type="submit" class="btn" style="margin-top: 10px;">Next</button>
                     </div>
                 </form>
@@ -274,6 +275,7 @@ input[type="email"]:hover {
                 e.preventDefault();
 
                 var email = $('input[name="email"]').val();
+                var recaptchaResponse = grecaptcha.getResponse();
 
                 // Validate email format
                 if (!validateEmail(email)) {
@@ -281,11 +283,16 @@ input[type="email"]:hover {
                     return;
                 }
 
+                if (recaptchaResponse.length === 0) {
+                    $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
+                    return;
+                }
+
                 // AJAX call to verify email
                 $.ajax({
                     url: 'lock.php',  // PHP script to handle email verification
                     method: 'POST',
-                    data: { email: email },
+                    data: { email: email, recaptcha_response: recaptchaResponse },
                     dataType: 'json',  // Expecting JSON response
                     beforeSend: function () {
                         $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
