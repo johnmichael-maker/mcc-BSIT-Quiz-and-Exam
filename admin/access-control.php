@@ -261,7 +261,7 @@
             </div>
         </div>
         <div class="lockscreen-footer text-center">
-            Copyright &copy; 2024 <b><a href="#" class="text-black">Madridejos Community College</a></b><br>
+            Copyright &copy; 2024 <b><a href="../index.php" class="text-black">Madridejos Community College</a></b><br>
             created by John Michaelle Robles
         </div>
     </div>
