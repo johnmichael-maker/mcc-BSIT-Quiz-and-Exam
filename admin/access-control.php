@@ -234,78 +234,81 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(function () {
-            // Handle email form submission
-            $('#email-form').on('submit', function (e) {
-                e.preventDefault();
+       $(function () {
+    // Handle email form submission
+    $('#email-form').on('submit', function (e) {
+        e.preventDefault();
 
-                var email = $('input[name="email"]').val();
+        var email = $('input[name="email"]').val();
 
-                // AJAX call to verify email
-                $.ajax({
-                    url: 'lock.php',  // PHP script that verifies the email and sends the verification code
-                    method: 'POST',
-                    data: { email: email },
-                    dataType: 'json',
-                    beforeSend: function () {
-                        $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
-                            $('#email-form').hide();
-                            $('#code-form').show();
-                        } else {
-                            $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
-                    }
-                });
-            });
-
-            // Handle verification code form submission
-            $('#code-form').on('submit', function (e) {
-                e.preventDefault();
-
-                var code = '';
-                $('.verification-input').each(function () {
-                    code += $(this).val();
-                });
-
-                if (code.length !== 4) { // Ensure the code has 4 digits
-                    $('#message').html('Please enter the full verification code.').removeClass('text-success').addClass('text-danger');
-                    return;
+        // AJAX call to verify email
+        $.ajax({
+            url: 'lock.php',  // PHP script that verifies the email and sends the verification code
+            method: 'POST',
+            data: { email: email },
+            dataType: 'json',
+            beforeSend: function () {
+                $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
+                    $('#email-form').hide();
+                    $('#code-form').show();
+                    // Auto-focus the first verification input field
+                    $('.verification-input').first().focus();
+                } else {
+                    $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
                 }
-
-                var email = $('input[name="email"]').val();
-
-                // AJAX call to verify the code
-                $.ajax({
-                    url: 'verify_code.php',  // PHP script that verifies the code
-                    method: 'POST',
-                    data: { email: email, code: code },
-                    dataType: 'json',
-                    beforeSend: function () {
-                        $('#message').html('<i class="fa fa-spinner fa-spin"></i> Verifying code...').removeClass('text-danger').addClass('text-info');
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
-                            setTimeout(function () {
-                                window.location.href = response.redirect; // Perform the redirection after a delay
-                            }, 1500);
-                        } else {
-                            $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
-                        }
-                    },
-                    error: function () {
-                        $('#message').html('An error occurred. Please try again.').removeClass('text-success').addClass('text-danger');
-                    }
-                });
-            });
+            },
+            error: function (xhr, status, error) {
+                $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
+            }
         });
+    });
+
+    // Handle verification code form submission
+    $('#code-form').on('submit', function (e) {
+        e.preventDefault();
+
+        var code = '';
+        $('.verification-input').each(function () {
+            code += $(this).val();
+        });
+
+        if (code.length !== 4) { // Ensure the code has 4 digits
+            $('#message').html('Please enter the full verification code.').removeClass('text-success').addClass('text-danger');
+            return;
+        }
+
+        var email = $('input[name="email"]').val();
+
+        // AJAX call to verify the code
+        $.ajax({
+            url: 'verify_code.php',  // PHP script that verifies the code
+            method: 'POST',
+            data: { email: email, code: code },
+            dataType: 'json',
+            beforeSend: function () {
+                $('#message').html('<i class="fa fa-spinner fa-spin"></i> Verifying code...').removeClass('text-danger').addClass('text-info');
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
+                    setTimeout(function () {
+                        window.location.href = response.redirect; // Perform the redirection after a delay
+                    }, 1500);
+                } else {
+                    $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
+                }
+            },
+            error: function () {
+                $('#message').html('An error occurred. Please try again.').removeClass('text-success').addClass('text-danger');
+            }
+        });
+    });
+});
+
     </script>
 </body>
 </html>    
