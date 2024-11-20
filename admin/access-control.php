@@ -90,7 +90,7 @@
             font-size: 16px;
             border-radius: 4px;
             cursor: pointer;
-            width: 105%;
+            width: 100%;
             transition: background-color 0.3s, transform 0.2s;
         }
 
@@ -181,6 +181,44 @@
                 padding: 9px 18px;
             }
         }
+        
+input[type="email"] {
+    width: 100%;                   
+    padding: 12px 15px;             
+    font-size: 16px;              
+    border: 1px solid #ddd;        
+    border-radius: 5px;             
+    background-color: #fff;        
+    box-sizing: border-box;       
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+}
+/* On focus: Change border color and add shadow */
+input[type="email"]:focus {
+    border-color: #3c8dbc;         
+    box-shadow: 0 0 8px rgba(60, 141, 188, 0.5); 
+    outline: none;                 
+}
+
+
+input[type="email"]:valid {
+    border-color: #28a745;          
+}
+
+
+input[type="email"]:invalid {
+    border-color: #dc3545;          
+}
+
+
+input[type="email"]::placeholder {
+    color: #999;                    
+    font-style: italic;          
+}
+
+
+input[type="email"]:hover {
+    border-color: #3c8dbc;         
+}
     </style>
 </head>
 <body class="hold-transition lockscreen">
@@ -222,7 +260,7 @@
             </div>
         </div>
         <div class="lockscreen-footer text-center">
-            Copyright &copy; 2024 <b><a href="#" class="text-black">Madridejos Community College</a></b><br>
+            Copyright &copy; 2024-2025 <b><a href="#" class="text-black">Madridejos Community College</a></b><br>
             created by John Michaelle Robles
         </div>
     </div>
