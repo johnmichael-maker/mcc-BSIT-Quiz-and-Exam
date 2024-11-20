@@ -1,4 +1,15 @@
 <?php
+// Include PHPMailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require __DIR__ . "../vendor/phpmailer/phpmailer/src/Exception.php";
+require __DIR__ . "../vendor/phpmailer/phpmailer/src/PHPMailer.php";
+require __DIR__ . "../vendor/phpmailer/phpmailer/src/SMTP.php";
+require '../vendor/autoload.php';
+
+require '../vendor/autoload.php';  // If you're using Composer. If not, include PHPMailer files manually.
+
 $conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
 
 if ($conn->connect_error) {
@@ -25,16 +36,33 @@ if (isset($_POST['email'])) {
         $updateStmt->bind_param("is", $verificationCode, $email);
         $updateStmt->execute();
 
-        // Send the verification code to the email using PHP's mail() function
-        $subject = "Your Verification Code";
-        $message = "Your verification code is: " . $verificationCode;
-        $headers = "From: mccbistquizandexam@gmail.com";
+        // Send the verification code using PHPMailer
+        $mail = new PHPMailer(true);  // Create a new PHPMailer instance
 
-        // Send email
-        if (mail($email, $subject, $message, $headers)) {
+        try {
+            //Server settings
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';  // Use SMTP server
+            $mail->SMTPAuth = true;
+            $mail->Username = 'johnmichaellerobles345@gmail.com';  // Your Gmail address
+            $mail->Password = 'ybhr uilh htvb xygk';  // Your Gmail password or app password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+   
+
+            //Recipients
+            $mail->setFrom('mccbsitquizandexam@gmail.com', 'Admin');  // Sender's email
+            $mail->addAddress($email);  // Recipient's email
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Your Verification Code';
+            $mail->Body    = 'Your verification code is: ' . $verificationCode;
+
+            $mail->send();
             echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to send email. Please try again later.']);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Mailer Error: ' . $mail->ErrorInfo]);
         }
     } else {
         echo json_encode(['success' => false, 'message' => 'Email not found.']);
