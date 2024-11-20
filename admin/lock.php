@@ -18,17 +18,23 @@ if (isset($_POST['email'])) {
     if ($result->num_rows > 0) {
         // Email found, generate a 4-digit verification code
         $verificationCode = rand(1000, 9999);
-
+        echo "Verification Code: " . $verificationCode; // Debugging code
+        
         // Update the verification code in the database
         $updateQuery = "UPDATE admin SET verification = ? WHERE email = ?";
         $updateStmt = $conn->prepare($updateQuery);
         $updateStmt->bind_param("is", $verificationCode, $email);
-        $updateStmt->execute();
+        
+        if ($updateStmt->execute()) {
+            echo "Verification code updated successfully.";
+        } else {
+            echo "Failed to update verification code: " . $updateStmt->error;
+        }
 
         // Send the verification code to the email
         $subject = "Your Verification Code";
         $message = "Your verification code is: " . $verificationCode;
-        $headers = "From: mccbistquizandexam@gmail.com";
+        $headers = "From: no-replayexample@gmail.com";
 
         if (mail($email, $subject, $message, $headers)) {
             echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
