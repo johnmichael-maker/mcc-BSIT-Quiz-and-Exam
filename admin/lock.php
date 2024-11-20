@@ -25,11 +25,12 @@ if (isset($_POST['email'])) {
         $updateStmt->bind_param("is", $verificationCode, $email);
         $updateStmt->execute();
 
-        // Send the verification code to the email
+        // Send the verification code to the email using PHP's mail() function
         $subject = "Your Verification Code";
         $message = "Your verification code is: " . $verificationCode;
         $headers = "From: mccbistquizandexam@gmail.com";
 
+        // Send email
         if (mail($email, $subject, $message, $headers)) {
             echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
         } else {
@@ -44,4 +45,4 @@ if (isset($_POST['email'])) {
 
 // Close connection
 $conn->close();
-?>  
+?>
