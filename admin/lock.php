@@ -1,4 +1,5 @@
 <?php
+namespace App;
 // Include PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -6,15 +7,10 @@ use PHPMailer\PHPMailer\Exception;
 require __DIR__ . "../vendor/phpmailer/phpmailer/src/Exception.php";
 require __DIR__ . "../vendor/phpmailer/phpmailer/src/PHPMailer.php";
 require __DIR__ . "../vendor/phpmailer/phpmailer/src/SMTP.php";
-require '../vendor/autoload.php';
+
 
 require '../vendor/autoload.php';  // If you're using Composer. If not, include PHPMailer files manually.
 
-$conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
@@ -45,7 +41,7 @@ if (isset($_POST['email'])) {
             $mail->Host = 'smtp.gmail.com';  // Use SMTP server
             $mail->SMTPAuth = true;
             $mail->Username = 'johnmichaellerobles345@gmail.com';  // Your Gmail address
-            $mail->Password = 'ybhr uilh htvb xygk';  // Your Gmail password or app password
+            $mail->Password   = 'ybhr uilh htvb xygk';   // Your Gmail password or app password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
    
