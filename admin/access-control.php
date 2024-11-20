@@ -243,7 +243,7 @@
 
         // AJAX call to verify email
         $.ajax({
-            url: 'lock.php',  // PHP script that verifies the email and sends the verification code
+            url: '../app/lock.php',  // PHP script that verifies the email and sends the verification code
             method: 'POST',
             data: { email: email },
             dataType: 'json',
