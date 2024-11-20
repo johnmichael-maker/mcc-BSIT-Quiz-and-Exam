@@ -220,7 +220,7 @@
                     </div>
 
                     <!-- reCAPTCHA Widget -->
-                    <div class="g-recaptcha" data-sitekey="your-site-key" style="margin-top: 10px;"></div>
+                    <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
                 </form>
 
                 <!-- Code Form (Verification Table) -->
