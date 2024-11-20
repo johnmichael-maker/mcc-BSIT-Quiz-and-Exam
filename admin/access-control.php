@@ -193,7 +193,7 @@
             <a style="color: #f4f6f9;"><b>Admin</b> Access Control</a>
         </div>
         <div class="lockscreen-name">
-            BSIT QUIZ AND EXAM
+            <b>BSIT QUIZ AND EXAM</b>
         </div>
         <div class="lockscreen-item">
             <div class="lockscreen-credentials">
