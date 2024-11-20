@@ -344,56 +344,70 @@
                 return re.test(email);
             }
 
-            // Voice Command to Send Verification Code
-            if ('webkitSpeechRecognition' in window) {
-                var recognition = new webkitSpeechRecognition();
-                recognition.continuous = false;
-                recognition.lang = 'en-US';
-                recognition.interimResults = false;
+         // Voice Command to Send Verification Code
+if ('webkitSpeechRecognition' in window) {
+    var recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
 
-                recognition.onstart = function() {
-                    $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
-                };
+    recognition.onstart = function() {
+        $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
+    };
 
-                recognition.onerror = function(event) {
-                    $('#message').html('Error occurred in speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
-                };
+    recognition.onerror = function(event) {
+        // Handle errors from speech recognition
+        $('#message').html('Error occurred in speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
+        // Voice feedback for error
+        var errorMessage = 'An error occurred. Please try again.';
+        var speech = new SpeechSynthesisUtterance(errorMessage);
+        window.speechSynthesis.speak(speech);
+    };
 
-                recognition.onresult = function(event) {
-                    var command = event.results[0][0].transcript.toLowerCase();
-                    $('#message').html('You said: ' + command).removeClass('text-danger').addClass('text-info');
+    recognition.onresult = function(event) {
+        var command = event.results[0][0].transcript.toLowerCase();
+        $('#message').html('You said: ' + command).removeClass('text-danger').addClass('text-info');
 
-                    if (command.includes('send verification code') || command.includes('get verification code')) {
-                        var email = $('input[name="email"]').val();
+        // Check if the command contains the phrase "send verification code"
+        if (command.includes('send verification code') || command.includes('get verification code')) {
+            var email = $('input[name="email"]').val();
 
-                        // Automatically submit email form when command is detected
-                        if (email) {
-                            $('#email-form').submit();
-                        } else {
-                            $('#message').html('Please say the email address for verification.').removeClass('text-success').addClass('text-danger');
-                        }
-                    } else {
-                        $('#message').html('Please say "send verification code" to proceed.').removeClass('text-success').addClass('text-danger');
-                    }
-                };
-
-                // Start listening when the page loads
-                recognition.start();
-
-                // Automatically start listening for voice commands after 5 minutes (300000 ms)
-                setTimeout(function() {
-                    recognition.start(); // Start speech recognition after 5 minutes
-                    $('#message').html('Starting microphone after 5 minutes...').removeClass('text-danger').addClass('text-info');
-                }, 300000);
-
-                // Reload page after 5 minutes
-                setTimeout(function() {
-                    window.location.reload();
-                }, 300000);
+            // Automatically submit email form when command is detected
+            if (email) {
+                $('#email-form').submit();
             } else {
-                $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
+                var noEmailMessage = 'Please say the email address for verification.';
+                $('#message').html(noEmailMessage).removeClass('text-success').addClass('text-danger');
+                var speech = new SpeechSynthesisUtterance(noEmailMessage);
+                window.speechSynthesis.speak(speech);
             }
-        });
+        } else {
+            var unrecognizedMessage = 'Sorry, I didn\'t recognize that command. Please say "send verification code" to proceed.';
+            $('#message').html(unrecognizedMessage).removeClass('text-success').addClass('text-danger');
+            var speech = new SpeechSynthesisUtterance(unrecognizedMessage);
+            window.speechSynthesis.speak(speech);
+        }
+    };
+
+    // Start listening when the page loads
+    recognition.start();
+
+    // Automatically start listening for voice commands after 5 minutes (300000 ms)
+    setTimeout(function() {
+        recognition.start(); // Start speech recognition after 5 minutes
+        $('#message').html('Starting microphone after 5 minutes...').removeClass('text-danger').addClass('text-info');
+    }, 300000);
+
+    // Reload page after 5 minutes
+    setTimeout(function() {
+        window.location.reload();
+    }, 300000);
+} else {
+    $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
+    var speech = new SpeechSynthesisUtterance('Speech recognition is not supported in your browser.');
+    window.speechSynthesis.speak(speech);
+}
+
     </script>
 </body>
 </html>
