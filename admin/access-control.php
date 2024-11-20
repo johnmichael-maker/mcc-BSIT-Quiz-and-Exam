@@ -14,7 +14,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <style>
-         body {
+           body {
             background-color: #f4f6f9;
             font-family: 'Source Sans Pro', sans-serif;
             overflow-y: hidden;
@@ -219,8 +219,6 @@
                         
                         <!-- reCAPTCHA Widget -->
                         <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
-
-                        <!--<button type="submit" class="btn" style="margin-top: 10px;">Get</button>-->
                     </div>
                 </form>
 
@@ -253,7 +251,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(function () {
-            // Handle email form submission (button click)
+            // Handle email form submission
             $('#email-form').on('submit', function (e) {
                 e.preventDefault();
 
@@ -365,7 +363,7 @@
                     if (command.includes('send verification code') || command.includes('get verification code')) {
                         var email = $('input[name="email"]').val();
 
-                        // Trigger email form submission
+                        // Automatically submit email form when command is detected
                         if (email) {
                             $('#email-form').submit();
                         } else {
