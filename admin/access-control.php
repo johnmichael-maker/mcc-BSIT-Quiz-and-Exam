@@ -93,7 +93,7 @@
             font-size: 16px;
             border-radius: 4px;
             cursor: pointer;
-            width: 100%;
+            width: 105%;
             transition: background-color 0.3s, transform 0.2s;
         }
 
