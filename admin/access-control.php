@@ -199,23 +199,6 @@
             box-shadow: 0 0 8px rgba(60, 141, 188, 0.5);
             outline: none;
         }
-
-        input[type="email"]:valid {
-            border-color: #28a745;
-        }
-
-        input[type="email"]:invalid {
-            border-color: #dc3545;
-        }
-
-        input[type="email"]::placeholder {
-            color: #999;
-            font-style: italic;
-        }
-
-        input[type="email"]:hover {
-            border-color: #3c8dbc;
-        }
     </style>
 </head>
 <body class="hold-transition lockscreen">
