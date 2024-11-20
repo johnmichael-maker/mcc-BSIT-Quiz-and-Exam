@@ -221,7 +221,7 @@
                         <!-- reCAPTCHA Widget -->
                         <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
 
-                        <button type="submit" class="btn" style="margin-top: 10px;">Next</button>
+                        <button type="submit" class="btn" style="margin-top: 10px;">Get</button>
                     </div>
                 </form>
 
