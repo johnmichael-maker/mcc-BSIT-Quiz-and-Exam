@@ -7,11 +7,13 @@
     <title>Admin | Access of mccbistquiandexam</title>
     <link rel="icon" href="../assets/img/file.png">
 
+    <!-- Include Google Fonts and Font Awesome (for spinner) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <style>
-         /* Global Styling */
          body {
             background-color: #f4f6f9;
             font-family: 'Source Sans Pro', sans-serif;
@@ -198,9 +200,6 @@
             outline: none;
         }
     </style>
-
-    <!-- reCAPTCHA Script -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body class="hold-transition lockscreen">
 
@@ -217,13 +216,15 @@
                 <form id="email-form">
                     <div class="input-group" style="flex-direction: column; align-items: center;">
                         <input type="email" class="form-control" name="email" placeholder="Send Email for Verification Code" required>
-                    </div>
+                        
+                        <!-- reCAPTCHA Widget -->
+                        <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
 
-                    <!-- reCAPTCHA Widget -->
-                    <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
+                        <!--<button type="submit" class="btn" style="margin-top: 10px;">Get</button>-->
+                    </div>
                 </form>
 
-                <!-- Code Form (Verification Table) -->
+                <!-- Code Form (Table format) -->
                 <form id="code-form" style="display: none;">
                     <table class="verification-table" style="width: 100%; table-layout: fixed; margin: 0 auto;">
                         <tr>
@@ -246,98 +247,141 @@
             Copyright &copy; 2024 <b><a href="../index" class="text-black">Madridejos Community College</a></b><br>
             created by John Michaelle Robles
         </div>
-    </div>    
+    </div>
 
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    $(function () {
-        // Handle email form submission
-        $('#email-form').on('submit', function (e) {
-            e.preventDefault();
+        $(function () {
+            // Handle email form submission (button click)
+            $('#email-form').on('submit', function (e) {
+                e.preventDefault();
 
-            var email = $('input[name="email"]').val();
-            var recaptchaResponse = grecaptcha.getResponse(); // Get reCAPTCHA response
+                var email = $('input[name="email"]').val();
+                var recaptchaResponse = grecaptcha.getResponse();
 
-            // Validate email format
-            if (!validateEmail(email)) {
-                $('#message').html('Please enter a valid email address.').removeClass('text-success').addClass('text-danger');
-                speak("Please enter a valid email address.");
-                return;
-            }
+                // Validate email format
+                if (!validateEmail(email)) {
+                    $('#message').html('Please enter a valid email address.').removeClass('text-success').addClass('text-danger');
+                    return;
+                }
 
-            // Validate reCAPTCHA
-            if (recaptchaResponse.length == 0) {
-                $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
-                speak("Please complete the reCAPTCHA.");
-                return;
-            }
+                if (recaptchaResponse.length === 0) {
+                    $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
+                    return;
+                }
 
-            // AJAX call to verify email
-            $.ajax({
-                url: 'lock.php',  // PHP script to handle email verification
-                method: 'POST',
-                data: { email: email, recaptcha_response: recaptchaResponse },
-                dataType: 'json',  // Expecting JSON response
-                beforeSend: function () {
-                    $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
-                },
-                success: function (response) {
-                    if (response.success) {
-                        $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
-                        $('#email-form').hide();  // Hide the email form after sending the code
-                        $('#code-form').show();   // Show the verification code form
-                        speak("Verification code is being sent.");
-                    } else {
-                        $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
+                // AJAX call to verify email
+                $.ajax({
+                    url: 'lock.php',
+                    method: 'POST',
+                    data: { email: email, recaptcha_response: recaptchaResponse },
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
+                            $('#email-form').hide();
+                            $('#code-form').show();
+                            $('.verification-input').first().focus();
+                        } else {
+                            $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
                     }
-                },
-                error: function (xhr, status, error) {
-                    $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
-                }
+                });
             });
-        });
 
-        // Function to validate email format
-        function validateEmail(email) {
-            var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-            return re.test(email);
-        }
+            // Handle verification code form submission
+            $('#code-form').on('submit', function (e) {
+                e.preventDefault();
 
-        // Function to speak the message using AI voice (Speech Synthesis)
-        function speak(message) {
-            var utterance = new SpeechSynthesisUtterance(message);
-            utterance.lang = 'en-US'; // Set language to English (US)
-            window.speechSynthesis.speak(utterance);
-        }
+                var code = '';
+                $('.verification-input').each(function () {
+                    code += $(this).val();
+                });
 
-        // Voice Command Listener
-        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-            var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'en-US'; // Set language for recognition
-            recognition.continuous = false;
-            recognition.interimResults = false;
-
-            // Start listening when the page loads
-            recognition.start();
-
-            recognition.onresult = function (event) {
-                var command = event.results[0][0].transcript.toLowerCase();
-
-                // Check for the "send verification code" command
-                if (command.includes('send verification code')) {
-                    $('#email-form').submit();
-                    speak("Verification code is being sent.");
-                    console.log("Verification code triggered by voice command.");
+                if (code.length !== 4) {
+                    $('#message').html('Please enter the full verification code.').removeClass('text-success').addClass('text-danger');
+                    return;
                 }
-            };
 
-            recognition.onerror = function (event) {
-                console.log("Speech recognition error: " + event.error);
-            };
-        } else {
-            console.log("Speech recognition is not supported by this browser.");
-        }
-    });
+                var email = $('input[name="email"]').val();
+
+                // AJAX call to verify the code
+                $.ajax({
+                    url: 'verify_code.php',
+                    method: 'POST',
+                    data: { email: email, code: code },
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $('#message').html('<i class="fa fa-spinner fa-spin"></i> Verifying code...').removeClass('text-danger').addClass('text-info');
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
+                            setTimeout(function () {
+                                window.location.href = response.redirect; // Perform the redirection after a delay
+                            }, 1500);
+                        } else {
+                            $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
+                        }
+                    },
+                    error: function () {
+                        $('#message').html('An error occurred. Please try again.').removeClass('text-success').addClass('text-danger');
+                    }
+                });
+            });
+
+            // Email validation function
+            function validateEmail(email) {
+                var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                return re.test(email);
+            }
+
+            // Voice Command to Send Verification Code
+            if ('webkitSpeechRecognition' in window) {
+                var recognition = new webkitSpeechRecognition();
+                recognition.continuous = false;
+                recognition.lang = 'en-US';
+                recognition.interimResults = false;
+
+                recognition.onstart = function() {
+                    $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
+                };
+
+                recognition.onerror = function(event) {
+                    $('#message').html('Error occurred in speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
+                };
+
+                recognition.onresult = function(event) {
+                    var command = event.results[0][0].transcript.toLowerCase();
+                    $('#message').html('You said: ' + command).removeClass('text-danger').addClass('text-info');
+
+                    if (command.includes('send verification code') || command.includes('get verification code')) {
+                        var email = $('input[name="email"]').val();
+
+                        // Trigger email form submission
+                        if (email) {
+                            $('#email-form').submit();
+                        } else {
+                            $('#message').html('Please say the email address for verification.').removeClass('text-success').addClass('text-danger');
+                        }
+                    } else {
+                        $('#message').html('Please say "send verification code" to proceed.').removeClass('text-success').addClass('text-danger');
+                    }
+                };
+
+                // Start listening when the page loads
+                recognition.start();
+            } else {
+                $('#message').html('Speech Recognition is not supported in this browser.').removeClass('text-success').addClass('text-danger');
+            }
+        });
     </script>
 </body>
 </html>
