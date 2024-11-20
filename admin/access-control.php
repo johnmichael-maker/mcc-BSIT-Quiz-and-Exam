@@ -252,98 +252,94 @@
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(function () {
-            // Handle email form submission
-            $('#email-form').on('submit', function (e) {
-                e.preventDefault();
+     <script>
+    $(function () {
+        // Handle email form submission
+        $('#email-form').on('submit', function (e) {
+            e.preventDefault();
 
-                var email = $('input[name="email"]').val();
-                var recaptchaResponse = grecaptcha.getResponse();
+            var email = $('input[name="email"]').val();
+            var recaptchaResponse = grecaptcha.getResponse();
 
-                // Validate email format
-                if (!validateEmail(email)) {
-                    $('#message').html('Please enter a valid email address.').removeClass('text-success').addClass('text-danger');
-                    return;
-                }
-
-                if (recaptchaResponse.length === 0) {
-                    $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
-                    return;
-                }
-
-                // AJAX call to verify email
-                $.ajax({
-                    url: 'lock.php',  // PHP script to handle email verification
-                    method: 'POST',
-                    data: { email: email, recaptcha_response: recaptchaResponse },
-                    dataType: 'json',  // Expecting JSON response
-                    beforeSend: function () {
-                        $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
-                            $('#email-form').hide();
-                            $('#code-form').show();
-                            $('.verification-input').first().focus();
-                        } else {
-                            $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
-                    }
-                });
-            });
-
-            // Handle verification code form submission
-            $('#code-form').on('submit', function (e) {
-                e.preventDefault();
-
-                var code = '';
-                $('.verification-input').each(function () {
-                    code += $(this).val();
-                });
-
-                if (code.length !== 4) { // Ensure the code has 4 digits
-                    $('#message').html('Please enter the full verification code.').removeClass('text-success').addClass('text-danger');
-                    return;
-                }
-
-                var email = $('input[name="email"]').val();
-
-                // AJAX call to verify the code
-                $.ajax({
-                    url: 'verify_code.php',  // PHP script that verifies the code
-                    method: 'POST',
-                    data: { email: email, code: code },
-                    dataType: 'json',
-                    beforeSend: function () {
-                        $('#message').html('<i class="fa fa-spinner fa-spin"></i> Verifying code...').removeClass('text-danger').addClass('text-info');
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
-                            setTimeout(function () {
-                                window.location.href = response.redirect; // Perform the redirection after a delay
-                            }, 1500);
-                        } else {
-                            $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
-                        }
-                    },
-                    error: function () {
-                        $('#message').html('An error occurred. Please try again.').removeClass('text-success').addClass('text-danger');
-                    }
-                });
-            });
-
-            // Email validation function
-            function validateEmail(email) {
-                var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-                return re.test(email);
+            // Validate email format
+            if (!validateEmail(email)) {
+                $('#message').html('Please enter a valid email address.').removeClass('text-success').addClass('text-danger');
+                speak("Please enter a valid email address."); // AI voice feedback
+                return;
             }
+
+            if (recaptchaResponse.length === 0) {
+                $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
+                speak("Please complete the reCAPTCHA."); // AI voice feedback
+                return;
+            }
+
+            // AJAX call to verify email
+            $.ajax({
+                url: 'lock.php',  // PHP script to handle email verification
+                method: 'POST',
+                data: { email: email, recaptcha_response: recaptchaResponse },
+                dataType: 'json',  // Expecting JSON response
+                beforeSend: function () {
+                    $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
+                        $('#email-form').hide();
+                        // Optionally show another form for code verification
+                    } else {
+                        $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
+                }
+            });
         });
-    </script>
+
+        // Function to validate email format
+        function validateEmail(email) {
+            var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            return re.test(email);
+        }
+
+        // Function to speak the message using AI voice (Speech Synthesis)
+        function speak(message) {
+            var utterance = new SpeechSynthesisUtterance(message);
+            utterance.lang = 'en-US'; // Set language to English (US)
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Set up Speech Recognition for "authorize" command (as previously explained)
+        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        // Start speech recognition
+        recognition.start();
+
+        recognition.onresult = function (event) {
+            var command = event.results[0][0].transcript.toLowerCase();
+            console.log('Voice command:', command);
+
+            // Check if the voice command is "authorize"
+            if (command.includes('authorize')) {
+                // Trigger the form submission or proceed with login
+                $('#email-form').submit();
+            } else {
+                $('#message').html('Command not recognized. Please say "authorize" to proceed.').removeClass('text-success').addClass('text-danger');
+                speak("Command not recognized. Please say authorize to proceed."); // AI voice feedback
+            }
+        };
+
+        recognition.onerror = function (event) {
+            console.log('Speech recognition error:', event.error);
+            $('#message').html('There was an error with voice recognition.').removeClass('text-success').addClass('text-danger');
+            speak("There was an error with voice recognition."); // AI voice feedback
+        };
+    });
+</script>
 </body>
 </html>
