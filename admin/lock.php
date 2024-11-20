@@ -33,7 +33,7 @@ if (isset($_POST['email'])) {
         // Send the verification code via mail()
         $subject = "Your Verification Code";
         $message = "Your verification code is: " . $verificationCode;
-        $headers = "From: mccbistquizandexam@gmail.com\r\n" .
+        $headers = "From: no-reply@yourdomain.com\r\n" .
                    "Reply-To: no-reply@yourdomain.com\r\n" .
                    "Content-Type: text/plain; charset=UTF-8";
 
