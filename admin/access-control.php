@@ -157,6 +157,9 @@
             outline: none;
         }
     </style>
+
+    <!-- reCAPTCHA Script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body class="hold-transition lockscreen">
 
@@ -174,6 +177,9 @@
                     <div class="input-group" style="flex-direction: column; align-items: center;">
                         <input type="email" class="form-control" name="email" placeholder="Send Email for Verification Code" required>
                     </div>
+
+                    <!-- reCAPTCHA Widget -->
+                    <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
                 </form>
 
                 <!-- Code Form (Table format) -->
@@ -209,6 +215,7 @@
             e.preventDefault();
 
             var email = $('input[name="email"]').val();
+            var recaptchaResponse = grecaptcha.getResponse(); // Get reCAPTCHA response
 
             // Validate email format
             if (!validateEmail(email)) {
@@ -217,11 +224,18 @@
                 return;
             }
 
+            // Validate reCAPTCHA
+            if (recaptchaResponse.length == 0) {
+                $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
+                speak("Please complete the reCAPTCHA."); // AI voice feedback
+                return;
+            }
+
             // AJAX call to verify email
             $.ajax({
                 url: 'lock.php',  // PHP script to handle email verification
                 method: 'POST',
-                data: { email: email },
+                data: { email: email, recaptcha_response: recaptchaResponse },
                 dataType: 'json',  // Expecting JSON response
                 beforeSend: function () {
                     $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
@@ -253,35 +267,6 @@
             utterance.lang = 'en-US'; // Set language to English (US)
             window.speechSynthesis.speak(utterance);
         }
-
-        // Set up Speech Recognition for "authorize" command
-        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'en-US';
-        recognition.continuous = false;
-        recognition.interimResults = false;
-
-        // Start speech recognition
-        recognition.start();
-
-        recognition.onresult = function (event) {
-            var command = event.results[0][0].transcript.toLowerCase();
-            console.log('Voice command:', command);
-
-            // Check if the voice command is "authorize"
-            if (command.includes('authorize')) {
-                // Trigger the form submission or proceed with login
-                $('#email-form').submit();
-            } else {
-                $('#message').html('Command not recognized. Please say "authorize" to proceed.').removeClass('text-success').addClass('text-danger');
-                speak("Command not recognized. Please say authorize to proceed."); // AI voice feedback
-            }
-        };
-
-        recognition.onerror = function (event) {
-            console.log('Speech recognition error:', event.error);
-            $('#message').html('There was an error with voice recognition.').removeClass('text-success').addClass('text-danger');
-            speak("There was an error with voice recognition."); // AI voice feedback
-        };
     });
     </script>
 </body>
