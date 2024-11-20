@@ -255,47 +255,58 @@
     <script>
         $(function () {
             // Handle email form submission
-            $('#email-form').on('submit', function (e) {
-                e.preventDefault();
+          // Handle email form submission
+$('#email-form').on('submit', function (e) {
+    e.preventDefault();
 
-                var email = $('input[name="email"]').val();
-                var recaptchaResponse = grecaptcha.getResponse();
+    var email = $('input[name="email"]').val();
+    var recaptchaResponse = grecaptcha.getResponse();
 
-                // Validate email format
-                if (!validateEmail(email)) {
-                    $('#message').html('Please enter a valid email address.').removeClass('text-success').addClass('text-danger');
-                    return;
+    // Validate email format
+    if (!validateEmail(email)) {
+        $('#message').html('Please enter a valid email address.').removeClass('text-success').addClass('text-danger');
+        return;
+    }
+
+    if (recaptchaResponse.length === 0) {
+        $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
+        return;
+    }
+
+    // AJAX call to verify email
+    $.ajax({
+        url: 'lock.php',  // PHP script to handle email verification
+        method: 'POST',
+        data: { email: email, recaptcha_response: recaptchaResponse },
+        dataType: 'json',  // Expecting JSON response
+        beforeSend: function () {
+            $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
+        },
+        success: function (response) {
+            if (response.success) {
+                $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
+                $('#email-form').hide();
+                $('#code-form').show();
+                $('.verification-input').first().focus();
+
+                // Trigger voice feedback when verification code is sent
+                if ('speechSynthesis' in window) {
+                    var msg = new SpeechSynthesisUtterance("The verification code has been sent to your email.");
+                    msg.lang = 'en-US';
+                    window.speechSynthesis.speak(msg);
+                } else {
+                    console.log('Speech synthesis not supported in this browser.');
                 }
 
-                if (recaptchaResponse.length === 0) {
-                    $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
-                    return;
-                }
-
-                // AJAX call to verify email
-                $.ajax({
-                    url: 'lock.php',  // PHP script to handle email verification
-                    method: 'POST',
-                    data: { email: email, recaptcha_response: recaptchaResponse },
-                    dataType: 'json',  // Expecting JSON response
-                    beforeSend: function () {
-                        $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
-                            $('#email-form').hide();
-                            $('#code-form').show();
-                            $('.verification-input').first().focus();
-                        } else {
-                            $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
-                    }
-                });
-            });
+            } else {
+                $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
+            }
+        },
+        error: function (xhr, status, error) {
+            $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
+        }
+    });
+});
 
             // Handle verification code form submission
             $('#code-form').on('submit', function (e) {
