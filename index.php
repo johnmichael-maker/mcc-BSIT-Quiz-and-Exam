@@ -652,8 +652,7 @@ window.addEventListener("load", function() {
         </div>
     </div>
 </header>
-`
-<div class="container text-light mt-3 py-3">
+`<div class="container text-light mt-3 py-3">
     <div class="footer-content">
         <!-- Fade In From the Left -->
         <div class="footer-left" data-aos="fade-left" data-aos-duration="1500">
@@ -882,4 +881,3 @@ document.addEventListener('keydown', function(e) {
 
 </body>
 </html>
-
