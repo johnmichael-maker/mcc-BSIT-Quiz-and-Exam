@@ -4,9 +4,10 @@ try {
     $db = new PDO('mysql:host=localhost;dbname=u510162695_bsit_quiz', 'u510162695_bsit_quiz', '1Bsit_quiz');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
+    // Function to get Admins with userType = 2
     function getAdminsTypeTwo($db) {
         try {
-            $stmt = $db->prepare("SELECT admin_id, username, email, created_at FROM admin WHERE userType = 2");
+            $stmt = $db->prepare("SELECT admin_id, firstName, middleName, lastName, phone, address, created_at FROM admin WHERE userType = 2");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -14,46 +15,51 @@ try {
         }
     }
 
+    // Handle POST request to delete admin
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['admin_id'])) {
         $admin_id = $_POST['admin_id'];
 
-       
+        // Sanitize and validate the admin_id (ensure it is an integer)
+        if (!filter_var($admin_id, FILTER_VALIDATE_INT)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid admin ID.']);
+            exit;
+        }
+    
         $db->beginTransaction();
         try {
-            
+            // Prepare the SELECT statement to find the admin
             $stmt = $db->prepare("SELECT email FROM admin WHERE admin_id = :admin_id AND userType = 2");
             $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
             $stmt->execute();
             $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
+            // Check if the admin exists
             if ($admin) {
                 $email = $admin['email'];
-
-                
+    
+                // Prepare and execute the DELETE statement
                 $stmt = $db->prepare("DELETE FROM admin WHERE admin_id = :admin_id");
                 $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
                 $stmt->execute();
-
-               
-                $stmt = $db->prepare("DELETE FROM instructors WHERE email = :email");
-                $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-                $stmt->execute();
-
                 
+                // Commit the transaction
                 $db->commit();
                 echo json_encode(['status' => 'success']);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Admin not found.']);
             }
         } catch (PDOException $e) {
+            // Rollback the transaction in case of error
             $db->rollBack(); 
             echo json_encode(['status' => 'error', 'message' => 'Error during deletion: ' . $e->getMessage()]);
         }
-        exit; 
+        exit;
     }
+
 } catch (PDOException $e) {
+    // Catch connection errors
     echo json_encode(['status' => 'error', 'message' => 'Database connection failed: ' . $e->getMessage()]);
-    exit; 
+    exit;
 }
 
 ?>
@@ -81,8 +87,11 @@ try {
                                         <thead>
                                             <tr>
                                                 <th>User ID</th>
-                                                <th>Username</th>
-                                                <th>Email</th>
+                                                <th>First Name</th>
+                                                <th>Middle Name</th>
+                                                <th>Last Name</th>
+                                                <th>Phone no.</th>
+                                                <th>Address</th>
                                                 <th>Created At</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -94,8 +103,11 @@ try {
                                                 foreach ($admins as $row): ?>
                                                     <tr>
                                                         <td><?= htmlspecialchars($row['admin_id']) ?></td>
-                                                        <td><?= htmlspecialchars($row['username']) ?></td>
-                                                        <td><?= htmlspecialchars($row['email']) ?></td>
+                                                        <td><?= htmlspecialchars($row['firstName']) ?></td>
+                                                        <td><?= htmlspecialchars($row['middleName']) ?></td>
+                                                        <td><?= htmlspecialchars($row['lastName']) ?></td>
+                                                        <td><?= htmlspecialchars($row['phone']) ?></td>
+                                                        <td><?= htmlspecialchars($row['address']) ?></td>
                                                         <td><?= htmlspecialchars($row['created_at']) ?></td>
                                                         <td>
                                                             <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(<?= htmlspecialchars($row['admin_id']) ?>)">
