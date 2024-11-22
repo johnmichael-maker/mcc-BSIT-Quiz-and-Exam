@@ -460,6 +460,11 @@ h6.fw-bold {
     .footer-copyright {
         color: #f8f9fa; 
     }
+     .footer-bottom {
+    background-color: #222;
+    padding: 10px 0;
+    text-align: center;
+}
     </style>
 </head>
 
