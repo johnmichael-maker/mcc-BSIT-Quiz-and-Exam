@@ -2,12 +2,17 @@
 session_start(); 
 
 
-if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true) {
-
-    header("Location: access-control.php"); // or wherever you want to redirect
+// Check if email is verified. If yes, redirect directly to login.php or proceed
+if (isset($_SESSION['email_verified']) && $_SESSION['email_verified'] === true) {
+    header("Location: login.php"); // Redirect to login page if already verified
     exit();
 }
 
+// If the email is not verified, proceed to the access-control page
+if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true) {
+    header("Location: access-control.php"); // Redirect to access-control if not verified
+    exit();
+}
 // The rest of your login page code here
 ?>
 
