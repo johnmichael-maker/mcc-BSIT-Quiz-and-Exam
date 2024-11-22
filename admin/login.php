@@ -4,7 +4,7 @@ session_start();
 
 if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true) {
 
-    header("Location: access-control.php"); // or wherever you want to redirect
+    header("Location: access-control"); // or wherever you want to redirect
     exit();
 }
 
