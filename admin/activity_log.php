@@ -46,7 +46,7 @@ $totalPages = ceil($totalLogs / $perPage);
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5><i class="bx bx-user"></i> Activity Logs</h5>
+                                <h5><i class="bx bx-user"></i> Activity Logs Report</h5>
                             </div>
 
                             <div class="card-body">
