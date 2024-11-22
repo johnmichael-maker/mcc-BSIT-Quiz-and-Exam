@@ -582,7 +582,7 @@ window.addEventListener("load", function() {
         </div>
     </div>
 </header>
-`
+
 <head>
 <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
@@ -599,7 +599,7 @@ window.addEventListener("load", function() {
     }
 
     .footer-background {
-        background-color: #333;
+        background-color: #002e5b;
         color: #fff;
     }
 
@@ -614,11 +614,17 @@ window.addEventListener("load", function() {
     .footer-bottom {
         padding: 10px 0;
         text-align: center;
-        background-color: #222;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
     }
 
     .footer-copyright {
         font-size: 14px;
+    }
+    .home-hero{
+        text-decoration: none;
+    }
+    .home-hero:hover{
+        color: crimson;
     }
 </style>
 </head>
@@ -728,9 +734,9 @@ window.addEventListener("load", function() {
                                 </aside>
                                 <aside id="follow-us-widget-2" class="widget follow-us">
                                     <div class="share-links">
-                                        <a href="#" class="share-facebook"><i class="fab fa-facebook"></i> Facebook</a>
-                                        <a href="#" class="share-youtube"><i class="fab fa-youtube"></i> YouTube</a>
-                                        <a href="#" class="share-instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                                        <a href="#" class="home-hero"><i class="fab fa-facebook"></i> Facebook</a>
+                                        <a href="#" class="home-hero"><i class="fab fa-youtube"></i> YouTube</a>
+                                        <a href="#" class="home-hero"><i class="fab fa-instagram"></i> Instagram</a>
                                     </div>
                                 </aside>
                             </div>
@@ -738,9 +744,9 @@ window.addEventListener("load", function() {
                                 <aside id="nav_menu-2" class="widget widget_nav_menu">
                                     <h3 class="widget-title">Links</h3>
                                     <ul id="menu-main-menu-1" class="menu">
-                                        <li><a href="https://mccbsitquizandexam.com">Home</a></li>
-                                        <li><a href="https://mccbsitquizandexam.com/about.php" aria-current="page">About Us</a></li>
-                                        <li><a href="https://mccbsitquizandexam.com/contact.php">Contact Us</a></li>
+                                        <li><a href="https://mccbsitquizandexam.com" class="home-hero">Home</a></li>
+                                        <li><a href="https://mccbsitquizandexam.com/about.php" aria-current="page" class="home-hero">About Us</a></li>
+                                        <li><a href="https://mccbsitquizandexam.com/contact.php" class="home-hero">Contact Us</a></li>
                                     </ul>
                                 </aside>
                             </div>
