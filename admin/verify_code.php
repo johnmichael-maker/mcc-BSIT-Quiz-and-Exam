@@ -26,6 +26,8 @@ if (isset($_POST['code']) && isset($_POST['email'])) {
             $updateStmt->bind_param("s", $email); // Bind the email parameter
             $updateStmt->execute();
 
+              $_SESSION['email_verified'] = true;
+            
             // Return success response and perform redirect
             echo json_encode(['success' => true, 'message' => 'Verification successful. Redirecting...', 'redirect' => 'login.php']);
         } else {
