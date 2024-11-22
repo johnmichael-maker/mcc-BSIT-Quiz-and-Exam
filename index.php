@@ -653,28 +653,41 @@ window.addEventListener("load", function() {
     </div>
 </header>
 `
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        body, html {
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
 
+        .container {
+            max-width: 100%; /* Ensures container doesn't overflow */
+        }
+    </style>
+</head>
+
+<body>
     <div class="container text-light mt-3 py-3">
-    <h3 class="border-bottom border-2" style="width: fit-content;" data-aos="fade-up" data-aos-duration="900">About Us</h3>
-    <div data-aos="fade-left" data-aos-duration="900">
-        <span class="ms-4">Madridejos</span> Community College (MCC) is a higher education institution located in
-        Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to
-        provide accessible and affordable education to the local community, focusing on developing skilled
-        professionals who can contribute to the region's socioeconomic growth.
-    </div>
+        <h3 class="border-bottom border-2" style="width: fit-content;" data-aos="fade-up" data-aos-duration="900">
+            About Us
+        </h3>
+        <div data-aos="fade-left" data-aos-duration="900">
+            <span class="ms-4">Madridejos</span> Community College (MCC) is a higher education institution located in
+            Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to
+            provide accessible and affordable education to the local community, focusing on developing skilled
+            professionals who can contribute to the region's socioeconomic growth.
+        </div>
 
         <hr>
-	    
-        <div class="mt-3">
+
+        <div class="mt-3" data-aos="fade-left" data-aos-duration="900">
             <h5>Vision:</h5>
             <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent
             individuals with benevolent character innovative, service-oriented, and highly empowered to meet and exceed
             challenges as proactive participants in shaping our world's future.
         </div>
-       
 
-
-        <div class="mt-3">
+        <div class="mt-3" data-aos="fade-left" data-aos-duration="900">
             <h5>Mission:</h5>
             <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning
             environment that aims to foster academic and career success through development of critical thinking,
@@ -683,7 +696,7 @@ window.addEventListener("load", function() {
             communities in a highly dynamic world.
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3" data-aos="fade-left" data-aos-duration="900">
             <h5>Goals:</h5>
             <span class="ms-4">Develop </span> globally competitive, value-laden professionals capable of making a
             positive social, environmental, and economic impact through research and community service.
@@ -691,25 +704,34 @@ window.addEventListener("load", function() {
 
         <hr>
 
-        <div class="mt-3">
+        <div class="mt-3" data-aos="fade-up" data-aos-duration="900">
             <span class="ms-4">Learning </span> Enhancement and Support. Foster student learning and support by
             leveraging student strengths and meeting their specific needs through targeted success pathways.
 
-            Adaptive
-            to change through innovation. Create an environment that encourages learners to be more innovative and
+            Adaptive to change through innovation. Create an environment that encourages learners to be more innovative and
             resilient in order to adapt to today's highly dynamic world.
 
-            Well-grounded
-            in research. Conduct extensive research based on facts and sound
-            reasoning to expand the learner's knowledge, promote effective learning, comprehend different concerns and
-            trends, seek the truth, and identify opportunities that lie ahead.
+            Well-grounded in research. Conduct extensive research based on facts and sound reasoning to expand the learner's
+            knowledge, promote effective learning, comprehend different concerns and trends, seek the truth, and identify
+            opportunities that lie ahead.
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3" data-aos="fade-up" data-aos-duration="900">
             <span class="ms-4">Inculcate </span>
-            Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and outside the school.
-            Social Responsibility. Ensure the relevance, alignment and support of the community and businesses by providing outreach, bridge programs, and community-focused facilities.
+            Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and outside
+            the school.
+            Social Responsibility. Ensure the relevance, alignment and support of the community and businesses by providing
+            outreach, bridge programs, and community-focused facilities.
         </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
         <hr>
 
         <div class="row mt-3">
