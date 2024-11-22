@@ -682,7 +682,8 @@ h6.fw-bold {
     .visible {
         opacity: 1;
     }
-    .img-style {
+   /* Adjusting image size and applying border radius */
+.img-style {
     width: 100%;
     max-width: 100%;
     height: auto;
@@ -690,18 +691,30 @@ h6.fw-bold {
     object-fit: cover;
 }
 
-/* Responsive size adjustments */
+/* Mobile (small screens) Layout */
 @media (max-width: 768px) {
+    .row {
+        display: flex;
+        flex-direction: column; /* Stack images vertically */
+        gap: 20px; /* Add space between the images */
+    }
+
+    .col-lg-6 {
+        width: 100%; /* Ensure the columns are full width on mobile */
+    }
+
     .img-style {
-        width: 90%;
+        width: 100%; /* Make images full width on mobile */
     }
 }
 
+/* For extra small screens (very narrow viewports) */
 @media (max-width: 480px) {
-    .img-style {
-        width: 80%;
+    .row {
+        gap: 10px; /* Reduce the space between images */
     }
 }
+
 </style>
 </head>
 
@@ -719,15 +732,15 @@ h6.fw-bold {
 
         <hr>
 
-       <div class="row">
+        <div class="row">
     <div class="col-lg-6 fade-in-left">
         <img src="assets/img/img-1.jpeg" alt="image" class="img-style w-100">
     </div>
-    <br>
     <div class="col-lg-6 fade-in-right">
         <img src="assets/img/img-2.jpeg" alt="image" class="img-style w-100">
     </div>
 </div>
+
 
         <hr>
 
