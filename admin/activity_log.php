@@ -160,5 +160,6 @@ $totalPages = ceil($totalLogs / $perPage);
 </script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<?php require __DIR__ . '/./partials/footer.php' ?>
 </body>
 </html>
