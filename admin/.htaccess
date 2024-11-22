@@ -9,6 +9,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Remove .php extension for access-control.php in the admin folder
 RewriteRule ^admin/access-control$ admin/access-control.php [L]
 
-# (Optional) Redirect .php URLs to clean URLs
+# Optional: Redirect .php URLs to clean URLs (For SEO purposes)
 RewriteCond %{THE_REQUEST} \s/([a-zA-Z0-9_-]+)\.php[\s?] [NC]
 RewriteRule ^([a-zA-Z0-9_-]+)\.php$ /$1 [R=301,L]
