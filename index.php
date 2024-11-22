@@ -665,12 +665,15 @@ window.addEventListener("load", function() {
 
         <hr>
 
+      <div data-aos="fade-left" data-aos-duration="900">
         <div class="mt-3">
             <h5>Vision:</h5>
             <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent
             individuals with benevolent character innovative, service-oriented, and highly empowered to meet and exceed
             challenges as proactive participants in shaping our world's future.
         </div>
+        </div>
+
 
         <div class="mt-3">
             <h5>Mission:</h5>
