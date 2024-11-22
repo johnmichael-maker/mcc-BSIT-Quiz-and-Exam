@@ -27,3 +27,13 @@ RewriteRule ^finished\.php$ /finished [R=301,L]    # Redirect finished.php to fi
 
 RewriteCond %{THE_REQUEST} \s/home\.php$ [NC]
 RewriteRule ^home\.php$ /home [R=301,L]    # Redirect home.php to home without .php
+
+
+# Custom Rule to Remove .php Extension for access-control.php in subfolder under admin
+RewriteCond %{REQUEST_FILENAME} !-f              # Ensure it's not a real file
+RewriteCond %{REQUEST_FILENAME} !-d              # Ensure it's not a real directory
+RewriteRule ^admin/subfolder/access-control$ admin/subfolder/access-control.php [NC,L]
+
+# Optionally, redirect old access-control.php URL to clean URL
+RewriteCond %{THE_REQUEST} \s/admin/subfolder/access-control\.php$ [NC]
+RewriteRule ^admin/subfolder/access-control\.php$ /admin/subfolder/access-control [R=301,L]
