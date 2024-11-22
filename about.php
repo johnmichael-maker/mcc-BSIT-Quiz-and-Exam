@@ -603,7 +603,7 @@ h6.fw-bold {
 
 <!-- Custom CSS -->
 <style>
-    body,
+     body,
     html {
         overflow-x: hidden;
         margin: 0;
@@ -615,7 +615,7 @@ h6.fw-bold {
     }
 
     .footer-background {
-        background-color: #333;
+        background-color: #002e5b;
         color: #fff;
     }
 
@@ -630,11 +630,17 @@ h6.fw-bold {
     .footer-bottom {
         padding: 10px 0;
         text-align: center;
-        background-color: #222;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
     }
 
     .footer-copyright {
         font-size: 14px;
+    }
+    .home-hero{
+        text-decoration: none;
+    }
+    .home-hero:hover{
+        color: crimson;
     }
 
     .fade-in-left {
@@ -676,6 +682,7 @@ h6.fw-bold {
     .visible {
         opacity: 1;
     }
+    
 </style>
 </head>
 
