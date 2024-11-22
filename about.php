@@ -666,12 +666,11 @@ h6.fw-bold {
     </header>
 
     <div class="container text-light mt-3 py-3">
-    <div data-aos="fade-right" data-aos-duration="1000">
-    <h3 class="border-bottom border-2" style="width: fit-content;" data-aos="fade-up" data-aos-duration="1000">History</h3>
+    <h3 class="border-bottom border-2" style="width: fit-content;">History</h3>
         <div>
             <span class="ms-4"></span> Founded in 2005 through a community-led initiative, Madridejos Community College emerged as a beacon of accessible, high-quality education on Bantayan Island. Inspired by the dedication of local leaders and driven by the mission to empower through education.
         </div>
-    </div>
+
          <hr>
 
 <div class="row">
@@ -687,15 +686,13 @@ h6.fw-bold {
 <hr>
 
 <div class="mt-3">
-<div data-aos="fade-right" data-aos-duration="1000">
             <h5>Vision:</h5>
             <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent
             individuals with benevolent character innovative, service-oriented, and highly empowered to meet and exceed
             challenges as proactive participants in shaping our world's future.
         </div>
-</div>
+
         <div class="mt-3">
-        <div data-aos="fade-left" data-aos-duration="1000">
             <h5>Mission:</h5>
             <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning
             environment that aims to foster academic and career success through development of critical thinking,
@@ -703,20 +700,16 @@ h6.fw-bold {
             are timely, appropriate, and transformative in response to the demands of local, national, and international
             communities in a highly dynamic world.
         </div>
-        </div>
 
         <div class="mt-3">
-        <div data-aos="fade-right" data-aos-duration="1000">
             <h5>Goals:</h5>
             <span class="ms-4">Develop </span> globally competitive, value-laden professionals capable of making a
             positive social, environmental, and economic impact through research and community service.
-        </div>
         </div>
 
         <hr>
 
         <div class="mt-3">
-        <div data-aos="fade-left" data-aos-duration="1000">
             <span class="ms-4">Learning </span> Enhancement and Support. Foster student learning and support by
             leveraging student strengths and meeting their specific needs through targeted success pathways.
 
@@ -729,17 +722,13 @@ h6.fw-bold {
             reasoning to expand the learner's knowledge, promote effective learning, comprehend different concerns and
             trends, seek the truth, and identify opportunities that lie ahead.
         </div>
-        </div>
 
         <div class="mt-3">
-        <div data-aos="fade-right" data-aos-duration="1000">
             <span class="ms-4">Inculcate </span>
             Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and outside the school.
             Social Responsibility. Ensure the relevance, alignment and support of the community and businesses by providing outreach, bridge programs, and community-focused facilities.
         </div>
-        </div>
     </div>
-
   
            <footer class="h-100 footer-background">
   <div class="container">
@@ -886,10 +875,7 @@ document.addEventListener('keydown', function(e) {
 </script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-    AOS.init();
-</script>
+
+
 </body>
 </html>
