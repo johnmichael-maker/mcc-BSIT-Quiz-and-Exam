@@ -1,13 +1,3 @@
-<?php
-session_start(); // Start session to check email verification status
-
-// If the user is already verified, redirect them to login page or other protected pages
-if (isset($_SESSION['email_verified']) && $_SESSION['email_verified'] === true) {
-    header("Location: login.php"); // Redirect to login page
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
