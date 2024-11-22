@@ -1,0 +1,13 @@
+# Enable mod_rewrite engine
+RewriteEngine On
+RewriteBase /
+
+# Redirect old .php URLs to clean URLs (for SEO purposes)
+RewriteCond %{THE_REQUEST} \s/([a-zA-Z0-9_-]+)\.php[\s?] [NC]
+RewriteRule ^([a-zA-Z0-9_-]+)\.php$ /$1 [R=301,L]
+
+# Remove .php extension for login.php (from the root directory)
+RewriteCond %{REQUEST_FILENAME} !-f              # Ensure it's not a real file
+RewriteCond %{REQUEST_FILENAME} !-d              # Ensure it's not a real directory
+RewriteRule ^login$ admin/login.php [L]          # Route /login to /admin/login.php internally
+
