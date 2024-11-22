@@ -1,15 +1,4 @@
-<?php
-session_start(); 
 
-
-if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true) {
-
-    header("Location: access-control"); // or wherever you want to redirect
-    exit();
-}
-
-// The rest of your login page code here
-?>
 
 <?php require __DIR__ . '/partials/header.php'; ?>
     <!DOCTYPE html>
