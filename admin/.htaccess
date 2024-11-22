@@ -2,11 +2,16 @@
 RewriteEngine On
 RewriteBase /
 
-# Redirect old .php URLs to clean URLs
+# Redirect .php URLs to clean URLs (for SEO purposes)
 RewriteCond %{THE_REQUEST} \s/([a-zA-Z0-9_-]+)\.php[\s?] [NC]
 RewriteRule ^([a-zA-Z0-9_-]+)\.php$ /$1 [R=301,L]
 
+# Remove .php extension for login.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^login$ admin/login.php [L]
+
 # Remove .php extension for access-control.php
-RewriteCond %{REQUEST_FILENAME} !-f             # Ensure it's not a real file
-RewriteCond %{REQUEST_FILENAME} !-d             # Ensure it's not a real directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^access-control$ admin/access-control.php [L]
