@@ -682,7 +682,26 @@ h6.fw-bold {
     .visible {
         opacity: 1;
     }
-    
+    .img-style {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px; /* Rounded corners */
+    object-fit: cover;
+}
+
+/* Responsive size adjustments */
+@media (max-width: 768px) {
+    .img-style {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .img-style {
+        width: 80%;
+    }
+}
 </style>
 </head>
 
@@ -700,15 +719,15 @@ h6.fw-bold {
 
         <hr>
 
-        <div class="row">
-            <div class="col-lg-6 fade-in-left">
-                <img src="assets/img/img-1.jpeg" alt="image" class="w-100">
-            </div>
-            <br>
-            <div class="col-lg-6 fade-in-right">
-                <img src="assets/img/img-2.jpeg" alt="image" class="w-100">
-            </div>
-        </div>
+       <div class="row">
+    <div class="col-lg-6 fade-in-left">
+        <img src="assets/img/img-1.jpeg" alt="image" class="img-style w-100">
+    </div>
+    <br>
+    <div class="col-lg-6 fade-in-right">
+        <img src="assets/img/img-2.jpeg" alt="image" class="img-style w-100">
+    </div>
+</div>
 
         <hr>
 
