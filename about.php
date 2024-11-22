@@ -846,6 +846,36 @@ h6.fw-bold {
             observer.observe(element);
         });
     });
+
+	document.addEventListener('contextmenu', function(e) {
+    e.preventDefault(); // Disables right-click menu
+});
+
+// Prevent specific key combinations
+document.addEventListener('keydown', function(e) {
+    // Disable specific key combinations such as Ctrl + I, Ctrl + U, Ctrl + J, Ctrl + C, Ctrl + S, F12
+    if (e.ctrlKey || e.metaKey) {
+        if (
+            e.key === 'i' ||  // Ctrl + I (Inspect)
+            e.key === 'u' ||  // Ctrl + U (View Source)
+            e.key === 'j' ||  // Ctrl + J (Console)
+            e.key === 'c' ||  // Ctrl + C (Copy)
+            e.key === 's' ||  // Ctrl + S (Save)
+            e.key === 'k' ||  // Ctrl + K (Search Console)
+            e.key === 'h' ||  // Ctrl + H (History)
+            e.key === 'd' ||  // Ctrl + D (Bookmark)
+            e.key === 'r' ||  // Ctrl + R (Reload)
+            e.key === 'p' ||  // Ctrl + P (Print)
+            e.key === 'f' ||  // Ctrl + F (Find)
+            e.key === 'q' ||  // Ctrl + Q (Quit)
+            e.key === 'F12'   // F12 (Developer Tools)
+        ) {
+            e.preventDefault();  // Prevent default action
+            return false;
+        }
+    }
+});
+
 </script>
 
 </body>
