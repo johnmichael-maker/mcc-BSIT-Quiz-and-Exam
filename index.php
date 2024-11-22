@@ -664,8 +664,7 @@ window.addEventListener("load", function() {
     </div>
 
         <hr>
-
-      <div data-aos="fade-left" data-aos-duration="900">
+	    
         <div class="mt-3">
             <h5>Vision:</h5>
             <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent
