@@ -59,6 +59,12 @@ $inactive = "text-light";
         </li>
         <?php endif; ?>
 
+        <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
+        <li class="nav-item">
+            <a href="activity_log.php" class="nav-link <?= str_contains($url, '/activity_log.php') ? $active : $inactive ?>"> <i class="bx bx-clipboard"></i> Activity Log</a>
+        </li>
+        <?php endif; ?>
+        
         <!-- Conditionally render Ms365 Account menu based on AUTH_UTYPE -->
         <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
         <li class="nav-item">
