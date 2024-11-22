@@ -6,9 +6,11 @@
     $databaseController = new DatabaseControl;
     $adminController = new Admin($_POST);
     // $adminController->startSession();
-    if ($adminController->checkAdmin()) {
-        header('location: access-control.php');
-    }
+   <?php
+if ($adminController->checkAdmin()) {
+    header('Location: access-control'); // Redirect to clean URL without .php
+    exit(); // Don't forget to call exit() after header to stop script execution
+}
     if ($adminController->isAdminDashboard()) {
         if (!$adminController->isActive()) {
             header('location: login.php');
