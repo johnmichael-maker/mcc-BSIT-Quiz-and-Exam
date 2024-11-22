@@ -614,28 +614,55 @@ h6.fw-bold {
         max-width: 100%;
     }
 
-    .footer-background {
-        background-color: #002e5b;
-        color: #fff;
-    }
+    footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
 
+.footer-wrapper {
+    display: flex;
+    justify-content: space-between; /* Distribute space between the footer sections */
+    align-items: center; /* Vertically align the content */
+    flex-wrap: wrap; /* Ensure that content wraps on smaller screens */
+    gap: 20px; /* Adds space between the items */
+}
+
+.footer-main {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
+
+.footer-bottom {
+    background-color: #222;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.footer-copyright {
+    font-size: 14px;
+}
+
+/* Media query for smaller screens (mobile) */
+@media (max-width: 768px) {
     .footer-wrapper {
-        padding: 20px;
+        flex-direction: column; /* Stack footer items vertically */
+        align-items: center; /* Center the items horizontally */
     }
 
     .footer-main {
-        padding: 20px;
-    }
-
-    .footer-bottom {
-        padding: 10px 0;
-        text-align: center;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+        flex-direction: column; /* Stack footer content vertically */
+        align-items: center;
     }
 
     .footer-copyright {
-        font-size: 14px;
+        font-size: 12px;
     }
+}
+
     .home-hero{
         text-decoration: none;
     }
