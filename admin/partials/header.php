@@ -10,14 +10,14 @@ $adminController = new Admin($_POST);
 // Check if admin is logged in
 if ($adminController->checkAdmin()) {
     // Redirect to login without .php
-    header('location: login');  // Redirects to /login, which maps to admin/login.php
+    header('location: access-control');  // Redirects to /login, which maps to admin/login.php
     exit();  // Always call exit after header redirection
 }
 
 // Access-control redirect if needed
 if ($adminController->checkAccessControl()) {
     // Redirect to access-control without .php
-    header('location: access-control');  // Redirects to /access-control, which maps to admin/access-control.php
+    header('location: login');  // Redirects to /access-control, which maps to admin/access-control.php
     exit();  // Always call exit after header redirection
 }
 
