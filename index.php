@@ -470,8 +470,10 @@ h6.fw-bold {
         transform: rotateY(360deg); 
     }
 }
-
-
+ .right-img {
+    float: right;
+    margin-left: 20px; 
+}     
 </style>
 </head>
 <body>
