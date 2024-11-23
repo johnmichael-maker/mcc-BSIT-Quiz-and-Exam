@@ -222,7 +222,9 @@ require __DIR__ . '/./partials/header.php';
                 <form name="signup" method="post" class="m-auto" id="signup-card">
                     <div class="card">
                         <div class="card-body">
-                            <a href="student-signup.php" class="btn btn-secondary mb-2"><i class="bx bx-arrow-back"></i></a>
+                           <a href="student-signup.php?token=<?php echo urlencode($token); ?>" class="btn btn-secondary mb-2">
+                            <i class="bx bx-arrow-back"></i>
+                            </a>
                             <h3 class="text-center fw-bold my-3"><i class="bx bx-question-mark"></i>Pop Quiz</h3>
                             <h5 class="mb-3">Please sign up first</h5>
 
@@ -275,7 +277,9 @@ require __DIR__ . '/./partials/header.php';
                 <form name="signup-exam" class="m-auto" id="signup-card">
                     <div class="card ">
                         <div class="card-body">
-                            <a href="student-signup.php" class="btn btn-secondary mb-2"><i class="bx bx-arrow-back"></i></a>
+                           <a href="student-signup.php?token=<?php echo urlencode($token); ?>" class="btn btn-secondary mb-2">
+                       <i class="bx bx-arrow-back"></i>
+                            </a>
                             <h3 class="text-center fw-bold my-3"><i class="bx bx-file"></i> Exam</h3>
                             <h5 class="mb-3">Please sign up first</h5>
 
