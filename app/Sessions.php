@@ -50,14 +50,14 @@ Trait Sessions {
         }
     }
 
-   private function activeAdminSession($username, $image, $userType){
-       
-        $_SESSION['AUTH_ID'] = $id;   
+    private function activeAdminSession($id, $username, $image, $userType)
+    {
+        $_SESSION['AUTH_ID'] = $id;       // Store the ID in the session
         $_SESSION['AUTH_KEY'] = $username;
         $_SESSION['AUTH_IMG'] = $image;
         $_SESSION['AUTH_UTYPE'] = $userType;
         $_SESSION['ADMIN_ACTIVE'] = true;
-    }
+    }    
 
     public function sessionDestroy(){
         session_destroy();
