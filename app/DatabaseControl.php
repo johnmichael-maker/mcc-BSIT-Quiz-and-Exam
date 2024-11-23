@@ -122,11 +122,29 @@ class DatabaseControl extends Database
     }
 
 
-    public function getExams(){
+   public function getstudentExams(){
         $conn = $this->getConnection();
         $stmt = $conn->prepare("SELECT * FROM exams");
         $stmt->execute();
         return $stmt;
+    }
+
+    public function getExams() {
+        $conn = $this->getConnection();
+        
+        if (isset($_SESSION['AUTH_ID']) && !empty($_SESSION['AUTH_ID'])) {
+            $adminId = $_SESSION['AUTH_ID'];
+            
+            // Prepare the statement to select exams filtered by admin_id
+            $stmt = $conn->prepare("SELECT * FROM exams WHERE admin_id = :admin_id");
+            $stmt->bindParam(':admin_id', $adminId, PDO::PARAM_INT); // Bind the admin ID to the query
+            $stmt->execute();
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            // Handle case where admin ID is not set
+            return [];
+        }
     }
 
     public function getMultipleChoice($id){
