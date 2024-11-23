@@ -33,7 +33,7 @@ function sendRegistrationLink(string $email): string {
         $insertStmt->execute();
 
         
-        $registration_link = "https://mccbsitquizandexam.com/instructor-reg?token=" . $token;
+        $registration_link = "https://mccbsitquizandexam.com/step-123?token=" . $token;
 
 
         $mail = new PHPMailer(true);
