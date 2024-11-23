@@ -89,18 +89,17 @@ class Admin extends Database
     public function login()
     {
         $conn = $this->getConnection();
-        $uname = $this->post_data['uname'];
+       $uname = $this->post_data['uname'];
         $password = $this->post_data['password'];
-    
+
         $stmt = $conn->prepare("SELECT * FROM admin WHERE username = :uname");
         $stmt->execute([':uname' => $uname]);
-    
+
         if ($stmt) {
             if ($stmt->rowCount() > 0) {
                 $result = $stmt->fetch();
                 if (password_verify($password, $result['password'])) {
-                    // Pass the ID along with the other data
-                    $this->activeAdminSession($result['admin_id'], $result['username'], $result['img'], $result['userType']);
+                    $this->activeAdminSession($result['username'], $result['img'], $result['userType']);
                     $this->message = "success";
                 } else {
                     $this->message = "error";
@@ -109,9 +108,9 @@ class Admin extends Database
                 $this->message = "error";
             }
         }
-    
+
         return $this->message;
-    }    
+    }
 
     public function confirmSession()
     {
