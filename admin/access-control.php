@@ -384,7 +384,7 @@ $('#email-form').on('submit', function (e) {
                             $('#message').html('Please say the email address for verification.').removeClass('text-success').addClass('text-danger');
                         }
                     } else {
-                        $('#message').html('Please say "send verification code" to proceed.').removeClass('text-success').addClass('text-danger');
+                        $('#message').html('').removeClass('text-success').addClass('text-danger');
                     }
                 };
 
