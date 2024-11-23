@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-    <?php  
+<?php
 // Database connection (using PDO)
 $host = 'localhost';
 $dbname = 'u510162695_bsit_quiz';
@@ -424,14 +424,17 @@ if (!$user) {
     <script src="assets/js/show-hide-password.js"></script>
     <!-- SweetAlert 2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 <script>
-      const urlParams = new URLSearchParams(window.location.search);
+     // JavaScript for form submission prevention if token is invalid
+     const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
 
         // Ensure the token is present and valid
         if (!token || token.length !== 32) {
             window.location.href = "error_page.php";  // Redirect to error page if token is invalid
         }
+
         
         function togglePasswordVisibility(passwordFieldId, iconId) {
             const passwordField = document.getElementById(passwordFieldId);
