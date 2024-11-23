@@ -400,6 +400,54 @@ class Admin extends Database
         return $stmt;
     }
 
+    public function getMidtermExaminees()
+{
+    $conn = $this->getConnection();
+    
+    // Get the admin_id from session
+    if (!isset($_SESSION['AUTH_ID'])) {
+        // Get the admin_id from session
+
+        $stmt = $conn->prepare("SELECT 
+        *,
+        CONCAT(fname , ' ', mname, ' ', lname) AS fullname
+    FROM 
+        examinees
+    ");
+    $stmt->execute();
+    return $stmt;
+
+    }else{
+        // Get the admin_id from session
+    $adminId = $_SESSION['AUTH_ID'];
+
+        // SQL query to join exams and examinees tables and filter by type and admin_id
+    $stmt = $conn->prepare("
+    SELECT 
+        e.id_number,
+        CONCAT(e.fname, ' ', e.mname, ' ', e.lname) AS fullname,
+        e.section,
+        e.year_level,
+        e.score,
+        e.created_at
+    FROM 
+        examinees e
+    INNER JOIN 
+        exams ex ON e.section = ex.section AND e.year_level = ex.year_level
+    WHERE 
+        ex.type = 2 
+        AND ex.admin_id = :admin_id
+        AND e.exam_id = ex.id
+");
+
+// Bind the admin ID from session
+$stmt->bindParam(':admin_id', $adminId, PDO::PARAM_INT);
+
+$stmt->execute();
+return $stmt;
+    }
+}
+
     public function getContestants()
     {
         $conn = $this->getConnection();
@@ -444,15 +492,18 @@ class Admin extends Database
     public function addExam()
     {
         $conn = $this->getConnection();
+        $adminId = $_SESSION['AUTH_ID']; // Retrieve admin ID from session
         $section = $_POST['section'];
         $year_level = $_POST['year_level'];
         $semester = $_POST['semester'];
         $type = $_POST['type'];
         $category = $_POST['category'];
         $time_limit = $_POST['time_limit'];
-
-        $stmt = $conn->prepare("INSERT INTO exams(section,year_level,semester,type,category,time_limit) VALUES(:section, :year_level, :semester, :type, :category, :time_limit)");
-
+    
+        // Insert the exam details along with the admin ID
+        $stmt = $conn->prepare("INSERT INTO exams (section, year_level, semester, type, category, time_limit, admin_id) 
+                                VALUES(:section, :year_level, :semester, :type, :category, :time_limit, :admin_id)");
+    
         if (!empty($section) && !empty($year_level) && !empty($semester) && !empty($category) && !empty($type) && !empty($time_limit)) {
             $stmt->execute([
                 ':section' => $section,
@@ -460,11 +511,21 @@ class Admin extends Database
                 ':semester' => $semester,
                 ':type' => $type,
                 ':category' => $category,
-                ':time_limit' => $time_limit
+                ':time_limit' => $time_limit,
+                ':admin_id' => $adminId // Bind the admin ID
             ]);
-
+    
+            // Log the activity
+            $logStmt = $conn->prepare("INSERT INTO activity_logs (admin_id, action, action_details) 
+                                       VALUES (:admin_id, :action, :action_details)");
+            $logStmt->execute([
+                ':admin_id' => $adminId,
+                ':action' => 'Added Exam',
+                ':action_details' => "Section: $section, Year Level: $year_level, Semester: $semester, Type: $type, Category: $category"
+            ]);
+    
             if ($stmt) {
-            ?>
+                ?>
                 <script>
                     Swal.fire({
                         position: "top-end",
@@ -473,55 +534,64 @@ class Admin extends Database
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        window.location.href = "add-exam.php"
+                        window.location.href = "add-exam.php";
                     });
                 </script>
                 <?php
-                // header("location: add-exam.php?message=Exam added successfully");
-            }else{
+            } else {
                 ?>
                 <script>
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
-                        title: "Error, exam already exist",
+                        title: "Error, exam already exists",
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        window.location.href = "add-exam.php"
+                        window.location.href = "add-exam.php";
                     });
                 </script>
                 <?php
             }
         }
     }
+    
 
     public function editExam()
-    {
-        $conn = $this->getConnection();
-        $id = $_POST['id'];
-        $section = $_POST['section'];
-        $year_level = $_POST['year_level'];
-        $semester = $_POST['semester'];
-        $type = $_POST['type'];
-        $category = $_POST['category'];
-        $time_limit = $_POST['time_limit'];
+{
+    $conn = $this->getConnection();
+    $id = $_POST['id'];
+    $section = $_POST['section'];
+    $year_level = $_POST['year_level'];
+    $semester = $_POST['semester'];
+    $type = $_POST['type'];
+    $category = $_POST['category'];
+    $time_limit = $_POST['time_limit'];
 
-        $stmt = $conn->prepare("UPDATE exams SET section = :section, year_level = :year_level,semester = :semester, type = :type, category = :category,time_limit = :time_limit WHERE id = :id");
-        $stmt->execute([
-            ':section' => $section,
-            ':year_level' => $year_level,
-            ':semester' => $semester,
-            ':type' => $type,
-            ':category' => $category,
-            ':time_limit' => $time_limit,
-            ':id' => $id
-        ]);
+    $stmt = $conn->prepare("UPDATE exams SET section = :section, year_level = :year_level, semester = :semester, type = :type, category = :category, time_limit = :time_limit WHERE id = :id");
+    $stmt->execute([
+        ':section' => $section,
+        ':year_level' => $year_level,
+        ':semester' => $semester,
+        ':type' => $type,
+        ':category' => $category,
+        ':time_limit' => $time_limit,
+        ':id' => $id
+    ]);
 
-        if ($stmt) {
-            header("location: edit-exam.php?id=$id&message=Exam updated successfully");
-        }
+    // Log the activity
+    $logStmt = $conn->prepare("INSERT INTO activity_logs (admin_id, action, action_details) 
+                               VALUES (:admin_id, :action, :action_details)");
+    $logStmt->execute([
+        ':admin_id' => $_SESSION['AUTH_ID'],
+        ':action' => 'Updated Exam',
+        ':action_details' => "Exam ID: $id, Section: $section, Year Level: $year_level, Semester: $semester, Type: $type, Category: $category"
+    ]);
+
+    if ($stmt) {
+        header("location: edit-exam.php?id=$id&message=Exam updated successfully");
     }
+}
 
     public function getExamById()
     {
@@ -538,14 +608,37 @@ class Admin extends Database
     {
         $id = $_POST['id'];
         $conn = $this->getConnection();
-
+    
+        // Get exam details before deletion for logging
+        $stmt = $conn->prepare("SELECT * FROM exams WHERE id=:id");
+        $stmt->execute([':id' => $id]);
+        $exam = $stmt->fetch(PDO::FETCH_ASSOC);
+    
         $stmt = $conn->prepare("DELETE FROM exams WHERE id=:id");
         $stmt->execute([':id' => $id]);
-
+    
+        // Log the activity
+        $logStmt = $conn->prepare("INSERT INTO activity_logs (admin_id, action, action_details) 
+                                   VALUES (:admin_id, :action, :action_details)");
+        $logStmt->execute([
+            ':admin_id' => $_SESSION['AUTH_ID'],
+            ':action' => 'Deleted Exam',
+            ':action_details' => "Exam ID: $id, Section: {$exam['section']}, Year Level: {$exam['year_level']}, Semester: {$exam['semester']}, Type: {$exam['type']}, Category: {$exam['category']}"
+        ]);
+    
         if ($stmt) {
             header('location: exam.php?message=Exam removed successfully');
         }
     }
+    
+    public function getActivityLogs()
+{
+    $conn = $this->getConnection();
+    $stmt = $conn->prepare("SELECT * FROM activity_logs ORDER BY timestamp DESC");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
     public function getAllContestants()
     {
