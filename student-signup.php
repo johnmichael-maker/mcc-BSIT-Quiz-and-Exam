@@ -317,8 +317,8 @@ require __DIR__ . '/./partials/header.php';
                             </select>
 
                             <label for="">Choose Exam</label>
-                            <select name="exam_id" class="form-select my-2">
-                                <?php 
+                            <select name="exam_id" class="form-select my-2"  required>>
+                                 <?php 
                                 $exams = $databaseController->getstudentExams();
                                 foreach($exams as $exam): 
                                    
