@@ -319,7 +319,7 @@ require __DIR__ . '/./partials/header.php';
                             <label for="">Choose Exam</label>
                             <select name="exam_id" class="form-select my-2">
                                 <?php 
-                                $exams = $databaseController->getExams();
+                                $exams = $databaseController->getstudentExams();
                                 foreach($exams as $exam): 
                                    
                                 ?>
