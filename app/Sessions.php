@@ -51,6 +51,8 @@ Trait Sessions {
     }
 
    private function activeAdminSession($username, $image, $userType){
+       
+        $_SESSION['AUTH_ID'] = $id;   
         $_SESSION['AUTH_KEY'] = $username;
         $_SESSION['AUTH_IMG'] = $image;
         $_SESSION['AUTH_UTYPE'] = $userType;
