@@ -18,7 +18,7 @@ RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]
 RewriteCond %{REQUEST_URI} !^/student-signup.php$  # Exclude student-signup.php from redirection
 RewriteRule ^([^/]+)\.php$ /$1 [R=301,L]    # Redirect .php URLs to clean URLs without .php
 
-# Additional rules: Redirect "exam.php" to the clean URL "exam", "finished.php" to "finished", and "home.php" to "home"
+# Additional rules: Redirect "exam.php" to the clean URL "exam", "finished.php" to "finished", "home.php" to "home"
 RewriteCond %{THE_REQUEST} \s/exam\.php$ [NC]
 RewriteRule ^exam\.php$ /exam [R=301,L]    # Redirect exam.php to exam without .php
 
@@ -27,3 +27,7 @@ RewriteRule ^finished\.php$ /finished [R=301,L]    # Redirect finished.php to fi
 
 RewriteCond %{THE_REQUEST} \s/home\.php$ [NC]
 RewriteRule ^home\.php$ /home [R=301,L]    # Redirect home.php to home without .php
+
+# Add rule to redirect error_page.php to clean URL "error_page" without .php
+RewriteCond %{THE_REQUEST} \s/error_page\.php$ [NC]
+RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php to error_page without .php
