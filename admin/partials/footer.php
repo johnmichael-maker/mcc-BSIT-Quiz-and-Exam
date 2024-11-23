@@ -16,7 +16,7 @@
 
     <script>
         Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
             title: "Logged out successfully",
             showConfirmButton: false,
