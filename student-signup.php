@@ -212,8 +212,8 @@ require __DIR__ . '/./partials/header.php';
                         <h1>Hello <span class="text-danger fw-bold">Welcome!</span></h1>
                         <p>What do you want to sign up as?</p>
                         <div class="d-flex align-items-center gap-2 mt-4">
-                           <a href="?signup=quiz" class="btn btn-danger w-100"><i class="bx bx-question-mark"></i>Pop Quiz</a>
-                            <a href="?signup=exam" class="btn btn-danger w-100"><i class="bx bx-file"></i> Exam</a>
+                            <a href="?signup=quiz&token=<?php echo $userToken; ?>" class="btn btn-danger w-100"><i class="bx bx-question-mark"></i>Pop Quiz</a>
+                        <a href="?signup=exam&token=<?php echo $userToken; ?>" class="btn btn-danger w-100"><i class="bx bx-file"></i> Exam</a> 
                         </div>
                     </div>
                 </div>
