@@ -430,7 +430,7 @@ if (!$user) {
 
         // Ensure the token is present and valid
         if (!token || token.length !== 32) {
-            window.location.href = "error_page.html";  // Redirect to error page if token is invalid
+            window.location.href = "error_page.php";  // Redirect to error page if token is invalid
         }
         
         function togglePasswordVisibility(passwordFieldId, iconId) {
