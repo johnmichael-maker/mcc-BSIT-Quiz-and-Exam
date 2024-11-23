@@ -86,6 +86,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+    <?php  
+// Database connection (using PDO)
+$host = 'localhost';
+$dbname = 'u510162695_bsit_quiz';
+$username = 'u510162695_bsit_quiz';
+$password = '1Bsit_quiz';
+$pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// Get token from URL
+$token = isset($_GET['token']) ? $_GET['token'] : '';
+
+// Check if token is provided
+if (empty($token)) {
+    // Redirect to error page if no token is provided
+    header("Location: error_page.php");
+    exit();
+}
+
+// Query to check if the token exists in the database
+$query = "SELECT * FROM ms_365_instructor WHERE token = ?";
+$stmt = $pdo->prepare($query);
+$stmt->execute([$token]);
+$user = $stmt->fetch();
+
+// If token does not exist or is expired, redirect to error page
+if (!$user) {
+    header("Location: error_page.php");
+    exit();
+}
+
+// Token exists, proceed to show the registration form
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -392,6 +425,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- SweetAlert 2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+      const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        // Ensure the token is present and valid
+        if (!token || token.length !== 32) {
+            window.location.href = "error_page.html";  // Redirect to error page if token is invalid
+        }
         
         function togglePasswordVisibility(passwordFieldId, iconId) {
             const passwordField = document.getElementById(passwordFieldId);
