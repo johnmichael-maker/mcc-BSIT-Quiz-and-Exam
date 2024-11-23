@@ -42,6 +42,21 @@ $inactive = "text-light";
                 || str_contains($url, 'view-exam') 
                 ? $active : $inactive ?>"> <i class="bx bx-file"></i> Exam</a>
         </li>
+        <li class="nav-item dropend">
+    <a href="#" class="nav-link dropdown-toggle <?= 
+        str_contains($url, '/midterm.php') || str_contains($url, '/final.php') 
+        ? $active : $inactive ?>" 
+        id="classRecordsDropdown" 
+        role="button" 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false">
+        <i class="bx bx-book"></i> Class Records
+    </a>
+    <ul class="dropdown-menu custom-dropdown bg-danger" aria-labelledby="classRecordsDropdown">
+        <li><a class="dropdown-item text-black" href="midterm.php">Midterm</a></li>
+        <li><a class="dropdown-item text-black" href="final.php">Final</a></li>
+    </ul>
+</li>
         <?php endif; ?>
         
        <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
@@ -64,7 +79,7 @@ $inactive = "text-light";
             <a href="activity_log.php" class="nav-link <?= str_contains($url, '/activity_log.php') ? $active : $inactive ?>"> <i class="bx bx-clipboard"></i> Activity Log</a>
         </li>
         <?php endif; ?>
-        
+
         <!-- Conditionally render Ms365 Account menu based on AUTH_UTYPE -->
         <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
         <li class="nav-item">
