@@ -74,6 +74,7 @@
             confirmButtonText: `Yes`,
             confirmButtonColor: "#d93645",
             cancelButtonText: `No`,
+           position: 'center'
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location = "?logout"
