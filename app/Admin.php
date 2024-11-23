@@ -402,6 +402,57 @@ class Admin extends Database
         return $stmt;
     }
 
+public function getMidtermExaminees()
+{
+    $conn = $this->getConnection();
+    
+    // Get the admin_id from session
+    if (!isset($_SESSION['AUTH_ID'])) {
+        // Get the admin_id from session
+
+        $stmt = $conn->prepare("SELECT 
+        *,
+        CONCAT(fname , ' ', mname, ' ', lname) AS fullname
+    FROM 
+        examinees
+    ");
+    $stmt->execute();
+    return $stmt;
+
+    }else{
+        // Get the admin_id from session
+    $adminId = $_SESSION['AUTH_ID'];
+
+        // SQL query to join exams and examinees tables and filter by type and admin_id
+    $stmt = $conn->prepare("
+    SELECT 
+        e.id_number,
+        CONCAT(e.fname, ' ', e.mname, ' ', e.lname) AS fullname,
+        e.section,
+        e.year_level,
+        e.score,
+        e.created_at
+    FROM 
+        examinees e
+    INNER JOIN 
+        exams ex ON e.section = ex.section AND e.year_level = ex.year_level
+    WHERE 
+        ex.type = 2 
+        AND ex.admin_id = :admin_id
+        AND e.exam_id = ex.id
+");
+
+// Bind the admin ID from session
+$stmt->bindParam(':admin_id', $adminId, PDO::PARAM_INT);
+
+$stmt->execute();
+return $stmt;
+    }
+}
+
+
+
+    
     public function getContestants()
     {
         $conn = $this->getConnection();
