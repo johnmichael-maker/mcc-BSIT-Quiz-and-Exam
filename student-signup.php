@@ -30,6 +30,7 @@ if (!$user) {
 }
 
 // Token exists, proceed to show the registration form
+$username = $user['Username'];
 ?>
     <?php
 require __DIR__ . '/./partials/header.php';
@@ -229,7 +230,13 @@ require __DIR__ . '/./partials/header.php';
                             <h5 class="mb-3">Please sign up first</h5>
 
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
+                            <div class="field">
 
+                     <div class="label">Username</div>
+                          <input type="text" name="Username" id="username" placeholder="MS 365 Email"
+                        value="<?php echo htmlspecialchars($username); ?>" 
+            readonly required />
+               </div>
                             <label for="">ID Number</label>
                              <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732" name="id_number" required pattern="^\d{4}-\d{4}$" id="id_number">
                             <p class="errors d-none alert alert-danger py-1"></p>
@@ -286,7 +293,12 @@ require __DIR__ . '/./partials/header.php';
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
 
                             <p class="alert alert-danger py-2 d-none" id="alert-incorrect">Error, Credentials doesn't match</p>
-
+                            <div class="field">
+                     <div class="label">Username</div>
+                     <input type="text" name="Username" id="username" placeholder="MS 365 Email"
+                    value="<?php echo htmlspecialchars($username); ?>" 
+                    readonly required />
+                   </div>
                             <label for="">ID Number</label>
                              <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732" name="id_number" required pattern="^\d{4}-\d{4}$" id="id_number">
                             <p class="errors d-none alert alert-danger py-1"></p>
