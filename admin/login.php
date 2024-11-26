@@ -1,3 +1,5 @@
+
+
 <?php require __DIR__ . '/partials/header.php'; ?>
     <!DOCTYPE html>
     <html lang="zxx">
@@ -183,7 +185,7 @@
 
                     if (dataResponse === "success") {
                         alertSuccess.classList.remove("d-none");
-                        setTimeout(() => window.location.href = "access-control.php", 3000);
+                        setTimeout(() => window.location.href = "index.php", 3000);
                     } else if (dataResponse === 'error') {
                         alertError.classList.remove("d-none");
                         setTimeout(() => window.location.href = "login.php", 3000);
