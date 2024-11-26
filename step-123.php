@@ -383,7 +383,6 @@ $username = $user['Username'];  // Get username from the database
     <input type="text" name="Username" id="username" placeholder="MS 365 Email"
            value="<?php echo htmlspecialchars($username); ?>" 
            readonly required />
-           <span id="email-error" style="color: red; display: none; font-size: 12px;">Invalid email format. Please use a valid email from mcclawis.edu.ph domain.</span>
   </div>
              <div class="field">
         <div class="label">Password</div>
