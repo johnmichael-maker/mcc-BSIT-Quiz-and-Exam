@@ -1,4 +1,4 @@
- 
+
 body {
     color: hsl(0, 0%, 20%); 
 }
@@ -434,75 +434,7 @@ h6.fw-bold {
         transform: rotateY(360deg); 
     }
 }
-
-
-  .footer-background {
-  background-color: #002e5b; 
-  color: #fff;
-  padding: 50px 0;
-}
-
-.footer-background a {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.footer-background a:hover {
-  color: crimson;
-}
-
-.footer-background h5 {
-  font-family: 'Karla', sans-serif;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.footer-background p {
-  font-family: 'Karla', sans-serif;
-  font-weight: 400;
-  margin: 5px 0;
-}
-
-.footer-background .social-icons {
-  margin-top: 20px;
-}
-
-.footer-background .social-icons a {
-  font-size: 20px;
-  margin: 0 10px;
-  color: white;
-  transition: color 0.3s ease;
-}
-
-.footer-background .social-icons a:hover {
-  color: #ffffff; 
-}
-
-.footer-background .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-@media (min-width: 768px) {
-  .footer-background .container {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-}
-
-.footers {
-        bottom: 0;
-        width: 100%;
-        padding: 10px 0;
-        font-size: 14px;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
-    }
-
-    .footer-copyright {
-        color: #f8f9fa; /* Footer text color */
-    }
-      .right-img {
+ .right-img {
     float: right;
     margin-left: 20px; 
-} 
+}     
