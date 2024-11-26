@@ -86,30 +86,13 @@ class Admin extends Database
         return json_encode($averages);
     }
 
+  
     public function login()
     {
         $conn = $this->getConnection();
         $uname = $this->post_data['uname'];
         $password = $this->post_data['password'];
-
-        $ip = $_SERVER['REMOTE_ADDR'];  // Get the user's IP address for tracking attempts
-    $attemptsFile = 'failed_attempts.json'; // File to store failed attempts data
-    $maxAttempts = 4; // Maximum failed attempts before locking out
     
- // Read the current failed attempts log
- if (file_exists($attemptsFile)) {
-    $failedAttempts = json_decode(file_get_contents($attemptsFile), true);
-} else {
-    $failedAttempts = [];
-}
-if (isset($failedAttempts[$ip])) {
-    $failedData = $failedAttempts[$ip];
-    if ($failedData['attempts'] >= $maxAttempts && (time() - $failedData['last_failed_time']) < 300) { // 5 minutes lockout
-        $this->message = "You have exceeded the maximum number of login attempts. Please try again later.";
-        return $this->message;
-    }
-}
-
         $stmt = $conn->prepare("SELECT * FROM admin WHERE username = :uname");
         $stmt->execute([':uname' => $uname]);
     
@@ -117,20 +100,13 @@ if (isset($failedAttempts[$ip])) {
             if ($stmt->rowCount() > 0) {
                 $result = $stmt->fetch();
                 if (password_verify($password, $result['password'])) {
-
-                      // Reset failed attempts on successful login
-                unset($failedAttempts[$ip]);
-                file_put_contents($attemptsFile, json_encode($failedAttempts));
-
                     // Pass the ID along with the other data
                     $this->activeAdminSession($result['admin_id'], $result['username'], $result['img'], $result['userType']);
                     $this->message = "success";
                 } else {
-                    $this->trackFailedAttempt($ip, $failedAttempts, $attemptsFile);
                     $this->message = "error";
                 }
             } else {
-                $this->trackFailedAttempt($ip, $failedAttempts, $attemptsFile);
                 $this->message = "error";
             }
         }
@@ -138,43 +114,9 @@ if (isset($failedAttempts[$ip])) {
         return $this->message;
     }    
 
-    private function trackFailedAttempt($ip, &$failedAttempts, $attemptsFile)
-{
-    $currentTime = time();
-
-    // Increment failed attempts for the IP
-    if (isset($failedAttempts[$ip])) {
-        $failedAttempts[$ip]['attempts']++;
-        $failedAttempts[$ip]['last_failed_time'] = $currentTime;
-    } else {
-        $failedAttempts[$ip] = ['attempts' => 1, 'last_failed_time' => $currentTime];
-    }
-
-    // Update the failed attempts data
-    file_put_contents($attemptsFile, json_encode($failedAttempts));
-}
-     
-
     public function confirmSession()
     {
-        $ip = $_SERVER['REMOTE_ADDR'];
-    $attemptsFile = 'failed_attempts.json';
-       
-    if (file_exists($attemptsFile)) {
-        $failedAttempts = json_decode(file_get_contents($attemptsFile), true);
-    } else {
-        $failedAttempts = [];
-    }
-
-    if (isset($failedAttempts[$ip])) {
-        $failedData = $failedAttempts[$ip];
-        if ($failedData['attempts'] >= 4 && (time() - $failedData['last_failed_time']) < 300) {
-            return "Too many failed attempts. Please try again later.";
-        }
-    }
-
         if (isset($_SESSION['ADMIN_ACTIVE']) && isset($_SESSION['AUTH_KEY'])) {
-         return true;
 ?>
     
             <!-- <nav class="navbar navbar-light navbar-expand-lg py-0">
