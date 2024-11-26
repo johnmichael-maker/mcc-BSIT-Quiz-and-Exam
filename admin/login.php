@@ -1,5 +1,13 @@
+<?php
+session_start(); 
 
-
+// If the email is not verified, proceed to the access-control page
+if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true) {
+    header("Location: access-control.php"); // Redirect to access-control if not verified
+    exit();
+}
+// The rest of your login page code here
+?>
 <?php require __DIR__ . '/partials/header.php'; ?>
     <!DOCTYPE html>
     <html lang="zxx">
