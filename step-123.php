@@ -117,7 +117,8 @@ if (!$user) {
     exit();
 }
 
-// Token exists, proceed to show the registration form
+// Token exists, retrieve the username
+$username = $user['Username'];  // Get username from the database
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -355,11 +356,13 @@ if (!$user) {
         <!-- Step 2 - Contact Information -->
         <div class="page">
             <div class="title">Contact Info:</div>
-            <div class="field">
-    <div class="label">Email</div>
-    <input type="email" name="email" id="email" placeholder="MS 365 Email" required />
-    <span id="email-error" style="color: red; display: none; font-size: 12px;">Invalid email format. Please use a valid email from mcclawis.edu.ph domain.</span>
-</div>
+           <div class="field">
+    <div class="label">Username</div>
+    <input type="text" name="Username" id="username" placeholder="MS 365 Email"
+           value="<?php echo htmlspecialchars($username); ?>" 
+           readonly required />
+           <span id="email-error" style="color: red; display: none; font-size: 12px;">Invalid email format. Please use a valid email from mcclawis.edu.ph domain.</span>
+  </div>
 
             <div class="field">
                 <div class="label">Phone No.</div>
