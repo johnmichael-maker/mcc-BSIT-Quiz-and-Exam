@@ -227,20 +227,20 @@
 
                 <!-- Code Form (Table format) -->
                <form id="code-form" style="display: none;">
-                 <table class="verification-table" style="width: 100%; table-layout: fixed; margin: 0 auto;">
-                <tr>
-            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
-            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
-            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
-            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
-            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
-            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
-               </tr>
-           </table>
-          <div class="input-group-btn" style="text-align: center; margin-top: 20px;">
-        <button type="submit" class="btn">Verify</button>
-    </div>
-</form>
+              <!-- Code Form (Table format) -->
+                <form id="code-form" style="display: none;">
+                    <table class="verification-table" style="width: 100%; table-layout: fixed; margin: 0 auto;">
+                        <tr>
+                            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
+                            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
+                            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
+                            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
+                        </tr>
+                    </table>
+                    <div class="input-group-btn" style="text-align: center; margin-top: 20px;">
+                        <button type="submit" class="btn">Verify</button>
+                    </div>
+                </form>
 
 
                 <!-- Message Area (Success/Error Feedback) -->
