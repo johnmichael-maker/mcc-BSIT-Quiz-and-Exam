@@ -22,8 +22,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="shortcut icon" href="assets/img/file.png" type="">
-	<link rel="stylesheet" href="assets/css/home.css">
     <style>
+  
+body {
+    color: hsl(0, 0%, 20%); 
+}
 
 header {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url(./assets/img/mcc-bg.jpg);
@@ -31,11 +34,446 @@ header {
     background-repeat: no-repeat;
     background-position: center;
     padding: 0;
-    height: 90vh;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+.col-lg-8.h-100.my-auto.text-light {
+    padding-top: 50px; 
+}
+
+
+@media (max-width: 768px) {
+    header {
+        height: auto; 
+        padding: 20px 10px;
+    }
+
+    .col-lg-8.h-100.my-auto.text-light {
+        padding-top: 20px; 
+    }
+
+    h1.fade-in-right {
+        font-size: 24px; 
+    }
+
+    h3.fade-in-left {
+        font-size: 18px; 
+    }
+
+    p {
+        font-size: 14px; 
+    }
+}
+
+
+
+
+header img {
+    max-width: 100%; 
+}
+
+.nav-link {
+    font-size: 20px;
+}
+
+
+.footer-background {
+    background-color: #001f3f; 
+    color: hsl(0, 0%, 80%); 
+}
+
+.footer-background a {
+    color: white; 
+}
+
+.footer-background p {
+    color: hsl(0, 0%, 90%); 
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50vh);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-in-right {
+    animation: fadeInRight 1s ease-in-out;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50vh);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-in-left {
+    animation: fadeInLeft 1s ease-in-out;
+}
+
+
+@media print {
+    .dont-print {
+        display: none !important;
+    }
+
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+
+
+.container {
+    padding: 20px;
+}
+
+h3 {
+    padding-bottom: 10px;
+    color: #fff; 
+}
+
+h5 {
+    color: #fff; 
+    margin-bottom: 10px;
+}
+
+hr {
+    border: 1px solid #e0e0e0; 
+    margin: 20px 0;
+}
+
+span {
+    font-weight: bold; 
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+
+.hidden {
+    opacity: 0;
+    transform: translateY(50px); 
+}
+
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+
+.sticky-element {
+    position: -webkit-sticky; 
+    position: sticky;
+    top: 0; 
+    opacity: 1;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.sticky-element.sticky-active {
+    transform: translateY(0);
+}
+
+.sticky-element.sticky-inactive {
+    transform: translateY(-50px); 
+    opacity: 0;
+}
+
+
+@media (max-width: 1200px) {
+    .nav-link {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        padding: 15px;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header img {
+        width: 80%; 
+    }
+
+    .nav-link {
+        font-size: 16px;
+    }
+    
+    .footer-background {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-link {
+        font-size: 14px;
+    }
+    
+    .footer-background p, .footer-background a {
+        font-size: 14px;
+    }
+
+    .header img {
+        width: 100%; 
+    }
+}
+.logo-img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.smooth-move {
+    animation: smoothMove 3s ease-in-out infinite; 
+}
+.nav-link {
+    text-decoration: none;
+    padding: 10px;
+   
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: red;
+    border-bottom: 2px solid red;
+}
+h6.fw-bold {
+    color: black; 
+} .navbar-toggler { border: none; }
+        .navbar-toggler-icon { background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30"%3E%3Cpath stroke="%23333" stroke-width="2" d="M5 6h20M5 12h20M5 18h20" /%3E%3C/svg%3E'); }
+        .hidden { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
+        .visible { opacity: 1; transform: translateY(0); }
+        .sticky-active { position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .sticky-inactive { position: static; }
+        .logo-img { max-width: 100%; height: auto; }
+        .navbar-toggler {
+         border: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30"%3E%3Cpath stroke="%23ff0000" stroke-width="2" d="M5 6h20M5 12h20M5 18h20" /%3E%3C/svg%3E');
+    color: crimson; /* Fallback color */
+    size: 15px;
+}
+/* Default link color and font family */
+.navbar-nav .nav-link {
+    color: #555; 
+    font-size: 17px;
+     font-weight: bold;
+    text-transform: none; 
+    letter-spacing: 0; 
+    line-height: 1.5;
+    text-decoration: none; 
+    padding: 0.5rem 1rem; /
+}
+.navbar-nav .nav-item {
+    margin: 0 1rem; 
+}
+
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+   color: crimson; 
+    font-size: 17px;
+    text-decoration: none; 
+}
+
+
+.navbar-nav .nav-link.active {
+  color: crimson; 
+    font-size: 17px;
+    text-decoration: none; 
+}
+
+
+.navbar-toggler {
+    border: none; 
+    padding: 0.5rem; 
+}
+  /* Modal Enhancements */
+  .modal-content {
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa;
+    }
+
+    .modal-header {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .modal-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .modal-body {
+        font-size: 18px;
+        color: #555;
+        padding: 20px;
+    }
+
+    /* Role Buttons */
+    .btn-role {
+        border-radius: 30px;
+        padding: 10px 25px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-role:hover {
+        background-color: #0069d9;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+  
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-signup {
+	background-color: #df0100;
+        color: #fff;
+        border-radius: 50px; 
+        padding: 10px 25px; 
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+   
+    .btn-signup:hover {
+        background-color: #c82333; 
+	color:#fff;
+    }
+         
+  .result, .result1{
+            width: 73%;
+            position: absolute;        
+            z-index: 999;
+            top: 100%;
+            left: 0;
+        }
+        /* Formatting result items */
+        .result p, .result1 p{
+            margin: 0;
+            padding: 5px 5px;
+            border: 1px solid #CCCCCC;
+            border-top: none;
+            cursor: pointer;
+            background-color: white;
+        }
+        .result p:hover, .result1 p:hover{
+            background: #f2f2f2;
+        }
+        
+            
+/* Wrapper for the preloader */
+.loader-wrapper {
+    position: fixed;
+    z-index: 999999;
+    background:white;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 1s ease-out; 
+    opacity: 1; 
+}
+
+
+.loader-wrapper.hidden {
+    opacity: 0; 
+}
+
+
+.loader-logo {
+    margin-top: 20px; 
+    width: 120px; 
+    height: auto; 
+    opacity: 0.8; 
+    animation: fadeIn 2s ease-out forwards, flipLogo 2s ease-in-out infinite; 
+    color: white;
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+@keyframes flipLogo {
+    0% {
+        transform: rotateY(0deg); 
+    }
+    50% {
+        transform: rotateY(180deg); 
+    }
+    100% {
+        transform: rotateY(360deg); 
+    }
+}
+ .right-img {
+    float: right;
+    margin-left: 20px; 
+}     
 </style>
 </head>
 <body>
