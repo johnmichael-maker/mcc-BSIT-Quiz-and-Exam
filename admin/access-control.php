@@ -322,7 +322,7 @@ $('#email-form').on('submit', function (e) {
                     code += $(this).val();
                 });
 
-                if (code.length !== 4) { // Ensure the code has 4 digits
+                if (code.length !== 6) { // Ensure the code has 4 digits
                     $('#message').html('Please enter the full verification code.').removeClass('text-success').addClass('text-danger');
                     return;
                 }
