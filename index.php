@@ -31,7 +31,6 @@
     <link rel="shortcut icon" href="assets/img/file.png" type="">
     <link href="radiance/css/font-awesome.min.css" rel="stylesheet" />
     <link href="assets/css/home.css" rel="stylesheet">
-    <link href="radiance/css/responsive.css" rel="stylesheet">
     <style>
         .header_section {
             position: sticky;
