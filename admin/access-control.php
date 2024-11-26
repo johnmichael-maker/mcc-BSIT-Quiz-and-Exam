@@ -235,6 +235,8 @@
                             <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
                             <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
                             <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
+                            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
+                            <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
                         </tr>
                     </table>
                     <div class="input-group-btn" style="text-align: center; margin-top: 20px;">
