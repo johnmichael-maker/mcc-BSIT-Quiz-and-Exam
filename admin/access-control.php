@@ -70,7 +70,7 @@
 
         .verification-input {
             text-align: center;
-            width: 50px;
+            width: 30px;
             margin: 0 5px;
             font-size: 24px;
             padding: 10px;
