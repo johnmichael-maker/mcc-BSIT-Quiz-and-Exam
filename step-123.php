@@ -356,14 +356,11 @@ $username = $user['Username'];  // Get username from the database
         <!-- Step 2 - Contact Information -->
         <div class="page">
             <div class="title">Contact Info:</div>
-           <div class="field">
-    <div class="label">MS 365 Username</div>
-    <input type="text" name="Username" id="username" placeholder="MS 365 Email"
-           value="<?php echo htmlspecialchars($username); ?>" 
-           readonly required />
-           <span id="email-error" style="color: red; display: none; font-size: 12px;">Invalid email format. Please use a valid email from mcclawis.edu.ph domain.</span>
-  </div>
-
+              <div class="field">
+           <div class="label">Email</div>                         
+        <input type="email" name="email" id="email" placeholder="MS 365 Email" required />
+      <span id="email-error" style="color: red; display: none; font-size: 12px;">Invalid email format. Please use a valid email from mcclawis.edu.ph domain.</span>
+    </div>
             <div class="field">
                 <div class="label">Phone No.</div>
                 <input type="tel" id="phone" name="phone" maxlength="11" placeholder="Enter Phone Number" required pattern="09\d{9}" />
@@ -382,10 +379,13 @@ $username = $user['Username'];  // Get username from the database
         <!-- Step 3 - Login Details -->
         <div class="page">
             <div class="title">Login Details:</div>
-            <div class="field">
-                <div class="label">User Name</div>
-                <input type="email" name="username" class="email" id="username" placeholder="Enter Email" required />
-            </div>
+                  <div class="field">
+    <div class="label">MS 365 Username</div>
+    <input type="text" name="Username" id="username" placeholder="MS 365 Email"
+           value="<?php echo htmlspecialchars($username); ?>" 
+           readonly required />
+           <span id="email-error" style="color: red; display: none; font-size: 12px;">Invalid email format. Please use a valid email from mcclawis.edu.ph domain.</span>
+  </div>
              <div class="field">
         <div class="label">Password</div>
         <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required />
