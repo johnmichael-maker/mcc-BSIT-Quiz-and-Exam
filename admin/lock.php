@@ -34,8 +34,9 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Generate a 4-digit verification code
-        $verificationCode = rand(1000, 9999);
+    // Generate a 6-digit verification code
+    $verificationCode = rand(100000, 999999);
+
 
         // Update the verification code in the database
         $updateQuery = "UPDATE admin SET verification = ? WHERE email = ?";
