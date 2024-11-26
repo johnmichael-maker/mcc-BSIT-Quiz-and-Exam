@@ -113,45 +113,60 @@ $result = $conn->query($sql);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
     async function printPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({
-            orientation: "landscape", // Set orientation to landscape or portrait
-            unit: "mm", // Use mm for units
-            format: "a4", // Set page format to A4
-            putOnlyUsedFonts: true,
-            floatPrecision: 16 // Avoid floating point issues
-        });
+    const { jsPDF } = window.jspdf;
+    
+    // Set custom page size for Long Bond Paper (Legal size: 8.5 x 14 inches -> 215.9mm x 355.6mm)
+    const doc = new jsPDF({
+        orientation: "landscape",  // Landscape orientation (can also use portrait if needed)
+        unit: "mm",                // Units are in millimeters
+        format: [215.9, 355.6],    // Custom format: Long Bond Paper (Legal size)
+        putOnlyUsedFonts: true,    // Optimize fonts
+        floatPrecision: 16         // Avoid floating point issues
+    });
 
-        const table = document.getElementById('myDataTable');
-        let pdfContent = [];
+    const table = document.getElementById('myDataTable');
+    let pdfContent = [];
 
-        // Collect table headers
-        let headerData = [];
-        for (let header of table.tHead.rows[0].cells) {
-            headerData.push(header.innerText);
+    // Collect table headers (skip ID, only include Firstname, Lastname, and Email)
+    let headerData = [];
+    headerData.push(table.tHead.rows[0].cells[1].innerText); // Firstname
+    headerData.push(table.tHead.rows[0].cells[2].innerText); // Lastname
+    headerData.push(table.tHead.rows[0].cells[3].innerText); // Email
+    pdfContent.push(headerData); // Add headers to content
+
+    // Collect table data (skip ID, only include Firstname, Lastname, and Email)
+    let rowCount = table.rows.length;
+    let rowHeight = 10; // Row height in mm
+    let pageHeight = doc.internal.pageSize.height - 20; // Long Bond Paper height minus margins
+    let rowsPerPage = Math.floor((pageHeight - 20) / rowHeight); // Calculate how many rows fit in a page
+
+    let currentY = 20; // Starting Y position for the first row
+
+    // Add content to PDF
+    for (let i = 1; i < rowCount; i++) { // Start from 1 to skip headers
+        let rowData = [];
+        
+        rowData.push(table.rows[i].cells[1].innerText); 
+        rowData.push(table.rows[i].cells[2].innerText); 
+        rowData.push(table.rows[i].cells[3].innerText); 
+
+    
+        if (currentY + rowHeight > pageHeight) {
+           
+            doc.addPage();
+            currentY = 20; 
+            doc.text(headerData.join(' | '), 10, currentY); 
+            currentY += rowHeight; 
         }
-        pdfContent.push(headerData); // Add headers to content
 
-        // Collect table data
-        for (let row of table.rows) {
-            let rowData = [];
-            for (let cell of row.cells) {
-                rowData.push(cell.innerText);
-            }
-            pdfContent.push(rowData);
-        }
-
-        // Add content to PDF with better positioning
-        const startY = 20; // Start Y position
-        const rowHeight = 10; // Row height
-
-        pdfContent.forEach((rowData, index) => {
-            doc.text(rowData.join(' | '), 10, startY + (index * rowHeight));
-        });
-
-        // Save the PDF
-        doc.save("users_data.pdf");
+        doc.text(rowData.join(' | '), 10, currentY);
+        currentY += rowHeight; 
     }
+
+    // Save the PDF
+    doc.save("users_data.pdf");
+}
+
 </script>
 <script>
     // Initialize AOS (Animate On Scroll)
