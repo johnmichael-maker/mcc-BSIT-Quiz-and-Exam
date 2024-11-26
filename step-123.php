@@ -358,8 +358,7 @@ $username = $user['Username'];  // Get username from the database
             <div class="title">Contact Info:</div>
               <div class="field">
            <div class="label">Email</div>                         
-        <input type="email" name="email" id="email" placeholder="MS 365 Email" required />
-      <span id="email-error" style="color: red; display: none; font-size: 12px;">Invalid email format. Please use a valid email from mcclawis.edu.ph domain.</span>
+        <input type="email" name="email" id="email"  class="email" placeholder="Email" required />
     </div>
             <div class="field">
                 <div class="label">Phone No.</div>
