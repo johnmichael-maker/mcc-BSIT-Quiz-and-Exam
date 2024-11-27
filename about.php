@@ -1,620 +1,169 @@
+<?php 
+    require __DIR__ . '/./vendor/autoload.php';
+    use App\DatabaseControl;
+
+    $databaseController = new DatabaseControl;
+    $feedbacks = $databaseController->getFeedbacks();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="assets/img/file.png" type="image/x-icon">
+
     <title>MCC Competition : QUIZ BOWL</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome CSS (for icons) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link rel="shortcut icon" href="assets/img/file.png" type="">
+    <link href="radiance/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="./assets/css/home.css" rel="stylesheet">
     <style>
-    
-body {
-    color: hsl(0, 0%, 20%); 
-}
-
-header {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./assets/img/school.jpg);
-    background-size: cover;
-    background-position: center;
-    padding: 20px 0;
-}
-.col-lg-8.h-100.my-auto.text-light {
-    padding-top: 50px; 
-}
-
-
-@media (max-width: 768px) {
-    header {
-        height: auto; 
-        padding: 20px 10px;
-    }
-
-    .col-lg-8.h-100.my-auto.text-light {
-        padding-top: 20px; 
-    }
-
-    h1.fade-in-right {
-        font-size: 24px; 
-    }
-
-    h3.fade-in-left {
-        font-size: 18px; 
-    }
-
-    p {
-        font-size: 14px; 
-    }
-}
-
-
-
-
-header img {
-    max-width: 100%; 
-}
-
-.nav-link {
-    font-size: 20px;
-}
-
-
-.footer-background {
-    background-color: #001f3f; 
-    color: hsl(0, 0%, 80%); 
-}
-
-.footer-background a {
-    color: white; 
-}
-
-.footer-background p {
-    color: hsl(0, 0%, 90%); 
-}
-
-@keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(50vh);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.fade-in-right {
-    animation: fadeInRight 1s ease-in-out;
-}
-
-@keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50vh);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.fade-in-left {
-    animation: fadeInLeft 1s ease-in-out;
-}
-
-
-@media print {
-    .dont-print {
-        display: none !important;
-    }
-
-    .card {
-        border: none !important;
-        box-shadow: none !important;
-    }
-}
-
-
-.container {
-    padding: 20px;
-}
-
-h3 {
-    padding-bottom: 10px;
-    color: #fff; 
-}
-
-h5 {
-    color: #fff; 
-    margin-bottom: 10px;
-}
-
-hr {
-    border: 1px solid #e0e0e0; 
-    margin: 20px 0;
-}
-
-span {
-    font-weight: bold; 
-}
-
-.card {
-    margin-bottom: 20px;
-}
-
-
-.hidden {
-    opacity: 0;
-    transform: translateY(50px); 
-}
-
-
-.visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-
-.sticky-element {
-    position: -webkit-sticky; 
-    position: sticky;
-    top: 0; 
-    opacity: 1;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.sticky-element.sticky-active {
-    transform: translateY(0);
-}
-
-.sticky-element.sticky-inactive {
-    transform: translateY(-50px); 
-    opacity: 0;
-}
-
-
-@media (max-width: 1200px) {
-    .nav-link {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 992px) {
-    .container {
-        padding: 15px;
-    }
-
-    .navbar-nav {
-        text-align: center;
-    }
-
-    .card {
-        margin-bottom: 15px;
-    }
-}
-
-@media (max-width: 768px) {
-    .header img {
-        width: 80%; 
-    }
-
-    .nav-link {
-        font-size: 16px;
-    }
-    
-    .footer-background {
-        padding: 15px;
-    }
-
-    .container {
-        padding: 10px;
-    }
-}
-
-@media (max-width: 576px) {
-    .nav-link {
-        font-size: 14px;
-    }
-    
-    .footer-background p, .footer-background a {
-        font-size: 14px;
-    }
-
-    .header img {
-        width: 200%; 
-    }
-}
-
-.logo-img {
-    max-width: 100%;
-    height: auto;
-}
-
-
-.smooth-move {
-    animation: smoothMove 3s ease-in-out infinite; 
-}
-.nav-link {
-    text-decoration: none;
-    padding: 10px;
-   
-}
-
-.nav-link.active {
-    font-weight: bold;
-    color: red;
-    border-bottom: 2px solid red;
-}
-h6.fw-bold {
-    color: black; 
-} .navbar-toggler { border: none; }
-        .navbar-toggler-icon { background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30"%3E%3Cpath stroke="%23333" stroke-width="2" d="M5 6h20M5 12h20M5 18h20" /%3E%3C/svg%3E'); }
-        .hidden { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
-        .visible { opacity: 1; transform: translateY(0); }
-        .sticky-active { position: fixed; top: 0; width: 100%; z-index: 1000; }
-        .sticky-inactive { position: static; }
-        .logo-img { max-width: 100%; height: auto; }
-        .navbar-toggler {
-         border: none;
-}
-
-.navbar-toggler-icon {
-    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30"%3E%3Cpath stroke="%23ff0000" stroke-width="2" d="M5 6h20M5 12h20M5 18h20" /%3E%3C/svg%3E');
-    color: crimson; /* Fallback color */
-    size: 15px;
-}
-/* Default link color and font family */
-.navbar-nav .nav-link {
-    color: #555; 
-    font-size: 17px;
-     font-weight: bold;
-    text-transform: none; 
-    letter-spacing: 0; 
-    line-height: 1.5;
-    text-decoration: none; 
-    padding: 0.5rem 1rem; /
-}
-.navbar-nav .nav-item {
-    margin: 0 1rem; 
-}
-
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link:focus {
-   color: crimson; 
-    font-size: 17px;
-    text-decoration: none; 
-}
-
-
-.navbar-nav .nav-link.active {
-  color: crimson; 
-    font-size: 17px;
-    text-decoration: none; 
-}
-
-
-.navbar-toggler {
-    border: none; 
-    padding: 0.5rem; 
-}
-  /* Modal Enhancements */
-  .modal-content {
-        border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        background-color: #f8f9fa;
-    }
-
-    .modal-header {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-
-    .modal-title {
-        font-size: 24px;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .modal-body {
-        font-size: 18px;
-        color: #555;
-        padding: 20px;
-    }
-
-    /* Role Buttons */
-    .btn-role {
-        border-radius: 30px;
-        padding: 10px 25px;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border: none;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-    }
-
-    .btn-role:hover {
-        background-color: #0069d9;
-    }
-
-    .btn-success:hover {
-        background-color: #218838;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    /* Modal backdrop for a sleek effect */
-    .modal-backdrop {
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .btn-signup {
-        background-color: #df0100;
-        color: #fff;
-        border-radius: 50px; /* Makes the button round */
-        padding: 10px 25px; /* Increases button padding */
-        font-size: 16px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-    }
-
-    /* Optional: Button hover effect */
-    .btn-signup:hover {
-        background-color: #c82333; /* Slightly darker red on hover */
-        color: #fff;
-    }
-         
-  .result, .result1{
-            width: 73%;
-            position: absolute;        
-            z-index: 999;
-            top: 100%;
+        .header_section {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+        }
+
+        .navbar-nav .nav-item-spacing {
+            position: relative;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            margin-right: 0;
+        }
+
+        .navbar-nav .nav-item-spacing:hover {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .navbar-nav .nav-item-spacing::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background-color: red;
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: -3px;
             left: 0;
         }
-        /* Formatting result items */
-        .result p, .result1 p{
-            margin: 0;
-            padding: 5px 5px;
-            border: 1px solid #CCCCCC;
-            border-top: none;
-            cursor: pointer;
+
+        .navbar-nav .nav-item-spacing:hover::after {
+            width: 100%;
+            color: #333;
+        }
+
+        .adjust-text {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .adjust-text h1 {
+            margin-bottom: 15px;
+        }
+
+        .adjust-text h3 {
+            margin-bottom: 10px;
+        }
+
+        .adjust-img {
+            margin-top: 100px;
+        }
+
+        .adjust-img img {
+            margin-top: 10px;
+        }
+
+        .hero_area {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .header-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .owl-carousel-item img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-content-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .carousel-content-box h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .carousel-content-box p {
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+        }
+
+        .carousel-content-box .btn {
+            font-size: 1.2rem;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-content-box .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .header-carousel .owl-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .header-carousel .owl-dots .owl-dot span {
             background-color: white;
-        }
-        .result p:hover, .result1 p:hover{
-            background: #f2f2f2;
-        }
-        
-    .loader-wrapper {
-      position: fixed;
-      z-index: 999999;
-      background: #fff;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0; }
-      .loader-wrapper .loader {
-        height: 100px;
-        width: 100px;
-        position: fixed; }
-        .loader-wrapper .loader .loader-inner {
-          border: 0 solid transparent;
-          border-radius: 50%;
-          width: 150px;
-          height: 150px;
-          position: absolute;
-          top: calc(50vh - 75px);
-          left: calc(50vw - 75px); }
-          .loader-wrapper .loader .loader-inner:before {
-            content: '';
-            border: 1em solid #f0452e;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            width: inherit;
-            height: inherit;
-            position: absolute;
-            top: 0;
-            left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
-            opacity: 0;
-            -webkit-animation-delay: 0.8s;
-                    animation-delay: 0.8s; }
-          .loader-wrapper .loader .loader-inner:after {
-            content: '';
-            border: 1em solid #f0452e;
-            border-radius: 50%;
-            width: inherit;
-            height: inherit;
-            position: absolute;
-            top: 0;
-            left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
-            opacity: 0; }
-    
-    @-webkit-keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    @keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    .loader-box {
-      height: 150px;
-      text-align: center;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-      vertical-align: middle;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      -webkit-transition: .3s color, .3s border, .3s transform, .3s opacity;
-      transition: .3s color, .3s border, .3s transform, .3s opacity; }
-      .loader-box [class*="loader-"] {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        color: inherit;
-        vertical-align: middle; }
+        }
 
+        .header-carousel .owl-dots .owl-dot.active span {
+            background-color: #007bff;
+        }
 
-    </style>
-</head>
-
-<body>
-	 <div class="loader-wrapper" id="preloader">
-        <span class="loader"><span class="loader-inner"></span></span>
-    </div>
-    <script>
-        var loader = document.getElementById("preloader");
-        window.addEventListener("load", function() {
-            loader.style.display = "none"
-        })
-    </script>
-   <nav class="navbar navbar-expand-lg" style="background: #fff;">
-    <div class="container-fluid d-flex align-items-center justify-content-between">
-      
-        <div class="d-flex align-items-center">
-           
-          
-            <img src="assets/img/logo.png" alt="Logo" style="width: 130px; height: 80px; margin-left: -18px;">
-            
-            <div class="d-none d-md-block">
-                <h6 class="header-title text-blue ml-3" style="color: #666666; font-size: 15px;">
-                    MADRIDEJOS <span style="color: #c82333;">COMMUNITY COLLEGE</span>
-                </h6>
-            </div>
-            
-            <div class="d-block d-md-none" style="margin-left: -13px;">
-    <h6 class="header-title text-blue" style="color: #666666; font-size: 12px;">
-        MADRIDEJOS <span style="color: #c82333;">COMMUNITY</span>
-    </h6>
-    <h6 class="header-title text-blue" style="color: #c82333; font-size: 12px; margin-top: -5px;">
-        COLLEGE
-    </h6>
- </div>
-   </div>
-            
-       
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-        style="background-color: #f8f9fa; border-color: #c82333; padding: 8px; border-radius: 4px; margin-top: -8px; margin-right: -6px;">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="index.php" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="about.php" class="nav-link">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="contact.php" class="nav-link">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                    <button class="btn btn-signup btn-danger" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-   <!-- Sign Up Modal -->
-<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                 <h5 class="modal-title" id="signUpModalLabel" style="width: 100%; text-align: center; font-family: 'Arial', sans-serif;">Sign Up As</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-          <div class="modal-body">
-                <p class="text-center mb-4">Select your role to sign up:</p>
-                <div class="d-flex justify-content-center gap-4">
-                    <a href="step_register.php" class="btn btn-role btn-success">Examinee</a>
-                    <a href="./app/submit_instructor.php" class="btn btn-role btn-primary">Instructor</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-    <header class="bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                  <img src="assets/img/bsit-logo.png" alt="MCC Logo" class="logo-img smooth-move">
-                </div>
-                <div class="col-lg-8 h-100 my-auto text-light">
-                    
-       <div class="container text-light mt-3 py-3">
-        <h3 class="border-bottom border-2" style="width: fit-content;"  data-aos="fade-up" data-aos-duration="900">About Us</h3>
-        <div>
-            <span class="ms-4">Madridejos</span> Community College (MCC) is a higher education institution located in
-            Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to
-            provide accessible and affordable education to the local community, focusing on developing skilled
-            professionals who can contribute to the region's socioeconomic growth.
-        </div>
-                    
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-<!-- Custom CSS -->
-<style>
-     body,
-    html {
-        overflow-x: hidden;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        max-width: 100%;
-    }
-
-    footer {
+        footer {
     background-color: #333;
     color: #fff;
     padding: 20px 0;
@@ -669,152 +218,336 @@ h6.fw-bold {
     .home-hero:hover{
         color: crimson;
     }
-
-    .fade-in-left {
-        animation: fadeInLeft 1s ease-in-out;
+    /* Modal Enhancements */
+  .modal-content {
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa;
     }
 
-    .fade-in-right {
-        animation: fadeInRight 1s ease-in-out;
+    .modal-header {
+        border-bottom: none;
+        padding-bottom: 0;
     }
 
-    @keyframes fadeInLeft {
-        0% {
-            opacity: 0;
-            transform: translateX(-50px);
-        }
-
-        100% {
-            opacity: 1;
-            transform: translateX(0);
-        }
+    .modal-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
     }
 
-    @keyframes fadeInRight {
-        0% {
-            opacity: 0;
-            transform: translateX(50px);
-        }
-
-        100% {
-            opacity: 1;
-            transform: translateX(0);
-        }
+    .modal-body {
+        font-size: 18px;
+        color: #555;
+        padding: 20px;
     }
 
-    .hidden {
-        opacity: 0;
+    /* Role Buttons */
+    .btn-role {
+        border-radius: 30px;
+        padding: 10px 25px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
     }
 
-    .visible {
-        opacity: 1;
+    .btn-success {
+        background-color: #28a745;
+        border: none;
     }
-   /* Adjusting image size and applying border radius */
-.img-style {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    border-radius: 15px; /* Rounded corners */
-    object-fit: cover;
-}
 
-/* Mobile (small screens) Layout */
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-role:hover {
+        background-color: #0069d9;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+  
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+/* Mobile-friendly adjustments */
 @media (max-width: 768px) {
-    .row {
-        display: flex;
-        flex-direction: column; /* Stack images vertically */
-        gap: 20px; /* Add space between the images */
+    /* Adjust navbar items spacing */
+    .navbar-nav .nav-link {
+        font-size: 16px;
     }
 
-    .col-lg-6 {
-        width: 100%; /* Ensure the columns are full width on mobile */
+    /* Adjust modal buttons for sign-up */
+    .btn-role {
+        width: 100%;
+        margin-bottom: 10px;
     }
 
-    .img-style {
-        width: 100%; /* Make images full width on mobile */
+    /* Adjust carousel image for mobile */
+    .owl-carousel-item img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Adjust the text in the About Us section for readability */
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .text-black {
+        font-size: 14px;
+    }
+
+    .fs-5 {
+        font-size: 16px;
+    }
+
+    /* Button styling on smaller screens */
+    .btn-signup {
+        width: 100%;
+        font-size: 18px;
+        padding: 10px 0;
+    }
+}
+/* Make sure images are always responsive */
+.header-carousel img {
+    width: 100%;
+    height: auto;
+}
+
+/* Adjust carousel content padding and margins on mobile */
+@media (max-width: 768px) {
+    .header-carousel .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .header-carousel h1 {
+        font-size: 1.75rem; /* Smaller font size for smaller screens */
+    }
+
+    .header-carousel p {
+        font-size: 1rem; /* Adjust paragraph font size */
+    }
+
+    .header-carousel .btn {
+        padding: 10px 20px; /* Adjust button padding on smaller screens */
     }
 }
 
-/* For extra small screens (very narrow viewports) */
-@media (max-width: 480px) {
-    .row {
-        gap: 10px; /* Reduce the space between images */
+/* Adjust font size for very small screens */
+@media (max-width: 576px) {
+    .header-carousel h1 {
+        font-size: 1.5rem; /* Smaller font size for very small screens */
+    }
+
+    .header-carousel p {
+        font-size: 0.875rem; /* Smaller paragraph text */
+    }
+
+    .header-carousel .btn {
+        padding: 8px 16px; /* Further reduce button size */
     }
 }
 
-</style>
+    </style>
 </head>
 
 <body>
 
+  <!-- Header Section -->
+  <header class="header_section">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <a class="navbar-brand" href="index.php">
+        <img src="assets/img/file.png" alt="Logo" class="logo" style="max-height: 50px; margin-right: 10px;">
+        <span style="color: #333; font-size: 20px;">BSIT QUIZ  <span style="color: #c82333;  font-size: 20px;" >AND EXAM</span></span>
+        </a>
 
-<div class="container text-light mt-3 py-3">
-<div class="mt-3" data-aos="fade-left" data-aos-duration="900">
-        <h3 class="border-bottom border-2" style="width: fit-content;" data-aos="fade-up" data-aos-duration="900">History</h3>
-        <div>
-            <span class="ms-4"></span> Founded in 2005 through a community-led initiative, Madridejos Community College
-            emerged as a beacon of accessible, high-quality education on Bantayan Island. Inspired by the dedication of
-            local leaders and driven by the mission to empower through education.
+      
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+        style="background-color: #f8f9fa; border-color: #c82333; padding: 8px; border-radius: 4px; margin-top: -8px; margin-right: -6px;">
+            <span class="navbar-toggler-icon"></span>
+          <span></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+            <a href="index.php" class="nav-link nav-item-spacing" target="_blank">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link nav-item-spacing" target="_blank">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="help.php" class="nav-link nav-item-spacing" target="_blank">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a id="dosdonts-link" href="javascript:void(0);" class="nav-link nav-item-spacing" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</a>
+            </li>
+          </ul>
         </div>
-
-        <hr>
-
-        <div class="row">
-    <div class="col-lg-6 fade-in-left">
-        <img src="assets/img/img-1.jpeg" alt="image" class="img-style w-100">
+      </nav>
     </div>
-    <div class="col-lg-6 fade-in-right">
-        <img src="assets/img/img-2.jpeg" alt="image" class="img-style w-100">
+  </header>
+  <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                 <h5 class="modal-title" id="signUpModalLabel" style="width: 100%; text-align: center; font-family: 'Arial', sans-serif;">Sign Up As</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+          <div class="modal-body">
+                <p class="text-center mb-4">Select your role to sign up:</p>
+                <div class="d-flex justify-content-center gap-4">
+                     <a href="step_register.php" class="btn btn-role btn-success">Examinee</a>
+                    <a href="register_instructor.php" class="btn btn-role btn-primary">Instructor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- Carousel Start -->
+  <div class="container-fluid p-0 mb-5">
+        <div class="owl-carousel header-carousel position-relative">
+            <div class="owl-carousel-item position-relative">
+                <img class="img-fluid" src="assets/img/mcc-bg.jpg" alt="">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background:rgba(0, 0, 0, 0.6);">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-sm-10 col-lg-8">
+                            <h1 class="display-3 text-white animated slideInDown" style="font-weight: bold;">Welcome to the Pop Quiz Competition and Examination!</h1>
+
+                            <p class="fs-5 text-white mb-4 pb-2">
+                        <br><br>
+                        Our carefully designed quizzes and exams offer a great way to evaluate your knowledge and track your progress. Get ready to compete, learn, and gain recognition for your achievements. Whether you're aiming for certification or just want to test your knowledge, this is the perfect platform for you.
+                    </p>
+                    <button class="btn btn-signup btn-danger py-md-3 px-md-5 me-3 animated slideInLeft openFormButton" data-bs-toggle="modal" data-bs-target="#signUpModal" >Sign up</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div class="owl-carousel-item position-relative">
+    <img class="img-fluid" src="assets/img/graduation.png" alt="Graduation Image">
+    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background:rgba(0, 0, 0, 0.6);">
+        <div class="container">
+            <div class="row justify-content-start">
+                <div class="col-sm-10 col-lg-8">
+                    <!-- Updated Heading for Examination -->
+                    <h1 class="display-3 text-white animated slideInDown" style="font-weight: bold;" >Examinations & Certification</h1>
+                    
+                    <!-- Updated Description about Examinations -->
+                    <p class="fs-5 text-white mb-4 pb-2">
+                        Prepare for our comprehensive examinations designed to assess your knowledge and skills in various academic and professional fields. 
+                        <br><br>
+                        Take part in official exams and earn certifications that can open doors to new career opportunities and academic advancements. 
+                        Whether you're looking to challenge yourself or gain official recognition for your knowledge, our examinations offer a structured, formalized approach to success.
+                    </p>
+                    
+                    <!-- Sign In Button -->
+                    <button class="btn btn-signup btn-danger py-md-3 px-md-5 me-3 animated slideInLeft openFormButton" data-bs-toggle="modal" data-bs-target="#signUpModal" >Sign up</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 
-        <hr>
-
-        <div class="mt-3" data-aos="fade-left" data-aos-duration="900">
-            <h5>Vision:</h5>
-            <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent
-            individuals with benevolent character, innovative, service-oriented, and highly empowered to meet and exceed
-            challenges as proactive participants in shaping our world's future.
-        </div>
-
-        <div class="mt-3" data-aos="fade-left" data-aos-duration="900">
-            <h5>Mission:</h5>
-            <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning
-            environment that aims to foster academic and career success through the development of critical thinking,
-            creativity, informed research, and social responsibility. Our mission is to deliver academic programs that are
-            timely, appropriate, and transformative in response to the demands of local, national, and international
-            communities in a highly dynamic world.
-        </div>
-
-        <div class="mt-3" data-aos="fade-left" data-aos-duration="900">
-            <h5>Goals:</h5>
-            <span class="ms-4">Develop </span> globally competitive, value-laden professionals capable of making a
-            positive social, environmental, and economic impact through research and community service.
-        </div>
-
-        <hr>
-
-        <div class="mt-3" data-aos="fade-up" data-aos-duration="900">
-            <span class="ms-4">Learning </span> Enhancement and Support. Foster student learning and support by
-            leveraging student strengths and meeting their specific needs through targeted success pathways.
-            Adaptive to change through innovation. Create an environment that encourages learners to be more innovative
-            and resilient in order to adapt to today's highly dynamic world.
-            Well-grounded in research. Conduct extensive research based on facts and sound reasoning to expand the
-            learner's knowledge, promote effective learning, comprehend different concerns and trends, seek the truth,
-            and identify opportunities that lie ahead.
-        </div>
-
-        <div class="mt-3" data-aos="fade-right" data-aos-duration="900">
-            <span class="ms-4">Inculcate </span>
-            Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and
-            outside the school.
-            Social Responsibility. Ensure the relevance, alignment, and support of the community and businesses by
-            providing outreach, bridge programs, and community-focused facilities.
+            <div class="owl-carousel-item position-relative">
+                <img class="img-fluid" src="assets/img/bsit.jpg" alt="">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background:rgba(0, 0, 0, 0.6);">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-sm-10 col-lg-8">
+                                <h1 class="display-3 text-white animated slideInDown" style="font-weight: bold;">Join the Pop Quiz Competition</h1>
+                                <p class="fs-5 text-white mb-4 pb-2"> Test your knowledge and compete with others in our exciting Pop Quiz Competition! Whether you're a student or a quiz enthusiast, this is your chance to show off your skills and win fantastic prizes.
+                                <br><br>
+                        Participate in a series of fun and challenging quizzes across various topics, ranging from general knowledge to specialized subjects. Are you ready to take the challenge and prove you're the best?
+                        </p>
+                                </p>
+                                <button class="btn btn-signup btn-danger py-md-3 px-md-5 me-3 animated slideInLeft openFormButton" data-bs-toggle="modal" data-bs-target="#signUpModal" >Sign up</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    
+  <!-- Carousel End -->
 
-</div>
+  <!-- About Us Section -->
+  <div class="container text-black mt-3 py-3">
+    <h3 class="border-bottom border-2" style="width: fit-content;" data-aos="fade-up" data-aos-duration="900">About Us</h3>
+    <div data-aos="fade-left" data-aos-duration="900">
+        <span class="ms-4">Madridejos</span> Community College (MCC) is a higher education institution located in Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to provide accessible and affordable education to the local community, focusing on developing skilled professionals who can contribute to the region's socioeconomic growth.
+    </div>
+    <hr>
+    <div class="mt-3" data-aos="fade-left" data-aos-duration="900">
+        <h5>Vision:</h5>
+        <span class="ms-4">The </span> Madridejos Community College envisions a society comprised of fully competent individuals with benevolent character, innovative, service-oriented, and highly empowered to meet and exceed challenges as proactive participants in shaping our world's future.
+    </div>
+    <div class="mt-3" data-aos="fade-left" data-aos-duration="900">
+        <h5>Mission:</h5>
+        <span class="ms-4">Madridejos </span> Community College is a safe, accessible, and affordable learning environment that aims to foster academic and career success through development of critical thinking, creativity, informed research, and social responsibility.
+    </div>
+    <div class="mt-3" data-aos="fade-left" data-aos-duration="900">
+        <h5>Goals:</h5>
+        <span class="ms-4">Develop </span> globally competitive, value-laden professionals capable of making a positive social, environmental, and economic impact through research and community service.
+    </div>
+
+    <hr>
+
+    <div class="mt-3" data-aos="fade-up" data-aos-duration="900">
+        <span class="ms-4">Learning </span> Enhancement and Support. Foster student learning and support by leveraging student strengths and meeting their specific needs through targeted success pathways.
+    </div>
+
+    <div class="mt-3" data-aos="fade-up" data-aos-duration="900">
+        <span class="ms-4">Inculcate </span> Inculcate moral values. Instill positive attitudes and high moral virtues towards daily activities in and outside the school.
+    </div>
+
+    <hr>
+
+    <!-- Student Exam Feedback Section -->
+    <div class="row mt-3">
+      <div class="col-12">
+        <h5>STUDENT EXAM FEEDBACKS</h5>
+      </div>
+
+      <!-- PHP Logic to Display Feedbacks -->
+      <?php if ($feedbacks->rowCount() > 0): 
+          $data = $feedbacks->fetchAll(PDO::FETCH_ASSOC);
+      ?>
+          <?php foreach ($data as $feedback): ?>
+            <div class="col-lg-4">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="fw-bold"><?= htmlspecialchars($feedback['name']) ?></h6>
+                  <p class="text-center">" <?= htmlspecialchars($feedback['feedback']) ?> "</p>
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+      <?php else: ?>
+        <div class="col-12 text-center">
+          <p>No feedback found.</p>
+        </div>
+      <?php endif; ?>
+    </div>
+  </div>
+  <!-- End of About Us and Feedback Sections -->
 <!-- Footer Section -->
 <footer class="h-100 footer-background">
     <div class="container">
@@ -872,71 +605,25 @@ h6.fw-bold {
         </div>
     </div>
 </footer>
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-<!-- AOS JS -->
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-    AOS.init();
+  <script>
+  $(document).ready(function() {
+      $(".owl-carousel").owlCarousel({
+          loop: true,           // Enable looping of slides
+          margin: 10,           // Space between slides
+          nav: true,            // Show next/prev buttons
+          items: 1,             // Number of items visible at a time
+          autoplay: true,       // Enable autoplay
+          autoplayTimeout: 3000, // Time between each slide
+          autoplayHoverPause: true, // Pause on hover
+      });
+  });
 </script>
-
-<!-- Optional: Intersection Observer for Scroll Animations -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const options = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const handleIntersect = (entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        };
-
-        const observer = new IntersectionObserver(handleIntersect, options);
-        const elements = document.querySelectorAll('.animate-on-scroll');
-
-        elements.forEach(element => {
-            element.classList.add('hidden');
-            observer.observe(element);
-        });
-    });
-
-	document.addEventListener('contextmenu', function(e) {
-    e.preventDefault(); // Disables right-click menu
-});
-
-// Prevent specific key combinations
-document.addEventListener('keydown', function(e) {
-    // Disable specific key combinations such as Ctrl + I, Ctrl + U, Ctrl + J, Ctrl + C, Ctrl + S, F12
-    if (e.ctrlKey || e.metaKey) {
-        if (
-            e.key === 'i' ||  // Ctrl + I (Inspect)
-            e.key === 'u' ||  // Ctrl + U (View Source)
-            e.key === 'j' ||  // Ctrl + J (Console)
-            e.key === 'c' ||  // Ctrl + C (Copy)
-            e.key === 's' ||  // Ctrl + S (Save)
-            e.key === 'k' ||  // Ctrl + K (Search Console)
-            e.key === 'h' ||  // Ctrl + H (History)
-            e.key === 'd' ||  // Ctrl + D (Bookmark)
-            e.key === 'r' ||  // Ctrl + R (Reload)
-            e.key === 'p' ||  // Ctrl + P (Print)
-            e.key === 'f' ||  // Ctrl + F (Find)
-            e.key === 'q' ||  // Ctrl + Q (Quit)
-            e.key === 'F12'   // F12 (Developer Tools)
-        ) {
-            e.preventDefault();  // Prevent default action
-            return false;
-        }
-    }
-});
-
-</script>
-
 </body>
 
 </html>
