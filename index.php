@@ -23,7 +23,7 @@
     <!-- FontAwesome CSS (for icons) -->
     <link href="radiance/css/font-awesome.min.css" rel="stylesheet" />
     <link href="assets/css/boostrap.min.css" rel="stylesheet">
-    <link href="./assets/css/home.css" rel="stylesheet">
+    <link href="assets/css/home.css" rel="stylesheet">
     <style>
         .header_section {
             position: sticky;
