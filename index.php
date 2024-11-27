@@ -260,7 +260,7 @@ header {
         </div>
       </div>
       <div class="col-lg-4 d-flex justify-content-center align-items-center">
-        <img class="right-img pop-up pop-up-delay-4" decoding="async" width="550" height="400" src="https://cdn2.exam.net/website-2024-11-05/wp-content/uploads/2024/03/home-hero-graphic-1-1024x762.png" alt="User Interface of Exam.net">
+        <img class="right-img pop-up pop-up-delay-4" decoding="async" width="550" height="350" src="https://cdn2.exam.net/website-2024-11-05/wp-content/uploads/2024/03/home-hero-graphic-1-1024x762.png" alt="User Interface of Exam.net">
       </div>
     </div>
   </div>
