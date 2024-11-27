@@ -11,523 +11,176 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome CSS (for icons) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link rel="shortcut icon" href="assets/img/file.png" type="">
-    <style>
-    
-body {
-    color: hsl(0, 0%, 20%); 
-}
-
+    <link rel="stylesheet" href="dist/css/home.css">
+    <link rel="shortcut icon" href="assets/img/file.png" type="">
+<style>
 header {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./assets/img/school.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(assets/img/mcc-bg.jpg);
     background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
+    padding: 0;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ /* Define the pop-up animation */
+ @keyframes popUp {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Apply animation to individual elements with delays */
+    .pop-up {
+      animation: popUp 0.8s ease-out forwards;
+    }
+
+    .pop-up-delay-1 {
+      animation-delay: 0.3s;
+    }
+
+    .pop-up-delay-2 {
+      animation-delay: 0.6s;
+    }
+
+    .pop-up-delay-3 {
+      animation-delay: 0.9s;
+    }
+    body, html {
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 100%; /* Ensures container doesn't overflow */
+    }
+
+    footer {
+    background-color: #333;
+    color: #fff;
     padding: 20px 0;
 }
-.col-lg-8.h-100.my-auto.text-light {
-    padding-top: 50px; 
+
+.footer-wrapper {
+    display: flex;
+    justify-content: space-between; /* Distribute space between the footer sections */
+    align-items: center; /* Vertically align the content */
+    flex-wrap: wrap; /* Ensure that content wraps on smaller screens */
+    gap: 20px; /* Adds space between the items */
 }
 
+.footer-main {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
 
+.footer-bottom {
+    background-color: #222;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.footer-copyright {
+    font-size: 14px;
+}
+
+/* Media query for smaller screens (mobile) */
 @media (max-width: 768px) {
-    header {
-        height: auto; 
-        padding: 20px 10px;
+    .footer-wrapper {
+        flex-direction: column; /* Stack footer items vertically */
+        align-items: center; /* Center the items horizontally */
     }
 
-    .col-lg-8.h-100.my-auto.text-light {
-        padding-top: 20px; 
+    .footer-main {
+        flex-direction: column; /* Stack footer content vertically */
+        align-items: center;
     }
 
-    h1.fade-in-right {
-        font-size: 24px; 
-    }
-
-    h3.fade-in-left {
-        font-size: 18px; 
-    }
-
-    p {
-        font-size: 14px; 
+    .footer-copyright {
+        font-size: 12px;
     }
 }
 
-
-
-
-header img {
-    max-width: 100%; 
-}
-
-.nav-link {
-    font-size: 20px;
-}
-
-
-.footer-background {
-    background-color: #001f3f; 
-    color: hsl(0, 0%, 80%); 
-}
-
-.footer-background a {
-    color: white; 
-}
-
-.footer-background p {
-    color: hsl(0, 0%, 90%); 
-}
-
-@keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(50vh);
+    .home-hero{
+        text-decoration: none;
     }
-    to {
-        opacity: 1;
-        transform: translateX(0);
+    .home-hero:hover{
+        color: crimson;
     }
-}
-
-.fade-in-right {
-    animation: fadeInRight 1s ease-in-out;
-}
-
-@keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50vh);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.fade-in-left {
-    animation: fadeInLeft 1s ease-in-out;
-}
-
-
-@media print {
-    .dont-print {
-        display: none !important;
-    }
-
-    .card {
-        border: none !important;
-        box-shadow: none !important;
-    }
-}
-
-
-.container {
-    padding: 20px;
-}
-
-h3 {
-    padding-bottom: 10px;
-    color: #fff; 
-}
-
-h5 {
-    color: #fff; 
-    margin-bottom: 10px;
-}
-
-hr {
-    border: 1px solid #e0e0e0; 
-    margin: 20px 0;
-}
-
-span {
-    font-weight: bold; 
-}
-
-.card {
-    margin-bottom: 20px;
-}
-
-
-.hidden {
-    opacity: 0;
-    transform: translateY(50px); 
-}
-
-
-.visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-
-.sticky-element {
-    position: -webkit-sticky; 
-    position: sticky;
-    top: 0; 
-    opacity: 1;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.sticky-element.sticky-active {
-    transform: translateY(0);
-}
-
-.sticky-element.sticky-inactive {
-    transform: translateY(-50px); 
-    opacity: 0;
-}
-
-
-@media (max-width: 1200px) {
-    .nav-link {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 992px) {
-    .container {
-        padding: 15px;
-    }
-
-    .navbar-nav {
-        text-align: center;
-    }
-
-    .card {
-        margin-bottom: 15px;
-    }
-}
-
-@media (max-width: 768px) {
-    .header img {
-        width: 80%; 
-    }
-
-    .nav-link {
-        font-size: 16px;
-    }
-    
-    .footer-background {
-        padding: 15px;
-    }
-
-    .container {
-        padding: 10px;
-    }
-}
-
-@media (max-width: 576px) {
-    .nav-link {
-        font-size: 14px;
-    }
-    
-    .footer-background p, .footer-background a {
-        font-size: 14px;
-    }
-
-    .header img {
-        width: 200%; 
-    }
-}
-
-.logo-img {
-    max-width: 100%;
-    height: auto;
-}
-
-
-.smooth-move {
-    animation: smoothMove 3s ease-in-out infinite; 
-}
-.nav-link {
-    text-decoration: none;
-    padding: 10px;
-   
-}
-
-.nav-link.active {
-    font-weight: bold;
-    color: red;
-    border-bottom: 2px solid red;
-}
-h6.fw-bold {
-    color: black; 
-} .navbar-toggler { border: none; }
-        .navbar-toggler-icon { background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30"%3E%3Cpath stroke="%23333" stroke-width="2" d="M5 6h20M5 12h20M5 18h20" /%3E%3C/svg%3E'); }
-        .hidden { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
-        .visible { opacity: 1; transform: translateY(0); }
-        .sticky-active { position: fixed; top: 0; width: 100%; z-index: 1000; }
-        .sticky-inactive { position: static; }
-        .logo-img { max-width: 100%; height: auto; }
-        .navbar-toggler {
-         border: none;
-}
-
-.navbar-toggler-icon {
-    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30"%3E%3Cpath stroke="%23ff0000" stroke-width="2" d="M5 6h20M5 12h20M5 18h20" /%3E%3C/svg%3E');
-    color: crimson; /* Fallback color */
-    size: 15px;
-}
-/* Default link color and font family */
-.navbar-nav .nav-link {
-    color: #555; 
-    font-size: 17px;
-     font-weight: bold;
-    text-transform: none; 
-    letter-spacing: 0; 
-    line-height: 1.5;
-    text-decoration: none; 
-    padding: 0.5rem 1rem; /
-}
-.navbar-nav .nav-item {
-    margin: 0 1rem; 
-}
-
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link:focus {
-   color: crimson; 
-    font-size: 17px;
-    text-decoration: none; 
-}
-
-
-.navbar-nav .nav-link.active {
-  color: crimson; 
-    font-size: 17px;
-    text-decoration: none; 
-}
-
-
-.navbar-toggler {
-    border: none; 
-    padding: 0.5rem; 
-}
-  /* Modal Enhancements */
-  .modal-content {
-        border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        background-color: #f8f9fa;
-    }
-
-    .modal-header {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-
-    .modal-title {
-        font-size: 24px;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .modal-body {
-        font-size: 18px;
-        color: #555;
-        padding: 20px;
-    }
-
-    /* Role Buttons */
-    .btn-role {
-        border-radius: 30px;
-        padding: 10px 25px;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border: none;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-    }
-
-    .btn-role:hover {
-        background-color: #0069d9;
-    }
-
-    .btn-success:hover {
-        background-color: #218838;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    /* Modal backdrop for a sleek effect */
-    .modal-backdrop {
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .btn-signup {
-        background-color: #df0100;
-        color: #fff;
-        border-radius: 50px; /* Makes the button round */
-        padding: 10px 25px; /* Increases button padding */
-        font-size: 16px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-    }
-
-    /* Optional: Button hover effect */
-    .btn-signup:hover {
-        background-color: #c82333; /* Slightly darker red on hover */
-        color: #fff;
-    }
-         
-  .result, .result1{
-            width: 73%;
-            position: absolute;        
-            z-index: 999;
-            top: 100%;
-            left: 0;
-        }
-        /* Formatting result items */
-        .result p, .result1 p{
-            margin: 0;
-            padding: 5px 5px;
-            border: 1px solid #CCCCCC;
-            border-top: none;
-            cursor: pointer;
-            background-color: white;
-        }
-        .result p:hover, .result1 p:hover{
-            background: #f2f2f2;
-        }
-        
-    .loader-wrapper {
-      position: fixed;
-      z-index: 999999;
-      background: #fff;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0; }
-      .loader-wrapper .loader {
-        height: 100px;
-        width: 100px;
-        position: fixed; }
-        .loader-wrapper .loader .loader-inner {
-          border: 0 solid transparent;
-          border-radius: 50%;
-          width: 150px;
-          height: 150px;
-          position: absolute;
-          top: calc(50vh - 75px);
-          left: calc(50vw - 75px); }
-          .loader-wrapper .loader .loader-inner:before {
-            content: '';
-            border: 1em solid #f0452e;
-            border-radius: 50%;
-            width: inherit;
-            height: inherit;
-            position: absolute;
+    .header_section {
+            position: sticky;
             top: 0;
-            left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
-            opacity: 0;
-            -webkit-animation-delay: 0.8s;
-                    animation-delay: 0.8s; }
-          .loader-wrapper .loader .loader-inner:after {
-            content: '';
-            border: 1em solid #f0452e;
-            border-radius: 50%;
-            width: inherit;
-            height: inherit;
+            width: 100%;
+            z-index: 1000;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+        }
+
+        .navbar-nav .nav-item-spacing {
+            position: relative;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            margin-right: 0;
+        }
+
+        .navbar-nav .nav-item-spacing:hover {
+            text-decoration: none;
+            color: crimson;
+        }
+
+        .navbar-nav .nav-item-spacing::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background-color: crimson;
+            transition: width 0.3s ease;
             position: absolute;
-            top: 0;
+            bottom: -3px;
             left: 0;
-            -webkit-animation: loader 2s linear infinite;
-                    animation: loader 2s linear infinite;
-            opacity: 0; }
-    
-    @-webkit-keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    @keyframes loader {
-      0% {
-        -webkit-transform: scale(0);
-                transform: scale(0);
-        opacity: 0; }
-      50% {
-        opacity: 1; }
-      100% {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-        opacity: 0; } }
-    
-    .loader-box {
-      height: 150px;
-      text-align: center;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
-      vertical-align: middle;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      -webkit-transition: .3s color, .3s border, .3s transform, .3s opacity;
-      transition: .3s color, .3s border, .3s transform, .3s opacity; }
-      .loader-box [class*="loader-"] {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        color: inherit;
-        vertical-align: middle; }
+        }
 
-
-    </style>
+        .navbar-nav .nav-item-spacing:hover::after {
+            width: 100%;
+            color: crimson;
+        }
+</style>
 </head>
-
 <body>
-	 <div class="loader-wrapper" id="preloader">
-        <span class="loader"><span class="loader-inner"></span></span>
-    </div>
-    <script>
-        var loader = document.getElementById("preloader");
-        window.addEventListener("load", function() {
-            loader.style.display = "none"
-        })
-    </script>
-   <nav class="navbar navbar-expand-lg" style="background: #fff;">
+  
+  <nav class="navbar navbar-expand-lg" style="background: #fff;">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       
         <div class="d-flex align-items-center">
            
           
-            <img src="assets/img/logo.png" alt="Logo" style="width: 130px; height: 80px; margin-left: -18px;">
+            <img src="assets/img/bsit-logo.png" alt="Logo" style="width: 90px; height: 70px; margin-left: -13px;">
             
             <div class="d-none d-md-block">
                 <h6 class="header-title text-blue ml-3" style="color: #666666; font-size: 15px;">
-                    MADRIDEJOS <span style="color: #c82333;">COMMUNITY COLLEGE</span>
+                  MCC BSIT QUIZ<span style="color: #c82333;"> AND EXAMINATION</span>
                 </h6>
             </div>
             
             <div class="d-block d-md-none" style="margin-left: -13px;">
     <h6 class="header-title text-blue" style="color: #666666; font-size: 12px;">
-        MADRIDEJOS <span style="color: #c82333;">COMMUNITY</span>
-    </h6>
-    <h6 class="header-title text-blue" style="color: #c82333; font-size: 12px; margin-top: -5px;">
-        COLLEGE
+        MCC BSIT QUIZ<span style="color: #c82333;"> AND EXAMINATION</span>
     </h6>
  </div>
    </div>
@@ -541,16 +194,16 @@ h6.fw-bold {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a href="index.php" class="nav-link">Home</a>
+                        <a href="index.php" class="nav-link nav-item-spacing">HOME</a>
                     </li>
                     <li class="nav-item">
-                        <a href="about.php" class="nav-link">About Us</a>
+                        <a href="about.php" class="nav-link nav-item-spacing">ABOUT US</a>
                     </li>
                     <li class="nav-item">
-                        <a href="contact.php" class="nav-link">Contact</a>
+                        <a href="contact.php" class="nav-link nav-item-spacing">CONTACT</a>
                     </li>
                     <li class="nav-item">
-                    <button class="btn btn-signup btn-danger" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
+                    <button class="btn btn-signup btn-danger" class="nav-link nav-item-spacing"  data-bs-toggle="modal" data-bs-target="#signUpModal">SIGN UP</button>
                     </li>
                 </ul>
             </div>
@@ -577,27 +230,76 @@ h6.fw-bold {
         </div>
     </div>
 </div>
-    <header class="bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                  <img src="assets/img/bsit-logo.png" alt="MCC Logo" class="logo-img smooth-move">
-                </div>
-                <div class="col-lg-8 h-100 my-auto text-light">
-                    
-       <div class="container text-light mt-3 py-3">
-        <h3 class="border-bottom border-2" style="width: fit-content;"  data-aos="fade-up" data-aos-duration="900">About Us</h3>
-        <div>
-            <span class="ms-4">Madridejos</span> Community College (MCC) is a higher education institution located in
+
+
+<header class="bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 h-100 my-auto text-light">
+        <div class="content-left">
+          <!-- Rotating Text Section -->
+          <h1 class="display-3 text-white animated slideInDown pop-up pop-up-delay-1" style="font-weight: bold; margin-top:-30px;">
+          About Us
+          </h1>
+          <div id="rotatingText" class="pop-up pop-up-delay-2">
+            <h3 class="rotating-text">MadridejosCommunity College (MCC) is a higher education institution located in
             Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to
             provide accessible and affordable education to the local community, focusing on developing skilled
-            professionals who can contribute to the region's socioeconomic growth.
+            professionals who can contribute to the region's socioeconomic growth..</h3>
         </div>
-                    
-                </div>
-            </div>
         </div>
-    </header>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Add JavaScript for smooth text rotation with delay -->
+<script>
+  let currentIndex = 0;
+  const rotatingTexts = document.querySelectorAll('.rotating-text');
+  
+  function rotateText() {
+    // Hide all texts
+    rotatingTexts.forEach(text => {
+      text.classList.remove('show');
+    });
+    
+    // Show the current text with smooth transition
+    rotatingTexts[currentIndex].classList.add('show');
+    
+    // Move to the next text or loop back to the first
+    currentIndex = (currentIndex + 1) % rotatingTexts.length;
+  }
+  
+  // Initialize the first text to display
+  rotateText();
+  
+  // Set interval for text rotation with delay of 4 seconds (4000ms)
+  setInterval(rotateText, 8000);
+</script>
+
+<!-- Add CSS for smooth rotation effect with delay -->
+<style>
+  #rotatingText {
+    position: relative;
+    height: 100px; /* Adjust according to the height of your text */
+  }
+  
+  .rotating-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* Smooth fade-in/out */
+    transition-delay: 1s; /* Delay before the next fade */
+  }
+  
+  .rotating-text.show {
+    opacity: 1;
+    transition-delay: 0s; /* Immediately show the next text */
+  }
+</style>
 
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
