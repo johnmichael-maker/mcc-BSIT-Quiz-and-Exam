@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <!-- FontAwesome CSS (for icons) -->
     <link href="radiance/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="assets/css/boostrap.min.css" rel="stylesheet">
+    <link href="assets/css/boostrap-css.css" rel="stylesheet">
     <link href="assets/css/home.css" rel="stylesheet">
     <style>
         .header_section {
