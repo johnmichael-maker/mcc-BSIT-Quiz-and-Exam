@@ -23,7 +23,7 @@ header {
     background-repeat: no-repeat;
     background-position: center;
     padding: 0;
-    height: 120vh;
+    height: 110vh;
     display: flex;
     align-items: center;
     justify-content: center;
