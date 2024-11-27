@@ -164,7 +164,7 @@ header {
 </head>
 <body>
   
-  <nav class="navbar navbar-expand-lg" style="background: #fff;">
+  <nav class="navbar navbar-expand-lg" style="background: #fff; position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       
         <div class="d-flex align-items-center">
