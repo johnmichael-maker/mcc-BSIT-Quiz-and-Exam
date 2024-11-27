@@ -204,13 +204,20 @@
 </head>
 <body class="hold-transition lockscreen">
 
-    <div class="lockscreen-wrapper">
+   <div class="lockscreen-wrapper">
+        <!-- Logo Section -->
         <div class="lockscreen-logo">
-            <a style="color: #F40009; font-size:30px;"><b>Admin</b> Access Control</a>
+            <a style="color: #F40009; font-size:30px; font-weight: bold;">
+                <b>Authorized Access</b>
+            </a>
         </div>
-        <div class="lockscreen-name">
-           <b> BSIT QUIZ AND EXAM</b>
+       
+         <!-- Security Message Section -->
+       <div class="security-message" style="background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; border: 1px solid #f5c6cb;">
+            <strong>Security Notice:</strong> This area is restricted to <b>authorized users only</b>. Unauthorized access is prohibited and may result in legal action.
         </div>
+        <br>
+       
         <div class="lockscreen-item">
             <div class="lockscreen-credentials">
                 <!-- Email Form -->
