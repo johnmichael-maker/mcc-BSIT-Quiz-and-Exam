@@ -21,7 +21,7 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" href="img/mcc1.png" type="">
 
-  <title>MCC DOCUMENT TRACKER </title>
+  <title>MCC BSIT QUIZ AND EXAMINATION</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/boostrap.css" />
