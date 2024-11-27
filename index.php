@@ -188,10 +188,7 @@ header {
             
             <div class="d-block d-md-none" style="margin-left: -13px;">
     <h6 class="header-title text-blue" style="color: #666666; font-size: 12px;">
-    MCC BSIT QUIZ <span style="color: #c82333;">AND</span>
-    </h6>
-    <h6 class="header-title text-blue" style="color: #c82333; font-size: 12px; margin-top: -5px;">
-    EXAMINATION
+        MCC BSIT QUIZ<span style="color: #c82333;"> AND EXAMINATION</span>
     </h6>
  </div>
    </div>
