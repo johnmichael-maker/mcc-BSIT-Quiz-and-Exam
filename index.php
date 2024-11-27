@@ -31,7 +31,7 @@ header {
     background-repeat: no-repeat;
     background-position: center;
     padding: 0;
-    height: 90vh;
+    height: 120vh;
     display: flex;
     align-items: center;
     justify-content: center;
