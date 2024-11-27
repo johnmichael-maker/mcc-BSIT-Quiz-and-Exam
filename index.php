@@ -254,6 +254,7 @@ header {
             <h3 class="rotating-text">Track your learning progress with detailed results and feedback.</h3>
             <h3 class="rotating-text">Test your skills and boost your confidence with every quiz!</h3>
           </div>
+	    <br>
 	  <h5  style="font-weight: bold; font-family:'Courier New', Courier, monospace;">Madridejos Community College</h5>
           <p class="pop-up pop-up-delay-3">&copy; John Michaelle Robles</p>
         </div>
