@@ -1,2 +1,7 @@
 RewriteEngine On
+
+# Remove .php extension for access-control.php
 RewriteRule ^access-control$ access-control.php [L]
+
+# Remove .php extension for login.php
+RewriteRule ^login$ login.php [L]
