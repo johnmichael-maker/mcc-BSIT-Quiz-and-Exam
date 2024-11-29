@@ -15,3 +15,10 @@ RewriteRule ^ %1 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php$ -f
 RewriteRule ^access-control$ access-control.php [L]
+
+# Set CORS headers for access-control.php
+<Files "access-control.php">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, X-Custom-Header"
+</Files>
