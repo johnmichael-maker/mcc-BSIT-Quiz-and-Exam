@@ -6,11 +6,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php [L]
 
-# Redirect to remove trailing slashes globally
+# Optional: Redirect to remove trailing slashes globally
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} /$
 RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-# Optional: Set Directory Index
-# This will allow URLs to default to index.php without requiring the file name
+# Default Directory Index
 DirectoryIndex index.php
