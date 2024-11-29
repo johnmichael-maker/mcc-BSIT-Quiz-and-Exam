@@ -1,15 +1,17 @@
-# Enable mod_rewrite
+# Enable Rewrite Engine
 RewriteEngine On
 
-# Check if the request is not for an existing file
-RewriteCond %{REQUEST_FILENAME} !-f
-
-# Check if the request is not for an existing directory
+# Remove .php extension for all files
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1 [L]
 
-# Internally rewrite access-control to access-control.php
-RewriteRule ^access-control$ /access-control.php [L]
+# Redirect URLs with .php to clean URLs (optional)
+RewriteCond %{THE_REQUEST} "\s(.+)\.php[\s?]"
+RewriteRule ^ %1 [R=301,L]
 
-# Redirect .php to clean URL (if user tries to access .php directly)
-RewriteCond %{THE_REQUEST} \s/([a-zA-Z0-9_-]+)\.php\s [NC]
-RewriteRule ^([a-zA-Z0-9_-]+)\.php$ /$1 [R=301,L]
+# Add rule for handling access-control.php (optional)
+# If you want to access access-control.php with a clean URL (e.g., /access-control instead of /access-control.php):
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php$ -f
+RewriteRule ^access-control$ access-control.php [L]
