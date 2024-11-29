@@ -1,11 +1,9 @@
-# Enable Rewrite Engine
 RewriteEngine On
 
-# Remove .php extension for all files
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ $1 [L]
+# Remove the .php extension from URLs within the admin folder
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^admin/(.*)$ /admin/$1.php [L]
 
-# Redirect URLs with .php to clean URLs (optional)
-RewriteCond %{THE_REQUEST} "\s(.+)\.php[\s?]"
-RewriteRule ^ %1 [R=301,L]
+# Redirect URLs that include the .php extension to clean URLs
+RewriteCond %{THE_REQUEST} \s/admin/(.+)\.php[\s?]
+RewriteRule ^admin/(.*)$ /admin/$1 [R=301,L]
