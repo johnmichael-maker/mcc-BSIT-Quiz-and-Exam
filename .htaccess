@@ -1,15 +1,25 @@
 # Enable Rewrite Engine
 RewriteEngine On
 
-# Remove .php extension globally
+# === Remove .php Extension ===
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ $1.php [L]
+RewriteRule ^(.*)$ $1 [L]
 
-# Optional: Redirect to remove trailing slashes globally
+# === Force HTTPS (Optional) ===
+# Redirect all HTTP requests to HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# === Remove Trailing Slashes (Optional) ===
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} /$
 RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-# Default Directory Index
+# === Default Directory Index ===
+# Load index.php by default when accessing a directory
 DirectoryIndex index.php
+
+# === Custom 404 Error Page (Optional) ===
+# Define a custom error page
+ErrorDocument 404 /error_page.php
