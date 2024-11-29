@@ -1,7 +1,10 @@
 # Enable mod_rewrite
 RewriteEngine On
 
-# Remove .php extension for all files in all directories
-RewriteCond %{REQUEST_FILENAME} !-d                  # Check if it is not a directory
-RewriteCond %{REQUEST_FILENAME}.php -f               # Check if the file with .php extension exists
-RewriteRule ^(.*[^/])$ $1.php [L,QSA]                # Rewrite URL to add .php
+# Exclude /admin directory from removing .php
+RewriteCond %{REQUEST_URI} !^/admin/ [NC]
+
+# Remove .php extension for all files except in /admin directory
+RewriteCond %{REQUEST_FILENAME} !-d                      # Check if it's not a directory
+RewriteCond %{REQUEST_FILENAME}.php -f                   # Check if the .php file exists
+RewriteRule ^(.*)$ $1.php [L,QSA]                        # Rewrite URL to add .php extension
