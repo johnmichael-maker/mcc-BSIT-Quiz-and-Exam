@@ -30,7 +30,7 @@ if (isset($_POST['code']) && isset($_POST['email'])) {
               $_SESSION['email_verified'] = true;
             
             // Return success response and perform redirect
-            echo json_encode(['success' => true, 'message' => 'Verification successful. Redirecting...', 'redirect' => 'login.php']);
+            echo json_encode(['success' => true, 'message' => 'Verification successful. Redirecting...', 'redirect' => 'login']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Invalid verification code.']);
         }
