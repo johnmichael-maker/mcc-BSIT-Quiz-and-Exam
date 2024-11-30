@@ -1,7 +1,7 @@
 # Enable mod_rewrite engine
 RewriteEngine On
 
-# Prevent direct access to the home page ("/") - COMMENT OUT or REMOVE
+# Prevent direct access to the home page ("/") - COMMENT OUT or REMOVE if not needed
 # RewriteCond %{REQUEST_URI} ^/$
 # RewriteRule ^$ - [F,L]
 
@@ -31,3 +31,44 @@ RewriteRule ^home\.php$ /home [R=301,L]    # Redirect home.php to home without .
 # Add rule to redirect error_page.php to clean URL "error_page" without .php
 RewriteCond %{THE_REQUEST} \s/error_page\.php$ [NC]
 RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php to error_page without .php
+
+# Force HTTPS (if using SSL)
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Prevent access to the .htaccess file
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Block unwanted HTTP methods (e.g., TRACE, DELETE, PUT)
+<Limit TRACE DELETE PUT>
+    Order Deny,Allow
+    Deny from all
+</Limit>
+
+# Disable directory listing
+Options -Indexes
+
+# Block access to sensitive files like .env, php.ini, etc.
+<FilesMatch "(^\.|\.env|\.git|\.gitignore|\.ini)">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Set HTTP Security Headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-XSS-Protection "1; mode=block"
+Header set X-Frame-Options "DENY"
+Header set Referrer-Policy "no-referrer"
+Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none';"
+
+# Prevent image hotlinking
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https?://(www\.)?yourdomain.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif|bmp|webp)$ - [F,NC,L]
+
+# Redirect www to non-www (or vice versa)
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
