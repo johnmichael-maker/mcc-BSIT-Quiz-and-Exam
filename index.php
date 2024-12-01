@@ -23,7 +23,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://mccbsitquizandexam.com/dist/css/home.css">
-    <link rel="shortcut icon" href="assets/img/file.png" type="">
+    <link rel="shortcut icon" href="https://mccbsitquizandexam.com/assets/img/file.png" type="">
 <style>
 header {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(assets/img/mcc-bg.jpg);
