@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MCC Competition : QUIZ BOWL</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="https://mccbsitquizandexam.com/assets/css/style.css">
+    <link rel="stylesheet" href="https://mccbsitquizandexam.com/assets/boxicons/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://mccbsitquizandexam.com/assets/css/bootstrap.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome CSS (for icons) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="dist/css/home.css">
-    <link rel="shortcut icon" href="assets/img/file.png" type="">
+    <link rel="stylesheet" href="https://mccbsitquizandexam.com/dist/css/home.css">
+    <link rel="shortcut icon" href="https://mccbsitquizandexam.com/assets/img/file.png" type="">
 <style>
 header {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(assets/img/bsit.jpg);
