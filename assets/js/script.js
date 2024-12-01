@@ -831,12 +831,17 @@ if (submitForm) {
   };
 }
 
+
+//contestant
 if (indexDOM) {
   let alertModal = document.getElementById("alert-modal");
   let alertMode = alertModal.querySelectorAll(".card");
   let questionNumber = document.getElementById("question-number");
   let questionDiv = document.getElementById("question");
   let choices = document.getElementById("choices");
+
+  // Initialize a variable to track wrong answers
+  let wrongAnswerCount = 0;
 
   indexDOM.onload = () => {
 
@@ -846,120 +851,131 @@ if (indexDOM) {
       if(dataResponse[0].status === 1) {
         questionDiv.classList.add("pt-5")
         questionDiv.innerHTML = "The competition has not started yet. Please wait for the admin to start the competition";
-      }else{
+      } else {
+        for (let i = 0; i < dataResponse.length; i++) {
 
-      for (let i = 0; i < dataResponse.length; i++) {
+          const dataObject = {
+            id: dataResponse[i].question_id,
+            question: dataResponse[i].question,
+            answer: dataResponse[i].answer,
+            choices: [
+              dataResponse[i].A,
+              dataResponse[i].B,
+              dataResponse[i].C,
+              dataResponse[i].D,
+            ],
+            status: dataResponse[i].status,
+            activation: dataResponse[i].activation,
+            category: dataResponse[i].category
+          }
 
-        const dataObject = {
-          id: dataResponse[i].question_id,
-          question: dataResponse[i].question,
-          answer: dataResponse[i].answer,
-          choices: [
-            dataResponse[i].A,
-            dataResponse[i].B,
-            dataResponse[i].C,
-            dataResponse[i].D,
-          ],
-          status: dataResponse[i].status,
-          activation: dataResponse[i].activation,
-          category: dataResponse[i].category
-        }
+          // Base time for any question (in milliseconds)
+          let time = 5000; // Default time (5 seconds)
 
+          // Add additional time if the question length exceeds 100 characters
+          if (dataObject.question.length > 100) {
+            const additionalTime = (dataObject.question.length - 100) * 10; // Adds 10ms for each character over 100
+            time += additionalTime; // Increase the time by the additional time
+          }
 
-        if (dataObject.status === 3 && dataObject.activation === 1) {
-          questionNumber.innerHTML = dataResponse[i]['question_id']
-          questionDiv.innerHTML = dataResponse[i]['question']
+          // Set a maximum time limit (for very long questions)
+          const maxTime = 20000; // Maximum time of 20 seconds (20000ms)
+          if (time > maxTime) {
+            time = maxTime; // Ensure time doesn't exceed the max time
+          }
 
-          document.getElementById("time-div").classList.remove("d-none")
+          if (dataObject.status === 3 && dataObject.activation === 1) {
+            questionNumber.innerHTML = dataResponse[i]['question_id']
+            questionDiv.innerHTML = dataResponse[i]['question']
 
-          let interval = setInterval(() => {
-            time -= 4;
-            if (time <= 0) {
-              clearInterval(interval); // Stop the timer when time reaches zero or less
-              timer.innerHTML = "Time's up!";
-              let buttons = document.querySelectorAll("button");
+            document.getElementById("time-div").classList.remove("d-none")
+
+            let interval = setInterval(() => {
+              time -= 4; // Decrease time in 4ms increments
+              if (time <= 0) {
+                clearInterval(interval); // Stop the timer when time reaches zero or less
+                timer.innerHTML = "Time's up!";
+                let buttons = document.querySelectorAll("button");
                 buttons.forEach(button => {
-                button.classList.add("disabled")
-                button.setAttribute("disabled","true")
-                
-                if (dataObject.category != 2) {
-                  disableAccount()
-                  alertModal.classList.remove("d-none")
-                  alertMode[2].classList.remove("d-none")
-                }
-              })
-            } else {
-              timer.innerHTML = time + "ms";
-            }
+                  button.classList.add("disabled")
+                  button.setAttribute("disabled", "true")
+                  
+                  if (dataObject.category != 2) {
+                    alertModal.classList.remove("d-none")
+                    alertMode[2].classList.remove("d-none")
+                  }
+                })
+              } else {
+                timer.innerHTML = time + "ms"; // Display the remaining time
+              }
             }, 1);
 
-         
-          
-          for (let j = 0; j < dataObject.choices.length; j++) {
-            let col = document.createElement("div");
-          col.setAttribute("class", "col-6");
+            // Handle choices for the question
+            for (let j = 0; j < dataObject.choices.length; j++) {
+              let col = document.createElement("div");
+              col.setAttribute("class", "col-6");
               col.innerHTML = `
-              <button class="w-100"><span>${letters[j]}</span> ${dataObject.choices[j]} <i class="bx bx-check-circle"></i></button>
-          `;
-          choices.appendChild(col);
+                <button class="w-100"><span>${letters[j]}</span> ${dataObject.choices[j]} <i class="bx bx-check-circle"></i></button>
+              `;
+              choices.appendChild(col);
 
-          document.querySelectorAll("button")[j].onclick = () => {
-            let correctAnswer;
-            let code;
-            let buttons = document.querySelectorAll("button");
-            for (let y = 0; y < buttons.length; y++) {
-              if (y === j) {
-                buttons[j].classList.add("active");
-              } else {
-                buttons[y].classList.add("disabled");
-              }
+              document.querySelectorAll("button")[j].onclick = () => {
+                let correctAnswer;
+                let code;
+                let buttons = document.querySelectorAll("button");
+                for (let y = 0; y < buttons.length; y++) {
+                  if (y === j) {
+                    buttons[j].classList.add("active");
+                  } else {
+                    buttons[y].classList.add("disabled");
+                  }
+                }
+                clearInterval(interval);
+                
+                if (dataObject.answer === j) {
+                  alertModal.classList.remove("d-none");
+                  alertMode[0].classList.remove("d-none");
+                  correctAnswer = 'correct';
+                  code = 1;
+                } else {
+                  alertModal.classList.remove("d-none");
+                  alertMode[1].classList.remove("d-none");
+                  correctAnswer = 'wrong';
+                  // Increment wrong answer count if wrong answer
+                  wrongAnswerCount++;
+
+                  if (wrongAnswerCount >= 3) {
+                    // Disable account after 3 wrong answers
+                    disableAccount();
+                    alertMode[2].classList.remove("d-none");
+                  }
+                  
+                  code = null;
+                }
+                
+                let answerData = {
+                  answer: dataObject.choices[j],
+                  question_id: dataObject.id,
+                  time: time,
+                  correct: correctAnswer,
+                  code: code
+                };
+
+                console.log(answerData);
+
+                addAnswer(answerData);
+              };
             }
-            clearInterval(interval);
-            
-            if (dataObject.answer === j) {
-              alertModal.classList.remove("d-none");
-              alertMode[0].classList.remove("d-none");
-              correctAnswer = 'correct';
-              code = 1;
-            } else {
-              alertModal.classList.remove("d-none");
-              alertMode[1].classList.remove("d-none");
-              correctAnswer = 'wrong';
-              if (dataObject.category != 2) {
-                disableAccount()
-              }
-              code = null;
-            }
-            
-            let answerData = {
-              answer: dataObject.choices[j],
-              question_id: dataObject.id,
-              time: time,
-              correct: correctAnswer,
-              code: code
-            };
-
-
-            console.log(answerData);
-
-            addAnswer(answerData);
-          };
-
           }
-          
         }
       }
     }
-    }
-    getResponseDataFromDb()
+    getResponseDataFromDb();
 
-    
-   setInterval(() => {
-      getNewQuestion()
+    setInterval(() => {
+      getNewQuestion();
     }, 1500);
-
-    };
-  
+  };
 }
 
 if (signupForm) {
