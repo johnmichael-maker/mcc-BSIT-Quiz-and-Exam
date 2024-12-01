@@ -168,7 +168,7 @@ header {
             width: 100%;
             color: crimson;
         }
-	 h5 {
+	 h4 {
             font-weight: bold;
             font-family: 'Courier New', Courier, monospace;
             font-size: 20px;
@@ -278,7 +278,7 @@ header {
             <h3 class="rotating-text">Test your skills and boost your confidence with every quiz!</h3>
           </div>
 	    <br>
-	          <h5 id="autoWriteText"></h5>
+	          <h4 id="autoWriteText"></h4>
 
 <script>
     const text = "Madridejos Community College"; 
@@ -425,7 +425,7 @@ header {
     <hr>
     <div class="row mt-3">
         <div class="col-12">
-            <h4>STUDENT EXAM FEEDBACKS</h4>
+            <h5>STUDENT EXAM FEEDBACKS</h5>
         </div>
 
         <!-- PHP Logic to Display Feedbacks -->
