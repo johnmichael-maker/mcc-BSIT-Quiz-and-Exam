@@ -168,29 +168,6 @@ header {
             width: 100%;
             color: crimson;
         }
-        h5 {
-            font-weight: bold;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 20px;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 3px solid #fff;
-            width: fit-content;
-            animation: blinkCursor 0.7s steps(2) infinite;
-        }
-
-        /* Blinking Cursor Effect */
-        @keyframes blinkCursor {
-            0% {
-                border-right-color: #fff;
-            }
-            50% {
-                border-right-color: transparent;
-            }
-            100% {
-                border-right-color: #fff;
-            }
-        }
 </style>
 </head>
 <body>
@@ -278,26 +255,7 @@ header {
             <h3 class="rotating-text">Test your skills and boost your confidence with every quiz!</h3>
           </div>
 	    <br>
-        <h5 id="autoWriteText"></h5>
-<script>
-    const text = "Madridejos Community College"; // Text to display
-    const speed = 75; // Speed in milliseconds (faster for smooth effect)
-    let index = 0;
-
-    function smoothAutoWrite() {
-        const element = document.getElementById("autoWriteText");
-        if (index <= text.length) {
-            element.textContent = text.slice(0, index); // Gradually add letters
-            index++;
-        } else {
-            clearInterval(autoWriteInterval); // Stop when complete
-            element.style.borderRight = "none"; // Remove cursor
-        }
-    }
-
-    // Start the auto-write effect
-    const autoWriteInterval = setInterval(smoothAutoWrite, speed);
-</script>
+	  <h5  style="font-weight: bold; font-family:'Courier New', Courier, monospace;">Madridejos Community College</h5>
           <p class="pop-up pop-up-delay-3">&copy; John Michaelle Robles</p>
         </div>
       </div>
@@ -540,34 +498,7 @@ header {
             observer.observe(element);
         });
     });
-	document.addEventListener('contextmenu', function(e) {
-    e.preventDefault(); // Disables right-click menu
-});
 
-// Prevent specific key combinations
-document.addEventListener('keydown', function(e) {
-    // Disable specific key combinations such as Ctrl + I, Ctrl + U, Ctrl + J, Ctrl + C, Ctrl + S, F12
-    if (e.ctrlKey || e.metaKey) {
-        if (
-            e.key === 'i' ||  // Ctrl + I (Inspect)
-            e.key === 'u' ||  // Ctrl + U (View Source)
-            e.key === 'j' ||  // Ctrl + J (Console)
-            e.key === 'c' ||  // Ctrl + C (Copy)
-            e.key === 's' ||  // Ctrl + S (Save)
-            e.key === 'k' ||  // Ctrl + K (Search Console)
-            e.key === 'h' ||  // Ctrl + H (History)
-            e.key === 'd' ||  // Ctrl + D (Bookmark)
-            e.key === 'r' ||  // Ctrl + R (Reload)
-            e.key === 'p' ||  // Ctrl + P (Print)
-            e.key === 'f' ||  // Ctrl + F (Find)
-            e.key === 'q' ||  // Ctrl + Q (Quit)
-            e.key === 'F12'   // F12 (Developer Tools)
-        ) {
-            e.preventDefault();  // Prevent default action
-            return false;
-        }
-    }
-});
 // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
         document.onkeydown = function (e) {
             if (
