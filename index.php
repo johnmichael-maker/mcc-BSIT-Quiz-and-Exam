@@ -168,6 +168,29 @@ header {
             width: 100%;
             color: crimson;
         }
+	 h5 {
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid #fff;
+            width: fit-content;
+            animation: blinkCursor 0.7s steps(2) infinite;
+        }
+
+        /* Blinking Cursor Effect */
+        @keyframes blinkCursor {
+            0% {
+                border-right-color: #fff;
+            }
+            50% {
+                border-right-color: transparent;
+            }
+            100% {
+                border-right-color: #fff;
+            }
+        }
 </style>
 </head>
 <body>
@@ -255,7 +278,26 @@ header {
             <h3 class="rotating-text">Test your skills and boost your confidence with every quiz!</h3>
           </div>
 	    <br>
-	  <h5  style="font-weight: bold; font-family:'Courier New', Courier, monospace;">Madridejos Community College</h5>
+	  <h5 id="autoWriteText"></h5>
+   <script>
+    const text = "Madridejos Community College"; 
+    const speed = 75; 
+    let index = 0;
+
+    function smoothAutoWrite() {
+        const element = document.getElementById("autoWriteText");
+        if (index <= text.length) {
+            element.textContent = text.slice(0, index); 
+            index++;
+        } else {
+            clearInterval(autoWriteInterval); 
+            element.style.borderRight = "none"; 
+        }
+    }
+
+    
+    const autoWriteInterval = setInterval(smoothAutoWrite, speed);
+</script>
           <p class="pop-up pop-up-delay-3">&copy; John Michaelle Robles</p>
         </div>
       </div>
