@@ -425,7 +425,7 @@ header {
     <hr>
     <div class="row mt-3">
         <div class="col-12">
-            <h5>STUDENT EXAM FEEDBACKS</h5>
+            <h4>STUDENT EXAM FEEDBACKS</h4>
         </div>
 
         <!-- PHP Logic to Display Feedbacks -->
