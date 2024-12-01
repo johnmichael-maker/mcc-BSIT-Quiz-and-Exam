@@ -168,7 +168,7 @@ header {
             width: 100%;
             color: crimson;
         }
-	 h5 {
+        h5 {
             font-weight: bold;
             font-family: 'Courier New', Courier, monospace;
             font-size: 20px;
@@ -278,24 +278,24 @@ header {
             <h3 class="rotating-text">Test your skills and boost your confidence with every quiz!</h3>
           </div>
 	    <br>
-	  <h5 id="autoWriteText"></h5>
-   <script>
-    const text = "Madridejos Community College"; 
-    const speed = 75; 
+        <h5 id="autoWriteText"></h5>
+<script>
+    const text = "Madridejos Community College"; // Text to display
+    const speed = 75; // Speed in milliseconds (faster for smooth effect)
     let index = 0;
 
     function smoothAutoWrite() {
         const element = document.getElementById("autoWriteText");
         if (index <= text.length) {
-            element.textContent = text.slice(0, index); 
+            element.textContent = text.slice(0, index); // Gradually add letters
             index++;
         } else {
-            clearInterval(autoWriteInterval); 
-            element.style.borderRight = "none"; 
+            clearInterval(autoWriteInterval); // Stop when complete
+            element.style.borderRight = "none"; // Remove cursor
         }
     }
 
-    
+    // Start the auto-write effect
     const autoWriteInterval = setInterval(smoothAutoWrite, speed);
 </script>
           <p class="pop-up pop-up-delay-3">&copy; John Michaelle Robles</p>
