@@ -3,7 +3,7 @@ RewriteEngine On
 # Rewrite root URL to /admin/index.php
 RewriteRule ^$ /admin/index.php [L]
 
-# If the requested file or directory doesn't exist, rewrite to index.php without the .php extension
+# If the requested file or directory doesn't exist, rewrite it to /admin/index.php without the .php extension
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /index.php/$1 [L]
+RewriteRule ^(.*)$ /admin/index.php/$1 [L]
