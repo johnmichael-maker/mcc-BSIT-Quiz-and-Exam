@@ -68,7 +68,7 @@ function sendRegistrationLink(string $email): string {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['Username'] ?? '';
+    $email = $_POST['username'] ?? '';
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $status = sendRegistrationLink($email);
     } else {
