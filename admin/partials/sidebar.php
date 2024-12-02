@@ -35,8 +35,8 @@ $inactive = "text-light";
         </li>
         
         <li class="nav-item">
-            <a href="exam.php" class="nav-link <?= 
-                $url == '/exam.php' 
+            <a href="exam" class="nav-link <?= 
+                $url == '/exam' 
                 || str_contains($url, 'exam.php') 
                 || str_contains($url, 'edit-exam') 
                 || str_contains($url, 'view-exam') 
@@ -65,25 +65,25 @@ $inactive = "text-light";
         </li>
         <?php endif; ?>
         <li class="nav-item">
-            <a href="examinees.php" class="nav-link <?= str_contains($url, '/examinees.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Examinees</a>
+            <a href="examinees" class="nav-link <?= str_contains($url, '/examinees') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Examinees</a>
         </li>
 
         <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
         <li class="nav-item">
-            <a href="instructors.php" class="nav-link <?= str_contains($url, '/instructors.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Instructors</a>
+            <a href="instructors" class="nav-link <?= str_contains($url, '/instructors') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Instructors</a>
         </li>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
         <li class="nav-item">
-            <a href="activity_log.php" class="nav-link <?= str_contains($url, '/activity_log.php') ? $active : $inactive ?>"> <i class="bx bx-clipboard"></i> Activity Log</a>
+            <a href="activity_log" class="nav-link <?= str_contains($url, '/activity_log') ? $active : $inactive ?>"> <i class="bx bx-clipboard"></i> Activity Log</a>
         </li>
         <?php endif; ?>
 
         <!-- Conditionally render Ms365 Account menu based on AUTH_UTYPE -->
         <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
         <li class="nav-item">
-            <a href="ms_account.php" class="nav-link <?= str_contains($url, '/ms_account.php') ? $active : $inactive ?>"> 
+            <a href="ms_account" class="nav-link <?= str_contains($url, '/ms_account') ? $active : $inactive ?>"> 
                 <i class="bx bx-user"></i> Ms365 Account
             </a>
         </li>
