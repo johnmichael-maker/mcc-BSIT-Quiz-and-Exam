@@ -480,7 +480,7 @@ return $stmt;
     public function checkAdmin()
     {
         $url = implode(explode('/mcc-bsit-quiz-and-exam', strtolower($_SERVER['REQUEST_URI'])));
-        if ($url !== '/admin/login.php' && $url !== '/admin/forgot-password.php' && $url !== '/admin/reset-password.php') {
+        if ($url !== '/admin/login' && $url !== '/admin/forgot-password.php' && $url !== '/admin/reset-password.php') {
             if (!isset($_SESSION['ADMIN_ACTIVE']) && !isset($_SESSION['AUTH_KEY'])) {
                 return true;
             }
@@ -490,7 +490,7 @@ return $stmt;
     public function isAdminDashboard()
     {
         $url = implode(explode('/mcc-bsit-quiz-and-exam', strtolower($_SERVER['REQUEST_URI'])));
-        if (!str_contains('/admin/login.php', $url) && !str_contains('/admin/forgot-password.php', $url) && !str_contains('/admin/reset-password.php', $url)) {
+        if (!str_contains('/admin/login', $url) && !str_contains('/admin/forgot-password.php', $url) && !str_contains('/admin/reset-password.php', $url)) {
             return true;
         }
     }
