@@ -90,7 +90,7 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
                                 <div class="g-recaptcha" data-sitekey="6Ld-fYEqAAAAAHbSvaJjesYOnT7kXZWRmQE4njI-" data-callback="enableSubmitBtn"></div>
                                 <button type="submit" name="button" id="mySubmitBtn" disabled="disabled" class="btn w-100 btn-danger mt-3 mb-2" disabled>Login</button>
                                 <p style="float: left; margin-top: 10px;">
-                                    <a href="../index.php" style="display: block; text-align: right;">Back Home</a>
+                                    <a href="../index" style="display: block; text-align: right;">Back Home</a>
                                 </p>
                                 <p style="float: right; margin-top: 10px;">
                                     <a href="forgot-password" style="display: block; text-align: right;">Forgot Password</a>
