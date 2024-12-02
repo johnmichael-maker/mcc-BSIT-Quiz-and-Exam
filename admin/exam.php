@@ -71,13 +71,13 @@ if (isset($_GET['message'])) {
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#delete-<?= $row['id'] ?>" class="dropdown-item"> <i class="bx bx-trash text-danger"></i> Delete</a>
                                                     </li>
                                                     <li>
-                                                    <a href="edit-exam.php?id=<?= $row['id'] ?>" class="dropdown-item"><i class="bx bx-edit"></i> Edit</a>
+                                                    <a href="edit-exam?id=<?= $row['id'] ?>" class="dropdown-item"><i class="bx bx-edit"></i> Edit</a>
                                                     </li>
                                                     <li>
-                                                    <a href="view-exam.php?id=<?= $row['id'] ?>" class="dropdown-item"><i class="bx bx-file"></i> View</a>
+                                                    <a href="view-exam?id=<?= $row['id'] ?>" class="dropdown-item"><i class="bx bx-file"></i> View</a>
                                                     </li>
                                                     <li>
-                                                    <a href="print-exam.php?id=<?= $row['id'] ?>" class="dropdown-item"><i class="bx bx-printer"></i> Print Result</a>
+                                                    <a href="print-exam?id=<?= $row['id'] ?>" class="dropdown-item"><i class="bx bx-printer"></i> Print Result</a>
                                                     </li>
                                                 </ul>
 
