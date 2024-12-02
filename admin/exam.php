@@ -24,7 +24,7 @@ if (isset($_GET['message'])) {
 
                     <div class="card-header d-flex align-items-center">
                         <h5 class="mb-0 me-2">Exams</h5>
-                        <a href="add-exam.php" class="btn btn-danger" ><i class="bx bx-plus"></i></a>
+                        <a href="add-exam" class="btn btn-danger" ><i class="bx bx-plus"></i></a>
                     </div>
 
                     <div class="card-body">
