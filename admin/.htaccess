@@ -1,11 +1,8 @@
-# Enable mod_rewrite engine
 RewriteEngine On
 
-# Rule to remove .php extension from URLs
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([^/]+)$ $1.php [L,QSA]
+# Rewrite root URL to home.php
+RewriteRule ^$ /admin/index.php [L]
 
-# Optionally, you can handle redirection from .php to non-.php URLs
-RewriteCond %{REQUEST_URI} \.php$
-RewriteRule ^(.*)\.php$ /$1 [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)
