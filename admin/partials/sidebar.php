@@ -53,7 +53,7 @@ $inactive = "text-light";
         <i class="bx bx-book"></i> Class Records
     </a>
     <ul class="dropdown-menu custom-dropdown bg-danger" aria-labelledby="classRecordsDropdown">
-        <li><a class="dropdown-item text-black" href="midterm.">Midterm</a></li>
+        <li><a class="dropdown-item text-black" href="midterm">Midterm</a></li>
         <li><a class="dropdown-item text-black" href="final">Final</a></li>
     </ul>
 </li>
