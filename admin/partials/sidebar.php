@@ -24,27 +24,27 @@ $inactive = "text-light";
 
     <ul class="nav flex-column mt-4">
         <li class="nav-item">
-            <a href="index.php" class="nav-link <?= str_contains($url, '/index.php') ? $active : $inactive ?>"> <i class="bx bx-home"></i> Dashboard</a>
+            <a href="index" class="nav-link <?= str_contains($url, '/index') ? $active : $inactive ?>"> <i class="bx bx-home"></i> Dashboard</a>
         </li>
 
         <!-- Conditionally render Exam menu based on AUTH_UTYPE -->
         <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 1): ?>
 
         <li class="nav-item">
-            <a href="quiz" class="nav-link <?= str_contains($url, '/quiz') || str_contains($url, '/print-quiz.php') ? $active : $inactive ?>"> <i class="bx bx-question-mark"></i> Quiz</a>
+            <a href="quiz" class="nav-link <?= str_contains($url, '/quiz') || str_contains($url, '/print-quiz') ? $active : $inactive ?>"> <i class="bx bx-question-mark"></i> Quiz</a>
         </li>
         
         <li class="nav-item">
             <a href="exam" class="nav-link <?= 
                 $url == '/exam' 
-                || str_contains($url, 'exam.php') 
+                || str_contains($url, 'exam') 
                 || str_contains($url, 'edit-exam') 
                 || str_contains($url, 'view-exam') 
                 ? $active : $inactive ?>"> <i class="bx bx-file"></i> Exam</a>
         </li>
         <li class="nav-item dropend">
     <a href="#" class="nav-link dropdown-toggle <?= 
-        str_contains($url, '/midterm.php') || str_contains($url, '/final.php') 
+        str_contains($url, '/midterm') || str_contains($url, '/final.php') 
         ? $active : $inactive ?>" 
         id="classRecordsDropdown" 
         role="button" 
@@ -53,8 +53,8 @@ $inactive = "text-light";
         <i class="bx bx-book"></i> Class Records
     </a>
     <ul class="dropdown-menu custom-dropdown bg-danger" aria-labelledby="classRecordsDropdown">
-        <li><a class="dropdown-item text-black" href="midterm.php">Midterm</a></li>
-        <li><a class="dropdown-item text-black" href="final.php">Final</a></li>
+        <li><a class="dropdown-item text-black" href="midterm.">Midterm</a></li>
+        <li><a class="dropdown-item text-black" href="final">Final</a></li>
     </ul>
 </li>
         <?php endif; ?>
