@@ -122,14 +122,14 @@
                         alert.classList.remove("d-none");
                     }, 3000);
                     setTimeout(() => {
-                        window.location.href = "reset-password.php";
+                        window.location.href = "reset-password";
                     }, 6000);
                 } else if (dataResponse === 'error') {
                     setTimeout(() => {
                         alertError.classList.remove("d-none");
                     }, 3000);
                     setTimeout(() => {
-                        window.location.href = "forgot-password.php";
+                        window.location.href = "forgot-password";
                     }, 7000);
                 }
             } catch (error) {
