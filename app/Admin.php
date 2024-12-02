@@ -540,7 +540,7 @@ return $stmt;
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        window.location.href = "add-exam.php";
+                        window.location.href = "add-exam";
                     });
                 </script>
                 <?php
@@ -554,7 +554,7 @@ return $stmt;
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        window.location.href = "add-exam.php";
+                        window.location.href = "add-exam";
                     });
                 </script>
                 <?php
@@ -594,7 +594,7 @@ return $stmt;
     ]);
 
     if ($stmt) {
-        header("location: edit-exam.php?id=$id&message=Exam updated successfully");
+        header("location: edit-exam?id=$id&message=Exam updated successfully");
     }
 }
 
@@ -632,7 +632,7 @@ return $stmt;
         ]);
     
         if ($stmt) {
-            header('location: exam.php?message=Exam removed successfully');
+            header('location: exam?message=Exam removed successfully');
         }
     }
     
@@ -711,7 +711,7 @@ return $stmt;
                         $stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':count' => $count]);
                     }
                 }
-                header("location: view-exam.php?id=$exam_id&message=Question added successfully");
+                header("location: view-exam?id=$exam_id&message=Question added successfully");
             }
         }
     }
@@ -730,10 +730,10 @@ return $stmt;
 
         if ($check) {
             if ($check->rowCount() > 0) {
-                header("location: view-exam.php?id=$exam_id&message_error=Choice already exist");
+                header("location: view-exam?id=$exam_id&message_error=Choice already exist");
             } else {
                 $stmt->execute([':exam_id' => $exam_id, ':identification_id' => $identification_id, ':answer' => $answer]);
-                header("location: view-exam.php?id=$exam_id&message=Choice added successfully");
+                header("location: view-exam?id=$exam_id&message=Choice added successfully");
             }
         }
     }
@@ -751,7 +751,7 @@ return $stmt;
         $check->execute([':exam_id' => $exam_id, ':question' => $question]);
 
         if ($check->rowCount() > 0) {
-            header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
+            header("location: view-exam?id=$exam_id&message_error=Question already exist");
         } else {
 
             if ($enumeration->execute([':exam_id' => $exam_id, ':question' => $question])) {
@@ -767,7 +767,7 @@ return $stmt;
                     if ($check_answer->rowCount() > 0) {
                     } else {
                         if ($answers->execute([':exam_id' => $exam_id, ':enumeration_id' => $enumeration_id, ':answer' => $value])) {
-                            header("location: view-exam.php?id=$exam_id&message=Question added successfully");
+                            header("location: view-exam?id=$exam_id&message=Question added successfully");
                         }
                     }
                 }
@@ -786,10 +786,10 @@ return $stmt;
         $check = $conn->prepare("SELECT * FROM essay WHERE exam_id = :exam_id AND question = :question");
         if ($check->execute([':exam_id' => $exam_id, ':question' => $question])) {
             if ($check->rowCount() > 0) {
-                header("location: view-exam.php?id=$exam_id&message_error=Question already exist");
+                header("location: view-exam?id=$exam_id&message_error=Question already exist");
             } else {
                 if ($stmt->execute([':exam_id' => $exam_id, ':question' => $question, ':answer' => $answer])) {
-                    header("location: view-exam.php?id=$exam_id&message=Question added successfully");
+                    header("location: view-exam?id=$exam_id&message=Question added successfully");
                 }
             }
         }
