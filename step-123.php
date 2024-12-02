@@ -380,7 +380,7 @@ $username = $user['Username'];  // Get username from the database
             <div class="title">Login Details:</div>
                   <div class="field">
     <div class="label">MS 365 Username</div>
-    <input type="text" name="Username" id="username" placeholder="MS 365 Email"
+    <input type="text" name="username" id="username" placeholder="MS 365 Email"
            value="<?php echo htmlspecialchars($username); ?>" 
            readonly required />
   </div>
