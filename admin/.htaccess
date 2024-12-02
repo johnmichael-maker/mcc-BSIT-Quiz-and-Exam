@@ -5,6 +5,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.*)$ $1.php [L,QSA]
 
-# Optionally, redirect .php URLs to remove the extension
+# Optionally, redirect .php URLs to remove the extension (including quiz.php)
 RewriteCond %{THE_REQUEST} \s/+(.*)\.php [NC]
 RewriteRule ^ /%1 [R=301,L]
