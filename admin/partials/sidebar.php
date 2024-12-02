@@ -31,7 +31,7 @@ $inactive = "text-light";
         <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 1): ?>
 
         <li class="nav-item">
-            <a href="quiz.php" class="nav-link <?= str_contains($url, '/quiz.php') || str_contains($url, '/print-quiz.php') ? $active : $inactive ?>"> <i class="bx bx-question-mark"></i> Quiz</a>
+            <a href="quiz" class="nav-link <?= str_contains($url, '/quiz') || str_contains($url, '/print-quiz.php') ? $active : $inactive ?>"> <i class="bx bx-question-mark"></i> Quiz</a>
         </li>
         
         <li class="nav-item">
@@ -61,7 +61,7 @@ $inactive = "text-light";
         
        <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
         <li class="nav-item">
-            <a href="quiz.php" class="nav-link <?= str_contains($url, '/quiz.php') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Quiz</a>
+            <a href="quiz" class="nav-link <?= str_contains($url, '/quiz') ? $active : $inactive ?>"> <i class="bx bx-user"></i> Quiz</a>
         </li>
         <?php endif; ?>
         <li class="nav-item">
