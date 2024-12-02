@@ -14,7 +14,7 @@ function sendRegistrationLink(string $email): string {
     $database = new Database();
     $pdo = $database->getConnection();
 
-    $stmt = $pdo->prepare("SELECT * FROM ms_365_instructor WHERE Username = :email");
+    $stmt = $pdo->prepare("SELECT * FROM ms_365_instructor WHERE username = :email");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
 
@@ -26,7 +26,7 @@ function sendRegistrationLink(string $email): string {
         $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
         
-        $insertStmt = $pdo->prepare("UPDATE ms_365_instructor SET token = :token, token_expire = :expiration WHERE Username = :email");
+        $insertStmt = $pdo->prepare("UPDATE ms_365_instructor SET token = :token, token_expire = :expiration WHERE username = :email");
         $insertStmt->bindParam(':token', $token);
         $insertStmt->bindParam(':expiration', $expiration);
         $insertStmt->bindParam(':email', $email);
