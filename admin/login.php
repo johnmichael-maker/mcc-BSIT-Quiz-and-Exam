@@ -196,7 +196,7 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
                         setTimeout(() => window.location.href = "index.php", 3000);
                     } else if (dataResponse === 'error') {
                         alertError.classList.remove("d-none");
-                        setTimeout(() => window.location.href = "login.php", 3000);
+                        setTimeout(() => window.location.href = "login", 3000);
                     }
                 } catch (error) {
                     console.error(error);
