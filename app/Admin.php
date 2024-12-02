@@ -480,7 +480,7 @@ return $stmt;
     public function checkAdmin()
     {
         $url = implode(explode('/mcc-bsit-quiz-and-exam', strtolower($_SERVER['REQUEST_URI'])));
-        if ($url !== '/admin/login' && $url !== '/admin/forgot-password.php' && $url !== '/admin/reset-password.php') {
+        if ($url !== '/admin/login' && $url !== '/admin/forgot-password' && $url !== '/admin/reset-password') {
             if (!isset($_SESSION['ADMIN_ACTIVE']) && !isset($_SESSION['AUTH_KEY'])) {
                 return true;
             }
@@ -490,7 +490,7 @@ return $stmt;
     public function isAdminDashboard()
     {
         $url = implode(explode('/mcc-bsit-quiz-and-exam', strtolower($_SERVER['REQUEST_URI'])));
-        if (!str_contains('/admin/login', $url) && !str_contains('/admin/forgot-password.php', $url) && !str_contains('/admin/reset-password.php', $url)) {
+        if (!str_contains('/admin/login', $url) && !str_contains('/admin/forgot-password', $url) && !str_contains('/admin/reset-password', $url)) {
             return true;
         }
     }
@@ -540,7 +540,7 @@ return $stmt;
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        window.location.href = "add-exam.php";
+                        window.location.href = "add-exam";
                     });
                 </script>
                 <?php
@@ -554,7 +554,7 @@ return $stmt;
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        window.location.href = "add-exam.php";
+                        window.location.href = "add-exam";
                     });
                 </script>
                 <?php
