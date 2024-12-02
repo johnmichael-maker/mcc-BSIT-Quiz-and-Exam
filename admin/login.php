@@ -93,7 +93,7 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
                                     <a href="../index.php" style="display: block; text-align: right;">Back Home</a>
                                 </p>
                                 <p style="float: right; margin-top: 10px;">
-                                    <a href="forgot-password.php" style="display: block; text-align: right;">Forgot Password</a>
+                                    <a href="forgot-password" style="display: block; text-align: right;">Forgot Password</a>
                                   
                                 </p>
                                 
