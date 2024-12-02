@@ -118,7 +118,7 @@ if (!$user) {
 }
 
 // Token exists, retrieve the username
-$username = $user['Username'];  // Get username from the database
+$username = $user['username'];  // Get username from the database
 ?>
 <!DOCTYPE html>
 <html lang="en">
