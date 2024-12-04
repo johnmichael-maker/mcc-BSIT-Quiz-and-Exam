@@ -30,34 +30,4 @@ RewriteRule ^home\.php$ /home [R=301,L]    # Redirect home.php to home without .
 
 # Add rule to redirect error_page.php to clean URL "error_page" without .php
 RewriteCond %{THE_REQUEST} \s/error_page\.php$ [NC]
-RewriteRule ^error_page\.php$ /error_page [R=301,L]
-
-# Enable Strict-Transport-Security (HSTS)
-<IfModule mod_headers.c>
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-</IfModule>
-
-# Prevent Clickjacking with X-Frame-Options
-<IfModule mod_headers.c>
-    Header always set X-Frame-Options "SAMEORIGIN"
-</IfModule>
-
-# Prevent MIME Type Sniffing
-<IfModule mod_headers.c>
-    Header always set X-Content-Type-Options "nosniff"
-</IfModule>
-
-# Control Referrer Information
-<IfModule mod_headers.c>
-    Header always set Referrer-Policy "no-referrer-when-downgrade"
-</IfModule>
-
-# Set Permissions-Policy
-<IfModule mod_headers.c>
-    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
-</IfModule>
-
-# Content-Security-Policy (Optional, adjust as needed)
-<IfModule mod_headers.c>
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self';"
-</IfModule>
+RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php to error_page without .php  
