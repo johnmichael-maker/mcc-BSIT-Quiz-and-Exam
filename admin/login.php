@@ -109,8 +109,6 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-   
-</script>
     const formInputs = document.querySelectorAll('#email, #password');
     const loginButton = document.querySelector('#loginButton');
 
@@ -168,6 +166,8 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
     document.addEventListener('DOMContentLoaded', function () {
         requestLocation();
     });
+</script>
+   
 
 </script>                                                           
         <script>
