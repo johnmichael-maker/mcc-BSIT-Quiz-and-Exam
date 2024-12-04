@@ -532,6 +532,11 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
             const container = document.querySelector('.terms-popup .swal2-html-container');
             container.style.maxHeight = '400px';
             container.style.overflowY = 'auto';
+            
+            // Justify text within the SweetAlert modal content
+            const termsContent = document.querySelector('.terms-popup .terms-content');
+            termsContent.style.textAlign = 'justify';  // Justify text
+            termsContent.style.lineHeight = '1.6';     // Optional: adjust line height for better readability
         }
     }).then((result) => {
         if (result.isConfirmed) {
