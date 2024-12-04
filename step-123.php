@@ -406,10 +406,15 @@ $username = $user['username'];  // Get username from the database
     </div>
 </div>
 
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
-                <label class="form-check-label" for="exampleCheck1">I agree to the <a href="#" target="_blank">Terms and Conditions</a></label>
-            </div>
+            <!-- Checkbox with link to Terms and Conditions -->
+           <div class="container mt-5">
+    <form id="instructorForm">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+            <label class="form-check-label" for="exampleCheck1">
+                I agree to the <a href="#" id="termsLink">Terms and Conditions</a>
+            </label>
+        </div>
             <div class="field btns">
                 <button type="button" class="prev-2 prev">Previous</button>
                 <button type="submit" id="confirmSignupBtn">Signup</button>
@@ -426,7 +431,115 @@ $username = $user['username'];  // Get username from the database
     <!-- SweetAlert 2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-<script>
+<script
+     // Add event listener to the "Terms and Conditions" link
+   document.getElementById('termsLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        // Show SweetAlert with Terms and Conditions for Instructors
+        Swal.fire({
+            title: 'Terms and Conditions',
+            html: `
+                <div class="terms-content">
+                    <h5>1. Introduction</h5>
+                    <p>By registering as an instructor on this Quiz and Examination System (the "System"), you agree to comply with and be bound by the following Terms and Conditions. Please read them carefully before proceeding with the registration.</p>
+
+                    <h5>2. Eligibility</h5>
+                    <p>To register as an instructor, you must meet the following requirements:</p>
+                    <ul>
+                        <li>Must be at least [insert age] years old.</li>
+                        <li>Must have a valid teaching qualification or relevant experience to administer quizzes or exams.</li>
+                        <li>Must agree to uphold academic integrity and ensure fairness in all quizzes and examinations.</li>
+                    </ul>
+
+                    <h5>3. Instructor Responsibilities</h5>
+                    <p>As an instructor, you agree to:</p>
+                    <ul>
+                        <li>Create and manage quizzes and exams for educational purposes only.</li>
+                        <li>Ensure that all content provided in quizzes, exams, and educational materials is appropriate, accurate, and relevant.</li>
+                        <li>Maintain a professional and respectful attitude toward students, ensuring a fair and conducive learning environment.</li>
+                        <li>Provide timely feedback and results to students after the completion of quizzes or exams.</li>
+                        <li>Ensure that all exams and quizzes are conducted within the platform’s allotted time limits, with no extensions unless previously authorized.</li>
+                    </ul>
+
+                    <h5>4. Anti-Cheating and Exam Integrity</h5>
+                    <p>By using the System, both instructors and students are expected to maintain the integrity of quizzes and exams. You agree to enforce the following rules:</p>
+                    <ul>
+                        <li><strong>No Cheating:</strong> Cheating, including using unauthorized resources, sharing answers, or collaborating with others during exams, is strictly prohibited.</li>
+                        <li><strong>No Screenshotting:</strong> Taking screenshots, recording, or distributing any part of the quiz/exam content is not allowed. The platform employs anti-screenshot mechanisms to prevent this behavior.</li>
+                        <li><strong>No External Assistance:</strong> Students are not allowed to seek help from external resources or individuals during quizzes or exams.</li>
+                        <li><strong>Monitor Activity:</strong> Instructors should actively monitor quiz and exam progress to detect suspicious activities. This includes looking for patterns of behavior indicative of cheating or collaboration.</li>
+                        <li><strong>Plagiarism Detection:</strong> The System employs advanced plagiarism detection tools to identify copied content. If any exam or quiz results are flagged for plagiarism, the user will be disqualified.</li>
+                    </ul>
+
+                    <h5>5. Instructor Account Security</h5>
+                    <p>You must provide accurate and complete information during the registration process and keep your account details up to date. You are responsible for maintaining the confidentiality of your account and password. Any activity conducted under your account is your responsibility.</p>
+
+                    <h5>6. Prohibited Activities</h5>
+                    <p>As an instructor, you are prohibited from the following activities:</p>
+                    <ul>
+                        <li>Sharing or selling quiz or examination content without authorization.</li>
+                        <li>Engaging in or promoting cheating, fraud, or dishonesty during quizzes or exams.</li>
+                        <li>Discriminating against or harassing students based on race, gender, ethnicity, or any other protected characteristic.</li>
+                        <li>Using the platform for any commercial or unauthorized purposes outside the scope of educational use.</li>
+                        <li>Tampering with system settings, attempting to hack the platform, or disrupting the normal functionality of the platform.</li>
+                    </ul>
+
+                    <h5>7. Data Privacy and Protection</h5>
+                    <p>We respect your privacy and the privacy of your students. All personal data collected will be handled in accordance with our Privacy Policy. As an instructor, you are also responsible for maintaining the confidentiality of your students' data and using it only for educational purposes.</p>
+
+                    <h5>8. Copyright and Intellectual Property</h5>
+                    <p>All content provided within the System, including quiz questions, examination materials, and educational resources, is protected by copyright laws. You agree not to copy, distribute, or modify any System content unless explicitly authorized by the platform.</p>
+
+                    <h5>9. Suspension or Termination of Instructor Account</h5>
+                    <p>We reserve the right to suspend or terminate your instructor account at any time, without notice, if you:</p>
+                    <ul>
+                        <li>Violate these Terms and Conditions.</li>
+                        <li>Engage in misconduct, cheating, or other unethical behavior.</li>
+                        <li>Fail to comply with system usage rules or community standards.</li>
+                        <li>Fail to provide educational content of sufficient quality or relevance.</li>
+                    </ul>
+
+                    <h5>10. System Use and Availability</h5>
+                    <p>The System is provided "as is," and we do not guarantee uninterrupted or error-free operation. We may make updates or changes to the platform from time to time. It is your responsibility to ensure your content is properly backed up and saved.</p>
+
+                    <h5>11. Limitation of Liability</h5>
+                    <p>We are not responsible for any loss, damage, or inconvenience arising from your use of the System, including but not limited to any technical failures, loss of data, or failure of quizzes or exams to perform as expected.</p>
+
+                    <h5>12. Governing Law</h5>
+                    <p>These Terms and Conditions are governed by the laws of [insert jurisdiction]. Any dispute arising from or related to these terms shall be resolved under the exclusive jurisdiction of the courts of [insert jurisdiction].</p>
+
+                    <h5>13. Changes to Terms</h5>
+                    <p>We may revise these Terms and Conditions at any time. Changes will be posted on this page, and you are encouraged to review the terms periodically. Continued use of the System signifies your acceptance of any changes to the terms.</p>
+
+                    <h5>14. Contact Us</h5>
+                    <p>If you have any questions or concerns regarding these Terms and Conditions, please contact us at [insert contact details].</p>
+                </div>
+            `,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'I Agree',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true,
+            customClass: {
+                popup: 'terms-popup'  // Add custom class to popup
+            },
+            didOpen: () => {
+                // Apply scrollable behavior once the modal is opened
+                const container = document.querySelector('.terms-popup .swal2-html-container');
+                container.style.maxHeight = '400px';
+                container.style.overflowY = 'auto';
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Automatically check the checkbox if the instructor agrees
+                document.getElementById('exampleCheck1').checked = true;
+                document.querySelector('button[type="submit"]').disabled = false; // Enable the submit button
+                Swal.fire('Accepted!', 'You have accepted the Instructor Terms and Conditions.', 'success');
+            }
+        });
+    });
+
      // JavaScript for form submission prevention if token is invalid
      const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
