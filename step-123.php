@@ -411,14 +411,13 @@ $username = $user['username'];  // Get username from the database
 </div>
 
             <!-- Checkbox with link to Terms and Conditions -->
-           <div class="container mt-5">
-    <form id="instructorForm">
-        <div class="form-check">
+          <div class="form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
             <label class="form-check-label" for="exampleCheck1">
                 I agree to the <a href="#" id="termsLink">Terms and Conditions</a>
             </label>
         </div>
+            
             <div class="field btns">
                 <button type="button" class="prev-2 prev">Previous</button>
                 <button type="submit" id="confirmSignupBtn">Signup</button>
