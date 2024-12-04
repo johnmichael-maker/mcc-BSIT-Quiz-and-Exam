@@ -316,6 +316,10 @@ $username = $user['username'];  // Get username from the database
             cursor: pointer;
             transform: translateY(-50%);
         }
+        .terms-popup .swal2-html-container {
+        max-height: 400px; /* Adjust height as needed */
+        overflow-y: auto;  /* Enable vertical scrolling */
+    }
     </style>
 </head>
 <link rel="stylesheet" href="../assets/css/alertify.min.css" />
@@ -432,7 +436,7 @@ $username = $user['username'];  // Get username from the database
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 <script
-     // Add event listener to the "Terms and Conditions" link
+    // Add event listener to the "Terms and Conditions" link
    document.getElementById('termsLink').addEventListener('click', function(event) {
         event.preventDefault(); // Prevent the default link behavior
 
@@ -539,6 +543,13 @@ $username = $user['username'];  // Get username from the database
             }
         });
     });
+
+    // Enable submit button when checkbox is checked
+    document.getElementById('exampleCheck1').addEventListener('change', function() {
+        const submitButton = document.querySelector('button[type="submit"]');
+        submitButton.disabled = !this.checked;
+    });
+                  
 
      // JavaScript for form submission prevention if token is invalid
      const urlParams = new URLSearchParams(window.location.search);
