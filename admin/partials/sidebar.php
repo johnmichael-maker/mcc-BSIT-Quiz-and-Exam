@@ -88,15 +88,6 @@ $inactive = "text-light";
             </a>
         </li>
         <?php endif; ?>
-
-  <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
-        <li class="nav-item">
-            <a href="fdfdfd" class="nav-link <?= str_contains($url, '/fdfdfd') ? $active : $inactive ?>"> 
-                <i class="bx bx-user"></i> Data
-            </a>
-        </li>
-        <?php endif; ?>
-
         <li class="nav-item">
             <a href="#" onclick="return showLogout()" class="nav-link text-light"> <i class="bx bx-log-out"></i> Logout</a>
         </li>
