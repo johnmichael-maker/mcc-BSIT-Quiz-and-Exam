@@ -278,7 +278,7 @@
                     grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'submit' }).then(function (token) {
                         // AJAX call to verify email
                         $.ajax({
-                            url: './admin/lock.php',  // PHP script to handle email verification
+                            url: '/admin/lock.php',  // PHP script to handle email verification
                             method: 'POST',
                             data: { email: email, recaptcha_response: token },
                             dataType: 'json',  // Expecting JSON response
