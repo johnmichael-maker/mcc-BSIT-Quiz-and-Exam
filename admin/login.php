@@ -74,7 +74,6 @@
                                     <i class="fas fa-eye" id="toggle-icon"></i>
                                 </span>
                             </div>
-                            <div class="g-recaptcha" data-sitekey="6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM" data-callback="enableSubmitBtn"></div>
                             <button type="submit" name="button" id="mySubmitBtn" disabled class="btn w-100 btn-danger mt-3 mb-2">Login</button>
                             <p style="float: left; margin-top: 10px;">
                                 <a href="../index" style="display: block; text-align: right;">Back Home</a>
