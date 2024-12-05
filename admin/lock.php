@@ -1,4 +1,5 @@
 <?php
+// Database connection
 $conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
 
 if ($conn->connect_error) {
@@ -34,9 +35,8 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-    // Generate a 6-digit verification code
-    $verificationCode = rand(100000, 999999);
-
+        // Generate a 6-digit verification code
+        $verificationCode = rand(100000, 999999);
 
         // Update the verification code in the database
         $updateQuery = "UPDATE admin SET verification = ? WHERE email = ?";
@@ -44,19 +44,25 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
         $updateStmt->bind_param("is", $verificationCode, $email);
         $updateStmt->execute();
 
-        // Send the verification code via email
-        $subject = "Your Verification Code";
-        $message = "Your verification code is: " . $verificationCode;
-        $headers = "From: no-reply@yourdomain.com\r\n" .
-                   "Reply-To: no-reply@yourdomain.com\r\n" .
-                   "Content-Type: text/plain; charset=UTF-8";
+        if ($updateStmt->affected_rows > 0) {
+            // Send the verification code via email
+            $subject = "Your Verification Code";
+            $message = "Your verification code is: " . $verificationCode;
+            $headers = "From: no-reply@yourdomain.com\r\n" .
+                       "Reply-To: no-reply@yourdomain.com\r\n" .
+                       "Content-Type: text/plain; charset=UTF-8";
 
-        // Use PHP's mail function to send the email
-        if (mail($email, $subject, $message, $headers)) {
-            echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
+            // Use PHP's mail function to send the email
+            if (mail($email, $subject, $message, $headers)) {
+                echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to send email. Please try again later.']);
+            }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to send email. Please try again later.']);
+            echo json_encode(['success' => false, 'message' => 'Failed to update the verification code in the database.']);
         }
+
+        $updateStmt->close();
     } else {
         echo json_encode(['success' => false, 'message' => 'Email not found.']);
     }
