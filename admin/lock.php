@@ -1,5 +1,14 @@
 <?php
-$conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
+
+namespace App;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require __DIR__ . "/../vendor/phpmailer/phpmailer/src/Exception.php";
+require __DIR__ . "/../vendor/phpmailer/phpmailer/src/PHPMailer.php";
+require __DIR__ . "/../vendor/phpmailer/phpmailer/src/SMTP.php";
+require '../vendor/autoload.php';
 
 if ($conn->connect_error) {
     die(json_encode(['success' => false, 'message' => 'Connection failed: ' . $conn->connect_error]));
@@ -16,10 +25,9 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
     }
 
     // Verify reCAPTCHA response
-    $recaptchaSecret = '6Ld9CpMqAAAAAD1Hq_krZF-HXnFLxuuY5HcqVSCF';  // Replace with your reCAPTCHA secret key
+    $recaptchaSecret = '6Ld9CpMqAAAAAD1Hq_krZF-HXnFLxuuY5HcqVSCF';
     $recaptchaUrl = "https://www.google.com/recaptcha/api/siteverify";
-    
-    // Use cURL to verify reCAPTCHA instead of file_get_contents for better error handling
+
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $recaptchaUrl);
     curl_setopt($ch, CURLOPT_POST, true);
@@ -30,7 +38,7 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($ch);
     curl_close($ch);
-    
+
     $responseKeys = json_decode($response, true);
 
     if (intval($responseKeys["success"]) !== 1) {
@@ -53,25 +61,41 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
         $updateQuery = "UPDATE admin SET verification = ? WHERE email = ?";
         $updateStmt = $conn->prepare($updateQuery);
         $updateStmt->bind_param("is", $verificationCode, $email);
-        
+
         // Check if the update query was successful
         if (!$updateStmt->execute()) {
             echo json_encode(['success' => false, 'message' => 'Failed to update verification code in database.']);
             exit();
         }
 
-        // Send the verification code via email
-        $subject = "Your Verification Code";
-        $message = "Your verification code is: " . $verificationCode;
-        $headers = "From: no-reply@yourdomain.com\r\n" .  // Replace with a valid email address
-                   "Reply-To: no-reply@yourdomain.com\r\n" .  // Replace with a valid email address
-                   "Content-Type: text/plain; charset=UTF-8";
+        // Send the verification code via email using PHPMailer and Gmail SMTP
+        $mail = new PHPMailer(true);  // Create a new PHPMailer instance
 
-        // Use PHP's mail function to send the email
-        if (mail($email, $subject, $message, $headers)) {
+        try {
+            //Server settings
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'johnmichaellerobles345@gmail.com'; 
+            $mail->Password   = 'ybhr uilh htvb xygk'; 
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+
+            //Recipients
+            $mail->setFrom('no-reply@yourdomain.com', 'Verification');
+            $mail->addAddress($email);  // Add recipient's email
+
+            // Content
+            $mail->isHTML(false);  // Set email format to plain text
+            $mail->Subject = 'Your Verification Code';
+            $mail->Body    = 'Your verification code is: ' . $verificationCode;
+
+            // Send the email
+            $mail->send();
             echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to send email. Please try again later.']);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Mailer Error: ' . $mail->ErrorInfo]);
         }
     } else {
         echo json_encode(['success' => false, 'message' => 'Email not found.']);
