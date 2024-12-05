@@ -1,31 +1,36 @@
+<!-- <div class="alert-modal d-none" id="alert-modal">
+    <div class="card position-relative bg-transparent pt-4 border-0 success-card d-none">
+        <div class="position-absolute top-0 text-center w-100 success-icon">
+            <img src="../assets/img/check-circle-svgrepo-com.png" alt="Icon-png">
+        </div>
+        <div class="card-body bg-light text-center pt-4 text-success">
+            <h1>Logged Out Successfully</h1>
+            <p>Your account has been logged out successfully.</p>
+        </div>
+    </div>
+</div> -->
 <?php
-  // Logout logic: check for `logout` parameter in the URL
   if (isset($_GET['logout'])) {
-    session_start();  // Ensure the session is started before calling session_destroy()
-    session_destroy();  // Destroy the session data
+        
+        ?>
 
-    // Redirect to a login page or index.php after session destruction
-    header("Location: ../index.php");  // Change this to your login page if needed
-    exit();
-  }
-?>
-
-<!-- HTML and SweetAlert logic for displaying a success message on logout -->
-<?php if (isset($_GET['logout'])): ?>
     <script>
         Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Logged out successfully',
+            position: "center",
+            icon: "success",
+            title: "Logged out successfully",
             showConfirmButton: false,
             timer: 1500
-        }).then(() => {
-            window.location.href = "../index.php";  // Redirect to the home or login page
-        });
+            }).then(() => {
+                window.location.href = "../index.php"
+            });
     </script>
-<?php endif; ?>
+<?php
+session_destroy();
+    }
+    ?>
 
-<!-- Footer and other scripts -->
+
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/dataTable.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
@@ -34,8 +39,8 @@
 <script>
     $(document).ready(function(){
         $("#dataTable").DataTable();
-    });
+    })
 </script>
-
 </body>
+
 </html>
