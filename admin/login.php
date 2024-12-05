@@ -55,7 +55,6 @@
                             <h2>Sign In As Admin</h2>
                             <p>Please enter your credentials to access your account.</p>
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
-                            <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect email or password</p>
                             <form name="login" class="m-auto" id="loginForm">
                                   <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required disabled>
                                 <div style="position: relative;">
