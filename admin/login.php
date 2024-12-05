@@ -79,9 +79,9 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                             <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect email or password</p>
                             <form name="login" class="m-auto" id="loginForm">
-                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required disabled>
+                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required>
                                 <div style="position: relative;">
-                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required disabled>
+                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required>
                                     <span id="show-pass" class="toggle-password">
                                         <i class="fas fa-eye" id="toggle-icon"></i>
                                     </span>
@@ -108,69 +108,7 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    const formInputs = document.querySelectorAll('#email, #password');
-    const loginButton = document.querySelector('#mySubmitBtn');
-    
-    // Enable form inputs and login button
-    function enableLoginForm() {
-        formInputs.forEach(input => input.disabled = false);
-        loginButton.disabled = false;
-    }
-
-    // Handle location permission and errors
-    function handleLocationError(error) {
-        if (error.code === error.PERMISSION_DENIED) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Permission Denied',
-                text: 'Please allow location access to use this login page.',
-                background: 'darkred',
-                color: 'white',
-                confirmButtonText: 'Reload',
-            }).then(() => {
-                window.location.reload();
-            });
-        } else if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Location Access Lost',
-                text: 'Location access was lost. The form will reload.',
-                confirmButtonText: 'Reload',
-            }).then(() => {
-                window.location.reload();
-            });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'An unknown error occurred while fetching the location.',
-            });
-        }
-    }
-
-    // Request location access
-    function requestLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    console.log('Location access granted');
-                    enableLoginForm(); // Enable form once location is granted
-                },
-                handleLocationError // Handle any errors related to geolocation
-            );
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Geolocation Not Supported',
-                text: 'Geolocation is not supported by this browser.',
-            });
-        }
-    }
-
-    // Call the location request on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        requestLocation();
-    });
+   
 </script>
 
    
