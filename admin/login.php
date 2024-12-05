@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="../assets/css/main.css" type="text/css" media="all">
         <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
         <link rel="icon" type="image/png" href="../assets/img/file.png">
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://www.google.com/recaptcha/api.js?render=6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM"></script> <!-- reCAPTCHA v3 -->
 
         <script>
             function enableSubmitBtn(){
@@ -169,36 +169,74 @@
 
 
 </script>                                                           
+
 <script>
-         // Function to show modal alert with countdown
-         const showModalAlert = (message, countdownTime) => {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Error, Incorrect email or password',
-                html: `
-                    <p>${message}</p>
-                    <p class="countdown" id="countdown-timer"></p>`,
-                showConfirmButton: false,
-                background: 'white',
-                color: 'black',
-                timer: countdownTime * 1000, // Convert seconds to milliseconds
-                timerProgressBar: true,
-                willOpen: () => {
-                    const countdownElement = document.getElementById('countdown-timer');
-                    let timeLeft = countdownTime;
+    // Function to show modal alert with countdown
+    const showModalAlert = (message, countdownTime) => {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Error, Incorrect email or password',
+            html: `
+                <p>${message}</p>
+                <p class="countdown" id="countdown-timer"></p>`,
+            showConfirmButton: false,
+            background: 'white',
+            color: 'black',
+            timer: countdownTime * 1000, // Convert seconds to milliseconds
+            timerProgressBar: true,
+            willOpen: () => {
+                const countdownElement = document.getElementById('countdown-timer');
+                let timeLeft = countdownTime;
 
-                    const countdownInterval = setInterval(() => {
-                        timeLeft--;
-                        countdownElement.innerHTML = `Try again in: ${timeLeft}s`;
+                const countdownInterval = setInterval(() => {
+                    timeLeft--;
+                    countdownElement.innerHTML = `Try again in: ${timeLeft}s`;
 
-                        if (timeLeft <= 0) {
-                            clearInterval(countdownInterval);
-                        }
-                    }, 1000);
-                }
-            });
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownInterval);
+                    }
+                }, 1000);
+            }
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Form submit handler
+        const loginForm = document.getElementById("loginForm");
+        const alertSuccess = document.getElementById("alert-success");
+        const alertError = document.getElementById("alert-error");
+
+        // Submit form
+        loginForm.onsubmit = function (e) {
+            e.preventDefault();  // Prevent form from submitting the default way
+
+            const uname = loginForm["uname"].value;
+            const password = loginForm["password"].value;
+
+            // Check if both fields are filled out
+            if (uname && password) {
+                // reCAPTCHA validation
+                grecaptcha.ready(function () {
+                    grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'login' }).then(function (token) {
+                        // Prepare data to send to the server
+                        const data = {
+                            uname: uname,
+                            password: password,
+                            recaptcha_token: token, // Pass reCAPTCHA token
+                            login: true
+                        };
+
+                        // Call login function
+                        login(data);
+                    });
+                });
+            } else {
+                alertError.classList.remove("d-none");
+                alertError.innerText = "Please fill in all fields.";
+            }
         };
 
+        // Login function
         const login = async (data) => {
             try {
                 const response = await fetch("../function/Process.php", {
@@ -214,34 +252,25 @@
                 }
 
                 const dataResponse = await response.text();
-                let alertSuccess = document.getElementById("alert-success");
-                let alertError = document.getElementById("alert-error");
 
+                // Handle the response from the server
                 if (dataResponse === "success") {
                     alertSuccess.classList.remove("d-none");
                     setTimeout(() => window.location.href = "index.php", 3000);
                 } else if (dataResponse === 'error') {
                     alertError.classList.remove("d-none");
-                    showModalAlert("Too many failed login attempts. Please try again after some time.");
+                    showModalAlert("Too many failed login attempts. Please try again after some time.", 30);  // Assuming 30 seconds
                     setTimeout(() => window.location.href = "login.php", 3000);
-                    
+                } else {
+                    alertError.classList.remove("d-none");
+                    alertError.innerText = "An unknown error occurred.";
                 }
             } catch (error) {
                 console.error(error);
             }
         };
 
-        const loginForm = document.getElementById("loginForm");
-        loginForm.onsubmit = (e) => {
-            e.preventDefault();
-            const uname = loginForm["uname"].value;
-            const password = loginForm["password"].value;
-
-            if (uname && password) {
-                login({ uname, password, login: true });
-            }
-        };
-
+        // Password visibility toggle
         const showPass = document.getElementById('show-pass');
         const passwordInput = document.getElementById('password');
         const toggleIcon = document.getElementById('toggle-icon');
@@ -259,36 +288,19 @@
         };
 
         // Disable context menu (right-click)
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault(); 
-        });
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
 
         // Disable certain keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.ctrlKey || e.metaKey) {
-                if (
-                    e.key === 'i' ||  
-                    e.key === 'u' ||  
-                    e.key === 'j' ||  
-                    e.key === 'c' ||  
-                    e.key === 's' ||  
-                    e.key === 'k' ||  
-                    e.key === 'h' ||  
-                    e.key === 'd' ||  
-                    e.key === 'r' || 
-                    e.key === 'p' ||  
-                    e.key === 'f' ||  
-                    e.key === 'q' ||  
-                    e.key === 'F12'   
-                ) {
-                    e.preventDefault();  
+                const disabledKeys = ['i', 'u', 'j', 'c', 's', 'k', 'h', 'd', 'r', 'p', 'f', 'q', 'F12'];
+                if (disabledKeys.includes(e.key)) {
+                    e.preventDefault();  // Disable key combinations
                     return false;
                 }
             }
         });
-    </script>
-
-</body>
-</html>
+    });
+</script>
 <?php require __DIR__ . '/partials/footer.php'; ?>
   
