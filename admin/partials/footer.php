@@ -1,36 +1,31 @@
-<!-- <div class="alert-modal d-none" id="alert-modal">
-    <div class="card position-relative bg-transparent pt-4 border-0 success-card d-none">
-        <div class="position-absolute top-0 text-center w-100 success-icon">
-            <img src="../assets/img/check-circle-svgrepo-com.png" alt="Icon-png">
-        </div>
-        <div class="card-body bg-light text-center pt-4 text-success">
-            <h1>Logged Out Successfully</h1>
-            <p>Your account has been logged out successfully.</p>
-        </div>
-    </div>
-</div> -->
 <?php
-  if (isset($_GET['logout'])) {
-        
-        ?>
+// Logout logic: check if 'logout' parameter is set
+if (isset($_GET['logout'])) {
+    // Destroy the session
+    session_start(); // Ensure session is started before destroying
+    session_unset(); // Clear all session variables
+    session_destroy(); // Destroy the session completely
+    ?>
 
     <script>
+        // Show a success message and redirect after logout
         Swal.fire({
             position: "center",
             icon: "success",
             title: "Logged out successfully",
             showConfirmButton: false,
             timer: 1500
-            }).then(() => {
-                window.location.href = "../index.php"
-            });
+        }).then(() => {
+            // Redirect to the homepage or any other page after logout
+            window.location.href = "../index.php";
+        });
     </script>
+
 <?php
-session_destroy();
-    }
-    ?>
+}
+?>
 
-
+<!-- Other scripts and page content -->
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/dataTable.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
@@ -38,8 +33,9 @@ session_destroy();
 
 <script>
     $(document).ready(function(){
+        // Initialize DataTable
         $("#dataTable").DataTable();
-    })
+    });
 </script>
 </body>
 
