@@ -12,14 +12,7 @@
         <link rel="stylesheet" href="../assets/css/main.css" type="text/css" media="all">
         <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
         <link rel="icon" type="image/png" href="../assets/img/file.png">
-        <script src="https://www.google.com/recaptcha/api.js?render=6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM"></script> <!-- reCAPTCHA v3 -->
-
-        <script>
-            function enableSubmitBtn(){
-                document.getElementById("mySubmitBtn").disabled = false;
-            }
-        </script>
-
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <style>
             .alert-link {
                 color: #fff;
@@ -35,13 +28,7 @@
                 top: 50%;
                 transform: translateY(-50%);
             }
-    .g-recaptcha {
-        transform: scale(0.8);
-        transform-origin: 0 0; 
-        width: 100% !important;  
-        max-width: 400px; 
-        margin: 0 auto;
-    }
+    
 
         </style>
     </head>
@@ -70,21 +57,21 @@
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                             <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect email or password</p>
                             <form name="login" class="m-auto" id="loginForm">
-                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required>
+                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required disabled>
                                 <div style="position: relative;">
-                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required>
+                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required disabled>
                                     <span id="show-pass" class="toggle-password">
                                         <i class="fas fa-eye" id="toggle-icon"></i>
                                     </span>
                                 </div>
                                 <input type="file" id="fileInput" name="image" accept="image/*" style="display: none;">
-                                <div class="g-recaptcha" data-sitekey="6Ld-fYEqAAAAAHbSvaJjesYOnT7kXZWRmQE4njI-" data-callback="enableSubmitBtn"></div>
-                                <button type="submit" name="button" id="mySubmitBtn" disabled="disabled" class="btn w-100 btn-danger mt-3 mb-2" disabled>Login</button>
+                            
+                                <button type="submit" name="button" id="mySubmitBtn"  class="btn w-100 btn-danger mt-3 mb-2">Login</button>
                                 <p style="float: left; margin-top: 10px;">
-                                    <a href="../index" style="display: block; text-align: right;">Back Home</a>
+                                    <a href="../index.php" style="display: block; text-align: right;">Back Home</a>
                                 </p>
                                 <p style="float: right; margin-top: 10px;">
-                                    <a href="forgot-password" style="display: block; text-align: right;">Forgot Password</a>
+                                    <a href="forgot-password.php" style="display: block; text-align: right;">Forgot Password</a>
                                   
                                 </p>
                                 
@@ -102,54 +89,48 @@
 <script>
     
     const formInputs = document.querySelectorAll('#email, #password');
-    const loginButton = document.querySelector('#mySubmitBtn');
+    const loginButton = document.querySelector('#loginButton');
+
     
-    // Enable form inputs and login button
-    function enableLoginForm() {
-        formInputs.forEach(input => input.disabled = false);
-        loginButton.disabled = false;
-    }
-
-    // Handle location permission and errors
-    function handleLocationError(error) {
-        if (error.code === error.PERMISSION_DENIED) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Permission Denied',
-                text: 'Please allow location access to use this login page.',
-                background: 'darkred',
-                color: 'white',
-                confirmButtonText: 'Reload',
-            }).then(() => {
-                window.location.reload();
-            });
-        } else if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Location Access Lost',
-                text: 'Location access was lost. The form will reload.',
-                confirmButtonText: 'Reload',
-            }).then(() => {
-                window.location.reload();
-            });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'An unknown error occurred while fetching the location.',
-            });
-        }
-    }
-
-    // Request location access
     function requestLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
+            
+            navigator.geolocation.watchPosition(
+                
+                function (position) {
                     console.log('Location access granted');
-                    enableLoginForm(); // Enable form once location is granted
+                    
+                    formInputs.forEach(input => input.disabled = false);
+                    loginButton.disabled = false;
                 },
-                handleLocationError // Handle any errors related to geolocation
+                
+                function (error) {
+                    if (error.code === error.PERMISSION_DENIED) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Permission Denied',
+                            text: 'Please allow location access to use this login page.',
+                            background:'darkred',
+                            color: 'white',
+                            confirmButtonText: 'Reload',
+                        }).then(() => {
+                            window.location.reload(); 
+                        });
+                    }
+                    
+                    if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
+                        formInputs.forEach(input => input.disabled = true);
+                        loginButton.disabled = true;
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Location Access Lost',
+                            text: 'Location access was lost. The form will reload.',
+                            confirmButtonText: 'Reload',
+                        }).then(() => {
+                            window.location.reload(); 
+                        });
+                    }
+                }
             );
         } else {
             Swal.fire({
@@ -160,8 +141,8 @@
         }
     }
 
-    // Call the location request on page load
-    document.addEventListener('DOMContentLoaded', function() {
+    
+    document.addEventListener('DOMContentLoaded', function () {
         requestLocation();
     });
 </script>
@@ -199,82 +180,48 @@
             });
         };
 
-        // Handle form submit
-const loginForm = document.getElementById("loginForm");
-const alertSuccess = document.getElementById("alert-success");
-const alertError = document.getElementById("alert-error");
+        const login = async (data) => {
+            try {
+                const response = await fetch("../function/Process.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                    },
+                    body: JSON.stringify(data),
+                });
 
-loginForm.onsubmit = function (e) {
-    e.preventDefault();  // Prevent form from submitting the default way
+                if (!response.ok) {
+                    throw new Error("Could not fetch resource");
+                }
 
-    const uname = loginForm["uname"].value;
-    const password = loginForm["password"].value;
+                const dataResponse = await response.text();
+                let alertSuccess = document.getElementById("alert-success");
+                let alertError = document.getElementById("alert-error");
 
-    // Check if both fields are filled out
-    if (uname && password) {
-        // reCAPTCHA validation
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'login' }).then(function (token) {
-                // Prepare data to send to the server
-                const data = {
-                    uname: uname,
-                    password: password,
-                    recaptcha_token: token, // Pass reCAPTCHA token
-                    login: true
-                };
+                if (dataResponse === "success") {
+                    alertSuccess.classList.remove("d-none");
+                    setTimeout(() => window.location.href = "index.php", 3000);
+                } else if (dataResponse === 'error') {
+                    alertError.classList.remove("d-none");
+                    showModalAlert("Too many failed login attempts. Please try again after some time.");
+                    setTimeout(() => window.location.href = "login.php", 3000);
+                    
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-                // Call login function
-                login(data);
-            }).catch(function (error) {
-                console.error("Error with reCAPTCHA: ", error);
-                alertError.classList.remove("d-none");
-                alertError.innerText = "reCAPTCHA failed, please try again.";
-            });
-        });
-    } else {
-        alertError.classList.remove("d-none");
-        alertError.innerText = "Please fill in all fields.";
-    }
-};
+        const loginForm = document.getElementById("loginForm");
+        loginForm.onsubmit = (e) => {
+            e.preventDefault();
+            const uname = loginForm["uname"].value;
+            const password = loginForm["password"].value;
 
-// Login function
-const login = async (data) => {
-    try {
-        const response = await fetch("../function/Process.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify(data),
-        });
-
-        if (!response.ok) {
-            throw new Error("Could not fetch resource");
-        }
-
-        const dataResponse = await response.text();
-
-        // Handle the response from the server
-        if (dataResponse === "success") {
-            alertSuccess.classList.remove("d-none");
-            setTimeout(() => window.location.href = "index.php", 3000);
-        } else if (dataResponse === 'error') {
-            alertError.classList.remove("d-none");
-            Swal.fire({
-                icon: 'error',
-                title: 'Too many failed attempts',
-                text: 'Please try again after some time.',
-                timer: 5000
-            });
-        } else {
-            alertError.classList.remove("d-none");
-            alertError.innerText = "An unknown error occurred.";
-        }
-    } catch (error) {
-        console.error(error);
-    }
-};
-
+            if (uname && password) {
+                login({ uname, password, login: true });
+            }
+        };
 
         const showPass = document.getElementById('show-pass');
         const passwordInput = document.getElementById('password');
@@ -325,4 +272,6 @@ const login = async (data) => {
 </body>
 </html>
 <?php require __DIR__ . '/partials/footer.php'; ?>
-  
+    </body>
+    </html>
+    <?php require __DIR__ . '/partials/footer.php'; ?>
