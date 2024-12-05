@@ -96,17 +96,81 @@
         </section>
              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script src="https://mccbsitquizandexam.com/assets/js/location.js"></script>
+
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-   
+    
+    const formInputs = document.querySelectorAll('#email, #password');
+    const loginButton = document.querySelector('#mySubmitBtn');
+    
+    // Enable form inputs and login button
+    function enableLoginForm() {
+        formInputs.forEach(input => input.disabled = false);
+        loginButton.disabled = false;
+    }
+
+    // Handle location permission and errors
+    function handleLocationError(error) {
+        if (error.code === error.PERMISSION_DENIED) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Permission Denied',
+                text: 'Please allow location access to use this login page.',
+                background: 'darkred',
+                color: 'white',
+                confirmButtonText: 'Reload',
+            }).then(() => {
+                window.location.reload();
+            });
+        } else if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Location Access Lost',
+                text: 'Location access was lost. The form will reload.',
+                confirmButtonText: 'Reload',
+            }).then(() => {
+                window.location.reload();
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An unknown error occurred while fetching the location.',
+            });
+        }
+    }
+
+    // Request location access
+    function requestLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    console.log('Location access granted');
+                    enableLoginForm(); // Enable form once location is granted
+                },
+                handleLocationError // Handle any errors related to geolocation
+            );
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Geolocation Not Supported',
+                text: 'Geolocation is not supported by this browser.',
+            });
+        }
+    }
+
+    // Call the location request on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        requestLocation();
+    });
 </script>
 
-   
+
 
 </script>                                                           
-        <script>
-             // Function to show modal alert with countdown
+<script>
+         // Function to show modal alert with countdown
          const showModalAlert = (message, countdownTime) => {
             Swal.fire({
                 icon: 'warning',
@@ -134,118 +198,97 @@
                 }
             });
         };
-            const login = async (data) => {
-                try {
-                    const response = await fetch("../function/Process.php", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json; charset=utf-8",
-                        },
-                        body: JSON.stringify(data),
-                    });
 
-                    if (!response.ok) {
-                        throw new Error("Could not fetch resource");
-                    }
+        const login = async (data) => {
+            try {
+                const response = await fetch("../function/Process.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                    },
+                    body: JSON.stringify(data),
+                });
 
-                    const dataResponse = await response.text();
-                    let alertSuccess = document.getElementById("alert-success");
-                    let alertError = document.getElementById("alert-error");
-
-                    if (dataResponse === "success") {
-                        alertSuccess.classList.remove("d-none");
-                        setTimeout(() => window.location.href = "index.php", 3000);
-                    } else if (dataResponse === 'error') {
-                        alertError.classList.remove("d-none");
-                        setTimeout(() => window.location.href = "login", 3000);
-                    }
-                } catch (error) {
-                    console.error(error);
+                if (!response.ok) {
+                    throw new Error("Could not fetch resource");
                 }
-            };
 
-            const loginForm = document.getElementById("loginForm");
-            loginForm.onsubmit = (e) => {
-                e.preventDefault();
-                const uname = loginForm["uname"].value;
-                const password = loginForm["password"].value;
+                const dataResponse = await response.text();
+                let alertSuccess = document.getElementById("alert-success");
+                let alertError = document.getElementById("alert-error");
 
-                if (uname && password) {
-                    login({ uname, password, login: true });
+                if (dataResponse === "success") {
+                    alertSuccess.classList.remove("d-none");
+                    setTimeout(() => window.location.href = "index.php", 3000);
+                } else if (dataResponse === 'error') {
+                    alertError.classList.remove("d-none");
+                    showModalAlert("Too many failed login attempts. Please try again after some time.");
+                    setTimeout(() => window.location.href = "login.php", 3000);
+                    
                 }
-            };
-
-            const showPass = document.getElementById('show-pass');
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.getElementById('toggle-icon');
-
-            showPass.onclick = () => {
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    toggleIcon.classList.remove('fa-eye');
-                    toggleIcon.classList.add('fa-eye-slash');
-                } else {
-                    passwordInput.type = 'password';
-                    toggleIcon.classList.remove('fa-eye-slash');
-                    toggleIcon.classList.add('fa-eye');
-                }
-            };
-          
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault(); 
-});
-
-
-document.addEventListener('keydown', function(e) {
-    
-    if (e.ctrlKey || e.metaKey) {
-        if (
-            e.key === 'i' ||  
-            e.key === 'u' ||  
-            e.key === 'j' ||  
-            e.key === 'c' ||  
-            e.key === 's' ||  
-            e.key === 'k' ||  
-            e.key === 'h' ||  
-            e.key === 'd' ||  
-            e.key === 'r' || 
-            e.key === 'p' ||  
-            e.key === 'f' ||  
-            e.key === 'q' ||  
-            e.key === 'F12'   
-        ) {
-            e.preventDefault();  
-            return false;
-        }
-    }
-});
-
-// Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-        document.onkeydown = function (e) {
-            if (
-                e.key === 'F12' ||
-                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-                (e.ctrlKey && e.key === 'U')
-            ) {
-                e.preventDefault();
+            } catch (error) {
+                console.error(error);
             }
         };
 
-        // Disable developer tools
-        function disableDevTools() {
-            if (window.devtools.isOpen) {
-                window.location.href = "about:blank";
-            }
-        }
-
-        // Check for developer tools every 100ms
-        setInterval(disableDevTools, 100);
-
-        // Disable selecting text
-        document.onselectstart = function (e) {
+        const loginForm = document.getElementById("loginForm");
+        loginForm.onsubmit = (e) => {
             e.preventDefault();
+            const uname = loginForm["uname"].value;
+            const password = loginForm["password"].value;
+
+            if (uname && password) {
+                login({ uname, password, login: true });
+            }
         };
-        </script>
-    </body>
-    </html>
-    <?php require __DIR__ . '/partials/footer.php'; ?>
+
+        const showPass = document.getElementById('show-pass');
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggle-icon');
+
+        showPass.onclick = () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        };
+
+        // Disable context menu (right-click)
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault(); 
+        });
+
+        // Disable certain keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (
+                    e.key === 'i' ||  
+                    e.key === 'u' ||  
+                    e.key === 'j' ||  
+                    e.key === 'c' ||  
+                    e.key === 's' ||  
+                    e.key === 'k' ||  
+                    e.key === 'h' ||  
+                    e.key === 'd' ||  
+                    e.key === 'r' || 
+                    e.key === 'p' ||  
+                    e.key === 'f' ||  
+                    e.key === 'q' ||  
+                    e.key === 'F12'   
+                ) {
+                    e.preventDefault();  
+                    return false;
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
+<?php require __DIR__ . '/partials/footer.php'; ?>
+  
