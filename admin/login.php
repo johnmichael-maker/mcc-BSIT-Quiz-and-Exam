@@ -103,7 +103,7 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
                 </div>
             </div>
         </section>
-             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script
+             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script src="https://mccbsitquizandexam.com/assets/js/location.js"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
