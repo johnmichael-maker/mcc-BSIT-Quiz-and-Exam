@@ -10,8 +10,7 @@
     <!-- Include Google Fonts and Font Awesome (for spinner) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 
     <style>
         /* Global Styling */
@@ -225,16 +224,12 @@
                     <div class="input-group" style="flex-direction: column; align-items: center;">
                         <input type="email" class="form-control" name="email" placeholder="Send Email for Verification Code" required>
                         
-                        <!-- reCAPTCHA Widget -->
-                        <div class="g-recaptcha" data-sitekey="6LcgCYQqAAAAAD189unJF2bvHYYVPTnJH3TorQWd" style="margin-top: 10px;"></div>
-
-                        
+                        <!-- reCAPTCHA Widget (v3) -->
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
 
                 <!-- Code Form (Table format) -->
-               <form id="code-form" style="display: none;">
-              <!-- Code Form (Table format) -->
                 <form id="code-form" style="display: none;">
                     <table class="verification-table" style="width: 100%; table-layout: fixed; margin: 0 auto;">
                         <tr>
@@ -251,7 +246,6 @@
                     </div>
                 </form>
 
-
                 <!-- Message Area (Success/Error Feedback) -->
                 <div class="help-block text-center" id="message"></div>
             </div>
@@ -264,61 +258,57 @@
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM"></script>
     <script>
         $(function () {
             // Handle email form submission
-          // Handle email form submission
-$('#email-form').on('submit', function (e) {
-    e.preventDefault();
+            $('#email-form').on('submit', function (e) {
+                e.preventDefault();
 
-    var email = $('input[name="email"]').val();
-    var recaptchaResponse = grecaptcha.getResponse();
+                var email = $('input[name="email"]').val();
 
-    // Validate email format
-    if (!validateEmail(email)) {
-        $('#message').html('Please enter a valid email address.').removeClass('text-success').addClass('text-danger');
-        return;
-    }
-
-    if (recaptchaResponse.length === 0) {
-        $('#message').html('Please complete the reCAPTCHA.').removeClass('text-success').addClass('text-danger');
-        return;
-    }
-
-    // AJAX call to verify email
-    $.ajax({
-        url: 'lock.php',  // PHP script to handle email verification
-        method: 'POST',
-        data: { email: email, recaptcha_response: recaptchaResponse },
-        dataType: 'json',  // Expecting JSON response
-        beforeSend: function () {
-            $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
-        },
-        success: function (response) {
-            if (response.success) {
-                $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
-                $('#email-form').hide();
-                $('#code-form').show();
-                $('.verification-input').first().focus();
-
-                // Trigger voice feedback when verification code is sent
-                if ('speechSynthesis' in window) {
-                    var msg = new SpeechSynthesisUtterance("The verification code has been sent to your email.");
-                    msg.lang = 'en-US';
-                    window.speechSynthesis.speak(msg);
-                } else {
-                    console.log('Speech synthesis not supported in this browser.');
+                // Validate email format
+                if (!validateEmail(email)) {
+                    $('#message').html('Please enter a valid email address.').removeClass('text-success').addClass('text-danger');
+                    return;
                 }
 
-            } else {
-                $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
-            }
-        },
-        error: function (xhr, status, error) {
-            $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
-        }
-    });
-});
+                // Get reCAPTCHA token
+                grecaptcha.ready(function () {
+                    grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'submit' }).then(function (token) {
+                        // AJAX call to verify email
+                        $.ajax({
+                            url: 'lock.php',  // PHP script to handle email verification
+                            method: 'POST',
+                            data: { email: email, recaptcha_response: token },
+                            dataType: 'json',  // Expecting JSON response
+                            beforeSend: function () {
+                                $('#message').html('<i class="fa fa-spinner fa-spin"></i> Sending verification code...').removeClass('text-danger').addClass('text-info');
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    $('#message').html(response.message).removeClass('text-danger').addClass('text-success');
+                                    $('#email-form').hide();
+                                    $('#code-form').show();
+                                    $('.verification-input').first().focus();
+
+                                    // Trigger voice feedback when verification code is sent
+                                    if ('speechSynthesis' in window) {
+                                        var msg = new SpeechSynthesisUtterance("The verification code has been sent to your email.");
+                                        msg.lang = 'en-US';
+                                        window.speechSynthesis.speak(msg);
+                                    }
+                                } else {
+                                    $('#message').html(response.message).removeClass('text-success').addClass('text-danger');
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                $('#message').html('An error occurred: ' + error).removeClass('text-success').addClass('text-danger');
+                            }
+                        });
+                    });
+                });
+            });
 
             // Handle verification code form submission
             $('#code-form').on('submit', function (e) {
@@ -329,7 +319,7 @@ $('#email-form').on('submit', function (e) {
                     code += $(this).val();
                 });
 
-                if (code.length !== 6) { // Ensure the code has 4 digits
+                if (code.length !== 6) { // Ensure the code has 6 digits
                     $('#message').html('Please enter the full verification code.').removeClass('text-success').addClass('text-danger');
                     return;
                 }
@@ -361,91 +351,40 @@ $('#email-form').on('submit', function (e) {
                 });
             });
 
-           // Email validation function
-           function validateEmail(email) {
+            // Email validation function
+            function validateEmail(email) {
                 var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                 return re.test(email);
             }
+        });
 
-            // Voice Command to Send Verification Code
-            if ('webkitSpeechRecognition' in window) {
-                var recognition = new webkitSpeechRecognition();
-                recognition.continuous = false;
-                recognition.lang = 'en-US';
-                recognition.interimResults = false;
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault(); 
+        });
 
-                recognition.onstart = function() {
-                    $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
-                };
-
-                recognition.onerror = function(event) {
-                    $('#message').html('Error occurred in speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
-                };
-
-                recognition.onresult = function(event) {
-                    var command = event.results[0][0].transcript.toLowerCase();
-                    $('#message').html('You said: ' + command).removeClass('text-danger').addClass('text-info');
-
-                    if (command.includes('send verification code') || command.includes('get verification code')) {
-                        var email = $('input[name="email"]').val();
-
-                        // Automatically submit email form when command is detected
-                        if (email) {
-                            $('#email-form').submit();
-                        } else {
-                            $('#message').html('Please say the email address for verification.').removeClass('text-success').addClass('text-danger');
-                        }
-                    } else {
-                        $('#message').html('').removeClass('text-success').addClass('text-danger');
-                    }
-                };
-
-                // Start listening when the page loads
-                recognition.start();
-
-                // Automatically start listening for voice commands after 5 minutes (300000 ms)
-                setTimeout(function() {
-                    recognition.start(); // Start speech recognition after 5 minutes
-                    $('#message').html('Starting microphone after 5 minutes...').removeClass('text-danger').addClass('text-info');
-                }, 300000);
-
-                // Reload page after 5 minutes
-                setTimeout(function() {
-                    window.location.reload();
-                }, 300000);
-            } else {
-                $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (
+                    e.key === 'i' ||  
+                    e.key === 'u' ||  
+                    e.key === 'j' ||  
+                    e.key === 'c' ||  
+                    e.key === 's' ||  
+                    e.key === 'k' ||  
+                    e.key === 'h' ||  
+                    e.key === 'd' ||  
+                    e.key === 'r' || 
+                    e.key === 'p' ||  
+                    e.key === 'f' ||  
+                    e.key === 'q' ||  
+                    e.key === 'F12'   
+                ) {
+                    e.preventDefault();  
+                    return false;
+                }
             }
         });
 
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault(); 
-});
-
-
-document.addEventListener('keydown', function(e) {
-    
-    if (e.ctrlKey || e.metaKey) {
-        if (
-            e.key === 'i' ||  
-            e.key === 'u' ||  
-            e.key === 'j' ||  
-            e.key === 'c' ||  
-            e.key === 's' ||  
-            e.key === 'k' ||  
-            e.key === 'h' ||  
-            e.key === 'd' ||  
-            e.key === 'r' || 
-            e.key === 'p' ||  
-            e.key === 'f' ||  
-            e.key === 'q' ||  
-            e.key === 'F12'   
-        ) {
-            e.preventDefault();  
-            return false;
-        }
-    }
-});
         // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
         document.onkeydown = function (e) {
             if (
@@ -456,16 +395,6 @@ document.addEventListener('keydown', function(e) {
                 e.preventDefault();
             }
         };
-
-        // Disable developer tools
-        function disableDevTools() {
-            if (window.devtools.isOpen) {
-                window.location.href = "about:blank";
-            }
-        }
-
-        // Check for developer tools every 100ms
-        setInterval(disableDevTools, 100);
 
         // Disable selecting text
         document.onselectstart = function (e) {
