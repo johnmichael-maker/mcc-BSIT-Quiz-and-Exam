@@ -115,6 +115,34 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
 
 </script>                                                           
         <script>
+             // Function to show modal alert with countdown
+         const showModalAlert = (message, countdownTime) => {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Error, Incorrect email or password',
+                html: `
+                    <p>${message}</p>
+                    <p class="countdown" id="countdown-timer"></p>`,
+                showConfirmButton: false,
+                background: 'white',
+                color: 'black',
+                timer: countdownTime * 1000, // Convert seconds to milliseconds
+                timerProgressBar: true,
+                willOpen: () => {
+                    const countdownElement = document.getElementById('countdown-timer');
+                    let timeLeft = countdownTime;
+
+                    const countdownInterval = setInterval(() => {
+                        timeLeft--;
+                        countdownElement.innerHTML = `Try again in: ${timeLeft}s`;
+
+                        if (timeLeft <= 0) {
+                            clearInterval(countdownInterval);
+                        }
+                    }, 1000);
+                }
+            });
+        };
             const login = async (data) => {
                 try {
                     const response = await fetch("../function/Process.php", {
