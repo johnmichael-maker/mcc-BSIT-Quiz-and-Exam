@@ -47,7 +47,7 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
     .g-recaptcha {
         transform: scale(0.8);
         transform-origin: 0 0; 
-        width: 100% !important;  /
+        width: 100% !important;  
         max-width: 400px; 
         margin: 0 auto;
     }
@@ -79,9 +79,9 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                             <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect email or password</p>
                             <form name="login" class="m-auto" id="loginForm">
-                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required >
+                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required disabled>
                                 <div style="position: relative;">
-                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required >
+                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required disabled>
                                     <span id="show-pass" class="toggle-password">
                                         <i class="fas fa-eye" id="toggle-icon"></i>
                                     </span>
@@ -105,11 +105,66 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
         </section>
              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script src="https://mccbsitquizandexam.com/assets/js/location.js"></script>
-
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
- 
+    const formInputs = document.querySelectorAll('#email, #password');
+    const loginButton = document.querySelector('#loginButton');
+
+    
+    function requestLocation() {
+        if (navigator.geolocation) {
+            
+            navigator.geolocation.watchPosition(
+                
+                function (position) {
+                    console.log('Location access granted');
+                    
+                    formInputs.forEach(input => input.disabled = false);
+                    loginButton.disabled = false;
+                },
+                
+                function (error) {
+                    if (error.code === error.PERMISSION_DENIED) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Permission Denied',
+                            text: 'Please allow location access to use this login page.',
+                            background:'darkred',
+                            color: 'white',
+                            confirmButtonText: 'Reload',
+                        }).then(() => {
+                            window.location.reload(); 
+                        });
+                    }
+                    
+                    if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
+                        formInputs.forEach(input => input.disabled = true);
+                        loginButton.disabled = true;
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Location Access Lost',
+                            text: 'Location access was lost. The form will reload.',
+                            confirmButtonText: 'Reload',
+                        }).then(() => {
+                            window.location.reload(); 
+                        });
+                    }
+                }
+            );
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Geolocation Not Supported',
+                text: 'Geolocation is not supported by this browser.',
+            });
+        }
+    }
+
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        requestLocation();
+    });
 </script>
    
 
