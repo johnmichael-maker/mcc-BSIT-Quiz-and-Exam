@@ -1,5 +1,4 @@
 <?php
-// Database connection
 $conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
 
 if ($conn->connect_error) {
@@ -42,9 +41,7 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
         $updateQuery = "UPDATE admin SET verification = ? WHERE email = ?";
         $updateStmt = $conn->prepare($updateQuery);
         $updateStmt->bind_param("is", $verificationCode, $email);
-        $updateStmt->execute();
-
-        if ($updateStmt->affected_rows > 0) {
+        if ($updateStmt->execute()) {
             // Send the verification code via email
             $subject = "Your Verification Code";
             $message = "Your verification code is: " . $verificationCode;
@@ -52,17 +49,15 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
                        "Reply-To: no-reply@yourdomain.com\r\n" .
                        "Content-Type: text/plain; charset=UTF-8";
 
-            // Use PHP's mail function to send the email
+            // Debugging: Log to check if mail is being sent
             if (mail($email, $subject, $message, $headers)) {
                 echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Failed to send email. Please try again later.']);
             }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to update the verification code in the database.']);
+            echo json_encode(['success' => false, 'message' => 'Failed to update verification code in the database.']);
         }
-
-        $updateStmt->close();
     } else {
         echo json_encode(['success' => false, 'message' => 'Email not found.']);
     }
