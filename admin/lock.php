@@ -16,9 +16,21 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
     }
 
     // Verify reCAPTCHA response
-    $recaptchaSecret = '6LcgCYQqAAAAAF2I3spmD66uqtH8tm7ionOFqxUf';  // Replace with your reCAPTCHA secret key
+    $recaptchaSecret = '6Ld9CpMqAAAAAD1Hq_krZF-HXnFLxuuY5HcqVSCF';  // Replace with your reCAPTCHA secret key
     $recaptchaUrl = "https://www.google.com/recaptcha/api/siteverify";
-    $response = file_get_contents($recaptchaUrl . "?secret=" . $recaptchaSecret . "&response=" . $recaptchaResponse);
+    
+    // Use cURL to verify reCAPTCHA instead of file_get_contents for better error handling
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $recaptchaUrl);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, [
+        'secret' => $recaptchaSecret,
+        'response' => $recaptchaResponse
+    ]);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    
     $responseKeys = json_decode($response, true);
 
     if (intval($responseKeys["success"]) !== 1) {
@@ -34,29 +46,32 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Generate a 6-digit verification code
-        $verificationCode = rand(100000, 999999);
+        // Generate a 6-digit verification code securely using random_int()
+        $verificationCode = random_int(100000, 999999);
 
         // Update the verification code in the database
         $updateQuery = "UPDATE admin SET verification = ? WHERE email = ?";
         $updateStmt = $conn->prepare($updateQuery);
         $updateStmt->bind_param("is", $verificationCode, $email);
-        if ($updateStmt->execute()) {
-            // Send the verification code via email
-            $subject = "Your Verification Code";
-            $message = "Your verification code is: " . $verificationCode;
-            $headers = "From: no-reply@yourdomain.com\r\n" .
-                       "Reply-To: no-reply@yourdomain.com\r\n" .
-                       "Content-Type: text/plain; charset=UTF-8";
+        
+        // Check if the update query was successful
+        if (!$updateStmt->execute()) {
+            echo json_encode(['success' => false, 'message' => 'Failed to update verification code in database.']);
+            exit();
+        }
 
-            // Debugging: Log to check if mail is being sent
-            if (mail($email, $subject, $message, $headers)) {
-                echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Failed to send email. Please try again later.']);
-            }
+        // Send the verification code via email
+        $subject = "Your Verification Code";
+        $message = "Your verification code is: " . $verificationCode;
+        $headers = "From: no-reply@yourdomain.com\r\n" .  // Replace with a valid email address
+                   "Reply-To: no-reply@yourdomain.com\r\n" .  // Replace with a valid email address
+                   "Content-Type: text/plain; charset=UTF-8";
+
+        // Use PHP's mail function to send the email
+        if (mail($email, $subject, $message, $headers)) {
+            echo json_encode(['success' => true, 'message' => 'Verification code sent to your email.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to update verification code in the database.']);
+            echo json_encode(['success' => false, 'message' => 'Failed to send email. Please try again later.']);
         }
     } else {
         echo json_encode(['success' => false, 'message' => 'Email not found.']);
