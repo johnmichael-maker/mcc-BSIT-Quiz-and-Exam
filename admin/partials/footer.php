@@ -1,31 +1,31 @@
 <?php
-// Logout logic: check if 'logout' parameter is set
-if (isset($_GET['logout'])) {
-    // Destroy the session
-    session_start(); // Ensure session is started before destroying
-    session_unset(); // Clear all session variables
-    session_destroy(); // Destroy the session completely
-    ?>
+  // Logout logic: check for `logout` parameter in the URL
+  if (isset($_GET['logout'])) {
+    session_start();  // Ensure the session is started before calling session_destroy()
+    session_destroy();  // Destroy the session data
 
+    // Redirect to a login page or index.php after session destruction
+    header("Location: ../index.php");  // Change this to your login page if needed
+    exit();
+  }
+?>
+
+<!-- HTML and SweetAlert logic for displaying a success message on logout -->
+<?php if (isset($_GET['logout'])): ?>
     <script>
-        // Show a success message and redirect after logout
         Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Logged out successfully",
+            position: 'center',
+            icon: 'success',
+            title: 'Logged out successfully',
             showConfirmButton: false,
             timer: 1500
         }).then(() => {
-            // Redirect to the homepage or any other page after logout
-            window.location.href = "../index.php";
+            window.location.href = "../index.php";  // Redirect to the home or login page
         });
     </script>
+<?php endif; ?>
 
-<?php
-}
-?>
-
-<!-- Other scripts and page content -->
+<!-- Footer and other scripts -->
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/dataTable.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
@@ -33,10 +33,9 @@ if (isset($_GET['logout'])) {
 
 <script>
     $(document).ready(function(){
-        // Initialize DataTable
         $("#dataTable").DataTable();
     });
 </script>
-</body>
 
+</body>
 </html>
