@@ -11,7 +11,7 @@
     }
     if ($adminController->isAdminDashboard()) {
         if (!$adminController->isActive()) {
-            header('location: login.php');
+            header('location: access-session');
         }
     }
     $examinees = $adminController->getExaminees();
