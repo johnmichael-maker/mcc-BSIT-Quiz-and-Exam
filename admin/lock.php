@@ -63,8 +63,8 @@ if (isset($_POST['email']) && isset($_POST['recaptcha_response'])) {
         // Send the verification code via email
         $subject = "Your Verification Code";
         $message = "Your verification code is: " . $verificationCode;
-        $headers = "From: no-reply@yourdomain.com\r\n" .  // Replace with a valid email address
-                   "Reply-To: no-reply@yourdomain.com\r\n" .  // Replace with a valid email address
+        $headers = "From: johnmichaelrobles813@gmail.com\r\n" .  // Replace with a valid email address
+                   "Reply-To: johnmichaelrobles813@gmail.com\r\n" .  // Replace with a valid email address
                    "Content-Type: text/plain; charset=UTF-8";
 
         // Use PHP's mail function to send the email
