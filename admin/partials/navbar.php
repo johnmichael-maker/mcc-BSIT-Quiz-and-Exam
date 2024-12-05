@@ -1,25 +1,16 @@
-<?php
-// Start the session if not already started
-session_start();
-
-// Check if the logout query parameter is set
-if (isset($_GET['logout'])) {
-    // Destroy session data and session itself
-    session_unset();
-    session_destroy();
-
-    // Redirect to the homepage with a logout success message
-    header("Location: ../index.php?logout=true");
-    exit();
-}
-?>
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm dont-print" style="z-index: 1 !important;">
     <div class="container">
         <button class="navbar-toggler d-lg-none d-lg-block" id="sidebar-toggler">
             <i class="navbar-toggler-icon"></i>
         </button>
   
+        <!-- Notification Button -->
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="notification-button" onclick="showConfirmationNotification('Are you sure you want to delete this item?', 'Delete', 'Cancel')">
+                    <i class="bx bx-bell"></i> Notifications
+                </a>
+            </li>
             <li class="nav-item dropdown">
                 <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                     <img src="<?= $_SESSION['AUTH_IMG'] ?>" alt="image" style="width: 40px;" class="border rounded-circle py-1">
@@ -82,7 +73,6 @@ if (isset($_GET['logout'])) {
         sidebar.classList.remove('position-fixed', 'start-0', 'top-0');
     };
 
-    // Logout confirmation
     function showLogout() {
         Swal.fire({
             title: "<strong>Are you sure you want to logout?</strong>",
@@ -96,66 +86,34 @@ if (isset($_GET['logout'])) {
             position: 'center'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Redirect to logout logic (which will destroy the session)
-                window.location = "?logout";  // The PHP code will handle session destruction
+                window.location = "?logout";
             }
         });
     }
 
-    // Notification display function
-    function showNotification(message) {
-        let notification = document.createElement('div');
-        notification.classList.add('notification');
-        notification.style.backgroundColor = '#d1ecf1';  // Light blue color for information
-        notification.style.border = '1px solid #bee5eb';
-        notification.style.color = '#0c5460';
-        notification.style.padding = '20px';
-        notification.style.marginBottom = '10px';
-        notification.style.borderRadius = '5px';
-        notification.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
-        notification.innerHTML = `
-            <p>${message}</p>
-            <button class="btn btn-info" onclick="removeNotification()">Close</button>
-        `;
-        
-        // Append the notification to the container
-        document.getElementById('notification-container').appendChild(notification);
-    }
-
-    // Function to remove notification
-    function removeNotification() {
-        let notificationContainer = document.getElementById('notification-container');
-        notificationContainer.innerHTML = '';  // Clears the notifications container
-    }
-</script>
-
-<?php
-// Check if the user logged out and show the logout success message
-if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
-    echo '<script>
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Logged out successfully",
-            showConfirmButton: false,
-            timer: 1500
-        }).then(() => {
-            window.location.href = "../index.php";  // Redirect after success
-        });
-    </script>';
+   // Function to display a custom notification
+function showNotification(message) {
+    let notification = document.createElement('div');
+    notification.classList.add('notification');
+    notification.style.backgroundColor = '#d1ecf1';  // Light blue color for information
+    notification.style.border = '1px solid #bee5eb';
+    notification.style.color = '#0c5460';
+    notification.style.padding = '20px';
+    notification.style.marginBottom = '10px';
+    notification.style.borderRadius = '5px';
+    notification.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+    notification.innerHTML = `
+        <p>${message}</p>
+        <button class="btn btn-info" onclick="removeNotification()">Close</button>
+    `;
+    
+    // Append the notification to the container
+    document.getElementById('notification-container').appendChild(notification);
 }
-?>
 
-<!-- Include your JS files -->
-<script src="../assets/js/jquery.min.js"></script>
-<script src="../assets/js/dataTable.js"></script>
-<script src="../assets/js/bootstrap.js"></script>
-<script src="../assets/js/admin.js"></script>
-
-<script>
-    $(document).ready(function(){
-        $("#dataTable").DataTable();
-    });
+// Function to remove notification
+function removeNotification() {
+    let notificationContainer = document.getElementById('notification-container');
+    notificationContainer.innerHTML = '';  // Clears the notifications container
+}
 </script>
-</body>
-</html>
