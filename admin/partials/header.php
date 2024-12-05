@@ -23,7 +23,7 @@ header("Permissions-Policy: accelerometer=(), camera=(), geolocation=(), microph
 
 // Check if the admin is authenticated and has an active session
 if ($adminController->checkAdmin()) {
-    header('Location: access-control');
+    header('Location: access-session');
     exit;
 }
 
