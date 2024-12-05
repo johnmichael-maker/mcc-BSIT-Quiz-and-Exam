@@ -79,9 +79,9 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                             <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect email or password</p>
                             <form name="login" class="m-auto" id="loginForm">
-                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required disabled>
+                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required >
                                 <div style="position: relative;">
-                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required disabled>
+                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required >
                                     <span id="show-pass" class="toggle-password">
                                         <i class="fas fa-eye" id="toggle-icon"></i>
                                     </span>
