@@ -89,127 +89,30 @@ class Admin extends Database
 
  public function login()
     {
-        try {
-            $conn = $this->getConnection();
-            $uname = $this->post_data['uname'];
-            $password = $this->post_data['password'];
-            $ip_address = $_SERVER['REMOTE_ADDR'];  // Get the user's IP address
-            $recaptcha_token = $this->post_data['recaptcha_token']; // reCAPTCHA token
+        $conn = $this->getConnection();
+        $uname = $this->post_data['uname'];
+        $password = $this->post_data['password'];
     
-            // reCAPTCHA secret key
-            $recaptcha_secret = '6Ld9CpMqAAAAAD1Hq_krZF-HXnFLxuuY5HcqVSCF';  // Replace with your actual secret key
+        $stmt = $conn->prepare("SELECT * FROM admin WHERE username = :uname");
+        $stmt->execute([':uname' => $uname]);
     
-            // Verify reCAPTCHA token
-            $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-            $response = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_token);
-            $responseKeys = json_decode($response, true);
-    
-            if (intval($responseKeys['success']) !== 1) {
-                // reCAPTCHA verification failed
-                $response = ['status' => 'recaptcha_failed', 'message' => 'reCAPTCHA verification failed.'];
-                echo json_encode($response);
-                return;
-            }
-    
-            // Check if the IP is blocked
-            $stmt = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = :ip_address");
-            $stmt->execute([':ip_address' => $ip_address]);
-            $attempts_data = $stmt->fetch();
-    
-            if ($attempts_data) {
-                // Limit failed attempts to 3 and block IP for 30 minutes (1800 seconds)
-                $attempt_limit = 3;
-                $time_limit = 1800;  // 30 minutes
-    
-                if ($attempts_data['blocked_until'] && strtotime($attempts_data['blocked_until']) > time()) {
-                    // If the IP is blocked, send back the block duration
-                    $time_remaining = strtotime($attempts_data['blocked_until']) - time();
-                    $response = ['status' => 'blocked', 'time_remaining' => $time_remaining];
-                    echo json_encode($response);
-                    return;
-                }
-    
-                // If too many failed attempts, set the block time
-                if ($attempts_data['attempts'] >= $attempt_limit) {
-                    $blocked_until = date('Y-m-d H:i:s', time() + $time_limit);
-                    $stmt = $conn->prepare("UPDATE login_attempts SET blocked_until = :blocked_until WHERE ip_address = :ip_address");
-                    $stmt->execute([':blocked_until' => $blocked_until, ':ip_address' => $ip_address]);
-                    $response = ['status' => 'blocked', 'message' => 'Your IP is blocked due to too many failed login attempts. Please try again later.'];
-                    echo json_encode($response);
-                    return;
-                }
-            }
-    
-            // Check username in the admin table
-            $stmt = $conn->prepare("SELECT * FROM admin WHERE username = :uname");
-            $stmt->execute([':uname' => $uname]);
-    
+        if ($stmt) {
             if ($stmt->rowCount() > 0) {
                 $result = $stmt->fetch();
                 if (password_verify($password, $result['password'])) {
-                    // Reset the login attempts after a successful login
-                    $this->resetLoginAttempts($ip_address);
-    
-                    // Start the session for the admin
+                    // Pass the ID along with the other data
                     $this->activeAdminSession($result['admin_id'], $result['username'], $result['img'], $result['userType']);
-                    $response = ['status' => 'success', 'message' => 'Login successful'];
+                    $this->message = "success";
                 } else {
-                    // Log failed login attempt
-                    $this->logFailedAttempt($ip_address);
-                    $response = ['status' => 'error', 'message' => 'Incorrect username or password'];
+                    $this->message = "error";
                 }
             } else {
-                $response = ['status' => 'error', 'message' => 'User not found'];
+                $this->message = "error";
             }
+        }
     
-            echo json_encode($response);
-        } catch (Exception $e) {
-            // Catch any unexpected errors and log them
-            error_log($e->getMessage());
-            $response = ['status' => 'error', 'message' => 'An unknown error occurred.'];
-            echo json_encode($response);
-        }
-    }
-    // Define the resetLoginAttempts method
-private function resetLoginAttempts($ip_address)
-{
-    try {
-        $conn = $this->getConnection();  // Assuming this method gets the DB connection
-        
-        // Update the login_attempts table to reset the attempts and block status
-        $stmt = $conn->prepare("UPDATE login_attempts SET attempts = 0, blocked_until = NULL WHERE ip_address = :ip_address");
-        $stmt->execute([':ip_address' => $ip_address]);
-    } catch (Exception $e) {
-        error_log("Error resetting login attempts: " . $e->getMessage());
-        // Optionally, you could return false or handle the error accordingly.
-    }
-}
-
-    // Function to log a failed login attempt
-private function logFailedAttempt($ip_address)
-{
-    try {
-        $conn = $this->getConnection();  // Assuming this method gets the DB connection
-
-        // Check if there is an existing record for the IP address
-        $stmt = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = :ip_address");
-        $stmt->execute([':ip_address' => $ip_address]);
-        $attempts_data = $stmt->fetch();
-
-        if ($attempts_data) {
-            // If the IP address already exists, increment the attempts count
-            $stmt = $conn->prepare("UPDATE login_attempts SET attempts = attempts + 1, last_attempt = NOW() WHERE ip_address = :ip_address");
-            $stmt->execute([':ip_address' => $ip_address]);
-        } else {
-            // If no record exists, create a new one with the failed attempt
-            $stmt = $conn->prepare("INSERT INTO login_attempts (ip_address, attempts, last_attempt) VALUES (:ip_address, 1, NOW())");
-            $stmt->execute([':ip_address' => $ip_address]);
-        }
-    } catch (Exception $e) {
-        error_log("Error logging failed attempt: " . $e->getMessage());
-        // Optionally, handle the error as needed
-    }
-}
+        return $this->message;
+    }    
     public function confirmSession()
     {
         if (isset($_SESSION['ADMIN_ACTIVE']) && isset($_SESSION['AUTH_KEY'])) {
