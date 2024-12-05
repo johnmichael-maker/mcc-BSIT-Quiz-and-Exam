@@ -109,48 +109,54 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     const formInputs = document.querySelectorAll('#email, #password');
-    const loginButton = document.querySelector('#loginButton');
-
+    const loginButton = document.querySelector('#mySubmitBtn');
     
+    // Enable form inputs and login button
+    function enableLoginForm() {
+        formInputs.forEach(input => input.disabled = false);
+        loginButton.disabled = false;
+    }
+
+    // Handle location permission and errors
+    function handleLocationError(error) {
+        if (error.code === error.PERMISSION_DENIED) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Permission Denied',
+                text: 'Please allow location access to use this login page.',
+                background: 'darkred',
+                color: 'white',
+                confirmButtonText: 'Reload',
+            }).then(() => {
+                window.location.reload();
+            });
+        } else if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Location Access Lost',
+                text: 'Location access was lost. The form will reload.',
+                confirmButtonText: 'Reload',
+            }).then(() => {
+                window.location.reload();
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An unknown error occurred while fetching the location.',
+            });
+        }
+    }
+
+    // Request location access
     function requestLocation() {
         if (navigator.geolocation) {
-            
-            navigator.geolocation.watchPosition(
-                
-                function (position) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
                     console.log('Location access granted');
-                    
-                    formInputs.forEach(input => input.disabled = false);
-                    loginButton.disabled = false;
+                    enableLoginForm(); // Enable form once location is granted
                 },
-                
-                function (error) {
-                    if (error.code === error.PERMISSION_DENIED) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Permission Denied',
-                            text: 'Please allow location access to use this login page.',
-                            background:'darkred',
-                            color: 'white',
-                            confirmButtonText: 'Reload',
-                        }).then(() => {
-                            window.location.reload(); 
-                        });
-                    }
-                    
-                    if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
-                        formInputs.forEach(input => input.disabled = true);
-                        loginButton.disabled = true;
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Location Access Lost',
-                            text: 'Location access was lost. The form will reload.',
-                            confirmButtonText: 'Reload',
-                        }).then(() => {
-                            window.location.reload(); 
-                        });
-                    }
-                }
+                handleLocationError // Handle any errors related to geolocation
             );
         } else {
             Swal.fire({
@@ -161,11 +167,12 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
         }
     }
 
-    
-    document.addEventListener('DOMContentLoaded', function () {
+    // Call the location request on page load
+    document.addEventListener('DOMContentLoaded', function() {
         requestLocation();
     });
 </script>
+
    
 
 </script>                                                           
