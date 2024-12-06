@@ -215,8 +215,7 @@
 </script>                                                           
 <script>
     
- document.addEventListener('DOMContentLoaded', function () {
-
+    document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById("loginForm");
     loginForm.onsubmit = (e) => {
         e.preventDefault();
@@ -280,7 +279,6 @@
         });
     }
 };
-
 
 
     // Password toggle functionality
