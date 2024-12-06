@@ -1,4 +1,16 @@
 <?php
+session_start(); // Start the session
+
+// Check if the user is logged in (and not an admin)
+if (!isset($_SESSION['AUTH_UTYPE']) || $_SESSION['AUTH_UTYPE'] == 2) {
+    // Redirect to the login page if no valid session exists
+    header("Location: ../index"); 
+    exit(); // Stop the script to prevent further execution
+}
+?>
+
+
+<?php
 
 $url = implode(explode('/mcc-bsit-quiz-and-exam/admin', strtolower($_SERVER['REQUEST_URI'])));
 $active = "text-dark bg-light";
