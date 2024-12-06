@@ -87,12 +87,13 @@ class Admin extends Database
     }
 
 
-    public function login()
+     public function login()
     {
         $conn = $this->getConnection();
         $uname = $this->post_data['uname'];
         $password = $this->post_data['password'];
         $ip_address = $_SERVER['REMOTE_ADDR'];  // Get the user's IP address
+      
     
         // Check if the IP is blocked
         $stmt = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = :ip_address");
@@ -183,8 +184,6 @@ class Admin extends Database
         $stmt = $conn->prepare("UPDATE login_attempts SET attempts = 0, blocked_until = NULL WHERE ip_address = :ip_address");
         $stmt->execute([':ip_address' => $ip_address]);
     }
-    
-    
 
     public function confirmSession()
     {
