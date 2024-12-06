@@ -1,15 +1,11 @@
 # Enable mod_rewrite engine
 RewriteEngine On
 
-# Prevent direct access to the home page ("/") - COMMENT OUT or REMOVE
-# RewriteCond %{REQUEST_URI} ^/$
-# RewriteRule ^$ - [F,L]
-
-# Do not apply rewrites to existing directories or files
+# Do not apply rewrites to existing directories or files (images, CSS, etc.)
 RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
-RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
+RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS, etc.)
 
-# General rewrite rules for URLs that need to be processed as PHP (without .php extension)
+# General rewrite rule for URLs that need to be processed as PHP (without .php extension)
 RewriteRule ^(admin/([a-zA-Z0-9_-]+))$ admin/$2.php [NC,L]
 RewriteRule ^(index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg|student-signup|step-123|exam|finished|home)$ $1.php [NC,L]
 
@@ -30,4 +26,4 @@ RewriteRule ^home\.php$ /home [R=301,L]    # Redirect home.php to home without .
 
 # Add rule to redirect error_page.php to clean URL "error_page" without .php
 RewriteCond %{THE_REQUEST} \s/error_page\.php$ [NC]
-RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php to error_page without .php  
+RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php to error_page without .php
