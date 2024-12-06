@@ -45,7 +45,7 @@ function getCurrentPage() {
 }
 
 // Example: Define a base URL for easy reference throughout the app
-define('BASE_URL', 'https://yourdomain.com/');
+define('BASE_URL', 'https://mccbsitquizandexam.com/');
 
 // Optionally: Define constants for commonly used paths
 define('TEMPLATES_PATH', __DIR__ . '/templates/');
