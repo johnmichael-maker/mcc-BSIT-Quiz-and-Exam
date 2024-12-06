@@ -390,14 +390,14 @@ $username = $user['username'];  // Get username from the database
   </div>
              <div class="field">
         <div class="label">Password</div>
-        <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required />
+        <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required minlength="16" />
         <span id="show-pass" class="toggle-password">
             <i class="fas fa-eye" id="toggle-icon-password"></i>  
         </span>
     </div>
 <div class="field">
         <div class="label">Confirm Password</div>
-        <input type="password" name="cpassword" id="confirmPasswordInput" placeholder="Confirm Password" required />
+        <input type="password" name="cpassword" id="confirmPasswordInput" placeholder="Confirm Password" required minlength="16" />
         <span id="show-pass-confirm" class="toggle-password">
             <i class="fas fa-eye" id="toggle-icon-confirm"></i>  
         </span>
