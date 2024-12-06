@@ -93,18 +93,6 @@ class Admin extends Database
         $uname = $this->post_data['uname'];
         $password = $this->post_data['password'];
         $ip_address = $_SERVER['REMOTE_ADDR'];  // Get the user's IP address
-         $recaptcha_token = $this->post_data['token']; // reCAPTCHA token from frontend
-
-        // Verify reCAPTCHA token
-        $recaptcha_secret = '6Ld9CpMqAAAAAD1Hq_krZF-HXnFLxuuY5HcqVSCF';  // Replace with your secret key from Google reCAPTCHA
-        $recaptcha_url = "https://www.google.com/recaptcha/api/siteverify";
-        
-        $recaptcha_response = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_token);
-        $recaptcha_data = json_decode($recaptcha_response);
-    
-         if (!$recaptcha_data->success || $recaptcha_data->score < 0.5) {
-            return json_encode(['status' => 'error', 'message' => 'ReCAPTCHA validation failed.']);
-        }
     
         // Check if the IP is blocked
         $stmt = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = :ip_address");
