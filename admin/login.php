@@ -152,24 +152,39 @@
 <script>
     
           document.addEventListener('DOMContentLoaded', function () {
-    const loginForm = document.getElementById("loginForm");
-    loginForm.onsubmit = async (e) => {
-        e.preventDefault();
+        const loginForm = document.getElementById("loginForm");
+        loginForm.onsubmit = async (e) => {
+            e.preventDefault();
 
-        const uname = loginForm["uname"].value;
-        const password = loginForm["password"].value;
+            const uname = loginForm["uname"].value;
+            const password = loginForm["password"].value;
 
-        if (uname && password) {
-            // Request a reCAPTCHA token
-            grecaptcha.ready(async function () {
-                const token = await grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'login' });
+            if (uname && password) {
+                // Request a reCAPTCHA token
+                grecaptcha.ready(async function () {
+                    try {
+                        const token = await grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'login' });
 
-                // Send the token and form data to the server
-                login({ uname, password, login: true, recaptcha_token: token });
-            });
-        }
-    };
-              
+                        // Send the token and form data to the server
+                        const response = await login({ uname, password, recaptcha_token: token });
+
+                        // Handle server response
+                        const data = await response.json();
+                        if (data.status === 'success') {
+                            alert(data.message);
+                            // Redirect or take further actions
+                        } else {
+                            alert(data.message);
+                        }
+                    } catch (error) {
+                        console.error('ReCAPTCHA verification failed:', error);
+                        alert('Failed to verify reCAPTCHA. Please try again.');
+                    }
+                });
+            } else {
+                alert('Please enter both username and password.');
+            }
+        };
             const login = async (data) => {
         try {
             const response = await fetch("../function/Process.php", {
