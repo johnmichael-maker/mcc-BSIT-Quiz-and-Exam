@@ -84,7 +84,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://www.google.com/recaptcha/api.js?render=6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM"></script> <!-- Add reCAPTCHA script -->
 <script>
     
     const formInputs = document.querySelectorAll('#email, #password');
@@ -151,7 +151,8 @@
 </script>                                                           
 <script>
     
-    document.addEventListener('DOMContentLoaded', function () {
+         // Submit the login form
+         document.addEventListener('DOMContentLoaded', function () {
             const loginForm = document.getElementById("loginForm");
             loginForm.onsubmit = async (e) => {
                 e.preventDefault();
@@ -166,7 +167,6 @@
                     login(data);
                 }
             };
-
 
     const login = async (data) => {
     try {
