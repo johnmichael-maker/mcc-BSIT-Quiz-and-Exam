@@ -168,58 +168,59 @@
                 }
             };
 
-    const login = async (data) => {
-    try {
-        const response = await fetch("../function/Process.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify(data),
-        });
-
-        if (!response.ok) {
-            throw new Error("Could not fetch resource");
-        }
-
-        const dataResponse = await response.json();
-
-        if (dataResponse.status === "blocked") {
-            // If IP is blocked, show the block message with countdown
-            Swal.fire({
-                icon: 'warning',
-                title: 'Your IP is Blocked',
-                html: `<p>${dataResponse.message}</p><p>Try again in: ${dataResponse.time_remaining} seconds</p>`,
-                showConfirmButton: false,
-                timer: dataResponse.time_remaining * 1000,  // Timer in milliseconds
-                timerProgressBar: true,
+            const login = async (data) => {
+        try {
+            const response = await fetch("../function/Process.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+                body: JSON.stringify(data),
             });
-        } else if (dataResponse.status === "success") {
-            // If login is successful, show SweetAlert and redirect
-            Swal.fire({
-                icon: 'success',
-                title: 'Login Successful',
-                text: dataResponse.message,
-            }).then(() => {
-                window.location.href = "index.php";  // Redirect to the dashboard
-            });
-        } else {
-            // If credentials are incorrect, show error alert
+
+            if (!response.ok) {
+                throw new Error("Could not fetch resource");
+            }
+
+            const dataResponse = await response.json();
+
+            if (dataResponse.status === "blocked") {
+                // Blocked IP, show SweetAlert with countdown
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Your IP is Blocked',
+                    html: `<p>${dataResponse.message}</p><p>Try again in: ${dataResponse.time_remaining} seconds</p>`,
+                    showConfirmButton: false,
+                    timer: dataResponse.time_remaining * 1000,  // Timer in milliseconds
+                    timerProgressBar: true,
+                });
+            } else if (dataResponse.status === "success") {
+                // Login success, redirect to the dashboard
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: dataResponse.message,
+                }).then(() => {
+                    window.location.href = "index.php";  // Redirect to the dashboard
+                });
+            } else if (dataResponse.status === "error") {
+                // Incorrect credentials or other error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Incorrect email or password',
+                    text: dataResponse.message,
+                });
+            }
+
+        } catch (error) {
+            console.error(error);
             Swal.fire({
                 icon: 'error',
-                title: 'Incorrect email or password',
-                text: dataResponse.message,
+                title: 'Oops!',
+                text: 'Something went wrong. Please try again later.',
             });
         }
-    } catch (error) {
-        console.error(error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops!',
-            text: 'Something went wrong. Please try again later.',
-        });
-    }
-};
+    };
 
 
     // Password toggle functionality
