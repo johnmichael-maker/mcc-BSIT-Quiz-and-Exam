@@ -1,9 +1,28 @@
 <?php
-  if (isset($_GET['logout'])) {
+session_start();
 
+if (isset($_GET['logout'])) {
+    // Get the user ID or some unique identifier for the user
+    $user_id = $_SESSION['admin_id']; // Assuming the user ID is stored in session
 
-    // Destroy the session and log out
-    session_start();
+    // Path where session files are stored (this could be any directory)
+    $session_dir = __DIR__ . '/app/Sessions';
+
+    // Get the list of all files in the session directory
+    $session_files = glob($session_dir . "*.sess");
+
+    // Loop through the session files and delete the ones matching the user's session ID
+    foreach ($session_files as $file) {
+        // Read the session data from the file to check if it belongs to this user
+        $session_data = file_get_contents($file);
+        
+        if (strpos($session_data, "admin_id|s:" . strlen($user_id) . ":\"$user_id\"") !== false) {
+            // Delete the session file if it belongs to this user
+            unlink($file);
+        }
+    }
+
+    // Destroy the current session
     session_destroy();
 
     // Trigger the JavaScript logout success message and page refresh
@@ -18,19 +37,5 @@
             window.location.href = '../index'; 
         });
     </script>";
-  }
+}
 ?>
-
-<script src="../assets/js/jquery.min.js"></script>
-<script src="../assets/js/dataTable.js"></script>
-<script src="../assets/js/bootstrap.js"></script>
-<script src="../assets/js/admin.js"></script>
-
-<script>
-    $(document).ready(function(){
-        // Initialize DataTable
-        $("#dataTable").DataTable();
-    });
-</script>
-</body>
-</html>
