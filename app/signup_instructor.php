@@ -52,9 +52,30 @@ function sendRegistrationLink(string $email): string {
             $mail->addAddress($email);
 
             
-            $mail->isHTML(true);
-            $mail->Subject = 'MS 365 Account Verification';
-            $mail->Body    = "Click on the following link to complete your registration: <a href='$registration_link'>$registration_link</a>";
+             // Styled email body
+            $mail->Body    = '
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
+                        .container { width: 100%; max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+                        h1 { color: #007bff; }
+                        .btn { background-color: #007bff; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; }
+                        .footer { font-size: 12px; color: #888; text-align: center; padding-top: 10px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>Welcome to MS 365 Account Verification</h1>
+                        <p>Dear user,</p>
+                        <p>Thank you for registering with us! To complete your registration, please click the button below:</p>
+                        <p><a href="' . $registration_link . '" class="btn">Complete Registration</a></p>
+                        <p>If you didn’t request this email, please ignore it.</p>
+                        <p class="footer">mccpopquizandexam &copy; ' . date('Y') . '</p>
+                    </div>
+                </body>
+                </html>';
+
 
             
             $mail->send();
