@@ -152,6 +152,10 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
             background-color: #2980b9;
         }
     </style>
+
+    <!-- Include Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
 </head>
 <body>
 
@@ -203,9 +207,11 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
         <p>No geolocation data available for this IP.</p>
     <?php endif; ?>
 
-    <!-- Google Maps Div -->
+    <!-- OpenStreetMap Div -->
     <div id="map"></div>
 
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    
     <script>
         // Function to show the map when button is clicked
         function showMap() {
@@ -213,16 +219,17 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
             var longitude = <?php echo $longitude ? $longitude : 'null'; ?>;
 
             if (latitude && longitude) {
-                var location = { lat: latitude, lng: longitude };
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 10,
-                    center: location
-                });
-                var marker = new google.maps.Marker({
-                    position: location,
-                    map: map,
-                    title: 'IP Location'
-                });
+                var map = L.map('map').setView([latitude, longitude], 13);
+
+                // Add OpenStreetMap tile layer
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                // Add marker at the provided latitude and longitude
+                L.marker([latitude, longitude]).addTo(map)
+                    .bindPopup('IP Location')
+                    .openPopup();
 
                 // Show the map div
                 document.getElementById('map').style.display = 'block';
@@ -230,15 +237,7 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
                 alert('Geolocation data is not available for this IP address.');
             }
         }
-
-        // Initialize Google Map script
-        function initMap() {
-            // Placeholder, only needed for initialization
-        }
     </script>
-
-    <!-- Load Google Maps API (replace 'YOUR_API_KEY' with your actual Google Maps API key) -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 
     <?php require __DIR__ . '/./partials/footer.php'; ?>
 
