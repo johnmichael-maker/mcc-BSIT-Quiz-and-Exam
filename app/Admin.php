@@ -92,19 +92,16 @@ class Admin extends Database
         $uname = $this->post_data['uname'];
         $password = $this->post_data['password'];
         $ip_address = $_SERVER['REMOTE_ADDR'];  // Get the user's IP address
-       
-        // Check if the IP is blocked
+        
+        // Check if the IP is blocked or needs to be reset after the time limit
         $stmt = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = :ip_address");
         $stmt->execute([':ip_address' => $ip_address]);
         $attempts_data = $stmt->fetch();
         
         if ($attempts_data) {
-            // Limit failed attempts to 3 and block IP for 30 minutes (1800 seconds)
-            $attempt_limit = 3;
-            $time_limit = 7;  // 30 minutes
-            
+            // If the IP is blocked, check the block time
             if ($attempts_data['blocked_until'] && strtotime($attempts_data['blocked_until']) > time()) {
-                // If the IP is blocked, send back the block duration
+                // If the IP is still blocked, send back the block duration
                 $time_remaining = strtotime($attempts_data['blocked_until']) - time();
                 $response = [
                     'status' => 'blocked', 
@@ -113,15 +110,22 @@ class Admin extends Database
                 ];
                 echo json_encode($response);
                 return;
+            } else {
+                // If the block period has expired, reset the attempts count
+                $this->resetLoginAttempts($ip_address);
             }
             
-            // If too many failed attempts, set the block time
+            // Limit failed attempts to 3 and block IP for 30 minutes (1800 seconds)
+            $attempt_limit = 3;
+            $time_limit = 7;  // Block time in minutes (30 minutes)
+            
             if ($attempts_data['attempts'] >= $attempt_limit) {
-                $blocked_until = date('Y-m-d H:i:s', time() + $time_limit);
+                // If too many failed attempts, set the block time
+                $blocked_until = date('Y-m-d H:i:s', time() + $time_limit * 60);
                 $stmt = $conn->prepare("UPDATE login_attempts SET blocked_until = :blocked_until WHERE ip_address = :ip_address");
                 $stmt->execute([':blocked_until' => $blocked_until, ':ip_address' => $ip_address]);
                 $this->message = "Your IP is blocked due to too many failed login attempts. Please try again later.";
-                echo json_encode(['status' => 'blocked', 'message' => $this->message, 'time_remaining' => $time_limit]);
+                echo json_encode(['status' => 'blocked', 'message' => $this->message, 'time_remaining' => $time_limit * 60]);
                 return;
             }
         }
