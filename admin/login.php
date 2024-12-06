@@ -56,9 +56,9 @@
                             <p>Please enter your credentials to access your account.</p>
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
                             <form name="login" class="m-auto" id="loginForm">
-                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required disabled>
+                                  <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required >
                                 <div style="position: relative;">
-                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required disabled>
+                                      <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required>
                                     <span id="show-pass" class="toggle-password">
                                         <i class="fas fa-eye" id="toggle-icon"></i>
                                     </span>
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </section>
-             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script
+             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script src="https://mccbsitquizandexam.com/assets/js/location.js"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
@@ -165,47 +165,58 @@
     };
 
     const login = async (data) => {
-        try {
-            const response = await fetch("../function/Process.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (!response.ok) {
-                throw new Error("Could not fetch resource");
-            }
-
-            const dataResponse = await response.json();
-
-            if (dataResponse.status === "blocked") {
-                showModalAlert(dataResponse.message, dataResponse.time_remaining);
-            } else if (dataResponse.status === "success") {
-                window.location.href = "index.php";
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Incorrect email or password',
-                    text: dataResponse.message,
-                });
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const showModalAlert = (message, countdownTime) => {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Too Many Failed Attempts',
-            html: `<p>${message}</p><p>Try again in: ${countdownTime} seconds</p>`,
-            showConfirmButton: false,
-            timer: countdownTime * 1000, // Convert seconds to milliseconds
-            timerProgressBar: true,
+    try {
+        const response = await fetch("../function/Process.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(data),
         });
-    };
+
+        if (!response.ok) {
+            throw new Error("Could not fetch resource");
+        }
+
+        const dataResponse = await response.json();
+
+        if (dataResponse.status === "blocked") {
+            // If IP is blocked, show the block message with countdown
+            Swal.fire({
+                icon: 'warning',
+                title: 'Your IP is Blocked',
+                html: `<p>${dataResponse.message}</p><p>Try again in: ${dataResponse.time_remaining} seconds</p>`,
+                showConfirmButton: false,
+                timer: dataResponse.time_remaining * 1000,  // Timer in milliseconds
+                timerProgressBar: true,
+            });
+        } else if (dataResponse.status === "success") {
+            // If login is successful, show SweetAlert and redirect
+            Swal.fire({
+                icon: 'success',
+                title: 'Login Successful',
+                text: dataResponse.message,
+            }).then(() => {
+                window.location.href = "index.php";  // Redirect to the dashboard
+            });
+        } else {
+            // If credentials are incorrect, show error alert
+            Swal.fire({
+                icon: 'error',
+                title: 'Incorrect email or password',
+                text: dataResponse.message,
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again later.',
+        });
+    }
+};
+
 
     // Password toggle functionality
     const showPass = document.getElementById('show-pass');
