@@ -2,6 +2,7 @@
 // Assuming you're already connected to the database
 $conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
 
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -22,10 +23,27 @@ function getUserIpAddress() {
     }
 }
 
+// Function to detect device type based on User-Agent
+function getDeviceInfo() {
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+    if (preg_match('/mobile/i', $userAgent)) {
+        return 'Mobile';
+    } elseif (preg_match('/tablet/i', $userAgent)) {
+        return 'Tablet';
+    } elseif (preg_match('/(windows|mac|linux)/i', $userAgent)) {
+        return 'Desktop';
+    } else {
+        return 'Unknown';
+    }
+}
+
 // Get the IP address of the user
 $ip_address = getUserIpAddress();
 
-// Prepare the SQL statement with a placeholder for IP address
+// Get the device info
+$device_info = getDeviceInfo();
+
+// Prepare the SQL statement with a placeholder for IP address and device info
 $stmt = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = ?");
 $stmt->bind_param("s", $ip_address);  // "s" means the parameter is a string
 $stmt->execute();
@@ -34,15 +52,24 @@ $stmt->execute();
 $result = $stmt->get_result();
 $attempts_data = $result->fetch_assoc();
 
-// Check if the IP address is localhost (loopback) and skip geolocation
-if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
-    $latitude = null;
-    $longitude = null;
+// Store or update the device information in the database
+if ($attempts_data) {
+    // Update the device info if already exists
+    $updateStmt = $conn->prepare("UPDATE login_attempts SET device_info = ? WHERE ip_address = ?");
+    $updateStmt->bind_param("ss", $device_info, $ip_address);
+    $updateStmt->execute();
 } else {
-    $latitude = $attempts_data['latitude'] ?? null;
-    $longitude = $attempts_data['longitude'] ?? null;
+    // Insert a new record if it doesn't exist
+    $insertStmt = $conn->prepare("INSERT INTO login_attempts (ip_address, device_info) VALUES (?, ?)");
+    $insertStmt->bind_param("ss", $ip_address, $device_info);
+    $insertStmt->execute();
 }
+
+// Continue with the existing logic
+$latitude = $attempts_data['latitude'] ?? null;
+$longitude = $attempts_data['longitude'] ?? null;
 ?>
+
 <?php require __DIR__ . '/./partials/header.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +77,6 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Attempts</title>
-    <link rel="stylesheet" href="styles.css"> <!-- External CSS -->
 
     <style>
         /* Body and general styles */
@@ -158,10 +184,21 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
 
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <?php require __DIR__ . '/partials/sidebar.php'; ?>
 
-    <h1>Login Attempt Details</h1>
+        <div class="col-lg-10 p-0 overflow-y-auto" style="max-height: 100vh;">
+            <?php require __DIR__ . '/partials/navbar.php'; ?>
+
+            <div class="w-100 p-3">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+              <h3 style="text-align: center;">Login Attempt Details</h3>
     
-    <?php if ($attempts_data): ?>
+         <?php if ($attempts_data): ?>
         <table>
             <thead>
                 <tr>
@@ -169,6 +206,7 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
                     <th>Attempts</th>
                     <th>Last Attempt</th>
                     <th>Status</th>
+                    <th>Device</th>
                 </tr>
             </thead>
             <tbody>
@@ -193,6 +231,7 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
                         }
                         ?>
                     </td>
+                    <td><?php echo htmlspecialchars($attempts_data['device_info']); ?></td>
                 </tr>
             </tbody>
         </table>
@@ -204,7 +243,7 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
     <?php if ($latitude && $longitude): ?>
         <button class="locate-button" onclick="showMap()">View Location on Map</button>
     <?php else: ?>
-        <p>No geolocation data available for this IP.</p>
+        
     <?php endif; ?>
 
     <!-- OpenStreetMap Div -->
