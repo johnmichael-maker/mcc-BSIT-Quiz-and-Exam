@@ -60,6 +60,9 @@ Trait Sessions {
     }    
 
     public function sessionDestroy(){
+
+    // Unset all session variables
+        session_unset(); 
         session_destroy();
     }
 
