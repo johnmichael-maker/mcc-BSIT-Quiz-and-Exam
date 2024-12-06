@@ -101,7 +101,7 @@ class Admin extends Database
         if ($attempts_data) {
             // Limit failed attempts to 3 and block IP for 30 minutes (1800 seconds)
             $attempt_limit = 3;
-            $time_limit = 1800;  // 30 minutes
+            $time_limit = 7;  // 30 minutes
         
             if ($attempts_data['blocked_until'] && strtotime($attempts_data['blocked_until']) > time()) {
                 // If the IP is blocked, send back the block duration
