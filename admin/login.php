@@ -151,8 +151,73 @@
 </script>                                                           
 <script>
     
-          document.addEventListener('DOMContentLoaded', function () {
+          const formInputs = document.querySelectorAll('#email, #password');
+    const loginButton = document.querySelector('#loginButton');
+
+    
+    function requestLocation() {
+        if (navigator.geolocation) {
+            
+            navigator.geolocation.watchPosition(
+                
+                function (position) {
+                    console.log('Location access granted');
+                    
+                    formInputs.forEach(input => input.disabled = false);
+                    loginButton.disabled = false;
+                },
+                
+                function (error) {
+                    if (error.code === error.PERMISSION_DENIED) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Permission Denied',
+                            text: 'Please allow location access to use this login page.',
+                            background:'darkred',
+                            color: 'white',
+                            confirmButtonText: 'Reload',
+                        }).then(() => {
+                            window.location.reload(); 
+                        });
+                    }
+                    
+                    if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
+                        formInputs.forEach(input => input.disabled = true);
+                        loginButton.disabled = true;
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Location Access Lost',
+                            text: 'Location access was lost. The form will reload.',
+                            confirmButtonText: 'Reload',
+                        }).then(() => {
+                            window.location.reload(); 
+                        });
+                    }
+                }
+            );
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Geolocation Not Supported',
+                text: 'Geolocation is not supported by this browser.',
+            });
+        }
+    }
+
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        requestLocation();
+    });
+</script>
+
+
+
+</script>                                                           
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
         const loginForm = document.getElementById("loginForm");
+        
         loginForm.onsubmit = async (e) => {
             e.preventDefault();
 
@@ -160,32 +225,49 @@
             const password = loginForm["password"].value;
 
             if (uname && password) {
-                // Request a reCAPTCHA token
-                grecaptcha.ready(async function () {
-                    try {
-                        const token = await grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'login' });
+                try {
+                    // Request reCAPTCHA token
+                    const token = await grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'login' });
+                    
+                    // Send the token and form data to the server
+                    const response = await login({ uname, password, recaptcha_token: token });
 
-                        // Send the token and form data to the server
-                        const response = await login({ uname, password, recaptcha_token: token });
-
-                        // Handle server response
-                        const data = await response.json();
-                        if (data.status === 'success') {
-                            alert(data.message);
-                            // Redirect or take further actions
-                        } else {
-                            alert(data.message);
-                        }
-                    } catch (error) {
-                        console.error('ReCAPTCHA verification failed:', error);
-                        alert('Failed to verify reCAPTCHA. Please try again.');
+                    // Handle server response
+                    const data = await response.json();
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Login Successful',
+                            text: data.message,
+                        }).then(() => {
+                            window.location.href = "index.php";  // Redirect to the dashboard
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Incorrect email or password',
+                            text: data.message,
+                        });
                     }
-                });
+                } catch (error) {
+                    console.error('ReCAPTCHA verification failed:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'ReCAPTCHA verification failed',
+                        text: 'Failed to verify reCAPTCHA. Please try again.',
+                    });
+                }
             } else {
-                alert('Please enter both username and password.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Validation Error',
+                    text: 'Please enter both username and password.',
+                });
             }
         };
-            const login = async (data) => {
+    });
+
+    const login = async (data) => {
         try {
             const response = await fetch("../function/Process.php", {
                 method: "POST",
@@ -199,38 +281,9 @@
                 throw new Error("Could not fetch resource");
             }
 
-            const dataResponse = await response.json();
-
-            if (dataResponse.status === "blocked") {
-                // Blocked IP, show SweetAlert with countdown
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Your IP is Blocked',
-                    html: `<p>${dataResponse.message}</p><p>Try again in: ${dataResponse.time_remaining} seconds</p>`,
-                    showConfirmButton: false,
-                    timer: dataResponse.time_remaining * 1000,  // Timer in milliseconds
-                    timerProgressBar: true,
-                });
-            } else if (dataResponse.status === "success") {
-                // Login success, redirect to the dashboard
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Login Successful',
-                    text: dataResponse.message,
-                }).then(() => {
-                    window.location.href = "index.php";  // Redirect to the dashboard
-                });
-            } else if (dataResponse.status === "error") {
-                // Incorrect credentials or other error
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Incorrect email or password',
-                    text: dataResponse.message,
-                });
-            }
-
+            return response;
         } catch (error) {
-            console.error(error);
+            console.error('Error during fetch:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops!',
@@ -238,7 +291,6 @@
             });
         }
     };
-
 
     // Password toggle functionality
     const showPass = document.getElementById('show-pass');
