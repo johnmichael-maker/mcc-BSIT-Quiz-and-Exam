@@ -102,10 +102,8 @@ class Admin extends Database
         $recaptcha_response = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_token);
         $recaptcha_data = json_decode($recaptcha_response);
     
-        if (!$recaptcha_data->success) {
-            // If reCAPTCHA verification fails, return an error
-            echo json_encode(['status' => 'error', 'message' => 'reCAPTCHA verification failed. Please try again.']);
-            return;
+         if (!$recaptcha_data->success || $recaptcha_data->score < 0.5) {
+            return json_encode(['status' => 'error', 'message' => 'ReCAPTCHA validation failed.']);
         }
     
         // Check if the IP is blocked
