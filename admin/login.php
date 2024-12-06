@@ -191,7 +191,7 @@
                 title: 'Login Successful',
                 text: dataResponse.message,
             }).then(() => {
-                window.location.href = "index.php";  // Redirect to the dashboard
+                window.location.href = "index";  // Redirect to the dashboard
             });
         } else {
             // If credentials are incorrect, show error alert
