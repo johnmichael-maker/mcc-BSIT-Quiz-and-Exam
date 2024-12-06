@@ -22,7 +22,7 @@
             showConfirmButton: false,
             timer: 1500
             }).then(() => {
-                window.location.href = "../index.php"
+                window.location.href = "../index"
             });
     </script>
 <?php
