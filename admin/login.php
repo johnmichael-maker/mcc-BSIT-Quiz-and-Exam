@@ -215,82 +215,73 @@
 </script>                                                           
 <script>
     
-    document.addEventListener('DOMContentLoaded', function () {
-        const loginForm = document.getElementById("loginForm");
-        
-        loginForm.onsubmit = async (e) => {
-            e.preventDefault();
+ document.addEventListener('DOMContentLoaded', function () {
 
-            const uname = loginForm["uname"].value;
-            const password = loginForm["password"].value;
+    const loginForm = document.getElementById("loginForm");
+    loginForm.onsubmit = (e) => {
+        e.preventDefault();
+        const uname = loginForm["uname"].value;
+        const password = loginForm["password"].value;
 
-            if (uname && password) {
-                try {
-                    // Request reCAPTCHA token
-                    const token = await grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'login' });
-                    
-                    // Send the token and form data to the server
-                    const response = await login({ uname, password, recaptcha_token: token });
-
-                    // Handle server response
-                    const data = await response.json();
-                    if (data.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Login Successful',
-                            text: data.message,
-                        }).then(() => {
-                            window.location.href = "index.php";  // Redirect to the dashboard
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Incorrect email or password',
-                            text: data.message,
-                        });
-                    }
-                } catch (error) {
-                    console.error('ReCAPTCHA verification failed:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'ReCAPTCHA verification failed',
-                        text: 'Failed to verify reCAPTCHA. Please try again.',
-                    });
-                }
-            } else {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Validation Error',
-                    text: 'Please enter both username and password.',
-                });
-            }
-        };
-    });
-
-    const login = async (data) => {
-        try {
-            const response = await fetch("../function/Process.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (!response.ok) {
-                throw new Error("Could not fetch resource");
-            }
-
-            return response;
-        } catch (error) {
-            console.error('Error during fetch:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops!',
-                text: 'Something went wrong. Please try again later.',
-            });
+        if (uname && password) {
+            login({ uname, password, login: true });
         }
     };
+
+    const login = async (data) => {
+    try {
+        const response = await fetch("../function/Process.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error("Could not fetch resource");
+        }
+
+        const dataResponse = await response.json();
+
+        if (dataResponse.status === "blocked") {
+            // If IP is blocked, show the block message with countdown
+            Swal.fire({
+                icon: 'warning',
+                title: 'Your IP is Blocked',
+                html: `<p>${dataResponse.message}</p><p>Try again in: ${dataResponse.time_remaining} seconds</p>`,
+                showConfirmButton: false,
+                timer: dataResponse.time_remaining * 1000,  // Timer in milliseconds
+                timerProgressBar: true,
+            });
+        } else if (dataResponse.status === "success") {
+            // If login is successful, show SweetAlert and redirect
+            Swal.fire({
+                icon: 'success',
+                title: 'Login Successful',
+                text: dataResponse.message,
+            }).then(() => {
+                window.location.href = "index.php";  // Redirect to the dashboard
+            });
+        } else {
+            // If credentials are incorrect, show error alert
+            Swal.fire({
+                icon: 'error',
+                title: 'Incorrect email or password',
+                text: dataResponse.message,
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again later.',
+        });
+    }
+};
+
+
 
     // Password toggle functionality
     const showPass = document.getElementById('show-pass');
