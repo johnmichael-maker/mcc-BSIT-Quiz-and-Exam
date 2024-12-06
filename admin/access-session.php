@@ -368,7 +368,7 @@
                 recognition.onresult = function (event) {
                     var command = event.results[0][0].transcript.toLowerCase();
 
-                    if (command.includes('submit') || command.includes('send email')) {
+                    if (command.includes('send verification code') || command.includes('send code')) {
                         // Trigger email form submission
                         $('#email-form').submit();
                     } else if (command.includes('verify') || command.includes('enter code')) {
