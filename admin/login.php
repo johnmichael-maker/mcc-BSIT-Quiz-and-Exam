@@ -152,17 +152,24 @@
 <script>
     
           document.addEventListener('DOMContentLoaded', function () {
-
     const loginForm = document.getElementById("loginForm");
-    loginForm.onsubmit = (e) => {
+    loginForm.onsubmit = async (e) => {
         e.preventDefault();
+
         const uname = loginForm["uname"].value;
         const password = loginForm["password"].value;
 
         if (uname && password) {
-            login({ uname, password, login: true });
+            // Request a reCAPTCHA token
+            grecaptcha.ready(async function () {
+                const token = await grecaptcha.execute('6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM', { action: 'login' });
+
+                // Send the token and form data to the server
+                login({ uname, password, login: true, recaptcha_token: token });
+            });
         }
     };
+              
             const login = async (data) => {
         try {
             const response = await fetch("../function/Process.php", {
