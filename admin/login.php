@@ -55,7 +55,6 @@
                             <h2>Sign In As Admin</h2>
                             <p>Please enter your credentials to access your account.</p>
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to dashboard page....</p>
-                            <p class="alert alert-danger py-2 d-none" id="alert-error">Error, Incorrect email or password</p>
                             <form name="login" class="m-auto" id="loginForm">
                                   <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required disabled>
                                 <div style="position: relative;">
@@ -81,7 +80,7 @@
                 </div>
             </div>
         </section>
-             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script
                 <script src="https://mccbsitquizandexam.com/assets/js/location.js"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
@@ -151,93 +150,80 @@
 
 </script>                                                           
 <script>
-         // Function to show modal alert with countdown
-         const showModalAlert = (message, countdownTime) => {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Error, Incorrect email or password',
-                html: `
-                    <p>${message}</p>
-                    <p class="countdown" id="countdown-timer"></p>`,
-                showConfirmButton: false,
-                background: 'white',
-                color: 'black',
-                timer: countdownTime * 1000, // Convert seconds to milliseconds
-                timerProgressBar: true,
-                willOpen: () => {
-                    const countdownElement = document.getElementById('countdown-timer');
-                    let timeLeft = countdownTime;
+    
+        document.addEventListener('DOMContentLoaded', function () {
 
-                    const countdownInterval = setInterval(() => {
-                        timeLeft--;
-                        countdownElement.innerHTML = `Try again in: ${timeLeft}s`;
+    const loginForm = document.getElementById("loginForm");
+    loginForm.onsubmit = (e) => {
+        e.preventDefault();
+        const uname = loginForm["uname"].value;
+        const password = loginForm["password"].value;
 
-                        if (timeLeft <= 0) {
-                            clearInterval(countdownInterval);
-                        }
-                    }, 1000);
-                }
+        if (uname && password) {
+            login({ uname, password, login: true });
+        }
+    };
+
+    const login = async (data) => {
+        try {
+            const response = await fetch("../function/Process.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+                body: JSON.stringify(data),
             });
-        };
 
-        const login = async (data) => {
-            try {
-                const response = await fetch("../function/Process.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                    },
-                    body: JSON.stringify(data),
-                });
-
-                if (!response.ok) {
-                    throw new Error("Could not fetch resource");
-                }
-
-                const dataResponse = await response.text();
-                let alertSuccess = document.getElementById("alert-success");
-                let alertError = document.getElementById("alert-error");
-
-                if (dataResponse === "success") {
-                    alertSuccess.classList.remove("d-none");
-                    setTimeout(() => window.location.href = "index.php", 3000);
-                } else if (dataResponse === 'error') {
-                    alertError.classList.remove("d-none");
-                    showModalAlert("Too many failed login attempts. Please try again after some time.");
-                    setTimeout(() => window.location.href = "login.php", 3000);
-                    
-                }
-            } catch (error) {
-                console.error(error);
+            if (!response.ok) {
+                throw new Error("Could not fetch resource");
             }
-        };
 
-        const loginForm = document.getElementById("loginForm");
-        loginForm.onsubmit = (e) => {
-            e.preventDefault();
-            const uname = loginForm["uname"].value;
-            const password = loginForm["password"].value;
+            const dataResponse = await response.json();
 
-            if (uname && password) {
-                login({ uname, password, login: true });
-            }
-        };
-
-        const showPass = document.getElementById('show-pass');
-        const passwordInput = document.getElementById('password');
-        const toggleIcon = document.getElementById('toggle-icon');
-
-        showPass.onclick = () => {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
+            if (dataResponse.status === "blocked") {
+                showModalAlert(dataResponse.message, dataResponse.time_remaining);
+            } else if (dataResponse.status === "success") {
+                window.location.href = "index.php";
             } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Incorrect email or password',
+                    text: dataResponse.message,
+                });
             }
-        };
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const showModalAlert = (message, countdownTime) => {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Too Many Failed Attempts',
+            html: `<p>${message}</p><p>Try again in: ${countdownTime} seconds</p>`,
+            showConfirmButton: false,
+            timer: countdownTime * 1000, // Convert seconds to milliseconds
+            timerProgressBar: true,
+        });
+    };
+
+    // Password toggle functionality
+    const showPass = document.getElementById('show-pass');
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggle-icon');
+
+    showPass.onclick = () => {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    };
+});
 
         // Disable context menu (right-click)
         document.addEventListener('contextmenu', function(e) {
@@ -268,10 +254,5 @@
             }
         });
     </script>
-
-</body>
-</html>
 <?php require __DIR__ . '/partials/footer.php'; ?>
-    </body>
-    </html>
-    <?php require __DIR__ . '/partials/footer.php'; ?>
+
