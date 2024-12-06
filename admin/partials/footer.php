@@ -1,8 +1,15 @@
 <?php
+  // Start the session at the beginning
+  session_start(); 
+
   if (isset($_GET['logout'])) {
+
     // Destroy the session and log out
-    session_start();
-    session_destroy();
+    $this->sessionDestroy(); // If this method handles session destruction
+
+    // Alternatively, you can destroy the session directly
+    // session_unset();  // Clears all session variables
+    // session_destroy();  // Destroys the session
 
     // Trigger the JavaScript logout success message and page refresh
     echo "<script>
@@ -13,7 +20,7 @@
             showConfirmButton: false,
             timer: 1500
         }).then(() => {
-            window.location.href = '../index'; 
+            window.location.href = '../index'; // Redirect to homepage or login page after logout
         });
     </script>";
   }
