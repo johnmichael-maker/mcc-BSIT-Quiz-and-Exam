@@ -186,7 +186,7 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
             }
         </script>
     <?php else: ?>
-        
+        <p>Geolocation data is not available for this IP.</p>
     <?php endif; ?>
 
     <script>
