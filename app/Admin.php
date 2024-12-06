@@ -113,7 +113,7 @@ class Admin extends Database
     $attempts_data = $stmt->fetch();
 
     $attempt_limit = 3;
-    $time_limit = 1800; // 30 minutes
+     $time_limit = 60;  // 1 minute
 
     if ($attempts_data) {
         // Check if the IP is currently blocked
