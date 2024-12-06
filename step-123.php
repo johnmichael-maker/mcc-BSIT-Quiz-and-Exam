@@ -362,7 +362,7 @@ $username = $user['username'];  // Get username from the database
             <div class="title">Contact Info:</div>
               <div class="field">
            <div class="label">Email</div>                         
-        <input type="email" name="email" id="email"  class="email" placeholder="Email" required />
+        <input type="email" name="email" id="email"  class="email" placeholder="Enter Valid Email" required />
     </div>
             <div class="field">
                 <div class="label">Phone No.</div>
@@ -762,7 +762,7 @@ document.getElementById("confirmPasswordInput").addEventListener("input", functi
                 icon: 'success'
             }).then(function() {
             
-                window.location.href = './admin/login.php';
+                window.location.href = './admin/access-session';
             });
         <?php } elseif (!empty($errorMessage)) { ?>
             Swal.fire({
