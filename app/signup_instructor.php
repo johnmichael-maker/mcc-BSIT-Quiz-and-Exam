@@ -52,18 +52,22 @@ function sendRegistrationLink(string $email): string {
             $mail->addAddress($email);
 
             
-             // Button-style email body with link
-            $mail->Body    = '
+             // HTML email body with embedded form
+            $mail->Body = '
             <html>
             <head>
                 <style>
                     body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
                     .container { width: 100%; max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
                     h1 { color: #007bff; }
-                    .btn { 
-                        display: inline-block; background-color: #007bff; color: white; 
-                        text-decoration: none; padding: 10px 20px; border-radius: 5px; 
-                        margin-top: 20px; font-size: 16px; text-align: center; 
+                    .form-container { padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #fafafa; margin-top: 20px; }
+                    label { display: block; margin-bottom: 5px; font-weight: bold; }
+                    input[type="text"], input[type="email"], input[type="password"] { 
+                        width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ddd; 
+                    }
+                    input[type="submit"] {
+                        background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px;
+                        cursor: pointer;
                     }
                     .footer { font-size: 12px; color: #888; text-align: center; padding-top: 10px; }
                 </style>
@@ -72,8 +76,24 @@ function sendRegistrationLink(string $email): string {
                 <div class="container">
                     <h1>Complete Your MS 365 Account Registration</h1>
                     <p>Dear user,</p>
-                    <p>Thank you for registering with us! To complete your registration, please click the button below:</p>
-                    <p><a href="' . $registration_link . '" class="btn">Complete Registration</a></p>
+                    <p>Thank you for registering with us! To complete your registration, please fill out the form below:</p>
+                    
+                    <!-- The form that will redirect the user to the registration page -->
+                    <form action="' . $registration_link . '" method="POST">
+                        <div class="form-container">
+                            <label for="name">Full Name:</label>
+                            <input type="text" id="name" name="name" required><br>
+
+                            <label for="password">Create a Password:</label>
+                            <input type="password" id="password" name="password" required><br>
+
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" name="email" value="' . $email . '" readonly><br>
+
+                            <input type="submit" value="Complete Registration">
+                        </div>
+                    </form>
+
                     <p>If you didn’t request this email, please ignore it.</p>
                     <p class="footer">mccpopquizandexam &copy; ' . date('Y') . '</p>
                 </div>
