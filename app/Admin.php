@@ -86,8 +86,7 @@ class Admin extends Database
         return json_encode($averages);
     }
 
-
-  public function login()
+ public function login()
     {
         $conn = $this->getConnection();
         $uname = $this->post_data['uname'];
@@ -103,11 +102,15 @@ class Admin extends Database
             // Limit failed attempts to 3 and block IP for 30 minutes (1800 seconds)
             $attempt_limit = 3;
             $time_limit = 1800;  // 30 minutes
-    
+            
             if ($attempts_data['blocked_until'] && strtotime($attempts_data['blocked_until']) > time()) {
                 // If the IP is blocked, send back the block duration
                 $time_remaining = strtotime($attempts_data['blocked_until']) - time();
-                $response = ['status' => 'blocked', 'time_remaining' => $time_remaining];
+                $response = [
+                    'status' => 'blocked', 
+                    'time_remaining' => $time_remaining,
+                    'message' => 'Your IP is blocked due to too many failed login attempts. Please try again later.'
+                ];
                 echo json_encode($response);
                 return;
             }
@@ -118,10 +121,11 @@ class Admin extends Database
                 $stmt = $conn->prepare("UPDATE login_attempts SET blocked_until = :blocked_until WHERE ip_address = :ip_address");
                 $stmt->execute([':blocked_until' => $blocked_until, ':ip_address' => $ip_address]);
                 $this->message = "Your IP is blocked due to too many failed login attempts. Please try again later.";
-                return $this->message;
+                echo json_encode(['status' => 'blocked', 'message' => $this->message, 'time_remaining' => $time_limit]);
+                return;
             }
         }
-    
+        
         // Check username in the admin table
         $stmt = $conn->prepare("SELECT * FROM admin WHERE username = :uname");
         $stmt->execute([':uname' => $uname]);
@@ -134,20 +138,23 @@ class Admin extends Database
                 
                 // Start the session for the admin
                 $this->activeAdminSession($result['admin_id'], $result['username'], $result['img'], $result['userType']);
-                $this->message = "success";
+                $this->message = "Login successful";
+                echo json_encode(['status' => 'success', 'message' => $this->message]);
+                return;
             } else {
                 // Log failed login attempt
                 $this->logFailedAttempt($ip_address);
-                $this->message = "error";
+                $this->message = "Invalid credentials!";
+                echo json_encode(['status' => 'error', 'message' => $this->message]);
+                return;
             }
         } else {
-            $this->message = "error";
+            $this->message = "Invalid credentials!";
+            echo json_encode(['status' => 'error', 'message' => $this->message]);
+            return;
         }
-    
-        return $this->message;
     }
     
-    // Function to log a failed login attempt
     private function logFailedAttempt($ip_address)
     {
         $conn = $this->getConnection();
@@ -167,7 +174,6 @@ class Admin extends Database
         }
     }
     
-    // Function to reset login attempts after successful login
     private function resetLoginAttempts($ip_address)
     {
         $conn = $this->getConnection();
@@ -175,9 +181,7 @@ class Admin extends Database
         $stmt = $conn->prepare("UPDATE login_attempts SET attempts = 0, blocked_until = NULL WHERE ip_address = :ip_address");
         $stmt->execute([':ip_address' => $ip_address]);
     }
-    
-    
-    
+  
     public function confirmSession()
     {
         if (isset($_SESSION['ADMIN_ACTIVE']) && isset($_SESSION['AUTH_KEY'])) {
