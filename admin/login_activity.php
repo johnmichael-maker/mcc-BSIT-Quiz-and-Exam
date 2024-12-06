@@ -1,13 +1,29 @@
 <?php
-// Assuming you're already connected to the database and $ip_address is set
+// Assuming you're already connected to the database
 $conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Get IP address (for testing, it could be localhost)
-$ip_address = $_SERVER['REMOTE_ADDR'];  // This gets the IP address of the user
+// Function to get the real IP address
+function getUserIpAddress() {
+    // Check for the real IP from various headers
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        // If there are multiple IPs, the first one is usually the real IP
+        $ip_addresses = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        return trim($ip_addresses[0]); // Take the first IP address
+    } elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        // If the client IP is available, use it
+        return $_SERVER['HTTP_CLIENT_IP'];
+    } else {
+        // If none of the above headers are found, fallback to REMOTE_ADDR
+        return $_SERVER['REMOTE_ADDR'];
+    }
+}
+
+// Get the IP address of the user
+$ip_address = getUserIpAddress();
 
 // Prepare the SQL statement with a placeholder for IP address
 $stmt = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = ?");
@@ -87,6 +103,7 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
             margin-top: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: none;
         }
 
         p {
@@ -118,6 +135,21 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
             font-size: 14px;
             border-radius: 4px;
             border: 1px solid #ccc;
+        }
+
+        /* Button styling */
+        .locate-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .locate-button:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
@@ -164,65 +196,49 @@ if ($ip_address === '127.0.0.1' || $ip_address === '::1') {
         <p>No login attempt data found for the given IP address.</p>
     <?php endif; ?>
 
-    
-    <!-- Check if valid latitude and longitude are available before embedding the map -->
+    <!-- Button to show location on map -->
     <?php if ($latitude && $longitude): ?>
-        <div id="map"></div>
-        <script>
-            // Initialize the Google Map
-            function initMap() {
-                var location = { lat: <?php echo $latitude; ?>, lng: <?php echo $longitude; ?> };
+        <button class="locate-button" onclick="showMap()">View Location on Map</button>
+    <?php else: ?>
+        <p>No geolocation data available for this IP.</p>
+    <?php endif; ?>
+
+    <!-- Google Maps Div -->
+    <div id="map"></div>
+
+    <script>
+        // Function to show the map when button is clicked
+        function showMap() {
+            var latitude = <?php echo $latitude ? $latitude : 'null'; ?>;
+            var longitude = <?php echo $longitude ? $longitude : 'null'; ?>;
+
+            if (latitude && longitude) {
+                var location = { lat: latitude, lng: longitude };
                 var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 10,
                     center: location
                 });
-
-                // Add a marker at the location
                 var marker = new google.maps.Marker({
                     position: location,
                     map: map,
                     title: 'IP Location'
                 });
-            }
-        </script>
-    <?php else: ?>
-        
-    <?php endif; ?>
 
-    <script>
-        // Function to get the current geolocation using JavaScript
-        function getGeolocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
-                    
-                    // Fill the latitude and longitude in the textboxes
-                    document.getElementById('latitude').value = latitude;
-                    document.getElementById('longitude').value = longitude;
-
-                    // Optional: You can also display the map using these coordinates
-                    var location = { lat: latitude, lng: longitude };
-                    var map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 10,
-                        center: location
-                    });
-                    var marker = new google.maps.Marker({
-                        position: location,
-                        map: map,
-                        title: 'Your Current Location'
-                    });
-                }, function(error) {
-                    alert('Geolocation error: ' + error.message);
-                });
+                // Show the map div
+                document.getElementById('map').style.display = 'block';
             } else {
-                alert('Geolocation is not supported by this browser.');
+                alert('Geolocation data is not available for this IP address.');
             }
         }
 
-        // Call the geolocation function on page load
-        window.onload = getGeolocation;
+        // Initialize Google Map script
+        function initMap() {
+            // Placeholder, only needed for initialization
+        }
     </script>
+
+    <!-- Load Google Maps API (replace 'YOUR_API_KEY' with your actual Google Maps API key) -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 
     <?php require __DIR__ . '/./partials/footer.php'; ?>
 
