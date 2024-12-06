@@ -151,18 +151,22 @@
 </script>                                                           
 <script>
     
-          document.addEventListener('DOMContentLoaded', function () {
+         // Submit the login form
+    document.addEventListener('DOMContentLoaded', function () {
+            const loginForm = document.getElementById("loginForm");
+            loginForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const uname = loginForm["uname"].value;
+                const password = loginForm["password"].value;
 
-    const loginForm = document.getElementById("loginForm");
-    loginForm.onsubmit = (e) => {
-        e.preventDefault();
-        const uname = loginForm["uname"].value;
-        const password = loginForm["password"].value;
+                // Get the reCAPTCHA token
+                const token = await grecaptcha.execute("6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM", { action: 'login' });
 
-        if (uname && password) {
-            login({ uname, password, login: true });
-        }
-    };
+                if (uname && password && token) {
+                    const data = { uname, password, login: true, token };
+                    login(data);
+                }
+            };
 
             const login = async (data) => {
         try {
