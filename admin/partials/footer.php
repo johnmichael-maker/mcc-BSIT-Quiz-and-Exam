@@ -1,12 +1,15 @@
 <?php
-  if (isset($_GET['logout'])) {
-
-
-    // Destroy the session and log out
+if (isset($_GET['logout'])) {
     session_start();
-    session_destroy();
-
-    // Trigger the JavaScript logout success message and page refresh
+    
+    // Destroy the session
+    session_unset(); // Unsets all session variables
+    session_destroy(); // Destroys the session
+    
+    // Optionally, you can clear session cookies too, for more security
+    setcookie(session_name(), '', time() - 3600, '/');
+    
+    // Redirect after logout
     echo "<script>
         Swal.fire({
             position: 'center',
@@ -18,8 +21,10 @@
             window.location.href = '../index'; 
         });
     </script>";
-  }
+    exit(); // Make sure the script stops executing after the redirect
+}
 ?>
+
 
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/dataTable.js"></script>
