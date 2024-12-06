@@ -267,6 +267,21 @@ if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true)
                 }
             }
         });
+    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        document.onkeydown = function (e) {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                (e.ctrlKey && e.key === 'U')
+            ) {
+                e.preventDefault();
+            }
+        };
+
+        // Disable selecting text
+        document.onselectstart = function (e) {
+            e.preventDefault();
+        };
     </script>
 <?php require __DIR__ . '/partials/footer.php'; ?>
 
