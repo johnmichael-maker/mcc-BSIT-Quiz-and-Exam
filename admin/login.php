@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="../assets/css/main.css" type="text/css" media="all">
         <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
         <link rel="icon" type="image/png" href="../assets/img/file.png">
+
         <style>
             .alert-link {
                 color: #fff;
@@ -139,80 +140,10 @@
             });
         }
     }
-
-    
     document.addEventListener('DOMContentLoaded', function () {
         requestLocation();
     });
 </script>
-
-
-
-</script>                                                           
-<script>
-    
-          const formInputs = document.querySelectorAll('#email, #password');
-    const loginButton = document.querySelector('#loginButton');
-
-    
-    function requestLocation() {
-        if (navigator.geolocation) {
-            
-            navigator.geolocation.watchPosition(
-                
-                function (position) {
-                    console.log('Location access granted');
-                    
-                    formInputs.forEach(input => input.disabled = false);
-                    loginButton.disabled = false;
-                },
-                
-                function (error) {
-                    if (error.code === error.PERMISSION_DENIED) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Permission Denied',
-                            text: 'Please allow location access to use this login page.',
-                            background:'darkred',
-                            color: 'white',
-                            confirmButtonText: 'Reload',
-                        }).then(() => {
-                            window.location.reload(); 
-                        });
-                    }
-                    
-                    if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
-                        formInputs.forEach(input => input.disabled = true);
-                        loginButton.disabled = true;
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Location Access Lost',
-                            text: 'Location access was lost. The form will reload.',
-                            confirmButtonText: 'Reload',
-                        }).then(() => {
-                            window.location.reload(); 
-                        });
-                    }
-                }
-            );
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Geolocation Not Supported',
-                text: 'Geolocation is not supported by this browser.',
-            });
-        }
-    }
-
-    
-    document.addEventListener('DOMContentLoaded', function () {
-        requestLocation();
-    });
-</script>
-
-
-
-</script>                                                           
 <script>
     
     document.addEventListener('DOMContentLoaded', function () {
