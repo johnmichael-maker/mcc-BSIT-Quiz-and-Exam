@@ -202,7 +202,6 @@
     </style>
 </head>
 <body class="hold-transition lockscreen">
-
    <div class="lockscreen-wrapper">
         <!-- Logo Section -->
         <div class="lockscreen-logo">
@@ -223,9 +222,6 @@
                 <form id="email-form">
                     <div class="input-group" style="flex-direction: column; align-items: center;">
                         <input type="email" class="form-control" name="email" placeholder="Send Email for Verification Code" required>
-                        
-                        <!-- reCAPTCHA Widget (v3) -->
-                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
 
@@ -241,9 +237,6 @@
                             <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
                         </tr>
                     </table>
-                    <div class="input-group-btn" style="text-align: center; margin-top: 20px;">
-                        <button type="submit" class="btn">Verify</button>
-                    </div>
                 </form>
 
                 <!-- Message Area (Success/Error Feedback) -->
@@ -356,6 +349,45 @@
                 var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                 return re.test(email);
             }
+
+            // Voice Command Integration
+            if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-US';
+                recognition.continuous = false;  // We don't need continuous speech input
+                recognition.interimResults = false;  // Don't show intermediate results
+
+                recognition.onstart = function () {
+                    $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
+                };
+
+                recognition.onerror = function (event) {
+                    $('#message').html('There was an error with speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
+                };
+
+                recognition.onresult = function (event) {
+                    var command = event.results[0][0].transcript.toLowerCase();
+
+                    if (command.includes('submit') || command.includes('send email')) {
+                        // Trigger email form submission
+                        $('#email-form').submit();
+                    } else if (command.includes('verify') || command.includes('enter code')) {
+                        // Trigger code form submission
+                        $('#code-form').submit();
+                    } else if (command.includes('enter') && command.includes('@')) {
+                        // Fill email field using voice
+                        $('input[name="email"]').val(command).focus();
+                        $('#message').html('Email address filled: ' + command).removeClass('text-danger').addClass('text-success');
+                    } else {
+                        $('#message').html('Command not recognized. Try again.').removeClass('text-success').addClass('text-danger');
+                    }
+                };
+
+                // Start voice recognition automatically
+                recognition.start();
+            } else {
+                $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
+            }
         });
 
         document.addEventListener('contextmenu', function(e) {
@@ -402,4 +434,3 @@
         };
     </script>
 </body>
-</html>
