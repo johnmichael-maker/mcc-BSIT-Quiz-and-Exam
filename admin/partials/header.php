@@ -7,11 +7,11 @@
     $adminController = new Admin($_POST);
     // $adminController->startSession();
     if ($adminController->checkAdmin()) {
-        header('location: login.php');
+        header('location:  access-session');
     }
     if ($adminController->isAdminDashboard()) {
         if (!$adminController->isActive()) {
-            header('location: access-session');
+            header('location: login');
         }
     }
     $examinees = $adminController->getExaminees();
