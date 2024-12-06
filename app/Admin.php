@@ -87,13 +87,13 @@ class Admin extends Database
     }
 
 
-     public function login()
+        public function login()
     {
         $conn = $this->getConnection();
         $uname = $this->post_data['uname'];
         $password = $this->post_data['password'];
         $ip_address = $_SERVER['REMOTE_ADDR'];  // Get the user's IP address
-    
+       
         // Check if the IP is blocked
         $stmt = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = :ip_address");
         $stmt->execute([':ip_address' => $ip_address]);
@@ -102,8 +102,7 @@ class Admin extends Database
         if ($attempts_data) {
             // Limit failed attempts to 3 and block IP for 30 minutes (1800 seconds)
             $attempt_limit = 3;
-                    $time_limit = 7;  // 7 seconds block time
-        
+            $time_limit = 1800;  // 30 minutes
             
             if ($attempts_data['blocked_until'] && strtotime($attempts_data['blocked_until']) > time()) {
                 // If the IP is blocked, send back the block duration
@@ -116,7 +115,7 @@ class Admin extends Database
                 echo json_encode($response);
                 return;
             }
-    
+            
             // If too many failed attempts, set the block time
             if ($attempts_data['attempts'] >= $attempt_limit) {
                 $blocked_until = date('Y-m-d H:i:s', time() + $time_limit);
@@ -127,7 +126,7 @@ class Admin extends Database
                 return;
             }
         }
-    
+        
         // Check username in the admin table
         $stmt = $conn->prepare("SELECT * FROM admin WHERE username = :uname");
         $stmt->execute([':uname' => $uname]);
@@ -157,7 +156,6 @@ class Admin extends Database
         }
     }
     
-    
     private function logFailedAttempt($ip_address)
     {
         $conn = $this->getConnection();
@@ -184,6 +182,8 @@ class Admin extends Database
         $stmt = $conn->prepare("UPDATE login_attempts SET attempts = 0, blocked_until = NULL WHERE ip_address = :ip_address");
         $stmt->execute([':ip_address' => $ip_address]);
     }
+    
+    
 
     public function confirmSession()
     {
