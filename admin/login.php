@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="../assets/css/main.css" type="text/css" media="all">
         <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
         <link rel="icon" type="image/png" href="../assets/img/file.png">
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <style>
             .alert-link {
                 color: #fff;
@@ -85,6 +84,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM"></script>
 <script>
     
     const formInputs = document.querySelectorAll('#email, #password');
@@ -151,18 +151,22 @@
 </script>                                                           
 <script>
     
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
+            const loginForm = document.getElementById("loginForm");
+            loginForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const uname = loginForm["uname"].value;
+                const password = loginForm["password"].value;
 
-    const loginForm = document.getElementById("loginForm");
-    loginForm.onsubmit = (e) => {
-        e.preventDefault();
-        const uname = loginForm["uname"].value;
-        const password = loginForm["password"].value;
+                // Get the reCAPTCHA token
+                const token = await grecaptcha.execute("6Ld9CpMqAAAAACHrxpkxa8ZWtOfi8cOMtxY0eNxM", { action: 'login' });
 
-        if (uname && password) {
-            login({ uname, password, login: true });
-        }
-    };
+                if (uname && password && token) {
+                    const data = { uname, password, login: true, token };
+                    login(data);
+                }
+            };
+
 
     const login = async (data) => {
     try {
