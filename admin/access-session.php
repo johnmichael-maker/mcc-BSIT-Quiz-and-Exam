@@ -237,7 +237,11 @@
                             <td><input type="text" class="form-control verification-input" maxlength="1" /></td>
                         </tr>
                     </table>
+                      <div class="input-group-btn" style="text-align: center; margin-top: 20px;">
+                        <button type="submit" class="btn">Verify</button>
+                    </div>
                 </form>
+
 
                 <!-- Message Area (Success/Error Feedback) -->
                 <div class="help-block text-center" id="message"></div>
