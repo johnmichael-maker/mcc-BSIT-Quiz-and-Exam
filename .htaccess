@@ -1,28 +1,15 @@
-<IfModule mod_headers.c>
-    # Apply headers only to the root directory (or specified paths)
-    <FilesMatch "\.(php|html|css|js|png|jpg)$">
-        Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self';"
-        Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-        Header set X-Frame-Options "SAMEORIGIN"
-        Header set X-Content-Type-Options "nosniff"
-        Header set Referrer-Policy "strict-origin-when-cross-origin"
-        Header set Permissions-Policy "geolocation=(), camera=(), microphone=()"
-    </FilesMatch>
-</IfModule>
-
 # Enable mod_rewrite engine
 RewriteEngine On
 
-# Prevent rewrites for specific directories
-RewriteCond %{REQUEST_URI} !^/uploads/       # Exclude the uploads directory
-RewriteCond %{REQUEST_URI} !^/assets/       # Exclude the assets directory
-RewriteCond %{REQUEST_URI} !^/static/       # Exclude the static directory
+# Prevent direct access to the home page ("/") - COMMENT OUT or REMOVE
+# RewriteCond %{REQUEST_URI} ^/$
+# RewriteRule ^$ - [F,L]
 
 # Do not apply rewrites to existing directories or files
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d               # Don't rewrite directories
+RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files (e.g., images, CSS)
 
-# General rewrite rules for URLs
+# General rewrite rules for URLs that need to be processed as PHP (without .php extension)
 RewriteRule ^(admin/([a-zA-Z0-9_-]+))$ admin/$2.php [NC,L]
 RewriteRule ^(index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg|student-signup|step-123|exam|finished|home)$ $1.php [NC,L]
 
@@ -31,19 +18,19 @@ RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]
 RewriteCond %{REQUEST_URI} !^/student-signup.php$  # Exclude student-signup.php from redirection
 RewriteRule ^([^/]+)\.php$ /$1 [R=301,L]    # Redirect .php URLs to clean URLs without .php
 
-# Specific redirects for certain URLs
+# Additional rules: Redirect "exam.php" to the clean URL "exam", "finished.php" to "finished", "home.php" to "home"
 RewriteCond %{THE_REQUEST} \s/exam\.php$ [NC]
-RewriteRule ^exam\.php$ /exam [R=301,L]
+RewriteRule ^exam\.php$ /exam [R=301,L]    # Redirect exam.php to exam without .php
 
 RewriteCond %{THE_REQUEST} \s/finished\.php$ [NC]
-RewriteRule ^finished\.php$ /finished [R=301,L]
+RewriteRule ^finished\.php$ /finished [R=301,L]    # Redirect finished.php to finished without .php
 
 RewriteCond %{THE_REQUEST} \s/home\.php$ [NC]
-RewriteRule ^home\.php$ /home [R=301,L]
+RewriteRule ^home\.php$ /home [R=301,L]    # Redirect home.php to home without .php
 
-# Add rule to redirect error_page.php to clean URL "error_page"
+# Add rule to redirect error_page.php to clean URL "error_page" without .php
 RewriteCond %{THE_REQUEST} \s/error_page\.php$ [NC]
-RewriteRule ^error_page\.php$ /error_page [R=301,L]
+RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php to error_page without .php  
 
 RewriteCond %{THE_REQUEST} \s/config\.php$ [NC]
-RewriteRule ^config\.php$ /config [R=301,L]
+RewriteRule ^config\.php$ /config [R=301,L]  
