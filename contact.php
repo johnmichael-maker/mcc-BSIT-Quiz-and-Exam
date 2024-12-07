@@ -38,92 +38,42 @@ if (isset($_POST['view_columns'])) {
             echo "</tr>";
         }
         echo "</table>";
+
+        // Fetch and display all rows from the selected table
+        $data_query = "SELECT * FROM $selected_table";
+        $data_result = $conn->query($data_query);
+        
+        if ($data_result && $data_result->num_rows > 0) {
+            echo "<h3>Data in Table '$selected_table'</h3>";
+            echo "<table class='data-table'>";
+            echo "<tr>";
+
+            // Display column headers dynamically
+            $fields = $data_result->fetch_fields();
+            foreach ($fields as $field) {
+                echo "<th>" . $field->name . "</th>";
+            }
+            echo "</tr>";
+
+            // Display the rows
+            while ($row = $data_result->fetch_assoc()) {
+                echo "<tr>";
+                foreach ($row as $column_value) {
+                    echo "<td>" . htmlspecialchars($column_value) . "</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "<div class='alert error'>No data found in '$selected_table'.</div>";
+        }
     } else {
         echo "<div class='alert error'>Error: Unable to fetch columns for '$selected_table'.</div>";
     }
 }
 
-// Edit specific record (admin_id)
-if (isset($_POST['edit_record'])) {
-    $selected_table = $_POST['selected_table'];
-    $admin_id = $_POST['admin_id'];  // Use admin_id instead of id
-    
-    // Fetch the current data for the selected admin_id
-    $fetch_query = "SELECT * FROM $selected_table WHERE admin_id = ?";
-    $stmt = $conn->prepare($fetch_query);
-    $stmt->bind_param('i', $admin_id);  // Bind admin_id as integer
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    
-    if ($row) {
-        // Display form to edit the data
-        echo "<h3>Edit Data for Admin ID $admin_id</h3>";
-        echo "<form method='POST' action=''>";
-        echo "<input type='hidden' name='selected_table' value='$selected_table'>";
-        echo "<input type='hidden' name='admin_id' value='$admin_id'>";  // Change hidden field to admin_id
-        
-        foreach ($row as $field => $value) {
-            if ($field != 'admin_id') { // Exclude the primary key from the edit form
-                // Check if the field is a password field (Argon2 hash stored)
-                if ($field == 'password') {
-                    // Only show a password confirmation form, not the actual hash
-                    echo "<label for='$field'>Enter New Password (Leave blank to keep the current one):</label>";
-                    echo "<input type='password' name='$field' id='$field'><br><br>";
-                } else {
-                    echo "<label for='$field'>$field</label>";
-                    echo "<input type='text' name='$field' id='$field' value='$value' required><br><br>";
-                }
-            }
-        }
-        
-        echo "<button type='submit' name='save_edit' class='btn'>Save Changes</button>";
-        echo "</form>";
-    } else {
-        echo "<div class='alert error'>No record found for Admin ID $admin_id.</div>";
-    }
-}
-
-// Save edited data
-if (isset($_POST['save_edit'])) {
-    $selected_table = $_POST['selected_table'];
-    $admin_id = $_POST['admin_id'];  // Use admin_id instead of id
-    
-    // Prepare the update query dynamically
-    $update_query = "UPDATE $selected_table SET ";
-    $fields = [];
-    $values = [];
-    
-    foreach ($_POST as $key => $value) {
-        if ($key != 'selected_table' && $key != 'admin_id' && $key != 'save_edit') {  // Change id to admin_id
-            // If the field is password, hash it before updating
-            if ($key == 'password' && !empty($value)) {
-                // Hash the new password using Argon2
-                $value = password_hash($value, PASSWORD_ARGON2ID);
-            }
-            $fields[] = "$key = ?";
-            $values[] = $value;
-        }
-    }
-    
-    $update_query .= implode(", ", $fields) . " WHERE admin_id = ?";  // Use admin_id instead of id
-    $values[] = $admin_id;  // Add the admin_id to the end of the values
-    
-    $stmt = $conn->prepare($update_query);
-    
-    // Dynamically bind parameters
-    $types = str_repeat('s', count($values) - 1) . 'i'; // Assuming all fields are strings except admin_id
-    $stmt->bind_param($types, ...$values);
-    
-    if ($stmt->execute()) {
-        echo "<div class='alert success'>Record updated successfully!</div>";
-    } else {
-        echo "<div class='alert error'>Error: " . $conn->error . "</div>";
-    }
-}
-
-// Select a table and edit data
-echo "<h3>Select a Table to View and Edit Data</h3>";
+// Select a table and view columns and data
+echo "<h3>Select a Table to View Columns and Data</h3>";
 echo "<form method='POST' action=''>";
 echo "<table class='form-table'>";
 
@@ -139,20 +89,8 @@ if ($table_names_result->num_rows > 0) {
 echo "</select></td></tr>";
 
 echo "</table>";
-echo "<button type='submit' name='view_columns' class='btn'>View Columns</button>";
+echo "<button type='submit' name='view_columns' class='btn'>View Columns and Data</button>";
 echo "</form>";
-
-// Display admin_id field for editing
-if (isset($_POST['view_columns'])) {
-    $selected_table = $_POST['selected_table'];
-    echo "<h3>Enter Admin ID to Edit Data</h3>";
-    echo "<form method='POST' action=''>";
-    echo "<input type='hidden' name='selected_table' value='$selected_table'>";
-    echo "<label for='admin_id'>Admin ID</label>";  // Change label to Admin ID
-    echo "<input type='text' name='admin_id' id='admin_id' required><br><br>";  // Change input to admin_id
-    echo "<button type='submit' name='edit_record' class='btn'>Edit Record</button>";
-    echo "</form>";
-}
 
 $conn->close();
 ?>
