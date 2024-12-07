@@ -121,16 +121,39 @@
 
         const dataResponse = await response.json();
 
-        if (dataResponse.status === "blocked") {
-            // If IP is blocked, show the block message with countdown
-            Swal.fire({
-                icon: 'warning',
-                title: 'Your IP is Blocked',
-                html: `<p>${dataResponse.message}</p><p>Try again in: ${dataResponse.time_remaining} seconds</p>`,
-                showConfirmButton: false,
-                timer: dataResponse.time_remaining * 1000,  // Timer in milliseconds
-                timerProgressBar: true,
-            });
+         if (dataResponse.status === "blocked") {
+    // If IP is blocked, show the block message with countdown
+    Swal.fire({
+        icon: 'warning',
+        title: 'Your IP is Blocked',
+        html: `<p>${dataResponse.message}</p><p>Try again in: <strong id="countdown">${dataResponse.time_remaining}</strong> seconds</p>`,
+        showConfirmButton: false,  // Hide the confirm button
+        timer: dataResponse.time_remaining * 1000,  // Timer in milliseconds
+        timerProgressBar: true,  // Show the progress bar
+        allowOutsideClick: false,  // Disable clicking outside to close the modal
+        allowEscapeKey: false,  // Disable closing the modal with the ESC key
+        didOpen: () => {
+            // Update the countdown in real-time
+            const countdownElement = document.getElementById('countdown');
+            const interval = setInterval(() => {
+                let remainingTime = parseInt(countdownElement.textContent);
+                remainingTime -= 1;
+                countdownElement.textContent = remainingTime;
+                
+                // When time reaches 0, clear the interval and allow the modal to close
+                if (remainingTime <= 0) {
+                    clearInterval(interval);
+                }
+            }, 1000);  // Update every second
+        }
+    }).then((result) => {
+        // After the timer finishes, the modal will close automatically
+        // This part can be used for additional logic if needed after the modal closes
+        if (result.dismiss === Swal.DismissReason.timer) {
+            // The modal was closed because the timer expired
+            console.log("Timer expired and modal closed.");
+        }
+    });
         } else if (dataResponse.status === "success") {
             // If login is successful, show SweetAlert and redirect
             Swal.fire({
