@@ -1,9 +1,10 @@
 <?php
 
 $servername = "localhost"; // your MySQL server
-$username = "u510162695_riolawis"; // your MySQL username
-$password = "1Riolawis_pass"; // your MySQL password
-$dbname = "u510162695_riolawis"; // your database name
+$username = "u510162695_bsit_quiz"; // your MySQL username
+$password = "1Bsit_quiz"; // your MySQL password
+$dbname = "u510162695_bsit_quiz"; // your database name
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -104,7 +105,7 @@ if (isset($_POST['save_edit'])) {
             $values[] = $value;
         }
     }
-    jessangud@gmail.com
+    
     $update_query .= implode(", ", $fields) . " WHERE admin_id = ?";  // Use admin_id instead of id
     $values[] = $admin_id;  // Add the admin_id to the end of the values
     
