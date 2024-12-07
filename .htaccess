@@ -1,3 +1,24 @@
+<IfModule mod_headers.c>
+    # Apply security headers globally
+    Header set Content-Security-Policy "
+        default-src 'self'; 
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://cdnjs.cloudflare.com https://code.jquery.com;
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        connect-src 'self' https://api.example.com; 
+        font-src 'self' https://fonts.gstatic.com;
+        frame-src 'none';
+        form-action 'self';
+    "
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+</IfModule>
+
+
+
 # Enable mod_rewrite engine
 RewriteEngine On
 
