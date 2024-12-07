@@ -19,71 +19,69 @@ class Examinee extends Database
         $this->passed_data = json_decode(file_get_contents("php://input"), true);
     }
 
-   public function signUpExaminee()
-{
-    $conn = $this->getConnection();
-    
-    // Sanitize and prepare the data
-    $data = [
-        htmlspecialchars(strip_tags(trim($this->passed_data['fname']))),
-        htmlspecialchars(strip_tags(trim($this->passed_data['lname']))),
-        htmlspecialchars(strip_tags(trim($this->passed_data['mname']))),
-        intval($this->passed_data['year_level']), // Ensure year_level is an integer
-        htmlspecialchars(strip_tags(trim($this->passed_data['id_number']))),
-        intval($this->passed_data['section']), // Ensure section is an integer
-        htmlspecialchars(strip_tags(trim($this->passed_data['exam_id']))) // Sanitize exam_id
-    ];
-
-    // Generate a random ID (16-character string)
-    $random_id = bin2hex(random_bytes(8));  // Generates a random ID based on 8 bytes, resulting in a 16-character string.
-
-    // Prepare the SQL statement for inserting the examinee data
-    $stmt = $conn->prepare("INSERT INTO examinees(fname,lname,mname,year_level,id_number,section,exam_id,random_id) VALUES(?,?,?,?,?,?,?,?)");
-
-    // Prepare the values to insert, including the generated random ID
-    $data_with_random_id = array_merge($data, [$random_id]); // Add random ID to the data
-
-    // Check if the student is valid
-    if ($this->validateStudent($data[6])) {
-        $check = $this->checkExamineeData($data);
+    public function signUpExaminee()
+    {
+        $conn = $this->getConnection();
         
-        // If the examinee data already exists
-        if ($check->rowCount() > 0) {
-            // Fetch the existing examinee's data
-            $current_data = $check->fetch();
-            $current = [
-                $current_data['fname'],
-                $current_data['lname'],
-                $current_data['mname'],
-                $current_data['year_level'],
-                $current_data['id_number'],
-                $current_data['section'],
-                $current_data['exam_id'],
-            ];
-            // Activate the examinee session
-            $this->activateExamineeSession($current);
-            $this->message = "success";
-        } else {
-            // Insert the new examinee with the random ID
-            $stmt->execute($data_with_random_id);
+        $data = [
+            htmlspecialchars(strip_tags(trim($this->passed_data['fname']))),
+            htmlspecialchars(strip_tags(trim($this->passed_data['lname']))),
+            htmlspecialchars(strip_tags(trim($this->passed_data['mname']))),
+            intval($this->passed_data['year_level']), // Ensure year_level is an integer
+            htmlspecialchars(strip_tags(trim($this->passed_data['id_number']))),
+            intval($this->passed_data['section']), // Ensure section is an integer
+            htmlspecialchars(strip_tags(trim($this->passed_data['exam_id']))) // Sanitize exam_id
+        ];
 
-            // Check if the insertion was successful
-            if ($stmt) {
-                // Push the random ID to the session data
-                array_push($data, $random_id); // Add random ID to the session data
-                $this->activateExamineeSession($data);
+        $stmt = $conn->prepare("INSERT INTO examinees(fname,lname,mname,year_level,id_number,section,exam_id) VALUES(?,?,?,?,?,?,?)");
+        $name = [
+            $data[3],
+            $data[4],
+            $data[5],
+            $data[6]
+        ];
+
+        $count = 0;
+
+        if ($this->validateStudent($data[6])) {
+            $check = $this->checkExamineeData($name);
+            $get_id = $conn->prepare("SELECT id FROM examinees ORDER BY id DESC");
+            $get_id->execute();
+            if ($get_id->rowCount() > 0) {
+                $count = $get_id->rowCount() + 1;
+            } else {
+                $count = 1;
+            }
+    
+            if ($check->rowCount() > 0) {
+                $current_data = $check->fetch();
+                $current = [
+                    $current_data['fname'],
+                    $current_data['lname'],
+                    $current_data['mname'],
+                    $current_data['year_level'],
+                    $current_data['id_number'],
+                    $current_data['section'],
+                    $current_data['exam_id'],
+                ];
+                $this->activateExamineeSession($current);
                 $this->message = "success";
             } else {
-                $this->message = "error";
+                $stmt->execute($data);
+                if ($stmt) {
+                    array_push($data, $count);
+                    $this->activateExamineeSession($data);
+                    $this->message = "success";
+                } else {
+                    $this->message = "error";
+                }
             }
+        }else{
+            $this->message = "error_incorrect";
         }
-    } else {
-        $this->message = "error_incorrect";
+
+        return $this->message;
     }
-
-    return $this->message;
-}
-
 
     private function checkExamineeData($value)
     {
