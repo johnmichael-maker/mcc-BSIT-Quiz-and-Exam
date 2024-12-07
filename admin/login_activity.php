@@ -181,13 +181,15 @@ $result = $stmt->get_result();
                                                 <td><?php echo htmlspecialchars($attempts_data['last_attempt']); ?></td>
                                                 <td>
                                                     <?php 
+                                                    // Check if the IP is blocked
                                                     $attempt_limit = 3;
-                                                    $time_limit = 1200;  
-                                                    $blocked_until = strtotime($attempts_data['blocked_until']);
+                                                    $time_limit = 1200;  // 20 minutes
+                                                    $blocked_until = strtotime($attempts_data['blocked_until']); // Convert to timestamp
 
                                                     if ($attempts_data['attempts'] >= $attempt_limit && $blocked_until > time()) {
-                                                        echo "<span class='status-blocked'>Blocked</span>";
+                                                        echo "<span class='status-blocked'>Blocked (Exceeded 3 failed attempts)</span>";
                                                     } elseif ($blocked_until && $blocked_until <= time()) {
+                                                        // Reset blocked status if the time has passed
                                                         echo "<span class='status-not-blocked'>Not Blocked</span>";
                                                     } else {
                                                         echo "<span class='status-not-blocked'>Not Blocked</span>";
@@ -200,14 +202,17 @@ $result = $stmt->get_result();
                                     </tbody>
                                 </table>
 
-                                <!-- Pagination Links -->
                                 <div class="pagination">
                                     <?php if ($page > 1): ?>
                                         <a href="?page=<?php echo $page - 1; ?>">Previous</a>
                                     <?php endif; ?>
 
-                                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                                        <a href="?page=<?php echo $i; ?>" class="<?php echo ($i == $page) ? 'active' : ''; ?>"><?php echo $i; ?></a>
+                                    <?php
+                                    // Display page numbers
+                                    for ($i = 1; $i <= $total_pages; $i++): ?>
+                                        <a href="?page=<?php echo $i; ?>" class="<?php echo ($i == $page) ? 'active' : ''; ?>">
+                                            <?php echo $i; ?>
+                                        </a>
                                     <?php endfor; ?>
 
                                     <?php if ($page < $total_pages): ?>
