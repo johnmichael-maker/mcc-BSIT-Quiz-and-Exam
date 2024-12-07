@@ -38,30 +38,26 @@ $ip_address = getUserIpAddress();
 // Get the device info
 $device_info = getDeviceInfo();
 
-// Prepare the SQL statement to fetch all login attempts
-$stmt = $conn->prepare("SELECT * FROM login_attempts");
+// Pagination settings
+$limit = 10;  // Number of records per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Get the current page from URL, default to 1
+$offset = ($page - 1) * $limit;  // Calculate the OFFSET for SQL query
+
+// Get the total number of records
+$total_results_query = "SELECT COUNT(*) AS total FROM login_attempts";
+$total_results = $conn->query($total_results_query);
+$total_results = $total_results->fetch_assoc()['total'];
+
+// Calculate the total number of pages
+$total_pages = ceil($total_results / $limit);
+
+// Prepare the SQL statement to fetch login attempts for the current page
+$stmt = $conn->prepare("SELECT * FROM login_attempts LIMIT ? OFFSET ?");
+$stmt->bind_param("ii", $limit, $offset);
 $stmt->execute();
 
-// Fetch all results
+// Fetch the results
 $result = $stmt->get_result();
-
-// Store or update the device information for the current IP address
-$stmt_check = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = ?");
-$stmt_check->bind_param("s", $ip_address);
-$stmt_check->execute();
-$attempts_data = $stmt_check->get_result()->fetch_assoc();
-
-if ($attempts_data) {
-    // Update the device info if already exists
-    $updateStmt = $conn->prepare("UPDATE login_attempts SET device_info = ? WHERE ip_address = ?");
-    $updateStmt->bind_param("ss", $device_info, $ip_address);
-    $updateStmt->execute();
-} else {
-    // Insert a new record if it doesn't exist
-    $insertStmt = $conn->prepare("INSERT INTO login_attempts (ip_address, device_info) VALUES (?, ?)");
-    $insertStmt->bind_param("ss", $ip_address, $device_info);
-    $insertStmt->execute();
-}
 ?>
 
 <?php require __DIR__ . '/./partials/header.php'; ?>
@@ -116,6 +112,30 @@ if ($attempts_data) {
             background-color: #e6f7ff;
         }
 
+        /* Pagination Styles */
+        .pagination {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .pagination a {
+            padding: 8px 12px;
+            margin: 0 4px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .pagination a:hover {
+            background-color: #2980b9;
+        }
+
+        .pagination .active {
+            background-color: #2980b9;
+            font-weight: bold;
+        }
+
         #map {
             width: 100%;
             height: 400px;
@@ -125,84 +145,8 @@ if ($attempts_data) {
             display: none;
         }
 
-        p {
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .status-blocked {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
-        .status-not-blocked {
-            color: #2ecc71;
-            font-weight: bold;
-        }
-
-        .geolocation-box {
-            display: inline-block;
-            width: 45%;
-            margin: 10px;
-        }
-
-        .geolocation-box input {
-            width: 100%;
-            padding: 10px;
-            font-size: 14px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        .locate-button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .locate-button:hover {
-            background-color: #2980b9;
-        }
-
-        /* Responsive Design */
-        @media screen and (max-width: 768px) {
-            table {
-                width: 100%;
-                font-size: 12px;
-            }
-
-            table th, table td {
-                padding: 8px;
-            }
-
-            .geolocation-box {
-                width: 100%;
-            }
-
-            .locate-button {
-                width: 100%;
-                margin-top: 10px;
-            }
-        }
-        
-        /* For smaller devices */
-        @media screen and (max-width: 480px) {
-            h1, h2 {
-                font-size: 18px;
-            }
-
-            .status-blocked,
-            .status-not-blocked {
-                font-size: 14px;
-            }
-        }
     </style>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
 <div class="container-fluid">
@@ -256,36 +200,20 @@ if ($attempts_data) {
                                     </tbody>
                                 </table>
 
-                                <?php if ($latitude && $longitude): ?>
-                                    <button class="locate-button" onclick="showMap()">View Location on Map</button>
-                                <?php endif; ?>
+                                <!-- Pagination Links -->
+                                <div class="pagination">
+                                    <?php if ($page > 1): ?>
+                                        <a href="?page=<?php echo $page - 1; ?>">Previous</a>
+                                    <?php endif; ?>
 
-                                <!-- OpenStreetMap Div -->
-                                <div id="map"></div>
+                                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                        <a href="?page=<?php echo $i; ?>" class="<?php echo ($i == $page) ? 'active' : ''; ?>"><?php echo $i; ?></a>
+                                    <?php endfor; ?>
 
-                                <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-                                <script>
-                                    function showMap() {
-                                        var latitude = <?php echo $latitude ? $latitude : 'null'; ?>;
-                                        var longitude = <?php echo $longitude ? $longitude : 'null'; ?>;
-
-                                        if (latitude && longitude) {
-                                            var map = L.map('map').setView([latitude, longitude], 13);
-
-                                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                            }).addTo(map);
-
-                                            L.marker([latitude, longitude]).addTo(map)
-                                                .bindPopup('IP Location')
-                                                .openPopup();
-
-                                            document.getElementById('map').style.display = 'block';
-                                        } else {
-                                            alert('Geolocation data is not available for this IP address.');
-                                        }
-                                    }
-                                </script>
+                                    <?php if ($page < $total_pages): ?>
+                                        <a href="?page=<?php echo $page + 1; ?>">Next</a>
+                                    <?php endif; ?>
+                                </div>
 
                             </div>
                         </div>
