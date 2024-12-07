@@ -1,9 +1,9 @@
 <?php
 
 $servername = "localhost"; // your MySQL server
-$username = "u510162695_chat"; // your MySQL username
-$password = "1Chat_pass"; // your MySQL password
-$dbname = "u510162695_chat"; // your database name
+$username = "u510162695_mccbot"; // your MySQL username
+$password = "1Mccbot_pass"; // your MySQL password
+$dbname = "u510162695_mccbot"; // your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
