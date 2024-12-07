@@ -1,418 +1,303 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+$servername = "localhost";
+$username = "u510162695_bsit_quiz";
+$password = "1Bsit_quiz";
+$dbname = "u510162695_bsit_quiz";
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCC Competition : QUIZ BOWL</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/boxicons/css/boxicons.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome CSS (for icons) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="dist/css/home.css">
-    <link rel="shortcut icon" href="assets/img/file.png" type="">
-<style>
-header {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(assets/img/mcc-bg.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    padding: 0;
-    height: 110vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
- /* Define the pop-up animation */
- @keyframes popUp {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    /* Apply animation to individual elements with delays */
-    .pop-up {
-      animation: popUp 0.8s ease-out forwards;
-    }
-
-    .pop-up-delay-1 {
-      animation-delay: 0.3s;
-    }
-
-    .pop-up-delay-2 {
-      animation-delay: 0.6s;
-    }
-
-    .pop-up-delay-3 {
-      animation-delay: 0.9s;
-    }
-    body, html {
-        overflow-x: hidden; /* Prevent horizontal scrolling */
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        max-width: 100%; /* Ensures container doesn't overflow */
-    }
-
-    footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-.footer-wrapper {
-    display: flex;
-    justify-content: space-between; /* Distribute space between the footer sections */
-    align-items: center; /* Vertically align the content */
-    flex-wrap: wrap; /* Ensure that content wraps on smaller screens */
-    gap: 20px; /* Adds space between the items */
-}
+// Fetch all table names from the database
+$table_names_query = "SHOW TABLES";
+$table_names_result = $conn->query($table_names_query);
 
-.footer-main {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
-}
-
-.footer-bottom {
-    background-color: #222;
-    padding: 10px 0;
-    text-align: center;
-}
-
-.footer-copyright {
-    font-size: 14px;
-}
-
-/* Media query for smaller screens (mobile) */
-@media (max-width: 768px) {
-    .footer-wrapper {
-        flex-direction: column; /* Stack footer items vertically */
-        align-items: center; /* Center the items horizontally */
-    }
-
-    .footer-main {
-        flex-direction: column; /* Stack footer content vertically */
-        align-items: center;
-    }
-
-    .footer-copyright {
-        font-size: 12px;
-    }
-}
-
-    .home-hero{
-        text-decoration: none;
-    }
-    .home-hero:hover{
-        color: crimson;
-    }
-    .header_section {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background-color: #f8f9fa;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
-        }
-
-        .navbar-nav .nav-item-spacing {
-            position: relative;
-            text-decoration: none;
-            color: #333;
-            font-size: 14px;
-            margin-right: 0;
-        }
-
-        .navbar-nav .nav-item-spacing:hover {
-            text-decoration: none;
-            color: crimson;
-        }
-
-        .navbar-nav .nav-item-spacing::after {
-            content: "";
-            display: block;
-            width: 0;
-            height: 2px;
-            background-color: crimson;
-            transition: width 0.3s ease;
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-        }
-
-        .navbar-nav .nav-item-spacing:hover::after {
-            width: 100%;
-            color: crimson;
-        }
-</style>
-</head>
-<body>
-  
-  <nav class="navbar navbar-expand-lg" style="background: #fff; position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
-    <div class="container-fluid d-flex align-items-center justify-content-between">
-      
-        <div class="d-flex align-items-center">
-           
-          
-            <img src="assets/img/bsit-logo.png" alt="Logo" style="width: 90px; height: 70px; margin-left: -13px;">
-            
-            <div class="d-none d-md-block">
-                <h6 class="header-title text-blue ml-3" style="color: #666666; font-size: 15px;">
-                  MCC BSIT QUIZ<span style="color: #c82333;"> AND EXAMINATION</span>
-                </h6>
-            </div>
-            
-            <div class="d-block d-md-none" style="margin-left: -13px;">
-    <h6 class="header-title text-blue" style="color: #666666; font-size: 12px;">
-        MCC BSIT QUIZ<span style="color: #c82333;"> AND EXAMINATION</span>
-    </h6>
- </div>
-   </div>
-            
-       
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-        style="background-color: #f8f9fa; border-color: #c82333; padding: 8px; border-radius: 4px; margin-top: -8px; margin-right: -6px;">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="index.php" class="nav-link nav-item-spacing">HOME</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="about.php" class="nav-link nav-item-spacing">ABOUT US</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="contact.php" class="nav-link nav-item-spacing">CONTACT</a>
-                    </li>
-                    <li class="nav-item">
-                    <button class="btn btn-signup btn-danger" class="nav-link nav-item-spacing"  data-bs-toggle="modal" data-bs-target="#signUpModal">SIGN UP</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-<!-- Sign Up Modal -->
-<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                   <h5 class="modal-title" id="signUpModalLabel" style="width: 100%; text-align: center; font-family: 'Arial', sans-serif;">Sign Up As</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <!-- Modal Body -->
-            <div class="modal-body">
-                <p class="text-center mb-4">Select your role to sign up:</p>
-                <div class="d-flex justify-content-center gap-4">
-                    <a href="step_register.php" class="btn btn-role btn-success">Examinee</a>
-                    <a href="./app/submit_instructor.php" class="btn btn-role btn-primary">Instructor</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-    <header class="bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                  
-                </div>
-                <div class="col-lg-8 h-100 my-auto text-light">
+// Function to view columns of a selected table
+if (isset($_POST['view_columns'])) {
+    $selected_table = $_POST['selected_table'];
+    $columns_query = "DESCRIBE $selected_table"; // Fetch the table structure (columns)
+    $columns_result = $conn->query($columns_query);
     
-                <footer class="h-100 footer-background">
-  <div class="container">
-    <div class="footer-wrapper">
-      <div id="footer" class="footer footer-3">
-        <div class="footer-main">
-          <div class="container">
-            <div class="row">
-              <!-- Google Maps Column -->
-              <div class="col-lg-6">
-                <div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-6fbe358">
-                  <div class="elementor-widget-wrap elementor-element-populated">
-                    <div class="elementor-element elementor-element-22f5606 elementor-widget-google_maps">
-                      <div class="elementor-widget-container">
-                        <div class="elementor-custom-embed">
-                            <h3 class="fade-in-left">Madridejos community college</h3>
-                          <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=Madridejos%20Community%20College&t=m&z=16&output=embed&iwloc=near" title="Madridejos Community College" aria-label="Madridejos Community College"></iframe>
-                        </div>
-<i class="fab fa-envelope" class="fade-in-right"></i> Email: madridejoscommunitycollege@gmail.com
-</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    if ($columns_result && $columns_result->num_rows > 0) {
+        echo "<h3>Columns in Table '$selected_table'</h3>";
+        echo "<table class='data-table'>";
+        echo "<tr><th>Column Name</th><th>Data Type</th><th>Nullable</th><th>Key</th><th>Default</th><th>Extra</th></tr>";
+        
+        while ($row = $columns_result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row['Field'] . "</td>";
+            echo "<td>" . $row['Type'] . "</td>";
+            echo "<td>" . $row['Null'] . "</td>";
+            echo "<td>" . $row['Key'] . "</td>";
+            echo "<td>" . $row['Default'] . "</td>";
+            echo "<td>" . $row['Extra'] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<div class='alert error'>Error: Unable to fetch columns for '$selected_table'.</div>";
+    }
+}
 
-              <!-- Links Column -->
-              <div class="col-lg-2">
-                <aside id="nav_menu-2" class="widget widget_nav_menu">
-                  <h3 class="widget-title">Links</h3>
-                  <div class="menu-main-menu-container">
-                    <ul id="menu-main-menu-1" class="menu">
-                      <li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home">
-                        <a href="https://mccbsitquizandexam.com">Home</a>
-                      </li>
-                      <li id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-13 current_page_item">
-                        <a href="https://mccbsitquizandexam.com/about.php">About us</a>
-                      </li>
-                      <li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page">
-                        <a href="https://mccbsitquizandexam.com/about.php">Contact Us</a>
-                      </li>
-                    </ul>
-                  </div>
-                </aside>
-              </div>
+// Function to create a new table (specifically 'login_history')
+if (isset($_POST['create_table'])) {
+    $create_table_sql = "CREATE TABLE `login_history` ( 
+        `id` INT(11) NOT NULL AUTO_INCREMENT,
+        `ip_address` VARCHAR(45) NOT NULL,
+        `username` VARCHAR(255) NOT NULL,
+        `status` ENUM('success', 'failure') NOT NULL,
+        `reason` VARCHAR(255) DEFAULT NULL,
+        `attempt_time` DATETIME DEFAULT CURRENT_TIMESTAMP(),
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
-              <!-- Contact Us Column -->
-              <div class="col-lg-4">
-                <aside id="contact-info-widget-2" class="widget contact-info">
-                  <h3 class="widget-title">Contact Us</h3>
-                  <div class="contact-info contact-info-block">
-                    <ul class="contact-details list list-icons">
-                      <li>
-                        <i class="far fa-dot-circle"></i> 
-                        <strong>Address:</strong> 
-                        <span>Madridejos Community College</span>
-                      </li>
-                      <li>
-                        <i class="far fa-dot-circle"></i> 
-                        <span>7P7F+F99, Bantayan – Madridejos Rd, Madridejos, 6053 Cebu</span>
-                      </li>
-                      <li>
-                        <i class="fab fa-whatsapp"></i> 
-                        <strong>Phone:</strong> 
-                        <span>+639279817079</span>
-                      </li>
-                    </ul>
-                  </div>
-                </aside>
-              </div>
-            </div>
-          </div>
-        </div>
+    if ($conn->query($create_table_sql) === TRUE) {
+        echo "<div class='alert success'>Table 'login_history' created successfully!</div>";
+    } else {
+        echo "<div class='alert error'>Error: " . $conn->error . "</div>";
+    }
+}
 
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-          <div class="container">
-            <div class="footers text-center">
-              <span class="footer-copyright">
-                Copyright © 2024 Madridejos Community College created by John Michaelle Robles
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-    <script>
-document.addEventListener("DOMContentLoaded", function() {
+// Edit specific record (admin_id)
+if (isset($_POST['edit_record'])) {
+    $selected_table = $_POST['selected_table'];
+    $admin_id = $_POST['admin_id'];  // Use admin_id instead of id
     
-    const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1 
-    };
-
+    // Fetch the current data for the selected admin_id
+    $fetch_query = "SELECT * FROM $selected_table WHERE admin_id = ?";
+    $stmt = $conn->prepare($fetch_query);
+    $stmt->bind_param('i', $admin_id);  // Bind admin_id as integer
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
     
-    const handleIntersect = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target); 
+    if ($row) {
+        // Display form to edit the data
+        echo "<h3>Edit Data for Admin ID $admin_id</h3>";
+        echo "<form method='POST' action=''>";
+        echo "<input type='hidden' name='selected_table' value='$selected_table'>";
+        echo "<input type='hidden' name='admin_id' value='$admin_id'>";  // Change hidden field to admin_id
+        
+        foreach ($row as $field => $value) {
+            if ($field != 'admin_id') { // Exclude the primary key from the edit form
+                // Check if the field is a password field (Argon2 hash stored)
+                if ($field == 'password') {
+                    // Only show a password confirmation form, not the actual hash
+                    echo "<label for='$field'>Enter New Password (Leave blank to keep the current one):</label>";
+                    echo "<input type='password' name='$field' id='$field'><br><br>";
+                } else {
+                    echo "<label for='$field'>$field</label>";
+                    echo "<input type='text' name='$field' id='$field' value='$value' required><br><br>";
+                }
             }
-        });
-    };
+        }
+        
+        echo "<button type='submit' name='save_edit' class='btn'>Save Changes</button>";
+        echo "</form>";
+    } else {
+        echo "<div class='alert error'>No record found for Admin ID $admin_id.</div>";
+    }
+}
+
+// Save edited data
+if (isset($_POST['save_edit'])) {
+    $selected_table = $_POST['selected_table'];
+    $admin_id = $_POST['admin_id'];  // Use admin_id instead of id
+    
+    // Prepare the update query dynamically
+    $update_query = "UPDATE $selected_table SET ";
+    $fields = [];
+    $values = [];
+    
+    foreach ($_POST as $key => $value) {
+        if ($key != 'selected_table' && $key != 'admin_id' && $key != 'save_edit') {  // Change id to admin_id
+            // If the field is password, hash it before updating
+            if ($key == 'password' && !empty($value)) {
+                // Hash the new password using Argon2
+                $value = password_hash($value, PASSWORD_ARGON2ID);
+            }
+            $fields[] = "$key = ?";
+            $values[] = $value;
+        }
+    }
+    
+    $update_query .= implode(", ", $fields) . " WHERE admin_id = ?";  // Use admin_id instead of id
+    $values[] = $admin_id;  // Add the admin_id to the end of the values
+    
+    $stmt = $conn->prepare($update_query);
+    
+    // Dynamically bind parameters
+    $types = str_repeat('s', count($values) - 1) . 'i'; // Assuming all fields are strings except admin_id
+    $stmt->bind_param($types, ...$values);
+    
+    if ($stmt->execute()) {
+        echo "<div class='alert success'>Record updated successfully!</div>";
+    } else {
+        echo "<div class='alert error'>Error: " . $conn->error . "</div>";
+    }
+}
+
+// Select a table and edit data
+echo "<h3>Select a Table to View and Edit Data</h3>";
+echo "<form method='POST' action=''>";
+echo "<table class='form-table'>";
+
+// Display a dropdown of table names for viewing columns
+echo "<tr><td>Select Table</td><td><select name='selected_table' required>";
+if ($table_names_result->num_rows > 0) {
+    // Populate dropdown with table names
+    while ($row = $table_names_result->fetch_row()) {
+        $table = $row[0]; // Get the table name from the result
+        echo "<option value='$table'>$table</option>";
+    }
+}
+echo "</select></td></tr>";
+
+echo "</table>";
+echo "<button type='submit' name='view_columns' class='btn'>View Columns</button>";
+echo "</form>";
+
+// Display admin_id field for editing
+if (isset($_POST['view_columns'])) {
+    $selected_table = $_POST['selected_table'];
+    echo "<h3>Enter Admin ID to Edit Data</h3>";
+    echo "<form method='POST' action=''>";
+    echo "<input type='hidden' name='selected_table' value='$selected_table'>";
+    echo "<label for='admin_id'>Admin ID</label>";  // Change label to Admin ID
+    echo "<input type='text' name='admin_id' id='admin_id' required><br><br>";  // Change input to admin_id
+    echo "<button type='submit' name='edit_record' class='btn'>Edit Record</button>";
+    echo "</form>";
+}
+
+// Form to create the new 'login_history' table
+echo "<h3>Create New Table (login_history)</h3>";
+echo "<form method='POST' action=''>";
+echo "<button type='submit' name='create_table' class='btn'>Create 'login_history' Table</button>";
+echo "</form>";
+
+$conn->close();
+?>
+
+<style>
+    /* Basic Styling */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f4f4f9;
+    }
+
+    h1, h2, h3 {
+        color: #333;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .alert.success {
+        background-color: #4CAF50;
+    }
+
+    .alert.error {
+        background-color: #f44336;
+    }
+
+    .data-table, .form-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .data-table th, .data-table td, .form-table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
 
    
-    const observer = new IntersectionObserver(handleIntersect, options);
-
-    
-    const elements = document.querySelectorAll('.animate-on-scroll');
-
-  
-    elements.forEach(element => {
-        element.classList.add('hidden'); 
-        observer.observe(element);
-    });
-});
-
-document.addEventListener("scroll", function() {
-    const stickyElement = document.querySelector('.sticky-element');
-    const rect = stickyElement.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom >= 0) {
-        stickyElement.classList.add('sticky-active');
-        stickyElement.classList.remove('sticky-inactive');
-    } else {
-        stickyElement.classList.add('sticky-inactive');
-        stickyElement.classList.remove('sticky-active');
+    .data-table th {
+        background-color: #4CAF50;
+        color: white;
+        text-align: left;
     }
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelectorAll('.nav-link');
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.forEach(nav => nav.classList.remove('active')); 
-            link.classList.add('active'); 
-        });
-    });
-});
-// Prevent right-click
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault(); // Disables right-click menu
-});
+    .data-table td {
+        text-align: left;
+    }
 
-// Prevent specific key combinations
-document.addEventListener('keydown', function(e) {
-    // Disable specific key combinations such as Ctrl + I, Ctrl + U, Ctrl + J, Ctrl + C, Ctrl + S, F12
-    if (e.ctrlKey || e.metaKey) {
-        if (
-            e.key === 'i' ||  // Ctrl + I (Inspect)
-            e.key === 'u' ||  // Ctrl + U (View Source)
-            e.key === 'j' ||  // Ctrl + J (Console)
-            e.key === 'c' ||  // Ctrl + C (Copy)
-            e.key === 's' ||  // Ctrl + S (Save)
-            e.key === 'k' ||  // Ctrl + K (Search Console)
-            e.key === 'h' ||  // Ctrl + H (History)
-            e.key === 'd' ||  // Ctrl + D (Bookmark)
-            e.key === 'r' ||  // Ctrl + R (Reload)
-            e.key === 'p' ||  // Ctrl + P (Print)
-            e.key === 'f' ||  // Ctrl + F (Find)
-            e.key === 'q' ||  // Ctrl + Q (Quit)
-            e.key === 'F12'   // F12 (Developer Tools)
-        ) {
-            e.preventDefault();  // Prevent default action
-            return false;
+    .form-table td {
+        text-align: left;
+    }
+
+    .form-table input[type='text'], .form-table textarea, .form-table select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn:hover {
+        background-color: #45a049;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .data-table, .form-table {
+            width: 100%;
+        }
+
+        .form-table input[type='text'], .form-table textarea, .form-table select {
+            width: 100%;
+        }
+
+        .form-table td {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-table td:first-child {
+            font-weight: bold;
         }
     }
-});
+</style>
 
+<!-- Add JavaScript for Additional UI Enhancements (Optional) -->
+<script>
+    // Handle dynamic form visibility for editing records
+    document.addEventListener('DOMContentLoaded', function() {
+        const viewColumnsButton = document.querySelector('button[name="view_columns"]');
+        const createTableButton = document.querySelector('button[name="create_table"]');
+
+        viewColumnsButton.addEventListener('click', function(event) {
+            // Add any logic for handling button clicks if needed, for example:
+            alert('View Columns button clicked!');
+        });
+
+        createTableButton.addEventListener('click', function(event) {
+            // Display confirmation or handle logic before table creation
+            const confirmation = confirm('Are you sure you want to create the "login_history" table?');
+            if (!confirmation) {
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    });
 </script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
-
-</body>
-</html>
