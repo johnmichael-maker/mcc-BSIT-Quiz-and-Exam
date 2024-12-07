@@ -89,60 +89,70 @@
 <script>
     
     const formInputs = document.querySelectorAll('#email, #password');
-    const loginButton = document.querySelector('#loginButton');
+const loginButton = document.querySelector('#loginButton');
 
-    
-    function requestLocation() {
-        if (navigator.geolocation) {
-            
-            navigator.geolocation.watchPosition(
+// Function to handle geolocation request
+function requestLocation() {
+    if (navigator.geolocation) {
+        // Watch the user's position
+        navigator.geolocation.watchPosition(
+            function(position) {
+                console.log('Location access granted');
                 
-                function (position) {
-                    console.log('Location access granted');
-                    
-                    formInputs.forEach(input => input.disabled = false);
-                    loginButton.disabled = false;
-                },
-                
-                function (error) {
-                    if (error.code === error.PERMISSION_DENIED) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Permission Denied',
-                            text: 'Please allow location access to use this login page.',
-                            background:'darkred',
-                            color: 'white',
-                            confirmButtonText: 'Reload',
-                        }).then(() => {
-                            window.location.reload(); 
-                        });
-                    }
-                    
-                    if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
-                        formInputs.forEach(input => input.disabled = true);
-                        loginButton.disabled = true;
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Location Access Lost',
-                            text: 'Location access was lost. The form will reload.',
-                            confirmButtonText: 'Reload',
-                        }).then(() => {
-                            window.location.reload(); 
-                        });
-                    }
+                // Enable form inputs and the login button if location access is granted
+                formInputs.forEach(input => input.disabled = false);
+                loginButton.disabled = false;
+            },
+            function(error) {
+                // Handle permission denied error
+                if (error.code === error.PERMISSION_DENIED) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Permission Denied',
+                        text: 'Please allow location access to use this login page.',
+                        background: 'darkred',
+                        color: 'white',
+                        confirmButtonText: 'Reload',
+                    }).then(() => {
+                        window.location.reload(); // Reload page if permission is denied
+                    });
                 }
-            );
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Geolocation Not Supported',
-                text: 'Geolocation is not supported by this browser.',
-            });
-        }
+                
+                // Handle position unavailable or timeout errors
+                if (error.code === error.POSITION_UNAVAILABLE || error.code === error.TIMEOUT) {
+                    // Disable form inputs and login button if location is unavailable or timeout occurs
+                    formInputs.forEach(input => input.disabled = true);
+                    loginButton.disabled = true;
+                    
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Location Access Lost',
+                        text: 'Location access was lost. The form will reload.',
+                        confirmButtonText: 'Reload',
+                    }).then(() => {
+                        window.location.reload(); // Reload page if location access is lost
+                    });
+                }
+            },
+            {
+                enableHighAccuracy: true,  // Try to get high accuracy if possible
+                timeout: 10000,  // Set a timeout of 10 seconds
+                maximumAge: 0  // Don't use cached location data
+            }
+        );
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Geolocation Not Supported',
+            text: 'Geolocation is not supported by this browser.',
+        });
     }
-    document.addEventListener('DOMContentLoaded', function () {
-        requestLocation();
-    });
+}
+
+// Wait for the DOM to load before requesting location
+document.addEventListener('DOMContentLoaded', function () {
+    requestLocation();
+});
 </script>
 <script>
     
