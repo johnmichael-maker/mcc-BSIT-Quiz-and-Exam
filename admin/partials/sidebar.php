@@ -89,10 +89,17 @@ $inactive = "text-light";
         </li>
         <?php endif; ?>
 
- <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
+       <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
         <li class="nav-item">
             <a href="login_activity" class="nav-link <?= str_contains($url, '/logn_activity') ? $active : $inactive ?>"> 
                 <i class="bx bx-user"></i> Login activity
+            </a>
+        </li>
+        <?php endif; ?>
+     <?php if (isset($_SESSION['AUTH_UTYPE']) && $_SESSION['AUTH_UTYPE'] != 2): ?>
+        <li class="nav-item">
+            <a href="login_history" class="nav-link <?= str_contains($url, '/logn_history') ? $active : $inactive ?>"> 
+                <i class="bx bx-user-check"></i> Login Activity
             </a>
         </li>
         <?php endif; ?>
