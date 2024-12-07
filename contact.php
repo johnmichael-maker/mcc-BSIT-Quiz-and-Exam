@@ -1,5 +1,4 @@
 <?php
-
 $servername = "localhost"; // your MySQL server
 $username = "u510162695_sillon"; // your MySQL username
 $password = "1Sillon_pass"; // your MySQL password
@@ -60,26 +59,26 @@ if (isset($_POST['edit_record'])) {
     if ($row) {
         // Display form to edit the data
         echo "<h3>Edit Data for ID $id</h3>";
-        echo "<form method='POST' action='' enctype='multipart/form-data'>";  // Add enctype for file upload
+        echo "<form method='POST' action='' enctype='multipart/form-data'>";
         echo "<input type='hidden' name='selected_table' value='$selected_table'>";
-        echo "<input type='hidden' name='id' value='$id'>";
+        echo "<input type='hidden' name='id' value='$id'>";  // Change hidden field to id
         
         foreach ($row as $field => $value) {
             if ($field != 'id') { // Exclude the primary key from the edit form
                 // Check if the field is a password field (Argon2 hash stored)
-                if ($field == 'password') {
+                if ($field == 'pass') {
                     echo "<label for='$field'>Enter New Password (Leave blank to keep the current one):</label>";
                     echo "<input type='password' name='$field' id='$field'><br><br>";
+                } elseif ($field == 'img') {
+                    // Display current image and allow new upload
+                    echo "<label for='$field'>Image (current: $value):</label>";
+                    echo "<input type='file' name='$field' id='$field'><br><br>";
                 } else {
                     echo "<label for='$field'>$field</label>";
                     echo "<input type='text' name='$field' id='$field' value='$value' required><br><br>";
                 }
             }
         }
-
-        // Image upload field
-        echo "<label for='image'>Upload Image:</label>";
-        echo "<input type='file' name='image' id='image' accept='image/*'><br><br>"; // Only allow image files
         
         echo "<button type='submit' name='save_edit' class='btn'>Save Changes</button>";
         echo "</form>";
@@ -98,25 +97,26 @@ if (isset($_POST['save_edit'])) {
     $fields = [];
     $values = [];
     
-    // Handle the image upload if a file is selected
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $image_name = $_FILES['image']['name'];
-        $image_tmp = $_FILES['image']['tmp_name'];
-        $image_size = $_FILES['image']['size'];
+    // Check if image is uploaded
+    if (isset($_FILES['img']) && $_FILES['img']['error'] == 0) {
+        // Handle image upload
+        $image_name = $_FILES['img']['name'];
+        $image_tmp = $_FILES['img']['tmp_name'];
+        $image_size = $_FILES['img']['size'];
         $image_ext = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
-        
-        // Check for allowed image extensions (JPEG, PNG, GIF)
+
+        // Allowed image extensions
         $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
         
         if (in_array($image_ext, $allowed_ext)) {
-            // Set a unique name for the image and move it to the "uploads" directory
+            // Generate a unique filename to avoid overwriting
             $image_new_name = uniqid() . '.' . $image_ext;
-            $image_path = 'uploads/' . $image_new_name;
-
+            $image_path = 'uploads/' . $image_new_name; // Store image in the uploads directory
+            
+            // Move the uploaded file to the uploads folder
             if (move_uploaded_file($image_tmp, $image_path)) {
-                // Add the image path to the database update
-                $fields[] = "image = ?";
-                $values[] = $image_path;
+                $fields[] = "img = ?";
+                $values[] = $image_path; // Store the image path in the db
             } else {
                 echo "<div class='alert error'>Failed to upload image.</div>";
             }
@@ -125,24 +125,23 @@ if (isset($_POST['save_edit'])) {
         }
     }
 
-    // Handle other form fields
+    // Process other fields
     foreach ($_POST as $key => $value) {
-        if ($key != 'selected_table' && $key != 'id' && $key != 'save_edit' && $key != 'image') { // Change admin_id to id
+        if ($key != 'selected_table' && $key != 'id' && $key != 'save_edit' && $key != 'img') {  // Change admin_id to id
             // If the field is password, hash it before updating
-            if ($key == 'password' && !empty($value)) {
-                // Hash the new password using Argon2
+            if ($key == 'pass' && !empty($value)) {
                 $value = password_hash($value, PASSWORD_ARGON2ID);
             }
             $fields[] = "$key = ?";
             $values[] = $value;
         }
     }
-
+    
     $update_query .= implode(", ", $fields) . " WHERE id = ?";
     $values[] = $id;  // Add the id to the end of the values
-
+    
     $stmt = $conn->prepare($update_query);
-
+    
     // Dynamically bind parameters
     $types = str_repeat('s', count($values) - 1) . 'i'; // Assuming all fields are strings except id
     $stmt->bind_param($types, ...$values);
@@ -242,15 +241,8 @@ $conn->close();
         text-align: left;
     }
 
-    .form-table input[type='text'], .form-table textarea, .form-table select {
+    .form-table input[type='text'], .form-table input[type='file'], .form-table textarea, .form-table select {
         width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
-    .form-table input[type='file'] {
         padding: 8px;
         border: 1px solid #ddd;
         border-radius: 4px;
@@ -269,25 +261,5 @@ $conn->close();
 
     .btn:hover {
         background-color: #45a049;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .data-table, .form-table {
-            width: 100%;
-        }
-
-        .form-table input[type='text'], .form-table textarea, .form-table select {
-            width: 100%;
-        }
-
-        .form-table td {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .form-table td:first-child {
-            font-weight: bold;
-        }
     }
 </style>
