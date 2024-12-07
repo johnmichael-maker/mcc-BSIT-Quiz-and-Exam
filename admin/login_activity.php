@@ -2,7 +2,6 @@
 // Assuming you're already connected to the database
 $conn = new mysqli("localhost", "u510162695_bsit_quiz", "1Bsit_quiz", "u510162695_bsit_quiz");
 
-
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -89,7 +88,7 @@ if ($attempts_data) {
         }
 
         table {
-            width: 80%;
+            width: 100%;
             margin: 20px auto;
             border-collapse: collapse;
             background-color: #fff;
@@ -169,6 +168,38 @@ if ($attempts_data) {
             background-color: #2980b9;
         }
 
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            table {
+                width: 100%;
+                font-size: 12px;
+            }
+
+            table th, table td {
+                padding: 8px;
+            }
+
+            .geolocation-box {
+                width: 100%;
+            }
+
+            .locate-button {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+        
+        /* For smaller devices */
+        @media screen and (max-width: 480px) {
+            h1, h2 {
+                font-size: 18px;
+            }
+
+            .status-blocked,
+            .status-not-blocked {
+                font-size: 14px;
+            }
+        }
     </style>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -206,15 +237,13 @@ if ($attempts_data) {
                                                 <td><?php echo htmlspecialchars($attempts_data['last_attempt']); ?></td>
                                                 <td>
                                                     <?php 
-                                                    // Check if the IP is blocked
                                                     $attempt_limit = 3;
-                                                    $time_limit = 1200;  // 20 minutes
-                                                    $blocked_until = strtotime($attempts_data['blocked_until']); // Convert to timestamp
+                                                    $time_limit = 1200;  
+                                                    $blocked_until = strtotime($attempts_data['blocked_until']);
 
                                                     if ($attempts_data['attempts'] >= $attempt_limit && $blocked_until > time()) {
-                                                        echo "<span class='status-blocked'>Blocked (Exceeded 3 failed attempts)</span>";
+                                                        echo "<span class='status-blocked'>Blocked</span>";
                                                     } elseif ($blocked_until && $blocked_until <= time()) {
-                                                        // Reset blocked status if the time has passed
                                                         echo "<span class='status-not-blocked'>Not Blocked</span>";
                                                     } else {
                                                         echo "<span class='status-not-blocked'>Not Blocked</span>";
@@ -236,7 +265,6 @@ if ($attempts_data) {
 
                                 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
                                 <script>
-                                    // Function to show the map when button is clicked
                                     function showMap() {
                                         var latitude = <?php echo $latitude ? $latitude : 'null'; ?>;
                                         var longitude = <?php echo $longitude ? $longitude : 'null'; ?>;
@@ -244,17 +272,14 @@ if ($attempts_data) {
                                         if (latitude && longitude) {
                                             var map = L.map('map').setView([latitude, longitude], 13);
 
-                                            // Add OpenStreetMap tile layer
                                             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                             }).addTo(map);
 
-                                            // Add marker at the provided latitude and longitude
                                             L.marker([latitude, longitude]).addTo(map)
                                                 .bindPopup('IP Location')
                                                 .openPopup();
 
-                                            // Show the map div
                                             document.getElementById('map').style.display = 'block';
                                         } else {
                                             alert('Geolocation data is not available for this IP address.');
