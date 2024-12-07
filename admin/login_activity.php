@@ -9,16 +9,12 @@ if ($conn->connect_error) {
 
 // Function to get the real IP address
 function getUserIpAddress() {
-    // Check for the real IP from various headers
     if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        // If there are multiple IPs, the first one is usually the real IP
         $ip_addresses = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-        return trim($ip_addresses[0]); // Take the first IP address
+        return trim($ip_addresses[0]);
     } elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-        // If the client IP is available, use it
         return $_SERVER['HTTP_CLIENT_IP'];
     } else {
-        // If none of the above headers are found, fallback to REMOTE_ADDR
         return $_SERVER['REMOTE_ADDR'];
     }
 }
@@ -43,16 +39,19 @@ $ip_address = getUserIpAddress();
 // Get the device info
 $device_info = getDeviceInfo();
 
-// Prepare the SQL statement with a placeholder for IP address and device info
-$stmt = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = ?");
-$stmt->bind_param("s", $ip_address);  // "s" means the parameter is a string
+// Prepare the SQL statement to fetch all login attempts
+$stmt = $conn->prepare("SELECT * FROM login_attempts");
 $stmt->execute();
 
-// Fetch the result
+// Fetch all results
 $result = $stmt->get_result();
-$attempts_data = $result->fetch_assoc();
 
-// Store or update the device information in the database
+// Store or update the device information for the current IP address
+$stmt_check = $conn->prepare("SELECT * FROM login_attempts WHERE ip_address = ?");
+$stmt_check->bind_param("s", $ip_address);
+$stmt_check->execute();
+$attempts_data = $stmt_check->get_result()->fetch_assoc();
+
 if ($attempts_data) {
     // Update the device info if already exists
     $updateStmt = $conn->prepare("UPDATE login_attempts SET device_info = ? WHERE ip_address = ?");
@@ -64,10 +63,6 @@ if ($attempts_data) {
     $insertStmt->bind_param("ss", $ip_address, $device_info);
     $insertStmt->execute();
 }
-
-// Continue with the existing logic
-$latitude = $attempts_data['latitude'] ?? null;
-$longitude = $attempts_data['longitude'] ?? null;
 ?>
 
 <?php require __DIR__ . '/./partials/header.php'; ?>
@@ -79,7 +74,6 @@ $longitude = $attempts_data['longitude'] ?? null;
     <title>Login Attempts</title>
 
     <style>
-        /* Body and general styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -137,7 +131,6 @@ $longitude = $attempts_data['longitude'] ?? null;
             font-size: 16px;
         }
 
-        /* Status message styles */
         .status-blocked {
             color: #e74c3c;
             font-weight: bold;
@@ -148,7 +141,6 @@ $longitude = $attempts_data['longitude'] ?? null;
             font-weight: bold;
         }
 
-        /* Textbox styling */
         .geolocation-box {
             display: inline-block;
             width: 45%;
@@ -163,7 +155,6 @@ $longitude = $attempts_data['longitude'] ?? null;
             border: 1px solid #ccc;
         }
 
-        /* Button styling */
         .locate-button {
             background-color: #3498db;
             color: white;
@@ -177,11 +168,10 @@ $longitude = $attempts_data['longitude'] ?? null;
         .locate-button:hover {
             background-color: #2980b9;
         }
+
     </style>
 
-    <!-- Include Leaflet.js CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-
 </head>
 <body>
 <div class="container-fluid">
@@ -196,89 +186,92 @@ $longitude = $attempts_data['longitude'] ?? null;
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-              <h3 style="text-align: center;">Login Attempt Details</h3>
-    
-         <?php if ($attempts_data): ?>
-        <table>
-            <thead>
-                <tr>
-                    <th>IP Address</th>
-                    <th>Attempts</th>
-                    <th>Last Attempt</th>
-                    <th>Status</th>
-                    <th>Device</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><?php echo htmlspecialchars($attempts_data['ip_address']); ?></td>
-                    <td><?php echo htmlspecialchars($attempts_data['attempts']); ?></td>
-                    <td><?php echo htmlspecialchars($attempts_data['last_attempt']); ?></td>
-                    <td>
-                        <?php 
-                        // Check if the IP is blocked
-                        $attempt_limit = 3;
-                        $time_limit = 1200;  // 20 minutes
-                        $blocked_until = strtotime($attempts_data['blocked_until']); // Convert to timestamp
+                                <h3 style="text-align: center;">Login Attempt Details</h3>
 
-                        if ($attempts_data['attempts'] >= $attempt_limit && $blocked_until > time()) {
-                            echo "<span class='status-blocked'>Blocked (Exceeded 3 failed attempts)</span>";
-                        } elseif ($blocked_until && $blocked_until <= time()) {
-                            // Reset blocked status if the time has passed
-                            echo "<span class='status-not-blocked'>Not Blocked</span>";
-                        } else {
-                            echo "<span class='status-not-blocked'>Not Blocked</span>";
-                        }
-                        ?>
-                    </td>
-                    <td><?php echo htmlspecialchars($attempts_data['device_info']); ?></td>
-                </tr>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p>No login attempt data found for the given IP address.</p>
-    <?php endif; ?>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>IP Address</th>
+                                            <th>Attempts</th>
+                                            <th>Last Attempt</th>
+                                            <th>Status</th>
+                                            <th>Device</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php while ($attempts_data = $result->fetch_assoc()): ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($attempts_data['ip_address']); ?></td>
+                                                <td><?php echo htmlspecialchars($attempts_data['attempts']); ?></td>
+                                                <td><?php echo htmlspecialchars($attempts_data['last_attempt']); ?></td>
+                                                <td>
+                                                    <?php 
+                                                    // Check if the IP is blocked
+                                                    $attempt_limit = 3;
+                                                    $time_limit = 1200;  // 20 minutes
+                                                    $blocked_until = strtotime($attempts_data['blocked_until']); // Convert to timestamp
 
-    <!-- Button to show location on map -->
-    <?php if ($latitude && $longitude): ?>
-        <button class="locate-button" onclick="showMap()">View Location on Map</button>
-    <?php else: ?>
-        
-    <?php endif; ?>
+                                                    if ($attempts_data['attempts'] >= $attempt_limit && $blocked_until > time()) {
+                                                        echo "<span class='status-blocked'>Blocked (Exceeded 3 failed attempts)</span>";
+                                                    } elseif ($blocked_until && $blocked_until <= time()) {
+                                                        // Reset blocked status if the time has passed
+                                                        echo "<span class='status-not-blocked'>Not Blocked</span>";
+                                                    } else {
+                                                        echo "<span class='status-not-blocked'>Not Blocked</span>";
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td><?php echo htmlspecialchars($attempts_data['device_info']); ?></td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                    </tbody>
+                                </table>
 
-    <!-- OpenStreetMap Div -->
-    <div id="map"></div>
+                                <?php if ($latitude && $longitude): ?>
+                                    <button class="locate-button" onclick="showMap()">View Location on Map</button>
+                                <?php endif; ?>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    
-    <script>
-        // Function to show the map when button is clicked
-        function showMap() {
-            var latitude = <?php echo $latitude ? $latitude : 'null'; ?>;
-            var longitude = <?php echo $longitude ? $longitude : 'null'; ?>;
+                                <!-- OpenStreetMap Div -->
+                                <div id="map"></div>
 
-            if (latitude && longitude) {
-                var map = L.map('map').setView([latitude, longitude], 13);
+                                <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+                                <script>
+                                    // Function to show the map when button is clicked
+                                    function showMap() {
+                                        var latitude = <?php echo $latitude ? $latitude : 'null'; ?>;
+                                        var longitude = <?php echo $longitude ? $longitude : 'null'; ?>;
 
-                // Add OpenStreetMap tile layer
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
+                                        if (latitude && longitude) {
+                                            var map = L.map('map').setView([latitude, longitude], 13);
 
-                // Add marker at the provided latitude and longitude
-                L.marker([latitude, longitude]).addTo(map)
-                    .bindPopup('IP Location')
-                    .openPopup();
+                                            // Add OpenStreetMap tile layer
+                                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                            }).addTo(map);
 
-                // Show the map div
-                document.getElementById('map').style.display = 'block';
-            } else {
-                alert('Geolocation data is not available for this IP address.');
-            }
-        }
-    </script>
+                                            // Add marker at the provided latitude and longitude
+                                            L.marker([latitude, longitude]).addTo(map)
+                                                .bindPopup('IP Location')
+                                                .openPopup();
 
-    <?php require __DIR__ . '/./partials/footer.php'; ?>
+                                            // Show the map div
+                                            document.getElementById('map').style.display = 'block';
+                                        } else {
+                                            alert('Geolocation data is not available for this IP address.');
+                                        }
+                                    }
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php require __DIR__ . '/./partials/footer.php'; ?>
 
 </body>
 </html>
