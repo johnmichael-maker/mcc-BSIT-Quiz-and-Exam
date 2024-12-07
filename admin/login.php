@@ -135,6 +135,9 @@
         didOpen: () => {
             // Update the countdown in real-time
             const countdownElement = document.getElementById('countdown');
+            
+             countdownElement.style.color = "red";
+            
             const interval = setInterval(() => {
                 let remainingTime = parseInt(countdownElement.textContent);
                 remainingTime -= 1;
