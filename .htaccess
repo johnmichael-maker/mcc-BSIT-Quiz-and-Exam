@@ -1,3 +1,12 @@
+<IfModule mod_headers.c>
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self';"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+</IfModule>
+
 # Enable mod_rewrite engine
 RewriteEngine On
 
@@ -33,4 +42,4 @@ RewriteCond %{THE_REQUEST} \s/error_page\.php$ [NC]
 RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php to error_page without .php  
 
 RewriteCond %{THE_REQUEST} \s/config\.php$ [NC]
-RewriteRule ^config\.php$ /config [R=301,L]  
+RewriteRule ^config\.php$ /config [R=301,L]
