@@ -904,23 +904,29 @@ return $stmt;
         return $stmt->rowCount();
     }
 
-    public function forgotPassword()
+     public function forgotPassword()
     {
         $conn = $this->getConnection();
         $email = $this->post_data['email'];
-
+    
         if (!empty($email)) {
             $stmt = $conn->prepare("SELECT * FROM admin WHERE email = :email");
             $stmt->execute([':email' => $email]);
             $verification = uniqid();
-
+    
             if ($stmt->rowCount() > 0) {
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 $id = $result['admin_id'];
-                $update = $conn->prepare("UPDATE admin SET verification = :verification WHERE admin_id =:id");
-                if ($update->execute([':verification' => $verification, ':id' => $id])) {
+                
+                // Set expiration time to 2 minutes from now
+                $expiresAt = date('Y-m-d H:i:s', strtotime('+2 minutes'));  // Expiry set to 2 minutes
+    
+                // Update verification code and expiration time
+                $update = $conn->prepare("UPDATE admin SET verification = :verification, expires_at = :expiresAt WHERE admin_id =:id");
+                if ($update->execute([':verification' => $verification, ':expiresAt' => $expiresAt, ':id' => $id])) {
                     $this->message = "success";
-
+    
+                    // Send verification email
                     $mail = new PHPMailer(true);
                     $mail->SMTPDebug = 0;
                     $mail->isSMTP();
@@ -929,7 +935,7 @@ return $stmt;
                     $mail->Username = 'sshin8859@gmail.com';
                     $mail->Password = 'trnzsprukfkfzkup';
                     $mail->Port = 587;
-
+    
                     $mail->SMTPOptions = array(
                         'ssl' => array(
                             'verify_peer' => false,
@@ -937,25 +943,24 @@ return $stmt;
                             'allow_self_signed' => true
                         )
                     );
-
+    
                     $mail->setFrom('mccbsitquizandexam@gmail.com', 'Mcc BSIT Quiz and Exam');
-
                     $mail->addAddress($result['email']);
                     $mail->Subject = "Reset Password Verification Code";
                     $mail->Body = "This is your verification code: " . $verification;
-
+    
                     $mail->send();
                 }
             } else {
-                $this->message = "error";
+                $this->message = "error";  // User not found
             }
         } else {
-            $this->message = "error";
+            $this->message = "error";  // Email is empty
         }
-
+    
         return $this->message;
     }
-
+    
     public function resetPassword()
     {
         $conn = $this->getConnection();
