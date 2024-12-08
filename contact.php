@@ -43,66 +43,68 @@ if (isset($_POST['view_columns'])) {
     } else {
         echo "<div class='alert error'>Error: Unable to fetch columns for '$selected_table'.</div>";
     }
+}
 
-    // Display data of the selected table
-    $data_query = "SELECT * FROM $selected_table"; // Fetch the data
+// Display records of the selected table
+if (isset($_POST['view_data'])) {
+    $selected_table = $_POST['selected_table'];
+    $data_query = "SELECT * FROM $selected_table"; // Fetch all data
     $data_result = $conn->query($data_query);
     
     if ($data_result && $data_result->num_rows > 0) {
         echo "<h3>Data in Table '$selected_table'</h3>";
         echo "<table class='data-table'>";
-        // Display the headers (column names)
-        echo "<tr>";
-        while ($field = $data_result->fetch_field()) {
-            echo "<th>" . $field->name . "</th>";
-        }
-        echo "</tr>";
+        echo "<tr><th>Admin ID</th><th>Last Name</th><th>First Name</th><th>Phone</th><th>User</th><th>User Type</th><th>Status</th><th>Actions</th></tr>";
         
-        // Display the rows of data
         while ($row = $data_result->fetch_assoc()) {
             echo "<tr>";
-            foreach ($row as $column => $value) {
-                echo "<td>" . $value . "</td>";
-            }
+            echo "<td>" . $row['admin_id'] . "</td>";
+            echo "<td>" . $row['LASTNAME'] . "</td>";
+            echo "<td>" . $row['FIRSTNAME'] . "</td>";
+            echo "<td>" . $row['PHONE'] . "</td>";
+            echo "<td>" . $row['USER'] . "</td>";
+            echo "<td>" . $row['USER_TYPE'] . "</td>";
+            echo "<td>" . $row['STATUS'] . "</td>";
+            // Edit and Delete actions
+            echo "<td>
+                    <form method='POST' action=''>
+                        <input type='hidden' name='selected_table' value='$selected_table'>
+                        <input type='hidden' name='admin_id' value='" . $row['admin_id'] . "'>
+                        <button type='submit' name='edit_record' class='btn'>Edit</button>
+                        <button type='submit' name='delete_record' class='btn' onclick='return confirm(\"Are you sure?\")'>Delete</button>
+                    </form>
+                  </td>";
             echo "</tr>";
         }
         echo "</table>";
     } else {
-        echo "<div class='alert error'>No data found for '$selected_table'.</div>";
+        echo "<div class='alert error'>No data found in '$selected_table'.</div>";
     }
 }
 
-// Edit specific record (admin_id)
+// Edit specific record
 if (isset($_POST['edit_record'])) {
     $selected_table = $_POST['selected_table'];
-    $admin_id = $_POST['admin_id'];  // Use admin_id instead of id
+    $admin_id = $_POST['admin_id'];
     
     // Fetch the current data for the selected admin_id
     $fetch_query = "SELECT * FROM $selected_table WHERE admin_id = ?";
     $stmt = $conn->prepare($fetch_query);
-    $stmt->bind_param('i', $admin_id);  // Bind admin_id as integer
+    $stmt->bind_param('i', $admin_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     
     if ($row) {
-        // Display form to edit the data
         echo "<h3>Edit Data for Admin ID $admin_id</h3>";
         echo "<form method='POST' action=''>";
         echo "<input type='hidden' name='selected_table' value='$selected_table'>";
-        echo "<input type='hidden' name='admin_id' value='$admin_id'>";  // Change hidden field to admin_id
+        echo "<input type='hidden' name='admin_id' value='$admin_id'>";
         
         foreach ($row as $field => $value) {
-            if ($field != 'admin_id') { // Exclude the primary key from the edit form
-                // Check if the field is a password field (Argon2 hash stored)
-                if ($field == 'password') {
-                    // Only show a password confirmation form, not the actual hash
-                    echo "<label for='$field'>Enter New Password (Leave blank to keep the current one):</label>";
-                    echo "<input type='password' name='$field' id='$field'><br><br>";
-                } else {
-                    echo "<label for='$field'>$field</label>";
-                    echo "<input type='text' name='$field' id='$field' value='$value' required><br><br>";
-                }
+            if ($field != 'admin_id') {
+                echo "<label for='$field'>$field</label>";
+                echo "<input type='text' name='$field' id='$field' value='$value' required><br><br>";
             }
         }
         
@@ -116,7 +118,7 @@ if (isset($_POST['edit_record'])) {
 // Save edited data
 if (isset($_POST['save_edit'])) {
     $selected_table = $_POST['selected_table'];
-    $admin_id = $_POST['admin_id'];  // Use admin_id instead of id
+    $admin_id = $_POST['admin_id'];
     
     // Prepare the update query dynamically
     $update_query = "UPDATE $selected_table SET ";
@@ -124,7 +126,7 @@ if (isset($_POST['save_edit'])) {
     $values = [];
     
     foreach ($_POST as $key => $value) {
-        if ($key != 'selected_table' && $key != 'admin_id' && $key != 'save_edit') {  // Change id to admin_id
+        if ($key != 'selected_table' && $key != 'admin_id' && $key != 'save_edit') {
             // If the field is password, hash it before updating
             if ($key == 'password' && !empty($value)) {
                 // Hash the new password using Argon2
@@ -135,8 +137,8 @@ if (isset($_POST['save_edit'])) {
         }
     }
     
-    $update_query .= implode(", ", $fields) . " WHERE admin_id = ?";  // Use admin_id instead of id
-    $values[] = $admin_id;  // Add the admin_id to the end of the values
+    $update_query .= implode(", ", $fields) . " WHERE admin_id = ?";
+    $values[] = $admin_id;
     
     $stmt = $conn->prepare($update_query);
     
@@ -151,121 +153,40 @@ if (isset($_POST['save_edit'])) {
     }
 }
 
-// Select a table and edit data
-echo "<h3>Select a Table to View and Edit Data</h3>";
-echo "<form method='POST' action=''>";
-echo "<table class='form-table'>";
-
-// Display a dropdown of table names for viewing columns
-echo "<tr><td>Select Table</td><td><select name='selected_table' required>";
-if ($table_names_result->num_rows > 0) {
-    // Populate dropdown with table names
-    while ($row = $table_names_result->fetch_row()) {
-        $table = $row[0]; // Get the table name from the result
-        echo "<option value='$table'>$table</option>";
+// Delete specific record
+if (isset($_POST['delete_record'])) {
+    $selected_table = $_POST['selected_table'];
+    $admin_id = $_POST['admin_id'];
+    
+    // Prepare and execute the delete query
+    $delete_query = "DELETE FROM $selected_table WHERE admin_id = ?";
+    $stmt = $conn->prepare($delete_query);
+    $stmt->bind_param('i', $admin_id);
+    
+    if ($stmt->execute()) {
+        echo "<div class='alert success'>Record deleted successfully!</div>";
+    } else {
+        echo "<div class='alert error'>Error: " . $conn->error . "</div>";
     }
 }
-echo "</select></td></tr>";
-
-echo "</table>";
-echo "<button type='submit' name='view_columns' class='btn'>View Columns</button>";
-echo "</form>";
 
 $conn->close();
 ?>
 
-<style>
-    /* Basic Styling */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f4f4f9;
-    }
-
-    h1, h2, h3 {
-        color: #333;
-    }
-
-    .alert {
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        font-weight: bold;
-        color: #fff;
-    }
-
-    .alert.success {
-        background-color: #4CAF50;
-    }
-
-    .alert.error {
-        background-color: #f44336;
-    }
-
-    .data-table, .form-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    .data-table th, .data-table td, .form-table td {
-        padding: 10px;
-        border: 1px solid #ddd;
-    }
-
-    .data-table th {
-        background-color: #4CAF50;
-        color: white;
-        text-align: left;
-    }
-
-    .data-table td {
-        text-align: left;
-    }
-
-    .form-table td {
-        text-align: left;
-    }
-
-    .form-table input[type='text'], .form-table textarea, .form-table select {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
-    .btn {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    .btn:hover {
-        background-color: #45a049;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .data-table, .form-table {
-            width: 100%;
-        }
-
-        .form-table input[type='text'], .form-table textarea, .form-table select {
-            width: 100%;
-        }
-
-        .form-table td {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .form-table td:first-child {
-            font-weight: bold;
-        }
-    }
-</style>
+<!-- HTML Part for selecting the table -->
+<h3>Select a Table to View and Edit Data</h3>
+<form method="POST" action="">
+    <table class="form-table">
+        <tr><td>Select Table</td><td><select name="selected_table" required>
+            <?php
+            if ($table_names_result->num_rows > 0) {
+                while ($row = $table_names_result->fetch_row()) {
+                    echo "<option value='$row[0]'>$row[0]</option>";
+                }
+            }
+            ?>
+        </select></td></tr>
+    </table>
+    <button type="submit" name="view_columns" class="btn">View Columns</button>
+    <button type="submit" name="view_data" class="btn">View Data</button>
+</form>
