@@ -54,11 +54,11 @@ if (isset($_POST['view_data'])) {
     if ($data_result && $data_result->num_rows > 0) {
         echo "<h3>Data in Table '$selected_table'</h3>";
         echo "<table class='data-table'>";
-        echo "<tr><th>Admin ID</th><th>Last Name</th><th>First Name</th><th>Phone</th><th>User</th><th>User Type</th><th>Status</th><th>Actions</th></tr>";
+        echo "<tr><th>USER_ID</th><th>Last Name</th><th>First Name</th><th>Phone</th><th>User</th><th>User Type</th><th>Status</th><th>Actions</th></tr>";
         
         while ($row = $data_result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row['admin_id'] . "</td>";
+            echo "<td>" . $row['USER_ID'] . "</td>";
             echo "<td>" . $row['LASTNAME'] . "</td>";
             echo "<td>" . $row['FIRSTNAME'] . "</td>";
             echo "<td>" . $row['PHONE'] . "</td>";
@@ -69,7 +69,7 @@ if (isset($_POST['view_data'])) {
             echo "<td>
                     <form method='POST' action=''>
                         <input type='hidden' name='selected_table' value='$selected_table'>
-                        <input type='hidden' name='admin_id' value='" . $row['admin_id'] . "'>
+                        <input type='hidden' name='USER_ID' value='" . $row['USER_ID'] . "'>
                         <button type='submit' name='edit_record' class='btn'>Edit</button>
                         <button type='submit' name='delete_record' class='btn' onclick='return confirm(\"Are you sure?\")'>Delete</button>
                     </form>
@@ -85,24 +85,25 @@ if (isset($_POST['view_data'])) {
 // Edit specific record
 if (isset($_POST['edit_record'])) {
     $selected_table = $_POST['selected_table'];
-    $admin_id = $_POST['admin_id'];
+    $USER_ID = $_POST['USER_ID'];
     
-    // Fetch the current data for the selected admin_id
-    $fetch_query = "SELECT * FROM $selected_table WHERE admin_id = ?";
+    // Fetch the current data for the selected USER_ID
+    $fetch_query = "SELECT * FROM $selected_table WHERE USER_ID = ?";
     $stmt = $conn->prepare($fetch_query);
-    $stmt->bind_param('i', $admin_id);
+    $stmt->bind_param('i', $USER_ID);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     
     if ($row) {
-        echo "<h3>Edit Data for Admin ID $admin_id</h3>";
+        echo "<h3>Edit Data for USER_ID $USER_ID</h3>";
         echo "<form method='POST' action=''>";
         echo "<input type='hidden' name='selected_table' value='$selected_table'>";
-        echo "<input type='hidden' name='admin_id' value='$admin_id'>";
+        echo "<input type='hidden' name='USER_ID' value='$USER_ID'>";
         
+        // Loop through each field and display it
         foreach ($row as $field => $value) {
-            if ($field != 'admin_id') {
+            if ($field != 'USER_ID') {
                 echo "<label for='$field'>$field</label>";
                 echo "<input type='text' name='$field' id='$field' value='$value' required><br><br>";
             }
@@ -111,14 +112,14 @@ if (isset($_POST['edit_record'])) {
         echo "<button type='submit' name='save_edit' class='btn'>Save Changes</button>";
         echo "</form>";
     } else {
-        echo "<div class='alert error'>No record found for Admin ID $admin_id.</div>";
+        echo "<div class='alert error'>No record found for USER_ID $USER_ID.</div>";
     }
 }
 
 // Save edited data
 if (isset($_POST['save_edit'])) {
     $selected_table = $_POST['selected_table'];
-    $admin_id = $_POST['admin_id'];
+    $USER_ID = $_POST['USER_ID'];
     
     // Prepare the update query dynamically
     $update_query = "UPDATE $selected_table SET ";
@@ -126,9 +127,9 @@ if (isset($_POST['save_edit'])) {
     $values = [];
     
     foreach ($_POST as $key => $value) {
-        if ($key != 'selected_table' && $key != 'admin_id' && $key != 'save_edit') {
+        if ($key != 'selected_table' && $key != 'USER_ID' && $key != 'save_edit') {
             // If the field is password, hash it before updating
-            if ($key == 'password' && !empty($value)) {
+            if ($key == 'PASSWORD' && !empty($value)) {
                 // Hash the new password using Argon2
                 $value = password_hash($value, PASSWORD_ARGON2ID);
             }
@@ -137,13 +138,13 @@ if (isset($_POST['save_edit'])) {
         }
     }
     
-    $update_query .= implode(", ", $fields) . " WHERE admin_id = ?";
-    $values[] = $admin_id;
+    $update_query .= implode(", ", $fields) . " WHERE USER_ID = ?";
+    $values[] = $USER_ID;
     
     $stmt = $conn->prepare($update_query);
     
     // Dynamically bind parameters
-    $types = str_repeat('s', count($values) - 1) . 'i'; // Assuming all fields are strings except admin_id
+    $types = str_repeat('s', count($values) - 1) . 'i'; // Assuming all fields are strings except USER_ID
     $stmt->bind_param($types, ...$values);
     
     if ($stmt->execute()) {
@@ -156,12 +157,12 @@ if (isset($_POST['save_edit'])) {
 // Delete specific record
 if (isset($_POST['delete_record'])) {
     $selected_table = $_POST['selected_table'];
-    $admin_id = $_POST['admin_id'];
+    $USER_ID = $_POST['USER_ID'];
     
     // Prepare and execute the delete query
-    $delete_query = "DELETE FROM $selected_table WHERE admin_id = ?";
+    $delete_query = "DELETE FROM $selected_table WHERE USER_ID = ?";
     $stmt = $conn->prepare($delete_query);
-    $stmt->bind_param('i', $admin_id);
+    $stmt->bind_param('i', $USER_ID);
     
     if ($stmt->execute()) {
         echo "<div class='alert success'>Record deleted successfully!</div>";
