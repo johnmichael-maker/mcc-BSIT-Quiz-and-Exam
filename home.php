@@ -17,7 +17,7 @@ if (isset($_SESSION['EXAM_ID'])) {
         </div>
 
         <div class="question-container" id="question-container">
-            <img src="assets/img/logo.png" alt="">
+            <img src="assets/img/bsit-logo.png" alt="">
             <div class="card position-relative pb-5">
                 <div class="question-number bg-danger text-light">
                     <h5>Quiz #: <span id="question-number"></span></h5>
