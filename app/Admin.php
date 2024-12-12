@@ -101,7 +101,8 @@ public function login()
     if ($attempts_data) {
         // Limit failed attempts to 3 and block IP for 7 seconds
         $attempt_limit = 3;
-        $block_duration = 1200;  // 7 seconds
+        $block_duration = 300; 
+        
 
         // If the IP is still blocked, send the remaining block time
         if ($attempts_data['blocked_until'] && strtotime($attempts_data['blocked_until']) > time()) {
