@@ -16,7 +16,12 @@ exec($command, $output, $return_var);
 
 // Check if the backup was successful
 if ($return_var === 0) {
-    echo "Database backup successfully created: $backupFile";
+    // Now initiate the file download
+    header('Content-Type: application/sql');
+    header('Content-Disposition: attachment; filename="' . basename($backupFile) . '"');
+    header('Content-Length: ' . filesize($backupFile));
+    readfile($backupFile);
+    exit; // Stop further script execution after file download
 } else {
     echo "Error creating backup: " . implode("\n", $output);
 }
