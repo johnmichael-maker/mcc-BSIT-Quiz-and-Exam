@@ -44,8 +44,8 @@ Trait Sessions {
 
     public function checkSession(){
         if (!isset($_SESSION['FNAME']) && !isset($_SESSION['LNAME']) && !isset($_SESSION['MNAME']) && !isset($_SESSION['LEVEL']) && !isset($_SESSION['ID'])) {
-            if (!str_contains($_SERVER['REQUEST_URI'], 'student-signup.php')) {
-                header("Location: student-signup.php");
+            if (!str_contains($_SERVER['REQUEST_URI'], 'student-signup')) {
+                header("Location: student-signup");
             }
         }
     }
