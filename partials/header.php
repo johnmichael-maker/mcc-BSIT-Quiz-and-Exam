@@ -13,7 +13,7 @@ $contestantController->checkAccountStatus();
 
 if ($examineeController->isStudentDashboard()) {
     if (!isset($_SESSION['EXAM_ID'])) {
-        header('location: student-signup.php');
+        header('location: student-signup');
     }
 }
 
