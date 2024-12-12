@@ -365,10 +365,43 @@
                     $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
                 };
 
-                recognition.onerror = function (event) {
-                     console.error('Speech recognition error: ', event.error); // Logs error to console
-                       $('#message').html('There was an error with speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
-                    };
+                               recognition.onerror = function (event) {
+    // Log the error to the console for debugging
+    console.error('Speech recognition error:', event.error);
+
+    // Handle different error types and display specific messages
+    let errorMessage = '';
+    switch (event.error) {
+        case 'network':
+            errorMessage = 'Network error. Please check your internet connection.';
+            break;
+        case 'not-allowed':
+            errorMessage = 'Microphone access denied. Please enable microphone access.';
+            break;
+        case 'not-available':
+            errorMessage = 'Speech recognition service is unavailable. Try again later.';
+            break;
+        case 'service-not-allowed':
+            errorMessage = 'Speech recognition service is not allowed in this environment.';
+            break;
+        case 'abort':
+            errorMessage = 'Speech recognition was aborted.';
+            break;
+        case 'no-speech':
+            errorMessage = 'No speech was detected. Please try again.';
+            break;
+        case 'audio-hardware':
+            errorMessage = 'There is an issue with the audio hardware.';
+            break;
+        default:
+            errorMessage = 'An unknown error occurred with speech recognition: ' + event.error;
+    }
+
+    // Display the error message to the user
+    $('#message').html(errorMessage).removeClass('text-success').addClass('text-danger');
+};
+
+
 
                 recognition.onresult = function (event) {
                     var command = event.results[0][0].transcript.toLowerCase();
