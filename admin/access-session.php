@@ -354,59 +354,46 @@
                 return re.test(email);
             }
 
-            // Voice Command Integration
-if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-    // Create a SpeechRecognition instance
-    var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = 'en-US';
-    recognition.continuous = false;  // We don't need continuous speech input
-    recognition.interimResults = false;  // Don't show intermediate results
+  // Voice Command Integration
+            if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-US';
+                recognition.continuous = false;  // We don't need continuous speech input
+                recognition.interimResults = false;  // Don't show intermediate results
 
-    recognition.onstart = function () {
-        $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
-    };
+                recognition.onstart = function () {
+                    $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
+                };
 
-    recognition.onerror = function (event) {
-        // Handle errors more clearly
-        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-            $('#message').html('Permission to access the microphone was denied. Please allow microphone access.').removeClass('text-success').addClass('text-danger');
-        } else if (event.error === 'network') {
-            $('#message').html('Network error occurred during speech recognition.').removeClass('text-success').addClass('text-danger');
-        } else if (event.error === 'no-speech') {
-            $('#message').html('No speech detected. Please speak clearly into the microphone.').removeClass('text-success').addClass('text-danger');
-        } else {
-            $('#message').html('There was an error with speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
-        }
-    };
+                recognition.onerror = function (event) {
+                     console.error('Speech recognition error: ', event.error); // Logs error to console
+                       $('#message').html('There was an error with speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
+                    };
 
-    recognition.onresult = function (event) {
-        var command = event.results[0][0].transcript.toLowerCase();
+                recognition.onresult = function (event) {
+                    var command = event.results[0][0].transcript.toLowerCase();
 
-        if (command.includes('send verification code') || command.includes('send code')) {
-            // Trigger email form submission
-            $('#email-form').submit();
-        } else if (command.includes('verify') || command.includes('enter code')) {
-            // Trigger code form submission
-            $('#code-form').submit();
-        } else if (command.includes('enter') && command.includes('@')) {
-            // Fill email field using voice
-            $('input[name="email"]').val(command).focus();
-            $('#message').html('Email address filled: ' + command).removeClass('text-danger').addClass('text-success');
-        } else {
-            $('#message').html('Command not recognized. Try again.').removeClass('text-success').addClass('text-danger');
-        }
-    };
+                    if (command.includes('send verification code') || command.includes('send code')) {
+                        // Trigger email form submission
+                        $('#email-form').submit();
+                    } else if (command.includes('verify') || command.includes('enter code')) {
+                        // Trigger code form submission
+                        $('#code-form').submit();
+                    } else if (command.includes('enter') && command.includes('@')) {
+                        // Fill email field using voice
+                        $('input[name="email"]').val(command).focus();
+                        $('#message').html('Email address filled: ' + command).removeClass('text-danger').addClass('text-success');
+                    } else {
+                        $('#message').html('Command not recognized. Try again.').removeClass('text-success').addClass('text-danger');
+                    }
+                };
 
-    // Start voice recognition automatically
-    try {
-        recognition.start();
-    } catch (error) {
-        $('#message').html('Speech recognition failed to start. Please ensure your microphone is working and permissions are granted.').removeClass('text-success').addClass('text-danger');
-    }
-} else {
-    $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
-}
-
+                // Start voice recognition automatically
+                recognition.start();
+            } else {
+                $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
+            }
+        });
 
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault(); 
