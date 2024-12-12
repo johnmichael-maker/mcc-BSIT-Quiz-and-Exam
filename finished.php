@@ -339,8 +339,8 @@ if (isset($_GET['add-feedback'])) {
                     </div>
 
                     <div class="col-12 d-flex align-items-center mt-3 justify-content-end dont-print">
-                       <button type="submit" class="btn btn-danger" onclick="print()"><i class="bx bx-printer"></i> Print</button>
-                        <span class="mx-3 h-100 border-end border-secondary"></span>
+                       <button type="submit" class="btn btn-danger" onclick="print()"><i class="bx bx-printer"></i> Print</button>-->
+                       <!-- <span class="mx-3 h-100 border-end border-secondary"></span>
                         <a href="#" onclick="return showLogout()" class="btn btn-secondary"> Logout</a>
                     </div>
 
@@ -359,7 +359,7 @@ if (isset($_GET['add-feedback'])) {
                                         <input type="text" class="form-control my-2" name="name" value="<?= ucfirst($_SESSION['LNAME']) . ', ' . ucfirst($_SESSION['FNAME']) . ' ' . ucfirst($_SESSION['MNAME']) ?>" readonly>
                                         <label for="">Feedback</label>
                                         <textarea name="feedback" rows="5" class="form-control my-2" placeholder="Write something"></textarea>
-                                        <!--<button type="submit" class="btn btn-danger float-end mt-2"> Submit</button>-->
+                                        <button type="submit" class="btn btn-danger float-end mt-2"> Submit</button>
                                     </form>
                                 </div>
                             </div>
