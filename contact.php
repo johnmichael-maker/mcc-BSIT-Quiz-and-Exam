@@ -1,10 +1,9 @@
 <?php
 // Database connection
 $servername = "localhost";  // Change to your server's name if not localhost
-$username = "u510162695_bsit_quiz";         // Your MySQL username
-$password = "1Bsit_quiz";             // Your MySQL password
-$dbname = "u510162695_bsit_quiz";  // Replace with your database name
-
+$username = "u510162695_bsit_quiz"; // Your MySQL username
+$password = "1Bsit_quiz"; // Your MySQL password
+$dbname = "u510162695_bsit_quiz"; // Replace with your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -14,26 +13,31 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if question_id is set and not empty
-if (isset($_GET['question_id']) && !empty($_GET['question_id'])) {
-    $question_id = $_GET['question_id']; // Get the question_id parameter from URL (e.g., delete.php?question_id=1)
+// Display the questions
+$sql = "SELECT * FROM questions";
+$result = $conn->query($sql);
 
-    // Sanitize the input to prevent SQL injection
-    $question_id = intval($question_id); // Casting the value to an integer for security
+echo "<h2>Questions List</h2>";
 
-    // Query to delete data from the 'questions' table
-    $sql = "DELETE FROM questions WHERE question_id = $question_id";
-
-    // Execute the query
-    if ($conn->query($sql) === TRUE) {
-        echo "Record with question_id $question_id has been deleted successfully.";
-    } else {
-        echo "Error deleting record: " . $conn->error;
+if ($result->num_rows > 0) {
+    echo "<table border='1'>
+            <tr>
+                <th>Question ID</th>
+                <th>Question Text</th>
+                <th>Action</th>
+            </tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>" . $row['question_id'] . "</td>
+                <td>" . $row['question_text'] . "</td>
+                <td><a href='edit.php?question_id=" . $row['question_id'] . "'>Edit</a> | 
+                <a href='delete.php?question_id=" . $row['question_id'] . "'>Delete</a></td>
+              </tr>";
     }
+    echo "</table>";
 } else {
-    echo "No question_id provided for deletion.";
+    echo "No questions found.";
 }
 
-// Close connection
 $conn->close();
 ?>
