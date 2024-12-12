@@ -354,7 +354,7 @@
                 return re.test(email);
             }
 
-  // Voice Command Integration
+ // Voice Command Integration
             if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
                 var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
                 recognition.lang = 'en-US';
@@ -365,20 +365,9 @@
                     $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
                 };
 
-                              recognition.onerror = function (event) {
-    console.error('Speech recognition error:', event.error);
-    let errorMessage = 'An error occurred with speech recognition.';
-    if (event.error === 'not-allowed') {
-        errorMessage = 'Microphone access was denied.';
-    } else if (event.error === 'network') {
-        errorMessage = 'There was a network error, check your connection.';
-    } else if (event.error === 'no-speech') {
-        errorMessage = 'No speech was detected.';
-    }
-    $('#message').html(errorMessage).removeClass('text-success').addClass('text-danger');
-};
-
-
+                recognition.onerror = function (event) {
+                    $('#message').html('There was an error with speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
+                };
 
                 recognition.onresult = function (event) {
                     var command = event.results[0][0].transcript.toLowerCase();
@@ -403,7 +392,7 @@
             } else {
                 $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
             }
-        });
+        });   
 
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault(); 
