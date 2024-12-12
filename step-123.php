@@ -199,14 +199,14 @@ $username = $user['username'];  // Get username from the database
   </div>
              <div class="field">
         <div class="label">Password</div>
-        <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required minlength="16" />
+        <input type="password" name="password" id="passwordInput" placeholder="Enter Password" required minlength="8" />
         <span id="show-pass" class="toggle-password">
             <i class="fas fa-eye" id="toggle-icon-password"></i>  
         </span>
     </div>
 <div class="field">
         <div class="label">Confirm Password</div>
-        <input type="password" name="cpassword" id="confirmPasswordInput" placeholder="Confirm Password" required minlength="16" />
+        <input type="password" name="cpassword" id="confirmPasswordInput" placeholder="Confirm Password" required minlength="8" />
         <span id="show-pass-confirm" class="toggle-password">
             <i class="fas fa-eye" id="toggle-icon-confirm"></i>  
         </span>
@@ -254,12 +254,11 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
         html: `
             <div class="terms-content">
                 <h5>Introduction</h5>
-                <p>By registering as an instructor on this Quiz and Examination System (the "System"), you agree to comply with and be bound by the following Terms and Conditions. Please read them carefully before proceeding with the registration.</p>
+                <p>By registering as an instructor on this Quiz and Examination System , you agree to comply with and be bound by the following Terms and Conditions. Please read them carefully before proceeding with the registration.</p>
 
                 <h5>Eligibility</h5>
                 <p>To register as an instructor, you must meet the following requirements:</p>
                 <ul>
-                    <li>Must be at least [insert age] years old.</li>
                     <li>Must have a valid teaching qualification or relevant experience to administer quizzes or exams.</li>
                     <li>Must agree to uphold academic integrity and ensure fairness in all quizzes and examinations.</li>
                 </ul>
@@ -318,14 +317,11 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
                 <h5>Limitation of Liability</h5>
                 <p>We are not responsible for any loss, damage, or inconvenience arising from your use of the System, including but not limited to any technical failures, loss of data, or failure of quizzes or exams to perform as expected.</p>
 
-                <h5>Governing Law</h5>
-                <p>These Terms and Conditions are governed by the laws of [insert jurisdiction]. Any dispute arising from or related to these terms shall be resolved under the exclusive jurisdiction of the courts of [insert jurisdiction].</p>
-
                 <h5>Changes to Terms</h5>
                 <p>We may revise these Terms and Conditions at any time. Changes will be posted on this page, and you are encouraged to review the terms periodically. Continued use of the System signifies your acceptance of any changes to the terms.</p>
 
                 <h5>Contact Us</h5>
-                <p>If you have any questions or concerns regarding these Terms and Conditions, please contact us at [insert contact details].</p>
+                <p>If you have any questions or concerns regarding these Terms and Conditions, please contact us at [Bsitquizandexam@gmail.com]</p>
             </div>
         `,
         icon: 'info',
