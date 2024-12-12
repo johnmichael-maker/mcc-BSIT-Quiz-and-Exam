@@ -831,7 +831,6 @@ if (submitForm) {
   };
 }
 
-
 if (indexDOM) {
   let alertModal = document.getElementById("alert-modal");
   let alertMode = alertModal.querySelectorAll(".card");
@@ -962,6 +961,8 @@ if (indexDOM) {
     };
   
 }
+
+
 if (signupForm) {
   signupForm.onsubmit = (e) => {
     e.preventDefault();
