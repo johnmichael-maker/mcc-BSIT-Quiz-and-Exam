@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Query to delete all contestant data
-$sql = "DELETE FROM contestants";
+$sql = "DELETE FROM questions;
 
 // Execute the query
 if ($conn->query($sql) === TRUE) {
