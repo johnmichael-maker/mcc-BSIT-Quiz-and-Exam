@@ -253,17 +253,17 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
         title: 'Terms and Conditions',
         html: `
             <div class="terms-content">
-                <h5>Introduction</h5>
+                <h3>Introduction</h3>
                 <p>By registering as an instructor on this Quiz and Examination System , you agree to comply with and be bound by the following Terms and Conditions. Please read them carefully before proceeding with the registration.</p>
 
-                <h5>Eligibility</h5>
+                <h3>Eligibility</h3>
                 <p>To register as an instructor, you must meet the following requirements:</p>
                 <ul>
                     <li>Must have a valid teaching qualification or relevant experience to administer quizzes or exams.</li>
                     <li>Must agree to uphold academic integrity and ensure fairness in all quizzes and examinations.</li>
                 </ul>
 
-                <h5>Instructor Responsibilities</h5>
+                <h3>Instructor Responsibilities</h3>
                 <p>As an instructor, you agree to:</p>
                 <ul>
                     <li>Create and manage quizzes and exams for educational purposes only.</li>
@@ -273,7 +273,7 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
                     <li>Ensure that all exams and quizzes are conducted within the platform’s allotted time limits, with no extensions unless previously authorized.</li>
                 </ul>
 
-                <h5>Anti-Cheating and Exam Integrity</h5>
+                <h3>Anti-Cheating and Exam Integrity</h3>
                 <p>By using the System, both instructors and students are expected to maintain the integrity of quizzes and exams. You agree to enforce the following rules:</p>
                 <ul>
                     <li><strong>No Cheating:</strong> Cheating, including using unauthorized resources, sharing answers, or collaborating with others during exams, is strictly prohibited.</li>
@@ -283,10 +283,10 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
                     <li><strong>Plagiarism Detection:</strong> The System employs advanced plagiarism detection tools to identify copied content. If any exam or quiz results are flagged for plagiarism, the user will be disqualified.</li>
                 </ul>
 
-                <h5>Instructor Account Security</h5>
+                <h3>Instructor Account Security</h3>
                 <p>You must provide accurate and complete information during the registration process and keep your account details up to date. You are responsible for maintaining the confidentiality of your account and password. Any activity conducted under your account is your responsibility.</p>
 
-                <h5>Prohibited Activities</h5>
+                <h3>Prohibited Activities</h3>
                 <p>As an instructor, you are prohibited from the following activities:</p>
                 <ul>
                     <li>Sharing or selling quiz or examination content without authorization.</li>
@@ -296,13 +296,13 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
                     <li>Tampering with system settings, attempting to hack the platform, or disrupting the normal functionality of the platform.</li>
                 </ul>
 
-                <h5>Data Privacy and Protection</h5>
+                <h3>Data Privacy and Protection</h3>
                 <p>We respect your privacy and the privacy of your students. All personal data collected will be handled in accordance with our Privacy Policy. As an instructor, you are also responsible for maintaining the confidentiality of your students' data and using it only for educational purposes.</p>
 
                 <h5>8. Copyright and Intellectual Property</h5>
                 <p>All content provided within the System, including quiz questions, examination materials, and educational resources, is protected by copyright laws. You agree not to copy, distribute, or modify any System content unless explicitly authorized by the platform.</p>
 
-                <h5>Suspension or Termination of Instructor Account</h5>
+                <h3>Suspension or Termination of Instructor Account</h3>
                 <p>We reserve the right to suspend or terminate your instructor account at any time, without notice, if you:</p>
                 <ul>
                     <li>Violate these Terms and Conditions.</li>
@@ -311,16 +311,16 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
                     <li>Fail to provide educational content of sufficient quality or relevance.</li>
                 </ul>
 
-                <h5>System Use and Availability</h5>
+                <h3>System Use and Availability</h3>
                 <p>The System is provided "as is," and we do not guarantee uninterrupted or error-free operation. We may make updates or changes to the platform from time to time. It is your responsibility to ensure your content is properly backed up and saved.</p>
 
-                <h5>Limitation of Liability</h5>
+                <h3>Limitation of Liability</h3>
                 <p>We are not responsible for any loss, damage, or inconvenience arising from your use of the System, including but not limited to any technical failures, loss of data, or failure of quizzes or exams to perform as expected.</p>
 
-                <h5>Changes to Terms</h5>
+                <h3>Changes to Terms</h3>
                 <p>We may revise these Terms and Conditions at any time. Changes will be posted on this page, and you are encouraged to review the terms periodically. Continued use of the System signifies your acceptance of any changes to the terms.</p>
 
-                <h5>Contact Us</h5>
+                <h3>Contact Us</h3>
                 <p>If you have any questions or concerns regarding these Terms and Conditions, please contact us at [Bsitquizandexam@gmail.com]</p>
             </div>
         `,
