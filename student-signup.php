@@ -342,7 +342,12 @@ require __DIR__ . '/./partials/header.php';
                                     <option value="<?= $exam['id'] ?>"><?= $databaseController->sections($exam['section']) .' | '. $databaseController->yearLevel()[$exam['year_level']] ?> - <?= $databaseController->semester()[$exam['semester']] ?> / <?= $databaseController->examType()[$exam['type']] ?> </option>
                                 <?php endforeach; ?>
                             </select>
-                                    
+                                     <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+    <label class="form-check-label" for="exampleCheck1">
+        I agree to the <a href="#" id="termsLink">Terms and Conditions</a>
+    </label>
+</div>
                             <button type="submit" name="button" class="w-100 btn btn-danger mt-3">Submit</button>
                             <div class="text-center d-none" id="loading-signup">
                                 <div class="spinner-border mt-3" role="status">
@@ -358,6 +363,47 @@ require __DIR__ . '/./partials/header.php';
         </div>
 
     </div>
+       <script>
+
+document.getElementById('termsLink').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+
+    // Show SweetAlert with Terms and Conditions
+    Swal.fire({
+        title: 'Terms and Conditions',
+        html: `
+            <div class="terms-content">
+               <h3>Prohibited Activities</h3> <p>As a student participating in exams or pop quiz competitions, you are prohibited from the following activities:</p> <ul> <li>Sharing or distributing quiz or examination content without authorization.</li> <li>Engaging in or promoting cheating, fraud, or dishonesty during the exam or quiz.</li> <li>Using unauthorized resources, including but not limited to mobile devices, internet, or external help during the exam or quiz.</li> <li>Discriminating against or harassing other students based on race, gender, ethnicity, or any other protected characteristic.</li> <li>Attempting to interfere with or disrupt the functionality of the exam platform, including tampering with system settings or attempting to hack the system.</li> <li>Engaging in any behavior that violates the academic integrity and fairness of the exam or quiz competition.</li> </ul>
+        `,
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'I Agree',
+        cancelButtonText: 'Cancel',
+        reverseButtons: true,
+        customClass: {
+            popup: 'terms-popup'  
+        },
+        didOpen: () => {
+            
+            const container = document.querySelector('.terms-popup .swal2-html-container');
+            container.style.maxHeight = '400px';
+            container.style.overflowY = 'auto';
+            
+           
+            const termsContent = document.querySelector('.terms-popup .terms-content');
+            termsContent.style.textAlign = 'justify';
+            termsContent.style.lineHeight = '1.6';     
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            
+            document.getElementById('exampleCheck1').checked = true;
+            document.querySelector('button[type="submit"]').disabled = false; // Enable the submit button
+            Swal.fire('Accepted!', 'You have accepted the Students Terms and Conditions.', 'success');
+        }
+    });
+});
+</script>
      <script>
           // JavaScript for form submission prevention if token is invalid
      const urlParams = new URLSearchParams(window.location.search);
