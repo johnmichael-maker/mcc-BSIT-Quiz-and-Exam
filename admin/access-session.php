@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -354,7 +355,7 @@
                 return re.test(email);
             }
 
-// Voice Command Integration
+ // Voice Command Integration
             if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
                 var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
                 recognition.lang = 'en-US';
@@ -390,8 +391,6 @@
             } else {
                 $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
             }
-        });   
-
         });   
 
         document.addEventListener('contextmenu', function(e) {
