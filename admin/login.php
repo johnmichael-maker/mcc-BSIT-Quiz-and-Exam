@@ -67,8 +67,8 @@ if(!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true){
                                   <input type="email" class="email" name="uname" id="email" placeholder="Enter Your Email" required >
                                 <div style="position: relative;">
                                       <input type="password" class="password" id="password" name="password" placeholder="Enter Your Password" required>
-                                    <span id="show-pass" class="toggle-password">
-                                        <i class="fas fa-eye" id="toggle-icon"></i>
+                                    <span id="toggle-icon-container" class="toggle-password">
+                                   <i class="fas fa-eye" id="toggle-icon"></i>
                                     </span>
                                 </div>
                                 <input type="file" id="fileInput" name="image" accept="image/*" style="display: none;">
@@ -193,23 +193,21 @@ if(!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true){
 };
 
 
-    // Password toggle functionality
-    const showPass = document.getElementById('show-pass');
-    const passwordInput = document.getElementById('password');
-    const toggleIcon = document.getElementById('toggle-icon');
+   const passwordInput = document.getElementById('password');
+const toggleIcon = document.getElementById('toggle-icon');
 
-    showPass.onclick = () => {
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            toggleIcon.classList.remove('fa-eye');
-            toggleIcon.classList.add('fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            toggleIcon.classList.remove('fa-eye-slash');
-            toggleIcon.classList.add('fa-eye');
-        }
-    };
-});
+toggleIcon.onclick = () => {
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+};
+
 
         // Disable context menu (right-click)
         document.addEventListener('contextmenu', function(e) {
