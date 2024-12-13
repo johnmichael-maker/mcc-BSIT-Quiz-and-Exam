@@ -97,7 +97,7 @@ if(!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true){
 <script>
     
    
-});
+
 </script>
 <script>
     
