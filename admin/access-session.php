@@ -365,9 +365,7 @@
                     $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
                 };
 
-                recognition.onerror = function (event) {
-                    $('#message').html(': ' + event.error).removeClass('text-success').addClass('text-danger');
-                };
+             
 
                 recognition.onresult = function (event) {
                     var command = event.results[0][0].transcript.toLowerCase();
