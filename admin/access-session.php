@@ -355,41 +355,45 @@
             }
 
  // Voice Command Integration
-            if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-                var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-                recognition.lang = 'en-US';
-                recognition.continuous = false;  // We don't need continuous speech input
-                recognition.interimResults = false;  // Don't show intermediate results
+if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+    var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.continuous = false;  // No continuous speech input
+    recognition.interimResults = false;  // Do not show intermediate results
 
-                recognition.onstart = function () {
-                    $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
-                };
+    recognition.onstart = function () {
+        $('#message').html('Listening for your command...').removeClass('text-danger').addClass('text-info');
+    };
 
-             
+    recognition.onerror = function (event) {
+        $('#message').html('There was an error with speech recognition: ' + event.error).removeClass('text-info').addClass('text-danger');
+    };
 
-                recognition.onresult = function (event) {
-                    var command = event.results[0][0].transcript.toLowerCase();
+    recognition.onresult = function (event) {
+        var command = event.results[0][0].transcript.toLowerCase().trim();  // Trim spaces from the command
 
-                    if (command.includes('send verification code') || command.includes('send code')) {
-                        // Trigger email form submission
-                        $('#email-form').submit();
-                    } else if (command.includes('verify') || command.includes('enter code')) {
-                        // Trigger code form submission
-                        $('#code-form').submit();
-                    } else if (command.includes('enter') && command.includes('@')) {
-                        // Fill email field using voice
-                        $('input[name="email"]').val(command).focus();
-                        $('#message').html('Email address filled: ' + command).removeClass('text-danger').addClass('text-success');
-                    } else {
-                        $('#message').html('Command not recognized. Try again.').removeClass('text-success').addClass('text-danger');
-                    }
-                };
+        // Check for voice commands and trigger the corresponding actions
+        if (command.includes('send verification code') || command.includes('send code')) {
+            // Trigger email form submission
+            $('#email-form').submit();
+        } else if (command.includes('verify') || command.includes('enter code')) {
+            // Trigger code form submission
+            $('#code-form').submit();
+        } else if (command.includes('enter') && command.includes('@')) {
+            // Fill email field using voice (only if command contains '@')
+            $('input[name="email"]').val(command).focus();
+            $('#message').html('Email address filled: ' + command).removeClass('text-danger').addClass('text-success');
+        } else {
+            $('#message').html('Command not recognized. Try again.').removeClass('text-success').addClass('text-danger');
+        }
+    };
 
-                // Start voice recognition automatically
-                recognition.start();
-            } else {
-                $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
-            }
+    // Start voice recognition automatically
+    recognition.start();
+} else {
+    $('#message').html('Speech recognition is not supported in your browser.').removeClass('text-success').addClass('text-danger');
+}
+
         });   
 
         document.addEventListener('contextmenu', function(e) {
