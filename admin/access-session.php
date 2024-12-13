@@ -366,7 +366,7 @@
                 };
 
                 recognition.onerror = function (event) {
-                    $('#message').html('There was an error with speech recognition: ' + event.error).removeClass('text-success').addClass('text-danger');
+                    $('#message').html(': ' + event.error).removeClass('text-success').addClass('text-danger');
                 };
 
                 recognition.onresult = function (event) {
