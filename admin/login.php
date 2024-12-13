@@ -206,7 +206,8 @@ if(!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true){
                 toggleIcon.classList.remove('fa-eye-slash');
                 toggleIcon.classList.add('fa-eye');
             }
-        };
+        }
+   });
 
 
         // Disable context menu (right-click)
