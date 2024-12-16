@@ -105,7 +105,7 @@ if (!$examineeController->checkExaminee()) {
 
                     <div class="col-12">
                         <div class=" my-3">
-                            <h6 class="mb-0">II. Identification</h6>
+                            <h6 class="mb-0">II. Matching Type</h6>
 
                         </div>
 
