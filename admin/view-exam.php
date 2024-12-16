@@ -95,7 +95,7 @@ if (isset($_GET['message'])) {
 
                     <div class="col-12">
                         <div class="d-flex align-items-center gap-2 my-3">
-                            <h6 class="mb-0">II. Identification</h6>
+                            <h6 class="mb-0">II. Matching Type</h6>
                         </div>
 
                         <div class="row">
