@@ -232,7 +232,7 @@ require __DIR__ . '/./partials/header.php';
                             <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
                             <div class="field">
 
-                         <div class="label">Username</div>
+                         <div class="label">Ms 365 Email</div>
                           <input type="text" class="form-control my-2" name="Username" id="username" placeholder="MS 365 Email"
                         value="<?php echo htmlspecialchars($username); ?>" 
                       readonly required />
@@ -340,7 +340,7 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
 
                             <p class="alert alert-danger py-2 d-none" id="alert-incorrect">Error, Credentials doesn't match</p>
                             <div class="field">
-                     <div class="label">Username</div>
+                      <div class="label">Ms 365 Email</div>
                      <input type="text" class="form-control my-2" name="Username" id="username" placeholder="MS 365 Email"
                     value="<?php echo htmlspecialchars($username); ?>" 
                     readonly required />
