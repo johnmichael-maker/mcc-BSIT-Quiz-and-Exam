@@ -113,7 +113,7 @@
                         <option value="3">Hard</option>
                     </select>
 
-                    <label for="">In minutes</label>
+                    <label for="">Time Limit (in minutes)</label>
                     <input type="number" name="time_limit" class="form-control my-2" value="0" min="0" required>
 
                     <button type="submit" class="btn btn-danger float-end px-lg-5 mt-3">Submit</button>
