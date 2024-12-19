@@ -1,3 +1,4 @@
+
 <IfModule mod_headers.c>
     # Apply security headers globally
     Header set Content-Security-Policy "
@@ -55,3 +56,7 @@ RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php
 
 RewriteCond %{THE_REQUEST} \s/config\.php$ [NC]
 RewriteRule ^config\.php$ /config [R=301,L]  
+
+# Redirect homie.php to homie without .php extension
+RewriteCond %{THE_REQUEST} \s/homie\.php$ [NC]
+RewriteRule ^homie\.php$ /homie [R=301,L]    # Redirect homie.php to homie without .php
