@@ -13,12 +13,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to delete all data from the `exams` table
-$sql = "DELETE FROM exams";
+// SQL query to delete all data from the `examinees` table
+$sql = "DELETE FROM examinees";
 
 // Execute the query
 if ($conn->query($sql) === TRUE) {
-    echo "All data from the `exams` table has been deleted!";
+    echo "All data from the `examinees` table has been deleted!";
 } else {
     echo "Error deleting data: " . $conn->error;
 }
