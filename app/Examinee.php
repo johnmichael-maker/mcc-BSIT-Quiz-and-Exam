@@ -159,6 +159,41 @@ class Examinee extends Database
             }
         }
 
+          $get_identifications = $databaseController->getIdentificationQuestions($exam_id);
+
+        foreach ($get_identifications as $identification) {
+            // Check if the answer for this identification question exists in the POST data
+            if (isset($_POST['identification' . $identification['id']])) {
+                // If the answer is an array (i.e., multiple answers for the same question)
+                if (is_array($_POST['identification' . $identification['id']])) {
+                    // Loop through the student's answers (if multiple answers for the same question)
+                    foreach ($_POST['identification' . $identification['id']] as $answer) {
+                        // Prepare the SQL statement for inserting the identification answer into the 'answer_identifications' table
+                        $identification_answer = $conn->prepare("INSERT INTO answer_identifications (exam_id, identification_id, id_number, answer) VALUES (:exam_id, :identification_id, :id_number, :answer)");
+                
+                        // Execute the SQL statement with the appropriate values
+                        $identification_answer->execute([
+                            ':exam_id' => $exam_id,                         // The exam ID
+                            ':identification_id' => $identification['id'],  // The specific identification question ID
+                            ':id_number' => $student_id,                     // The student ID (id_number)
+                            ':answer' => $answer                            // The student's answer for the identification question
+                        ]);
+                    }
+                } else {
+                    // If it's a single answer (not an array), just insert it directly
+                    $identification_answer = $conn->prepare("INSERT INTO answer_identifications (exam_id, identification_id, id_number, answer) VALUES (:exam_id, :identification_id, :id_number, :answer)");
+                
+                    // Execute the SQL statement with the appropriate values
+                    $identification_answer->execute([
+                        ':exam_id' => $exam_id,                         // The exam ID
+                        ':identification_id' => $identification['id'],  // The specific identification question ID
+                        ':id_number' => $student_id,                     // The student ID (id_number)
+                        ':answer' => $_POST['identification' . $identification['id']] // The student's answer for the identification question
+                    ]);
+                }
+            }
+        }
+
         $get_essay = $databaseController->getEssay($exam_id);
 
         foreach ($get_essay as $essay) {
@@ -233,6 +268,26 @@ class Examinee extends Database
 
     }
 
+  public function checkIdentifications($answer, $id){
+        $conn = $this->getConnection();
+        $student_id = $_SESSION['ID'];
+        
+        // $stmt = $conn->prepare("SELECT * FROM enumeration_correct WHERE enumeration_id = :id");
+        // $stmt->execute([':id' => $id]);
+        // $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $answers = $conn->prepare("SELECT * FROM answer_identifications WHERE identification_id = :id AND id_number = :id_number");
+        $answers->execute([':id' => $id, ':id_number' => $student_id]);
+        $result_answer = $answers->fetchAll(PDO::FETCH_ASSOC);
+
+       foreach ($result_answer as $key => $value) {
+        if (strtolower($answer) == strtolower($value['answer'])) {
+            return 1;
+        }
+       }
+
+    }
+    
     public function updateScore($score){
         $conn = $this->getConnection();
         $student_id = $_SESSION['ID'];
@@ -242,6 +297,8 @@ class Examinee extends Database
         $stmt->execute([':score' => $score, ':status' => $status, ':id_number' => $student_id]);
 
     }
+
+    
 
     public function checkExaminee(){
         $conn = $this->getConnection();
