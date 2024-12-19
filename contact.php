@@ -13,39 +13,41 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Step 1: Retrieve admin ID from URL or session
-$admin_id = $_GET['admin_id']; // Get admin_id from URL, e.g., edit_admin.php?admin_id=1
+// Step 1: Query to get the column names of the 'admin' table
+$sql_columns = "SHOW COLUMNS FROM admin";
+$columns_result = $conn->query($sql_columns);
 
-// Step 2: SQL query to get the current admin data
-$sql = "SELECT * FROM admin WHERE admin_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $admin_id); // Bind the admin_id as an integer parameter
-$stmt->execute();
-$result = $stmt->get_result();
+// Step 2: Query to get the data from the 'admin' table
+$sql_data = "SELECT * FROM admin";
+$data_result = $conn->query($sql_data);
 
-// Fetch the record
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $username = $row['username'];
-    $email = $row['email'];
+// Step 3: Check if there are any columns and data
+if ($columns_result->num_rows > 0 && $data_result->num_rows > 0) {
+    // Display columns
+    echo "<h2>Admin Table - Columns and Data</h2>";
+    echo "<table border='1'>";
+    
+    // Table Header: Display column names
+    echo "<tr>";
+    while ($column = $columns_result->fetch_assoc()) {
+        echo "<th>" . $column['Field'] . "</th>"; // 'Field' holds the column name
+    }
+    echo "</tr>";
+
+    // Table Rows: Display data from the 'admin' table
+    while ($row = $data_result->fetch_assoc()) {
+        echo "<tr>";
+        foreach ($row as $value) {
+            echo "<td>" . $value . "</td>"; // Display data for each column
+        }
+        echo "</tr>";
+    }
+
+    echo "</table>";
 } else {
-    echo "No record found for admin ID: $admin_id";
-    exit;
+    echo "No columns or data found in the 'admin' table.";
 }
 
-$stmt->close();
+// Close the connection
 $conn->close();
 ?>
-
-<!-- Display form to edit admin details -->
-<form method="POST" action="edit_admin_process.php">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" value="<?php echo $username; ?>" required><br><br>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="<?php echo $email; ?>" required><br><br>
-
-    <input type="hidden" name="admin_id" value="<?php echo $admin_id; ?>">
-
-    <input type="submit" value="Update">
-</form>
