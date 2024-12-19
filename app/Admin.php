@@ -597,74 +597,90 @@ return $stmt;
         }
     }
 
-   public function addExam()
-    {
-        $conn = $this->getConnection();
-        $adminId = $_SESSION['AUTH_ID']; // Retrieve admin ID from session
-        $section = $_POST['section'];
-        $year_level = $_POST['year_level'];
-        $semester = $_POST['semester'];
-        $type = $_POST['type'];
-        $category = $_POST['category'];
-        $time_limit = $_POST['time_limit'];
-        $start_time = $_POST['start_time']; // This is the field for scheduling the exam (start time)
-    
-        // Insert the exam details along with the admin ID
-        $stmt = $conn->prepare("INSERT INTO exams (section, year_level, semester, type, category, time_limit, start_time, admin_id) 
-                                VALUES(:section, :year_level, :semester, :type, :category, :time_limit, start_time, :admin_id)");
-    
-        if (!empty($section) && !empty($year_level) && !empty($semester) && !empty($category) && !empty($type) && !empty($time_limit) && !empty($start_time)) {
-            $stmt->execute([
-                ':section' => $section,
-                ':year_level' => $year_level,
-                ':semester' => $semester,
-                ':type' => $type,
-                ':category' => $category,
-                ':time_limit' => $time_limit,
-                ':start_time' => $start_time, // Bind the start time directly to the query
-                ':admin_id' => $adminId // Bind the admin ID
-            ]);
-    
-            // Log the activity
-            $logStmt = $conn->prepare("INSERT INTO activity_logs (admin_id, action, action_details) 
-                                       VALUES (:admin_id, :action, :action_details)");
-            $logStmt->execute([
-                ':admin_id' => $adminId,
-                ':action' => 'Added Exam',
-                ':action_details' => "Section: $section, Year Level: $year_level, Semester: $semester, Type: $type, Category: $category"
-            ]);
-    
-            if ($stmt) {
-                ?>
-                <script>
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Exam added successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(() => {
-                        window.location.href = "add-exam";
-                    });
-                </script>
-                <?php
-            } else {
-                ?>
-                <script>
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "error",
-                        title: "Error, exam already exists",
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(() => {
-                        window.location.href = "add-exam";
-                    });
-                </script>
-                <?php
-            }
-        }
+  public function addExam()
+{
+    $conn = $this->getConnection();
+    $adminId = $_SESSION['AUTH_ID']; // Retrieve admin ID from session
+    $section = $_POST['section'];
+    $year_level = $_POST['year_level'];
+    $semester = $_POST['semester'];
+    $type = $_POST['type'];
+    $category = $_POST['category'];
+    $time_limit = $_POST['time_limit'];
+    $start_time = $_POST['start_time']; // This is the field for scheduling the exam (start time)
+
+    // Check if all the fields are filled
+    if (empty($section) || empty($year_level) || empty($semester) || empty($category) || empty($type) || empty($time_limit) || empty($start_time)) {
+        ?>
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "All fields must be filled",
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = "add-exam";
+            });
+        </script>
+        <?php
+        return; // Stop execution if any field is empty
     }
+
+    // Insert the exam details along with the admin ID
+    $stmt = $conn->prepare("INSERT INTO exams (section, year_level, semester, type, category, time_limit, start_time, admin_id) 
+                            VALUES(:section, :year_level, :semester, :type, :category, :time_limit, :start_time, :admin_id)");
+
+    // Execute the query
+    if ($stmt->execute([
+        ':section' => $section,
+        ':year_level' => $year_level,
+        ':semester' => $semester,
+        ':type' => $type,
+        ':category' => $category,
+        ':time_limit' => $time_limit,
+        ':start_time' => $start_time, // Bind the start time directly to the query
+        ':admin_id' => $adminId // Bind the admin ID
+    ])) {
+        // Log the activity if exam added successfully
+        $logStmt = $conn->prepare("INSERT INTO activity_logs (admin_id, action, action_details) 
+                                   VALUES (:admin_id, :action, :action_details)");
+        $logStmt->execute([
+            ':admin_id' => $adminId,
+            ':action' => 'Added Exam',
+            ':action_details' => "Section: $section, Year Level: $year_level, Semester: $semester, Type: $type, Category: $category"
+        ]);
+
+        ?>
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Exam added successfully",
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = "add-exam";
+            });
+        </script>
+        <?php
+    } else {
+        // Handle error if the exam could not be added
+        ?>
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Error, exam could not be added",
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = "add-exam";
+            });
+        </script>
+        <?php
+    }
+}
 
    public function editExam()
 {
