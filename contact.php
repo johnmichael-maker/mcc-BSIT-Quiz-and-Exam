@@ -13,14 +13,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to drop the `exams` table if it exists
-$sql = "DROP TABLE IF EXISTS exams";
+// SQL query to delete all data in `activity_logs` table
+$sql = "DELETE FROM activity_logs";
 
 // Execute the query
 if ($conn->query($sql) === TRUE) {
-    echo "The `exams` table has been deleted successfully!";
+    echo "All data from `activity_logs` table has been deleted!";
 } else {
-    echo "Error deleting table: " . $conn->error;
+    echo "Error deleting data: " . $conn->error;
 }
 
 // Close the connection
