@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT COUNT(id) AS user_count FROM ms_365_users";
+$sql = "SELECT COUNT(id) AS user_count FROM ms_365_instructor";
 $result = $conn->query($sql);
 if ($result) {
     $row = $result->fetch_assoc();
