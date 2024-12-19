@@ -284,7 +284,7 @@ if (isset($_GET['add-feedback'])) {
     }
     ?>
 </div>
-                            <div class="col-12">
+                           <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
 
                                     <h6 class="mb-0">III. Enumeration</h6>
@@ -297,36 +297,32 @@ if (isset($_GET['add-feedback'])) {
                                     if ($enumerations->rowCount() > 0) {
                                         foreach ($enumerations as $enumeration) {
                                     ?>
-                                            <div class="col-12">
-                                                <p>
-                                                    <?= $count4++ ?>. <?= $enumeration['question'] ?></p>
-                                                <ul>
-                                                    <?php
-                                                    foreach ($databaseController->getEnumerationCorrect($id, $enumeration['id']) as $key => $value) {
-                                                    ?>
-
-                                                        <li>
-                                                            <?php
-                                                            if ($examineeController->checkEnumeration($value['answer'], $enumeration['id'])) {
-                                                                $score++;
-                                                            ?>
-                                                                <i class="bx bx-check text-success fw-bold"></i>
-                                                            <?php
-                                                            } else {
-                                                            ?>
-                                                                <i class="bx bx-x text-danger fw-bold"></i>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                            <?= $value['answer'] ?>
-                                                        </li>
-
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </ul>
-
-                                            </div>
+                                           <div class="col-12">
+    <p>
+        <?= $count4++ ?>. <?= $enumeration['question'] ?>
+    </p>
+    <ul>
+        <?php
+        foreach ($databaseController->getEnumerationCorrect($id, $enumeration['id']) as $key => $value) {
+        ?>
+            <li>
+                <?php
+                // Checking if the answer matches
+                if ($examineeController->checkEnumeration($value['answer'], $enumeration['id'])) {
+                    $score++;
+                    echo '<i class="bx bx-check text-success fw-bold"></i>';
+                } else {
+                    echo '<i class="bx bx-x text-danger fw-bold"></i>';
+                }
+                ?>
+                <!-- Hide the correct answer text -->
+                <!--<?= $value['answer'] ?>-->
+            </li>
+        <?php
+        }
+        ?>
+    </ul>
+</div>
                                         <?php
                                         }
                                     } else {
@@ -340,7 +336,6 @@ if (isset($_GET['add-feedback'])) {
                                 </div>
 
                             </div>
-
                             <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
 
