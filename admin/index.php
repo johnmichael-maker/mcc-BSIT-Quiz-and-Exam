@@ -55,6 +55,33 @@ $result_scores = $stmt_scores->get_result();
 $scores = $result_scores->fetch_assoc();
 $lowest_score = $scores['lowest_score'] ?? 0;
 $highest_score = $scores['highest_score'] ?? 0;
+
+// Fetch time intervals for exam completion
+$sql_completion_time = "SELECT TIMESTAMPDIFF(MINUTE, created_at, updated_at) AS completion_time 
+                        FROM examinees 
+                        WHERE score IS NOT NULL 
+                        AND MONTH(created_at) = ? 
+                        AND YEAR(created_at) = ?";
+$stmt_completion_time = $conn->prepare($sql_completion_time);
+$stmt_completion_time->bind_param('ii', $month, $year);
+$stmt_completion_time->execute();
+$result_completion_time = $stmt_completion_time->get_result();
+
+// Organize data into intervals
+$time_intervals = [];
+while ($row = $result_completion_time->fetch_assoc()) {
+    $interval = floor($row['completion_time'] / 10) * 10; // Group into 10-minute intervals
+    if (!isset($time_intervals[$interval])) {
+        $time_intervals[$interval] = 0;
+    }
+    $time_intervals[$interval]++;
+}
+
+// Prepare data for the chart
+ksort($time_intervals); // Sort intervals
+$interval_labels = json_encode(array_keys($time_intervals));
+$interval_values = json_encode(array_values($time_intervals));
+
 ?>
 
 <?php require __DIR__ . '/./partials/header.php' ?>
@@ -123,6 +150,15 @@ $highest_score = $scores['highest_score'] ?? 0;
                             </div>
                         </div>
                     </div>
+                        <div class="col-lg-6">
+                         <div class="card shadow" style="max-width: 1000px; margin: auto; margin-left:50px;"> 
+            <div class="card-body">
+                <h6>Exam Completion Times (<?= date('F Y') ?>)</h6>
+                <canvas id="completionChart"></canvas>
+            </div>
+        </div>
+    </div>
+
                     <!-- Chart -->
                     <div class="col-lg-12">
                         <div class="card">
@@ -136,6 +172,49 @@ $highest_score = $scores['highest_score'] ?? 0;
         </div>
     </div>
 </div>
+<script>
+    // Wave Chart for Exam Completion Times
+const completionCtx = document.getElementById('completionChart').getContext('2d');
+new Chart(completionCtx, {
+    type: 'line',
+    data: {
+        labels: <?= $interval_labels ?>, // Time intervals
+        datasets: [{
+            label: 'Number of Students',
+            data: <?= $interval_values ?>, // Counts
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 2,
+            tension: 0.4 // Create a smooth wave effect
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top'
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Completion Time (Minutes)'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Number of Students'
+                },
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
 <script>
     // Score Chart
     const scoreCtx = document.getElementById('scoreChart').getContext('2d');
