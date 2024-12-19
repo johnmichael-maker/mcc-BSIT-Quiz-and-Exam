@@ -82,7 +82,7 @@ if ($result_userType2) {
                     <div class="col-lg-4">
                         <div class="card shadow" style="border-left: 6px solid rgba(18, 91, 226, 0.8);">
                             <div class="card-body">
-                                <h5>MS 365 Users</h5>
+                                <h5>MS 365 Instructors</h5>
                                 <h1><?= $user_count ?></h1> 
                             </div>
                         </div>
