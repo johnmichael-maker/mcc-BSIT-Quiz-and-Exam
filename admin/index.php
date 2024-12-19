@@ -10,7 +10,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT COUNT(id) AS user_count FROM ms_365_instructor";
+$sql = "SELECT COUNT(id) AS user_count FROM ms_365_users";
 $result = $conn->query($sql);
 if ($result) {
     $row = $result->fetch_assoc();
@@ -82,7 +82,7 @@ if ($result_userType2) {
                     <div class="col-lg-4">
                         <div class="card shadow" style="border-left: 6px solid rgba(18, 91, 226, 0.8);">
                             <div class="card-body">
-                                <h5>MS 365 Instructors</h5>
+                                <h5>MS 365 Users</h5>
                                 <h1><?= $user_count ?></h1> 
                             </div>
                         </div>
@@ -116,7 +116,7 @@ if ($result_userType2) {
                     <?= $adminController->contestantsCount() ?>,  // Contestants count
                     <?= $adminController->examineesCount() ?>,  // Examinees count
                     <?= $userType2_count ?>,  // Instructor count
-                    <?= $user_count ?>  // MS 365 Users count
+                    <?= $user_count / 200?>  // MS 365 Users count
                 ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.8)',  // Red for Quizzes
