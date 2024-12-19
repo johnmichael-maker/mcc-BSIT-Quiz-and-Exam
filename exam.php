@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/./partials/header.php';
-// echo $_SESSION['EXAM_ID'];
 
 $row = $examineeController->getExamByStudent();
 $examineeController->checkExamineeSession();
@@ -10,7 +9,95 @@ if (isset($_GET['submit-exam'])) {
     $examineeController->submitAnswer();
 }
 
-if (!$examineeController->checkExaminee()) {
+// Ensure both current time and exam start time are in the same time zone
+$current_time = new DateTime('now', new DateTimeZone('Asia/Manila')); // Set to your server's time zone
+$start_time = new DateTime($row['start_time'], new DateTimeZone('Asia/Manila')); // Same time zone as current time
+
+
+if ($current_time < $start_time) {
+    $time_difference = $start_time->diff($current_time);
+    $remaining_time = $time_difference->format('%h hours %i minutes %s seconds');
+    
+    // Format the start time as a string in ISO 8601 format for JavaScript compatibility
+    $start_time_str = $start_time->format('Y-m-d\TH:i:s');  // Format to a string for JS
+    
+    echo "
+    <div style='
+        position: fixed; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+        background-color: #fff; 
+        padding: 30px; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        text-align: center; 
+        max-width: 400px; 
+        width: 90%; 
+        font-family: Arial, sans-serif;
+        border: 2px solid rgb(53, 236, 223);
+        z-index: 1000;
+        animation: fadeIn 0.5s ease-out;
+    '>
+        <h2 style='color:rgb(34, 150, 200); font-size: 1.5em; margin-bottom: 15px;'>Exam Start Time</h2>
+        <p id='countdown' style='font-size: 1.2em; color: #333;'>The exam will start in <strong>$remaining_time</strong>. Please wait until the scheduled time.</p>
+    </div>
+    <div style='
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    '></div>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+    <script>
+        // Use the formatted string to create the startTime Date object in JS
+        var startTime = new Date('$start_time_str'); // Format string for JS Date constructor
+        var currentTime = new Date(); // Get current time
+
+        // Function to update the countdown every second
+        function updateCountdown() {
+            var now = new Date();
+            var timeDiff = startTime - now;
+
+            if (timeDiff <= 0) {
+                // Exam time has arrived, reload the page
+                setTimeout(function() {
+                    window.location.reload();  // Reload the page after 3 seconds
+                }, 3000); // 3-second delay before auto reload
+                document.getElementById('countdown').innerHTML = 'The exam is starting now!';
+            } else {
+                var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+                var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').innerHTML = 'The exam will start in <strong>' + hours + ' hours ' + minutes + ' minutes ' + seconds + ' seconds</strong>. Please wait until the scheduled time.';
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+    </script>
+    ";
+    exit; // Prevent further code execution if the exam hasn't started yet.
+}
+
+
+
+$canStartExam = $examineeController->checkExaminee(); 
+
+if (!$canStartExam) {
     header('location: finished.php');
 }
 ?>
@@ -72,7 +159,7 @@ if (!$examineeController->checkExaminee()) {
                                         <span><?= $multiple['question'] ?></span>
                                         <div class="row g-2">
                                             <div class="col-lg-6">
-                                                <span><input type="radio" name="choices<?= $multiple['id'] ?>" value="A" checked> A.</span>
+                                                <span><input type="radio" name="choices<?= $multiple['id'] ?>" value="A"> A.</span>
                                                 <span><?= $multiple['A'] ?></span>
                                             </div>
                                             <div class="col-lg-6">
@@ -103,6 +190,43 @@ if (!$examineeController->checkExaminee()) {
 
                     </div>
 
+                      <div class="col-12">
+    <div class="d-flex align-items-center gap-2 my-3">
+        <h6 class="mb-0">II. Identification</h6>
+    </div>
+
+    <div class="row">
+        <?php
+        $count2 = 1;
+        // Fetch identification questions for the given exam
+        $identifications = $databaseController->getIdentificationQuestions($id);
+        
+        if ($identifications->rowCount() > 0) {
+            foreach ($identifications as $identification) {
+        ?>
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <!-- Question on the left, Input field on the right -->
+                        <p class="mb-0" style="flex: 1;"><?= $count2++ ?>. <?= $identification['question'] ?></p>
+
+                        
+                        <input type="text" name="identification<?= $identification['id'] ?>" class="form-control w-auto ml-3" placeholder="Enter Answer" style="max-width: 300px;">
+                    </div>
+                </div>
+            <?php
+            }
+        } else {
+            ?>
+            <div class="col-12">
+                No record found
+            </div>
+        <?php
+        }
+        ?>
+    </div>
+</div>
+
+                    
                     <div class="col-12">
                         <div class=" my-3">
                             <h6 class="mb-0">II. Matching Type</h6>
