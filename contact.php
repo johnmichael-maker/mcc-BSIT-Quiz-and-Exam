@@ -13,41 +13,53 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Step 1: Query to get the column names of the 'admin' table
-$sql_columns = "SHOW COLUMNS FROM admin";
-$columns_result = $conn->query($sql_columns);
+// Step 1: Get form data
+$admin_id = $_POST['admin_id'];
+$current_password = $_POST['current_password'];
+$new_password = $_POST['new_password'];
+$confirm_password = $_POST['confirm_password'];
 
-// Step 2: Query to get the data from the 'admin' table
-$sql_data = "SELECT * FROM admin";
-$data_result = $conn->query($sql_data);
-
-// Step 3: Check if there are any columns and data
-if ($columns_result->num_rows > 0 && $data_result->num_rows > 0) {
-    // Display columns
-    echo "<h2>Admin Table - Columns and Data</h2>";
-    echo "<table border='1'>";
-    
-    // Table Header: Display column names
-    echo "<tr>";
-    while ($column = $columns_result->fetch_assoc()) {
-        echo "<th>" . $column['Field'] . "</th>"; // 'Field' holds the column name
-    }
-    echo "</tr>";
-
-    // Table Rows: Display data from the 'admin' table
-    while ($row = $data_result->fetch_assoc()) {
-        echo "<tr>";
-        foreach ($row as $value) {
-            echo "<td>" . $value . "</td>"; // Display data for each column
-        }
-        echo "</tr>";
-    }
-
-    echo "</table>";
-} else {
-    echo "No columns or data found in the 'admin' table.";
+// Step 2: Validate the passwords
+if ($new_password !== $confirm_password) {
+    die("New passwords do not match.");
 }
 
-// Close the connection
+// Step 3: Query to get the current password from the database
+$sql = "SELECT password FROM admin WHERE admin_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $admin_id); // Bind the admin_id as an integer
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Check if the admin exists
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $stored_password = $row['password']; // Fetch the hashed password from the database
+    
+    // Step 4: Verify the current password using bcrypt
+    if (password_verify($current_password, $stored_password)) {
+        // Step 5: Hash the new password using bcrypt
+        $new_password_hashed = password_hash($new_password, PASSWORD_BCRYPT);
+
+        // Step 6: Update the password in the database
+        $update_sql = "UPDATE admin SET password = ? WHERE admin_id = ?";
+        $update_stmt = $conn->prepare($update_sql);
+        $update_stmt->bind_param("si", $new_password_hashed, $admin_id);
+        
+        if ($update_stmt->execute()) {
+            echo "Password updated successfully!";
+        } else {
+            echo "Error updating password: " . $conn->error;
+        }
+        
+        $update_stmt->close();
+    } else {
+        echo "Current password is incorrect.";
+    }
+} else {
+    echo "Admin not found.";
+}
+
+$stmt->close();
 $conn->close();
 ?>
