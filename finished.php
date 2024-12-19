@@ -110,41 +110,39 @@ if (isset($_GET['add-feedback'])) {
                                     if ($multiples->rowCount() > 0) {
                                         foreach ($multiples as $multiple) {
                                     ?>
-                                            <div class="col-12">
-                                                <span>
-                                                    <?php
-                                                    if ($examineeController->checkMultiple($multiple['id'])) {
-                                                        $score++;
-                                                    ?>
-                                                        <i class="bx bx-check text-success fw-bold"></i>
-                                                    <?php
-                                                    } else {
-                                                    ?>
-                                                        <i class="bx bx-x text-danger fw-bold"></i>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                    <?= $count1++ ?> .</span>
-                                                <span><?= $multiple['question'] ?></span>
-                                                <div class="row g-2">
-                                                    <div class="col-lg-6">
-                                                        <span class="<?= $multiple['answer'] == 'A' ? $correct_multiple : '' ?>">A.</span>
-                                                        <span><?= $multiple['A'] ?></span>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <span class="<?= $multiple['answer'] == 'B' ? $correct_multiple : '' ?>">B.</span>
-                                                        <span><?= $multiple['B'] ?></span>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <span class="<?= $multiple['answer'] == 'C' ? $correct_multiple : '' ?>">C.</span>
-                                                        <span><?= $multiple['C'] ?></span>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <span class="<?= $multiple['answer'] == 'D' ? $correct_multiple : '' ?>">D.</span>
-                                                        <span><?= $multiple['D'] ?></span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                             <div class="col-12">
+        <span>
+            <?php
+            if ($examineeController->checkMultiple($multiple['id'])) {
+                $score++;
+                echo '<i class="bx bx-check text-success fw-bold"></i>';
+            } else {
+                echo '<i class="bx bx-x text-danger fw-bold"></i>';
+            }
+            ?>
+            <?= $count1++ ?> .
+        </span>
+        <span><?= $multiple['question'] ?></span>
+        <div class="row g-2">
+            <div class="col-lg-6">
+                <span>A.</span>
+                <span><?= $multiple['A'] ?></span>
+            </div>
+            <div class="col-lg-6">
+                <span>B.</span>
+                <span><?= $multiple['B'] ?></span>
+            </div>
+            <div class="col-lg-6">
+                <span>C.</span>
+                <span><?= $multiple['C'] ?></span>
+            </div>
+            <div class="col-lg-6">
+                <span>D.</span>
+                <span><?= $multiple['D'] ?></span>
+            </div>
+        </div>
+    </div>
+
                                         <?php
                                         }
                                     } else {
@@ -159,9 +157,67 @@ if (isset($_GET['add-feedback'])) {
 
                             </div>
 
-                            <div class="col-12">
+
+
+
+  <div class="col-12">
+    <div class="d-flex align-items-center gap-2 my-3">
+        <h6 class="mb-0">II. Identification</h6>
+    </div>
+    <div class="row">
+        <?php
+        $count4 = 1;
+        $identifications = $databaseController->getIdentificationQuestions($id);  // Assuming this method gets all questions for the quiz
+        if ($identifications->rowCount() > 0) {
+            foreach ($identifications as $identification) {
+        ?>
+               <div class="col-12">
+    <p>
+        <?= $count4++ ?>. <?= htmlspecialchars($identification['question']) ?>
+    </p>
+    <ul>
+        <?php
+        // Retrieve correct answers for this question
+        $correctAnswers = $databaseController->getIdentificationCorrect($id, $identification['id']);
+        foreach ($correctAnswers as $answer) {
+        ?>
+            <li>
+                <?php
+                // Checking if the provided answer matches the correct one
+                if ($examineeController->checkIdentifications($answer['answer'], $identification['id'])) {
+                    $score++;  // Increment score if the answer matches
+                    echo '<i class="bx bx-check text-success fw-bold"></i>';
+                } else {
+                    echo '<i class="bx bx-x text-danger fw-bold"></i>';
+                }
+                ?>
+                <!-- Hide the correct answer text -->
+                <!--<?= htmlspecialchars($answer['answer']) ?>-->
+            </li>
+        <?php
+        }
+        ?>
+    </ul>
+</div>
+            <?php
+            }
+        } else {
+            ?>
+            <div class="col-12">
+                No record found
+            </div>
+        <?php
+        }
+        ?>
+    </div>
+</div>
+
+
+
+                            
+ <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
-                                    <h6 class="mb-0">II. Identification</h6>
+                                    <h6 class="mb-0">III. Matching Type</h6>
                                 </div>
 
                                 <div class="row">
@@ -170,76 +226,64 @@ if (isset($_GET['add-feedback'])) {
                                     $identifications = $databaseController->getIdentification($id);
 
                                     ?>
-                                    <div class="col-lg-6">
-                                        <div class="d-flex align-items-center gap-2 mb-3">
+                                  <div class="col-lg-6">
+    <div class="d-flex align-items-center gap-2 mb-3">
+        <p class="mb-0">Questions</p>
+    </div>
 
-                                            <p class="mb-0">Questions</p>
-                                        </div>
+    <?php
+    $identifications = $databaseController->getIdentification($id);
+    if ($identifications->rowCount() > 0) {
+        foreach ($identifications as $identification) :
+    ?>
+        <p>
+            <?php
+            // Show whether the answer is correct or not
+            if ($examineeController->checkIdentification($identification['id'])) {
+                $score++; // Increment score if correct
+                echo '<i class="bx bx-check text-success fw-bold"></i>';
+            } else {
+                echo '<i class="bx bx-x text-danger fw-bold"></i>';
+            }
+            ?>
+            <?= $count2++ ?>. <?= $identification['question'] ?>
+        </p>
+    <?php
+        endforeach;
+    } else {
+    ?>
+        <div class="col-12">
+            No record found
+        </div>
+    <?php
+    }
+    ?>
+</div>
 
-                                        <?php
-                                        $identification_data = [];
-                                        if ($identifications->rowCount() > 0) {
-                                            foreach ($identifications as $identification) :
+<div class="col-lg-6">
+    <div class="d-flex align-items-center gap-2 mb-3">
+        <p class="mb-0">Choices</p>
+    </div>
 
-                                        ?>
-                                                <p> <?php
-                                                    if ($examineeController->checkIdentification($identification['id'])) {
-                                                        $score++;
-                                                    ?>
-                                                        <i class="bx bx-check text-success fw-bold"></i>
-                                                    <?php
-                                                    } else {
-                                                    ?>
-                                                        <i class="bx bx-x text-danger fw-bold"></i>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                    <?= $count2++ ?>. <?= $identification['question'] ?>
-                                                </p>
-
-                                            <?php
-                                            endforeach;
-                                        } else {
-                                            ?>
-                                            <div class="col-12">
-                                                No record found
-                                            </div>
-                                        <?php
-                                        }
-                                        ?>
-
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="d-flex align-items-center gap-2 mb-3">
-
-                                            <p class="mb-0">Choices</p>
-                                        </div>
-
-                                        <?php
-                                        $count3 = 'A';
-                                        $identification_choices = $databaseController->getIdentificationChoicesAdmin($id);
-                                        $identification_choice = $identification_choices->fetchAll(PDO::FETCH_ASSOC);
-                                        if ($identification_choices->rowCount() > 0) {
-                                            for ($i = 0; $i < $identification_choices->rowCount(); $i++) :
-                                        ?>
-                                                <p><span class="p-1 py-0 bg-danger text-light rounded-circle"><?= $identification_choice[$i]['count'] ?></span> <?= $count3++ ?>. <?= $identification_choice[$i]['answer'] ?></p>
-                                            <?php
-                                            endfor;
-                                        } else {
-                                            ?>
-                                            <div class="col-12">
-                                                No record found
-                                            </div>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
-
-                                </div>
-
-                            </div> 
-
+    <?php
+    $count3 = 'A';
+    $identification_choices = $databaseController->getIdentificationChoicesAdmin($id);
+    $identification_choice = $identification_choices->fetchAll(PDO::FETCH_ASSOC);
+    if ($identification_choices->rowCount() > 0) {
+        for ($i = 0; $i < $identification_choices->rowCount(); $i++) :
+    ?>
+        <p><span class="p-1 py-0 bg-danger text-light rounded-circle"><?= $identification_choice[$i]['count'] ?></span> <?= $count3++ ?>. <?= $identification_choice[$i]['answer'] ?></p>
+    <?php
+        endfor;
+    } else {
+    ?>
+        <div class="col-12">
+            No record found
+        </div>
+    <?php
+    }
+    ?>
+</div>
                             <div class="col-12">
                                 <div class="d-flex align-items-center gap-2 my-3">
 
