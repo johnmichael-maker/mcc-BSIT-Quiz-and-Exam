@@ -87,6 +87,15 @@ if ($result_userType2) {
                             </div>
                         </div>
                     </div>
+                   <!-- Score Chart -->
+                    <div class="col-lg-3">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h5>Scores for <?= date('F Y') ?></h5>
+                                <canvas id="scoreChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Chart -->
                     <div class="col-lg-12">
                         <div class="card">
