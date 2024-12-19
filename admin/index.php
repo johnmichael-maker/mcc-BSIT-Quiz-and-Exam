@@ -118,7 +118,7 @@ $highest_score = $scores['highest_score'] ?? 0;
                     <div class="col-lg-3">
                         <div class="card shadow">
                             <div class="card-body">
-                                <h5>Scores for <?= date('F Y') ?></h5>
+                                <h6>Scores for <?= date('F Y') ?></h6>
                                 <canvas id="scoreChart"></canvas>
                             </div>
                         </div>
