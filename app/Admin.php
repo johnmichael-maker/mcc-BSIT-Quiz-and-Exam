@@ -764,6 +764,48 @@ return $stmt;
         return $result;
     }
 
+      public function addIdentificationQuestions($exam_id, $question, $answer)
+            {
+                $conn = $this->getConnection();
+            
+                // Check if the question already exists for the given exam_id
+                $checkStmt = $conn->prepare("SELECT * FROM identifications WHERE exam_id = :exam_id AND question = :question");
+                $checkStmt->execute([
+                    ':exam_id' => $exam_id,
+                    ':question' => $question
+                ]);
+            
+                if ($checkStmt->rowCount() > 0) {
+                    // If the question already exists, redirect with an error message
+                    header("location: view-exam.php?id=$exam_id&message_error=Question already exists.");
+                    exit();
+                }
+            
+                    // Insert the new identification question into the 'identifications' table
+                    $stmt = $conn->prepare("INSERT INTO identifications (exam_id, question) VALUES (:exam_id, :question)");
+                    $stmt->execute([
+                        ':exam_id' => $exam_id,
+                        ':question' => $question
+                    ]);
+                
+                    // Get the last inserted identification question ID
+                    $identification_id = $conn->lastInsertId();
+                
+                    // Insert the correct answer for the identification question into the 'identification_answers' table
+                    $answerStmt = $conn->prepare("INSERT INTO identification_answers (exam_id, identification_id, answer) VALUES (:exam_id, :identification_id, :answer)");
+                    $answerStmt->execute([
+                        ':exam_id' => $exam_id,
+                        ':identification_id' => $identification_id,
+                        ':answer' => $answer
+                    ]);
+                
+                // Redirect to the same page with a success message
+                header("location: view-exam.php?id=$exam_id&message=Question added successfully.");
+                exit();
+            }
+            
+
+
     public function addMultipleChoice()
     {
         $conn = $this->getConnection();
