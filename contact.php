@@ -13,36 +13,18 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Step 1: Create the 'identification_answers' table if it doesn't exist
-$table_creation_query = "
-CREATE TABLE IF NOT EXISTS identification_answers (
-  id INT(11) NOT NULL AUTO_INCREMENT,
-  exam_id INT(11) NOT NULL,
-  identification_id INT(11) NOT NULL,
-  answer TEXT NOT NULL,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
-
-// Execute the query to create the table
-if ($conn->query($table_creation_query) === TRUE) {
-    echo "Table 'identification_answers' created or already exists!<br>";
-} else {
-    echo "Error creating table: " . $conn->error . "<br>";
-}
-
-// Step 2: Show columns of the 'identification_answers' table
-$query = "SHOW COLUMNS FROM identification_answers";
+// Step 1: Query to get all tables in the database
+$query = "SHOW TABLES";
 $result = $conn->query($query);
 
-// Check if the query was successful
+// Step 2: Check if there are any tables and display them
 if ($result->num_rows > 0) {
-    echo "Columns in the 'identification_answers' table:<br>";
-    // Output column names and their types
+    echo "Tables in the database '$dbname':<br>";
     while ($row = $result->fetch_assoc()) {
-        echo "Column: " . $row['Field'] . " - Type: " . $row['Type'] . "<br>";
+        echo $row['Tables_in_' . $dbname] . "<br>";  // Display table name
     }
 } else {
-    echo "No columns found in the 'identification_answers' table.<br>";
+    echo "No tables found in the database.<br>";
 }
 
 // Close the connection
