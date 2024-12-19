@@ -151,7 +151,7 @@ $interval_values = json_encode(array_values($time_intervals));
                         </div>
                     </div>
                         <div class="col-lg-6">
-                         <div class="card shadow" style="width: 1000px; margin: auto; margin-left:50px;"> 
+                         <div class="card shadow" style="max-width: 1000px; margin: auto; margin-left:50px;"> 
             <div class="card-body">
                 <h6>Exam Completion Times (<?= date('F Y') ?>)</h6>
                 <canvas id="completionChart"></canvas>
