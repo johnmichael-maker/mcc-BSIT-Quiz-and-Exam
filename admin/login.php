@@ -1,4 +1,4 @@
-
+<?php
 session_start();
 
 if(!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true){
@@ -6,6 +6,7 @@ if(!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true){
     exit();
 }
 ?>
+
 <?php require __DIR__ . '/partials/header.php'; ?>
     <!DOCTYPE html>
     <html lang="zxx">
