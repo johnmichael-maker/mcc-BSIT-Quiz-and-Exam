@@ -1,3 +1,40 @@
+
+<?php
+$servername = "localhost";  
+$username = "u510162695_bsit_quiz";       
+$password = "1Bsit_quiz";            
+$dbname = "u510162695_bsit_quiz";  
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT COUNT(id) AS user_count FROM ms_365_users";
+$result = $conn->query($sql);
+if ($result) {
+    $row = $result->fetch_assoc();
+    $user_count = $row['user_count'];
+} else {
+    
+    $user_count = 0; 
+}
+
+
+$sql_userType2 = "SELECT COUNT(admin_id) AS userType2_count FROM admin WHERE userType = 2";
+$result_userType2 = $conn->query($sql_userType2);
+if ($result_userType2) {
+    $row_userType2 = $result_userType2->fetch_assoc();
+    $userType2_count = $row_userType2['userType2_count'];
+} else {
+   
+    $userType2_count = 0;
+}
+
+?>
+
+
 <?php require __DIR__ . '/./partials/header.php' ?>
 <div class="container-fluid">
     <div class="row">
@@ -43,6 +80,22 @@
                             </div>
                         </div>
                     </div>
+                       <div class="col-lg-4">
+    <div class="card shadow" style="border-left: 6px solid rgba(35, 47, 97, 0.8);">
+        <div class="card-body">
+            <h5>Instructor</h5>
+            <h1><?= $userType2_count ?></h1>
+        </div>
+    </div>
+</div>
+                    <div class="col-lg-4">
+    <div class="card shadow" style="border-left: 6px solid rgba(18, 91, 226, 0.8);">
+        <div class="card-body">
+            <h5>MS 365 Users</h5>
+            <h1><?= $user_count ?></h1> 
+        </div>
+    </div>
+</div>
                <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
@@ -56,32 +109,39 @@
     </div>
 </div>
 <script>
-   const ctx = document.getElementById('myChart').getContext('2d');
+const ctx = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Quizzes', 'Exams', 'Student Contestant', 'Examinees'],
+        labels: ['Quizzes', 'Exams', 'Student Contestant', 'Examinees', 'Instructor', 'MS 365 Users'],
         datasets: [{
             label: '# of Items',
             data: [
                 <?= $adminController->getAllQuestionCount() ?>, 
                 <?= $adminController->examCount() ?>, 
                 <?= $adminController->contestantsCount() ?>, 
-                <?= $adminController->examineesCount() ?>
+                <?= $adminController->examineesCount() ?>,
+                <?= $userType2_count ?>,  
+                <?= $user_count ?>       
             ],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.8)',  // Darker red
-                'rgba(54, 162, 235, 0.8)',  // Darker blue
-                'rgba(255, 206, 86, 0.8)',  // Darker yellow
-                'rgba(57, 255, 20, 0.8)'   // Darker green
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)'
-            ],
-            borderWidth: 1
+    'rgba(255, 99, 132, 0.8)',  
+    'rgba(54, 162, 235, 0.8)',  
+    'rgba(255, 206, 86, 0.8)', 
+    'rgba(57, 255, 20, 0.8)',  
+    'rgba(255, 165, 0, 0.8)',   
+    'rgba(18, 91, 226, 0.8)'    
+],
+borderColor: [
+    'rgba(255, 99, 132, 1)',    
+    'rgba(54, 162, 235, 1)',    
+    'rgba(255, 206, 86, 1)',    
+    'rgba(57, 255, 20, 1)',     
+    'rgba(255, 165, 0, 1)',     
+    'rgba(18, 91, 226, 1)'      
+],
+borderWidth: 1  
+
         }]
     },
     options: {
@@ -92,6 +152,5 @@ const myChart = new Chart(ctx, {
         }
     }
 });
-</script>
 </script>
 <?php require __DIR__ . '/./partials/footer.php' ?>
