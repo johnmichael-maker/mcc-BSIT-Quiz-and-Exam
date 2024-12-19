@@ -1,6 +1,17 @@
 <?php
 require __DIR__ . '/./partials/header.php';
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['questions']) && isset($_POST['answer'])) {
+    // Get the posted data
+    $exam_id = $_POST['exam_id'];
+    $question = $_POST['questions'];
+    $answer = $_POST['answer'];
+
+    // Assuming $databaseController is your instance of the controller
+    $adminController->addIdentificationQuestions($exam_id, $question, $answer); // Correct method name here
+}
+
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $row = $adminController->getExamById();
@@ -93,9 +104,87 @@ if (isset($_GET['message'])) {
 
                     </div>
 
+ <!-- Identification Section -->
                     <div class="col-12">
                         <div class="d-flex align-items-center gap-2 my-3">
-                            <h6 class="mb-0">II. Matching Type</h6>
+                            <!-- Button to open the modal -->
+                            <button type="button" class="btn btn-danger p-1 py-0" data-bs-toggle="modal" data-bs-target="#add-identification">
+                                <i class="bx bx-plus"></i>
+                            </button>
+                            <h6 class="mb-0">II. Identification</h6>
+                        </div>
+
+                        <div class="row">
+                            <?php
+                            $count2 = 1;
+                            $identifications = $databaseController->getIdentificationQuestions($id); // Get questions for the exam
+                            if ($identifications->rowCount() > 0) {
+                                foreach ($identifications as $identification) {
+                            ?>
+                                    <div class="col-12">
+                                        <p><?= $count2++ ?>. <?= $identification['question'] ?></p>
+                                        <ul>
+                                            <?php
+                                            // Retrieve the correct answer for this identification question
+                                            $answers = $databaseController->getIdentificationCorrect($id, $identification['id']);
+                                            foreach ($answers as $answer) {
+                                            ?>
+                                                <li><?= $answer['answer'] ?></li>
+                                            <?php
+                                            }
+                                            ?>
+                                        </ul>
+                                    </div>
+                                <?php
+                                }
+                            } else {
+                                ?>
+                                <div class="col-12">
+                                    No record found
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+
+<!-- Modal for adding a new identification question -->
+<div class="modal fade" id="add-identification" tabindex="-1" aria-labelledby="addIdentificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addIdentificationModalLabel">Add New Identification Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form for adding a question and answer -->
+                <form action="view-exam.php?id=<?= $id ?>" method="POST">
+    <input type="hidden" name="exam_id" value="<?= $id ?>">
+
+    <div class="mb-3">
+        <label for="modal-question" class="form-label">Question:</label>
+        <input type="text" id="modal-question" name="questions" class="form-control" placeholder="Enter question" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="modal-answer" class="form-label">Answer:</label>
+        <input type="text" id="modal-answer" name="answer" class="form-control" placeholder="Enter answer" required>
+    </div>
+
+    <button type="submit" class="btn btn-danger w-100 mt-3">Submit</button>
+</form>
+
+            </div>
+        </div>
+    </div>
+</div>
+                </div>
+
+                    
+                    <div class="col-12">
+                        <div class="d-flex align-items-center gap-2 my-3">
+                            <h6 class="mb-0">III. Matching Type</h6>
                         </div>
 
                         <div class="row">
@@ -382,7 +471,17 @@ if (isset($_GET['message'])) {
         </div>
     </div>
 </div>
+<script>
+    // To open the modal with the form values populated when the "Add Question" button is clicked
+    document.getElementById('openModalButton').addEventListener('click', function() {
+        var question = document.getElementById('question').value;
+        var answer = document.getElementById('answer').value;
 
+        // Populate the modal fields with form input values
+        document.getElementById('modal-question').value = question;
+        document.getElementById('modal-answer').value = answer;
+    });
+</script>
 <script>
     let addInputBtn = document.getElementById("add-answer-input");
     let answerDiv = document.getElementById("answer-div");
