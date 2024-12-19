@@ -172,6 +172,20 @@ class DatabaseControl extends Database
         return $stmt;
     }
 
+
+    // Function to retrieve all identification questions for a given exam ID
+public function getIdentificationQuestions($id){
+    $conn = $this->getConnection();
+    $stmt = $conn->query("SELECT * FROM identifications WHERE exam_id = '$id'  ORDER BY RAND()");
+    return $stmt;
+}
+
+public function getIdentificationCorrect($id, $identification_id){
+    $conn = $this->getConnection();
+    $stmt = $conn->query("SELECT * FROM identification_answers WHERE exam_id = '$id' AND identification_id = '$identification_id'");
+    return $stmt;
+}
+    
     public function getEnumeration($id){
         $conn = $this->getConnection();
         $stmt = $conn->query("SELECT * FROM enumeration WHERE exam_id = '$id'  ORDER BY RAND()");
