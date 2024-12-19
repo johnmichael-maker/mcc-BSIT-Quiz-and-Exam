@@ -27,7 +27,34 @@ if ($result_userType2) {
 } else {
     $userType2_count = 0;
 }
+// Get the current month and year
+$month = date('m');
+$year = date('Y');
 
+// Fetch the highest scorer
+$sql_highest_score = "SELECT fname, lname, score 
+                      FROM examinees 
+                      WHERE score = (SELECT MAX(score) 
+                                     FROM examinees 
+                                     WHERE MONTH(created_at) = ? AND YEAR(created_at) = ?) 
+                        AND MONTH(created_at) = ? AND YEAR(created_at) = ? 
+                      LIMIT 1";
+$stmt_highest_score = $conn->prepare($sql_highest_score);
+$stmt_highest_score->bind_param('iiii', $month, $year, $month, $year);
+$stmt_highest_score->execute();
+$result_highest_score = $stmt_highest_score->get_result();
+
+// Fetch lowest and highest scores for the chart
+$sql_scores = "SELECT MIN(score) AS lowest_score, MAX(score) AS highest_score 
+               FROM examinees 
+               WHERE MONTH(created_at) = ? AND YEAR(created_at) = ?";
+$stmt_scores = $conn->prepare($sql_scores);
+$stmt_scores->bind_param('ii', $month, $year);
+$stmt_scores->execute();
+$result_scores = $stmt_scores->get_result();
+$scores = $result_scores->fetch_assoc();
+$lowest_score = $scores['lowest_score'] ?? 0;
+$highest_score = $scores['highest_score'] ?? 0;
 ?>
 
 <?php require __DIR__ . '/./partials/header.php' ?>
