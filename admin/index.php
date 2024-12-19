@@ -144,10 +144,12 @@ borderWidth: 1
 
         }]
     },
-    options: {
+   options: {
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                max: 3500,  // Adjust max value based on the largest data point (3059)
+                stepSize: 500  // Adjust step size for better y-axis scaling
             }
         }
     }
