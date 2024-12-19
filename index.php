@@ -5,6 +5,10 @@
      $databaseController = new DatabaseControl;
     $feedbacks = $databaseController->getFeedbacks();
 
+ini_set('display_errors', 1);  // Show errors on the page
+error_reporting(E_ALL);        // Report all errors
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
