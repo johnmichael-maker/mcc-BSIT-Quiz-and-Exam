@@ -607,12 +607,13 @@ return $stmt;
         $type = $_POST['type'];
         $category = $_POST['category'];
         $time_limit = $_POST['time_limit'];
+        $start_time = $_POST['start_time']; // This is the field for scheduling the exam (start time)
     
         // Insert the exam details along with the admin ID
-        $stmt = $conn->prepare("INSERT INTO exams (section, year_level, semester, type, category, time_limit, admin_id) 
-                                VALUES(:section, :year_level, :semester, :type, :category, :time_limit, :admin_id)");
+        $stmt = $conn->prepare("INSERT INTO exams (section, year_level, semester, type, category, time_limit, start_time, admin_id) 
+                                VALUES(:section, :year_level, :semester, :type, :category, :time_limit, start_time, :admin_id)");
     
-        if (!empty($section) && !empty($year_level) && !empty($semester) && !empty($category) && !empty($type) && !empty($time_limit)) {
+        if (!empty($section) && !empty($year_level) && !empty($semester) && !empty($category) && !empty($type) && !empty($time_limit) && !empty($start_time)) {
             $stmt->execute([
                 ':section' => $section,
                 ':year_level' => $year_level,
@@ -620,6 +621,7 @@ return $stmt;
                 ':type' => $type,
                 ':category' => $category,
                 ':time_limit' => $time_limit,
+                ':start_time' => $start_time, // Bind the start time directly to the query
                 ':admin_id' => $adminId // Bind the admin ID
             ]);
     
