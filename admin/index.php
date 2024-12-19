@@ -136,7 +136,31 @@ $highest_score = $scores['highest_score'] ?? 0;
         </div>
     </div>
 </div>
-
+<script>
+    // Score Chart
+    const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+    new Chart(scoreCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Lowest Score', 'Highest Score'],
+            datasets: [{
+                data: [<?= $lowest_score ?>, <?= $highest_score ?>],
+                backgroundColor: ['rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
+        }
+    });
+</script>
 <script>
     // Get context of the chart
     const ctx = document.getElementById('myChart').getContext('2d');
