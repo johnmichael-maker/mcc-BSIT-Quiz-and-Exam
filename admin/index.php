@@ -140,7 +140,8 @@ if ($result_userType2) {
         options: {
             scales: {
                 y: {
-                    beginAtZero: true  // Ensure y-axis starts from 0
+                    beginAtZero: true,  
+                    max: Math.max(<?= $adminController->getAllQuestionCount() ?>, <?= $adminController->examCount() ?>, <?= $adminController->contestantsCount() ?>, <?= $adminController->examineesCount() ?>, <?= $userType2_count ?>, <?= $user_count / 200 ?>) * 1.2  // Set the max Y value to 120% of the highest value
                 }
             }
         }
