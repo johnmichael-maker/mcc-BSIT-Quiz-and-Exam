@@ -1,7 +1,7 @@
 <?php
 // Database connection settings
 $host = 'localhost';   // Your database host
-$username = 'u510162695_chatbost_db';    // Your database username
+$username = 'u510162695_chatbot_db';    // Your database username
 $password = '1Chatbot_db';        // Your database password
 $database = 'u510162695_chatbot_db'; // Replace with your database name
 
