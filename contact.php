@@ -17,52 +17,33 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the data from the form
     $user_id = $_POST['id'];
-    $current_password = $_POST['current_password'];
-    $new_password = $_POST['new_password'];
-    $confirm_new_password = $_POST['confirm_new_password'];
+    $new_username = $_POST['username'];
+    $new_email = $_POST['email'];
+    $new_password = $_POST['password'];
 
-    // Fetch the current password hash from the database
-    $sql = "SELECT `password` FROM `users` WHERE `id` = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Check if the user wants to update the password
+    if (!empty($new_password)) {
+        // Hash the new password before storing it with Bcrypt
+        $new_password_hash = password_hash($new_password, PASSWORD_BCRYPT);
 
-    if ($result->num_rows == 0) {
-        echo "User not found.";
-        exit;
-    }
-
-    $row = $result->fetch_assoc();
-    $hashed_password = $row['password']; // The stored hash of the current password
-
-    // Verify the current password entered by the user
-    if (!password_verify($current_password, $hashed_password)) {
-        echo "Current password is incorrect.";
-        exit;
-    }
-
-    // Check if the new password and the confirmation match
-    if ($new_password !== $confirm_new_password) {
-        echo "New password and confirmation do not match.";
-        exit;
-    }
-
-    // Hash the new password
-    $new_hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-
-    // Update the user's password in the database
-    $update_sql = "UPDATE `users` SET `password` = ? WHERE `id` = ?";
-    $update_stmt = $conn->prepare($update_sql);
-    $update_stmt->bind_param("si", $new_hashed_password, $user_id);
-
-    if ($update_stmt->execute()) {
-        echo "Password updated successfully!";
+        // Update query with new password
+        $sql = "UPDATE `users` SET `username` = ?, `email` = ?, `password` = ? WHERE `id` = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssi", $new_username, $new_email, $new_password_hash, $user_id);
     } else {
-        echo "Error updating password: " . $conn->error;
+        // If no password is provided, update only the username and email
+        $sql = "UPDATE `users` SET `username` = ?, `email` = ? WHERE `id` = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssi", $new_username, $new_email, $user_id);
+    }
+
+    // Execute the update
+    if ($stmt->execute()) {
+        echo "User updated successfully!";
+    } else {
+        echo "Error updating user: " . $conn->error;
     }
 }
 
-// Close the connection
 $conn->close();
 ?>
