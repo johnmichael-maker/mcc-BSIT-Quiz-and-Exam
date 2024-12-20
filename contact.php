@@ -21,17 +21,28 @@ $result = $conn->query($sql);
 
 // Check if there are records
 if ($result->num_rows > 0) {
-    // Output data of each row
+    // Get column names dynamically
+    $fields = $result->fetch_fields();
+    
+    // Start the table
     echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Username</th><th>Email</th><th>Other Columns</th></tr>";
+    
+    // Output column names as table headers
+    echo "<tr>";
+    foreach ($fields as $field) {
+        echo "<th>" . $field->name . "</th>";
+    }
+    echo "</tr>";
+    
+    // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>" . $row['id'] . "</td>";
-        echo "<td>" . $row['username'] . "</td>";
-        echo "<td>" . $row['email'] . "</td>";
-        // Add other columns if necessary
+        foreach ($fields as $field) {
+            echo "<td>" . $row[$field->name] . "</td>";
+        }
         echo "</tr>";
     }
+    
     echo "</table>";
 } else {
     echo "No users found in the table.";
