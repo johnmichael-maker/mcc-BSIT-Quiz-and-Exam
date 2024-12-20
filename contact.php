@@ -1,5 +1,4 @@
 <?php
-// Database connection settings
 $host = 'localhost';   // Your database host
 $username = 'u510162695_bsit_quiz';    // Your database username
 $password = '1Bsit_quiz';        // Your database password
@@ -13,19 +12,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to fetch all tables
-$sql = "SHOW TABLES";
-$result = $conn->query($sql);
+// SQL query to add the 'start_time' column to the 'exams' table
+$sql = "ALTER TABLE `exams`
+        ADD COLUMN `start_time` timestamp NULL DEFAULT NULL;";
 
-if ($result->num_rows > 0) {
-    // Output all table names
-    echo "<h2>Tables in Database: $database</h2><ul>";
-    while($row = $result->fetch_assoc()) {
-        echo "<li>" . $row['Tables_in_' . $database] . "</li>";
-    }
-    echo "</ul>";
+// Execute the query to add the column
+if ($conn->query($sql) === TRUE) {
+    echo "Column 'start_time' added successfully to the 'exams' table.";
 } else {
-    echo "No tables found in the database.";
+    echo "Error adding column: " . $conn->error;
 }
 
 // Close the connection
