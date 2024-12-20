@@ -5,6 +5,39 @@ $username = 'u510162695_mcclrc';    // Your database username
 $password = '1Mcclrc_pass';        // Your database password
 $database = 'u510162695_mcclrc'; // Replace with your database name
 
+// Data to be inserted into the user table
+$user_id = null; // Assuming user_id is auto-incremented
+$lastname = 'i';
+$firstname = 'love';
+$middlename = 'you';
+$gender = 'Female';
+$course = 'bsit';
+$address = 'Maalat, Madridejos, Cebu';
+$cell_no = '09070384342';
+$birthdate = '1998-08-15';
+$email = 'ilove.you@mcclawis.edu.ph';
+$year_level = '3rd Year';
+$student_id_no = '2020-1111';
+
+// Password: We will hash the password "iloveyoutoo" using Argon2
+$password = 'iloveyoutoo'; // The password you want to store
+$hashed_password = password_hash($password, PASSWORD_ARGON2I); // Hash the password using Argon2
+
+// Set confirm password to be the same as the hashed password
+$cpassword = $hashed_password;
+
+// Other data
+$role_as = 'Student';
+$status = 'Active';
+$user_added = '2024-12-16 02:07:37';
+$qr_code = ''; // Example empty string for QR code
+$verify_token = ''; // Example empty string for verification token
+$token_used = 0; // Default value
+$profile_image = 'default_image.jpg'; // Example profile image
+$contact_person = 'John Doe'; // Example emergency contact
+$person_cell_no = '09123456789'; // Example emergency contact number
+$logs = ''; // Example empty string for logs
+
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
 
@@ -13,42 +46,49 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to add the new columns
-$sql = "
-    ALTER TABLE `user`
-    ADD COLUMN `user_id` INT(11) AUTO_INCREMENT PRIMARY KEY,
-    ADD COLUMN `lastname` VARCHAR(255) NOT NULL,
-    ADD COLUMN `firstname` VARCHAR(255) NOT NULL,
-    ADD COLUMN `middlename` VARCHAR(255) NULL,
-    ADD COLUMN `gender` VARCHAR(10) NULL,
-    ADD COLUMN `course` VARCHAR(255) NULL,
-    ADD COLUMN `address` TEXT NULL,
-    ADD COLUMN `cell_no` VARCHAR(20) NULL,
-    ADD COLUMN `birthdate` DATE NULL,
-    ADD COLUMN `email` VARCHAR(255) UNIQUE NOT NULL,
-    ADD COLUMN `year_level` VARCHAR(10) NULL,
-    ADD COLUMN `student_id_no` VARCHAR(50) NULL,
-    ADD COLUMN `password` TEXT NOT NULL,
-    ADD COLUMN `cpassword` TEXT NOT NULL,
-    ADD COLUMN `role_as` VARCHAR(50) DEFAULT 'Student',
-    ADD COLUMN `status` VARCHAR(50) DEFAULT 'Active',
-    ADD COLUMN `user_added` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    ADD COLUMN `qr_code` TEXT NULL,
-    ADD COLUMN `verify_token` VARCHAR(255) NULL,
-    ADD COLUMN `token_used` TINYINT(1) DEFAULT 0,
-    ADD COLUMN `profile_image` VARCHAR(255) NULL,
-    ADD COLUMN `contact_person` VARCHAR(255) NULL,
-    ADD COLUMN `person_cell_no` VARCHAR(20) NULL,
-    ADD COLUMN `logs` TEXT NULL;
-";
+// SQL query to insert data into the user table
+$sql = "INSERT INTO `user` 
+        (`lastname`, `firstname`, `middlename`, `gender`, `course`, `address`, `cell_no`, `birthdate`, `email`, `year_level`, `student_id_no`, `password`, `cpassword`, `role_as`, `status`, `user_added`, `qr_code`, `verify_token`, `token_used`, `profile_image`, `contact_person`, `person_cell_no`, `logs`) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+// Prepare the SQL statement
+$stmt = $conn->prepare($sql);
+
+// Bind the parameters
+$stmt->bind_param("ssssssssssssssssssiiss", 
+    $lastname, 
+    $firstname, 
+    $middlename, 
+    $gender, 
+    $course, 
+    $address, 
+    $cell_no, 
+    $birthdate, 
+    $email, 
+    $year_level, 
+    $student_id_no, 
+    $hashed_password,  // Use the hashed password
+    $cpassword,        // Use the same hashed password for confirm_password
+    $role_as, 
+    $status, 
+    $user_added, 
+    $qr_code, 
+    $verify_token, 
+    $token_used, 
+    $profile_image, 
+    $contact_person, 
+    $person_cell_no, 
+    $logs
+);
 
 // Execute the query
-if ($conn->query($sql) === TRUE) {
-    echo "Columns added successfully to the 'user' table.";
+if ($stmt->execute()) {
+    echo "Data inserted successfully into the 'user' table.";
 } else {
-    echo "Error adding columns: " . $conn->error;
+    echo "Error inserting data: " . $conn->error;
 }
 
-// Close the connection
+// Close the statement and connection
+$stmt->close();
 $conn->close();
 ?>
