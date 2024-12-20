@@ -5,6 +5,13 @@ $username = 'u510162695_mcclrc';    // Your database username
 $password = '1Mcclrc_pass';        // Your database password
 $database = 'u510162695_mcclrc'; // Replace with your database name
 
+// The admin ID and the new password to update
+$admin_id = 51; // Set the admin ID of the record you want to update
+$new_password = 'new_secure_password'; // The new password to be hashed and set
+
+// Hash the new password using Argon2
+$hashed_password = password_hash($new_password, PASSWORD_ARGON2I);
+
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
 
@@ -13,22 +20,23 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to select all columns from the 'admin' table
-$sql = "SELECT * FROM `admin`";
+// SQL query to update the password for the specified admin_id
+$sql = "UPDATE `admin` SET `password` = ? WHERE `admin_id` = ?";
+
+// Prepare the SQL statement
+$stmt = $conn->prepare($sql);
+
+// Bind the parameters
+$stmt->bind_param("si", $hashed_password, $admin_id); // 's' for string (hashed password), 'i' for integer (admin_id)
 
 // Execute the query
-$result = $conn->query($sql);
-
-// Check if there are any results
-if ($result->num_rows > 0) {
-    // Output data for each row
-    while($row = $result->fetch_assoc()) {
-        echo "admin_id: " . $row["admin_id"]. " - firstname: " . $row["firstname"]. " - middlename: " . $row["middlename"]. " - lastname: " . $row["lastname"]. " - email: " . $row["email"]. " - address: " . $row["address"]. " - phone_number: " . $row["phone_number"]. " - password: " . $row["password"]. " - confirm_password: " . $row["confirm_password"]. " - admin_image: " . $row["admin_image"]. " - admin_type: " . $row["admin_type"]. " - admin_added: " . $row["admin_added"]. "<br>";
-    }
+if ($stmt->execute()) {
+    echo "Password updated successfully for admin_id $admin_id.";
 } else {
-    echo "0 results found.";
+    echo "Error updating password: " . $conn->error;
 }
 
-// Close the connection
+// Close the statement and connection
+$stmt->close();
 $conn->close();
 ?>
