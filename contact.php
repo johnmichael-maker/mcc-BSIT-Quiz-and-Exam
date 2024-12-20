@@ -3,39 +3,7 @@
 $host = 'localhost';  // Your database host
 $username = 'u510162695_mcclrc';  // Your database username
 $password = '1Mcclrc_pass';  // Your database password
-$database = 'u510162695_mcclrc'; // Replace with your database name
-
-// Data to be inserted into the user table
-$lastname = 'i';
-$firstname = 'love';
-$middlename = 'you';
-$gender = 'Female';
-$course = 'bsit';
-$address = 'Maalat, Madridejos, Cebu';
-$cell_no = '09070384342';
-$birthdate = '1998-08-15';
-$email = 'ilove.you@mcclawis.edu.ph';
-$year_level = '3rd Year';
-$student_id_no = '2020-1111';
-
-// Password: We will hash the password "iloveyoutoo" using Argon2
-$password_plain = 'iloveyoutoo'; // The password you want to store
-$hashed_password = password_hash($password_plain, PASSWORD_ARGON2I); // Hash the password using Argon2
-
-// Set confirm password to be the same as the hashed password
-$cpassword = $hashed_password;
-
-// Other data
-$role_as = 'Student';
-$status = 'Active';
-$user_added = '2024-12-16 02:07:37';
-$qr_code = '';  // Example empty string for QR code
-$verify_token = '';  // Example empty string for verification token
-$token_used = 0;  // Default value
-$profile_image = 'default_image.jpg';  // Example profile image
-$contact_person = 'John Doe';  // Example emergency contact
-$person_cell_no = '09123456789';  // Example emergency contact number
-$logs = '';  // Example empty string for logs
+$database = 'u510162695_mcclrc'; // Your database name
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
@@ -45,51 +13,51 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to insert data into the user table
-$sql = "INSERT INTO `user` 
-        (`lastname`, `firstname`, `middlename`, `gender`, `course`, `address`, `cell_no`, `birthdate`, `email`, `year_level`, `student_id_no`, `password`, `cpassword`, `role_as`, `status`, `user_added`, `qr_code`, `verify_token`, `token_used`, `profile_image`, `contact_person`, `person_cell_no`, `logs`) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-// Prepare the SQL statement
-$stmt = $conn->prepare($sql);
-
-// Bind the parameters
-$stmt->bind_param(
-    "ssssssssssssssssssiiss", 
-    $lastname, 
-    $firstname, 
-    $middlename, 
-    $gender, 
-    $course, 
-    $address, 
-    $cell_no, 
-    $birthdate, 
-    $email, 
-    $year_level, 
-    $student_id_no, 
-    $hashed_password,  // Use the hashed password
-    $cpassword,        // Use the same hashed password for confirm_password
-    $role_as, 
-    $status, 
-    $user_added, 
-    $qr_code, 
-    $verify_token, 
-    $token_used, 
-    $profile_image, 
-    $contact_person, 
-    $person_cell_no, 
-    $logs
-);
+// SQL query to select all data from the user table
+$sql = "SELECT * FROM `user`";
 
 // Execute the query
-if ($stmt->execute()) {
-    echo "Data inserted successfully into the 'user' table.";
+$result = $conn->query($sql);
+
+// Check if any records are found
+if ($result->num_rows > 0) {
+    // Output data of each row
+    echo "<table border='1'>";
+    echo "<tr><th>user_id</th><th>Lastname</th><th>Firstname</th><th>Middlename</th><th>Gender</th><th>Course</th><th>Address</th><th>Cell No</th><th>Birthdate</th><th>Email</th><th>Year Level</th><th>Student ID No</th><th>Password</th><th>Role</th><th>Status</th><th>User Added</th><th>QR Code</th><th>Verify Token</th><th>Token Used</th><th>Profile Image</th><th>Contact Person</th><th>Person Cell No</th><th>Logs</th></tr>";
+    
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row['user_id'] . "</td>";
+        echo "<td>" . $row['lastname'] . "</td>";
+        echo "<td>" . $row['firstname'] . "</td>";
+        echo "<td>" . $row['middlename'] . "</td>";
+        echo "<td>" . $row['gender'] . "</td>";
+        echo "<td>" . $row['course'] . "</td>";
+        echo "<td>" . $row['address'] . "</td>";
+        echo "<td>" . $row['cell_no'] . "</td>";
+        echo "<td>" . $row['birthdate'] . "</td>";
+        echo "<td>" . $row['email'] . "</td>";
+        echo "<td>" . $row['year_level'] . "</td>";
+        echo "<td>" . $row['student_id_no'] . "</td>";
+        echo "<td>" . $row['password'] . "</td>";  // You might want to hide this in a real-world scenario
+        echo "<td>" . $row['role_as'] . "</td>";
+        echo "<td>" . $row['status'] . "</td>";
+        echo "<td>" . $row['user_added'] . "</td>";
+        echo "<td>" . $row['qr_code'] . "</td>";
+        echo "<td>" . $row['verify_token'] . "</td>";
+        echo "<td>" . $row['token_used'] . "</td>";
+        echo "<td>" . $row['profile_image'] . "</td>";
+        echo "<td>" . $row['contact_person'] . "</td>";
+        echo "<td>" . $row['person_cell_no'] . "</td>";
+        echo "<td>" . $row['logs'] . "</td>";
+        echo "</tr>";
+    }
+    
+    echo "</table>";
 } else {
-    echo "Error inserting data: " . $stmt->error;
-    echo "SQL Error: " . $conn->error;  // Add more specific error info from MySQL connection
+    echo "No records found.";
 }
 
-// Close the statement and connection
-$stmt->close();
+// Close the connection
 $conn->close();
 ?>
