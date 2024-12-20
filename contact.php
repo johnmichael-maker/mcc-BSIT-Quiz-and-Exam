@@ -1,9 +1,9 @@
 <?php
 // Database connection settings
 $host = 'localhost';   // Your database host
-$username = 'u510162695_Mcclrc';    // Your database username
-$password = '1Mcclrc_pass';        // Your database password
-$database = 'u510162695_Mcclrc'; // Replace with your database name
+$username = 'u510162695_chatbost_db';    // Your database username
+$password = '1Chatbot_db';        // Your database password
+$database = 'u510162695_chatbot_db'; // Replace with your database name
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
