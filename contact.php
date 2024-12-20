@@ -5,49 +5,49 @@ $username = 'u510162695_mcclrc';    // Your database username
 $password = '1Mcclrc_pass';        // Your database password
 $database = 'u510162695_mcclrc'; // Replace with your database name
 
-// Create connection
-$conn = new mysqli($host, $username, $password, $database);
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve the new password and confirm password from form
+    $new_password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Check if the passwords match
+    if ($new_password === $confirm_password) {
+        // Hash the new password using Argon2
+        $hashed_password = password_hash($new_password, PASSWORD_ARGON2I);
 
-// SQL query to fetch all rows from the 'admin' table
-$sql = "SELECT * FROM `admin`";
+        // Admin ID of the user to update
+        $admin_id = 53; // Set the admin ID of the record you want to update
 
-// Execute the query
-$result = $conn->query($sql);
+        // Create connection
+        $conn = new mysqli($host, $username, $password, $database);
 
-// Check if any rows were returned
-if ($result->num_rows > 0) {
-    // Get the column names dynamically
-    $columns = $result->fetch_fields();
-    
-    // Start the table
-    echo "<h2>Admin Table Data:</h2>";
-    echo "<table border='1' cellpadding='10'>";
-    
-    // Display table headers (column names)
-    echo "<tr>";
-    foreach ($columns as $column) {
-        echo "<th>" . htmlspecialchars($column->name) . "</th>";
-    }
-    echo "</tr>";
-
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        foreach ($columns as $column) {
-            echo "<td>" . htmlspecialchars($row[$column->name]) . "</td>";
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         }
-        echo "</tr>";
-    }
-    echo "</table>";
-} else {
-    echo "No records found in the 'admin' table.";
-}
 
-// Close the connection
-$conn->close();
+        // SQL query to update the password for the specified admin_id
+        $sql = "UPDATE `admin` SET `password` = ? WHERE `admin_id` = ?";
+
+        // Prepare the SQL statement
+        $stmt = $conn->prepare($sql);
+
+        // Bind the parameters (hashed password and admin_id)
+        $stmt->bind_param("si", $hashed_password, $admin_id); // 's' for string, 'i' for integer
+
+        // Execute the query
+        if ($stmt->execute()) {
+            echo "Password updated successfully for admin_id $admin_id.";
+        } else {
+            echo "Error updating password: " . $conn->error;
+        }
+
+        // Close the statement and connection
+        $stmt->close();
+        $conn->close();
+    } else {
+        echo "Passwords do not match.";
+    }
+}
 ?>
