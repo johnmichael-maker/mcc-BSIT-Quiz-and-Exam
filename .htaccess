@@ -1,16 +1,18 @@
-
+# Enable mod_headers for security headers
 <IfModule mod_headers.c>
     # Apply security headers globally
-    Header set Content-Security-Policy "
-        default-src 'self'; 
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://cdnjs.cloudflare.com https://code.jquery.com;
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' data:;
-        connect-src 'self' https://api.example.com; 
-        font-src 'self' https://fonts.gstatic.com;
-        frame-src 'none';
-        form-action 'self';
-    "
+    # Content-Security-Policy (temporarily comment out if causing issues)
+    # Header set Content-Security-Policy "
+    #     default-src 'self'; 
+    #     script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://cdnjs.cloudflare.com https://code.jquery.com;
+    #     style-src 'self' 'unsafe-inline';
+    #     img-src 'self' data:;
+    #     connect-src 'self' https://api.example.com; 
+    #     font-src 'self' https://fonts.gstatic.com;
+    #     frame-src 'none';
+    #     form-action 'self';
+    # "
+    
     Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-Content-Type-Options "nosniff"
@@ -18,12 +20,10 @@
     Header set Permissions-Policy "geolocation=(), camera=(), microphone=()"
 </IfModule>
 
-
-
 # Enable mod_rewrite engine
 RewriteEngine On
 
-# Prevent direct access to the home page ("/") - COMMENT OUT or REMOVE
+# Prevent direct access to the home page ("/") - COMMENT OUT or REMOVE if not needed
 # RewriteCond %{REQUEST_URI} ^/$
 # RewriteRule ^$ - [F,L]
 
@@ -55,8 +55,8 @@ RewriteCond %{THE_REQUEST} \s/error_page\.php$ [NC]
 RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php to error_page without .php  
 
 RewriteCond %{THE_REQUEST} \s/config\.php$ [NC]
-RewriteRule ^config\.php$ /config [R=301,L]  
+RewriteRule ^config\.php$ /config [R=301,L]
 
-# Redirect homie.php to homie without .php extension
-RewriteCond %{THE_REQUEST} \s/homie\.php$ [NC]
-RewriteRule ^homie\.php$ /homie [R=301,L]    # Redirect homie.php to homie without .php
+# Optional: Error document handling (can be customized to redirect to specific error pages)
+# ErrorDocument 404 /404.html
+# ErrorDocument 500 /500.html
