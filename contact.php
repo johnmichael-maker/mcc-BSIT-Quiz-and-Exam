@@ -1,12 +1,11 @@
 <?php
 // Database connection settings
-$host = 'localhost';   // Your database host
-$username = 'u510162695_mcclrc';    // Your database username
-$password = '1Mcclrc_pass';        // Your database password
+$host = 'localhost';  // Your database host
+$username = 'u510162695_mcclrc';  // Your database username
+$password = '1Mcclrc_pass';  // Your database password
 $database = 'u510162695_mcclrc'; // Replace with your database name
 
 // Data to be inserted into the user table
-$user_id = null; // Assuming user_id is auto-incremented
 $lastname = 'i';
 $firstname = 'love';
 $middlename = 'you';
@@ -20,8 +19,8 @@ $year_level = '3rd Year';
 $student_id_no = '2020-1111';
 
 // Password: We will hash the password "iloveyoutoo" using Argon2
-$password = 'iloveyoutoo'; // The password you want to store
-$hashed_password = password_hash($password, PASSWORD_ARGON2I); // Hash the password using Argon2
+$password_plain = 'iloveyoutoo'; // The password you want to store
+$hashed_password = password_hash($password_plain, PASSWORD_ARGON2I); // Hash the password using Argon2
 
 // Set confirm password to be the same as the hashed password
 $cpassword = $hashed_password;
@@ -30,13 +29,13 @@ $cpassword = $hashed_password;
 $role_as = 'Student';
 $status = 'Active';
 $user_added = '2024-12-16 02:07:37';
-$qr_code = ''; // Example empty string for QR code
-$verify_token = ''; // Example empty string for verification token
-$token_used = 0; // Default value
-$profile_image = 'default_image.jpg'; // Example profile image
-$contact_person = 'John Doe'; // Example emergency contact
-$person_cell_no = '09123456789'; // Example emergency contact number
-$logs = ''; // Example empty string for logs
+$qr_code = '';  // Example empty string for QR code
+$verify_token = '';  // Example empty string for verification token
+$token_used = 0;  // Default value
+$profile_image = 'default_image.jpg';  // Example profile image
+$contact_person = 'John Doe';  // Example emergency contact
+$person_cell_no = '09123456789';  // Example emergency contact number
+$logs = '';  // Example empty string for logs
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
@@ -55,7 +54,8 @@ $sql = "INSERT INTO `user`
 $stmt = $conn->prepare($sql);
 
 // Bind the parameters
-$stmt->bind_param("ssssssssssssssssssiiss", 
+$stmt->bind_param(
+    "ssssssssssssssssssiiss", 
     $lastname, 
     $firstname, 
     $middlename, 
@@ -85,7 +85,8 @@ $stmt->bind_param("ssssssssssssssssssiiss",
 if ($stmt->execute()) {
     echo "Data inserted successfully into the 'user' table.";
 } else {
-    echo "Error inserting data: " . $conn->error;
+    echo "Error inserting data: " . $stmt->error;
+    echo "SQL Error: " . $conn->error;  // Add more specific error info from MySQL connection
 }
 
 // Close the statement and connection
