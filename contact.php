@@ -5,6 +5,9 @@ $username = 'u510162695_chatbot_db';    // Your database username
 $password = '1Chatbot_db';        // Your database password
 $database = 'u510162695_chatbot_db'; // Replace with your database name
 
+// The ID of the question you want to delete
+$id_to_delete = 5; // Change this to the ID of the row you want to delete
+
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
 
@@ -13,57 +16,21 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to fetch all tables
-$sql = "SHOW TABLES";
-$result = $conn->query($sql);
+// SQL query to delete a row from the 'questions' table by ID
+$sql = "DELETE FROM `questions` WHERE `id` = ?";
 
-if ($result->num_rows > 0) {
-    // Output all table names
-    echo "<h2>Tables in Database: $database</h2><ul>";
+// Prepare and bind
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_to_delete); // 'i' stands for integer type
 
-    while($row = $result->fetch_assoc()) {
-        // Get the table name
-        $table_name = $row['Tables_in_' . $database];
-        
-        echo "<li><strong>Table: $table_name</strong>";
-
-        // Query to fetch data from each table
-        $data_sql = "SELECT * FROM `$table_name`";
-        $data_result = $conn->query($data_sql);
-
-        if ($data_result->num_rows > 0) {
-            echo "<table border='1'><thead><tr>";
-
-            // Fetch column names for the table
-            $columns = $data_result->fetch_fields();
-            foreach ($columns as $column) {
-                echo "<th>" . $column->name . "</th>";
-            }
-
-            echo "</tr></thead><tbody>";
-
-            // Fetch and display data
-            while ($data_row = $data_result->fetch_assoc()) {
-                echo "<tr>";
-                foreach ($data_row as $value) {
-                    echo "<td>" . $value . "</td>";
-                }
-                echo "</tr>";
-            }
-
-            echo "</tbody></table>";
-        } else {
-            echo "No data found in this table.";
-        }
-
-        echo "</li><br>";
-    }
-    
-    echo "</ul>";
+// Execute the query
+if ($stmt->execute()) {
+    echo "Row with ID $id_to_delete deleted successfully from the 'questions' table.";
 } else {
-    echo "No tables found in the database.";
+    echo "Error deleting row: " . $conn->error;
 }
 
 // Close the connection
+$stmt->close();
 $conn->close();
 ?>
