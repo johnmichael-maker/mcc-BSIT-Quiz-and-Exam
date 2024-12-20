@@ -12,29 +12,33 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to create the table
+// SQL query to create only the 'exams' table
 $sql = "
-DROP TABLE IF EXISTS `examinees`;
-CREATE TABLE `examinees` (
+-- Drop the 'exams' table if it exists
+DROP TABLE IF EXISTS `exams`;
+
+-- Create the 'exams' table
+CREATE TABLE `exams` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_number` varchar(255) NOT NULL,
   `section` int(11) NOT NULL,
   `year_level` int(11) NOT NULL,
-  `fname` text NOT NULL,
-  `lname` text NOT NULL,
-  `mname` text DEFAULT NULL,
-  `exam_id` int(11) DEFAULT NULL,
-  `score` int(11) DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `semester` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `category` int(11) NOT NULL,
+  `time_limit` float NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '1=active,2=disabled',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `fk_admin_id` (`admin_id`),
+  CONSTRAINT `fk_admin_id` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ";
 
-// Execute the query to create the table
+// Execute the query to create the exams table
 if ($conn->multi_query($sql)) {
-    echo "Table 'examinees' created successfully.";
+    echo "Table 'exams' created successfully.";
 } else {
     echo "Error creating table: " . $conn->error;
 }
