@@ -1,9 +1,10 @@
+
 <?php
-// Database connection settings
 $host = 'localhost';   // Your database host
 $username = 'u510162695_bsit_quiz';    // Your database username
 $password = '1Bsit_quiz';        // Your database password
 $database = 'u510162695_bsit_quiz'; // Replace with your database name
+
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
@@ -13,19 +14,32 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to fetch all tables
-$sql = "SHOW TABLES";
-$result = $conn->query($sql);
+// SQL query to create the table
+$sql = "
+DROP TABLE IF EXISTS `examinees`;
 
-if ($result->num_rows > 0) {
-    // Output all table names
-    echo "<h2>Tables in Database: $database</h2><ul>";
-    while($row = $result->fetch_assoc()) {
-        echo "<li>" . $row['Tables_in_' . $database] . "</li>";
-    }
-    echo "</ul>";
+CREATE TABLE `examinees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_number` varchar(255) NOT NULL,
+  `section` int(11) NOT NULL,
+  `year_level` int(11) NOT NULL,
+  `fname` text NOT NULL,
+  `lname` text NOT NULL,
+  `mname` text DEFAULT NULL,
+  `exam_id` int(11) DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+";
+
+// Execute the query to create the table
+if ($conn->query($sql) === TRUE) {
+    echo "Table 'examinees' created successfully.";
 } else {
-    echo "No tables found in the database.";
+    echo "Error creating table: " . $conn->error;
 }
 
 // Close the connection
