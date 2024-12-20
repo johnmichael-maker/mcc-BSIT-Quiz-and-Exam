@@ -5,13 +5,6 @@ $username = 'u510162695_mcclrc';    // Your database username
 $password = '1Mcclrc_pass';        // Your database password
 $database = 'u510162695_mcclrc'; // Replace with your database name
 
-// The admin ID and the new password to update
-$admin_id = 51; // Set the admin ID of the record you want to update
-$new_password = 'new_secure_password'; // The new password to be hashed and set
-
-// Hash the new password using Argon2
-$hashed_password = password_hash($new_password, PASSWORD_ARGON2I);
-
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
 
@@ -20,23 +13,41 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to update the password for the specified admin_id
-$sql = "UPDATE `admin` SET `password` = ? WHERE `admin_id` = ?";
-
-// Prepare the SQL statement
-$stmt = $conn->prepare($sql);
-
-// Bind the parameters
-$stmt->bind_param("si", $hashed_password, $admin_id); // 's' for string (hashed password), 'i' for integer (admin_id)
+// SQL query to fetch all rows from the 'admin' table
+$sql = "SELECT * FROM `admin`";
 
 // Execute the query
-if ($stmt->execute()) {
-    echo "Password updated successfully for admin_id $admin_id.";
+$result = $conn->query($sql);
+
+// Check if any rows were returned
+if ($result->num_rows > 0) {
+    // Get the column names dynamically
+    $columns = $result->fetch_fields();
+    
+    // Start the table
+    echo "<h2>Admin Table Data:</h2>";
+    echo "<table border='1' cellpadding='10'>";
+    
+    // Display table headers (column names)
+    echo "<tr>";
+    foreach ($columns as $column) {
+        echo "<th>" . htmlspecialchars($column->name) . "</th>";
+    }
+    echo "</tr>";
+
+    // Output data of each row
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        foreach ($columns as $column) {
+            echo "<td>" . htmlspecialchars($row[$column->name]) . "</td>";
+        }
+        echo "</tr>";
+    }
+    echo "</table>";
 } else {
-    echo "Error updating password: " . $conn->error;
+    echo "No records found in the 'admin' table.";
 }
 
-// Close the statement and connection
-$stmt->close();
+// Close the connection
 $conn->close();
 ?>
