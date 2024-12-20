@@ -32,6 +32,7 @@ if ($result->num_rows > 0) {
     foreach ($fields as $field) {
         echo "<th>" . $field->name . "</th>";
     }
+    echo "<th>Actions</th>"; // For the Edit button
     echo "</tr>";
     
     // Output data of each row
@@ -40,6 +41,8 @@ if ($result->num_rows > 0) {
         foreach ($fields as $field) {
             echo "<td>" . $row[$field->name] . "</td>";
         }
+        // Add an Edit button with user ID
+        echo "<td><a href='edit_user.php?id=" . $row['id'] . "'>Edit</a></td>";
         echo "</tr>";
     }
     
