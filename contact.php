@@ -5,9 +5,6 @@ $username = 'u510162695_mcclrc';    // Your database username
 $password = '1Mcclrc_pass';        // Your database password
 $database = 'u510162695_mcclrc'; // Replace with your database name
 
-// The ID of the admin you want to delete
-$admin_id = 51; // Set the ID of the record you want to delete
-
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
 
@@ -16,23 +13,22 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to delete the admin record
-$sql = "DELETE FROM `admin` WHERE `admin_id` = ?";
-
-// Prepare the SQL statement
-$stmt = $conn->prepare($sql);
-
-// Bind the admin_id parameter
-$stmt->bind_param("i", $admin_id); // 'i' is for integer type
+// SQL query to select all columns from the 'admin' table
+$sql = "SELECT * FROM `admin`";
 
 // Execute the query
-if ($stmt->execute()) {
-    echo "Record with admin_id $admin_id deleted successfully.";
+$result = $conn->query($sql);
+
+// Check if there are any results
+if ($result->num_rows > 0) {
+    // Output data for each row
+    while($row = $result->fetch_assoc()) {
+        echo "admin_id: " . $row["admin_id"]. " - firstname: " . $row["firstname"]. " - middlename: " . $row["middlename"]. " - lastname: " . $row["lastname"]. " - email: " . $row["email"]. " - address: " . $row["address"]. " - phone_number: " . $row["phone_number"]. " - password: " . $row["password"]. " - confirm_password: " . $row["confirm_password"]. " - admin_image: " . $row["admin_image"]. " - admin_type: " . $row["admin_type"]. " - admin_added: " . $row["admin_added"]. "<br>";
+    }
 } else {
-    echo "Error deleting record: " . $conn->error;
+    echo "0 results found.";
 }
 
-// Close the statement and connection
-$stmt->close();
+// Close the connection
 $conn->close();
 ?>
