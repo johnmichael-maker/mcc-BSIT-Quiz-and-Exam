@@ -4,7 +4,7 @@ $servername = "localhost";
 $username = "u510162695_mcclrc"; // your database username
 $password = "1Mcclrc_pass";     // your database password
 $dbname = "u510162695_mcclrc"; // your database name
-09814473408
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
