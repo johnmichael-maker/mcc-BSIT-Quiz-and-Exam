@@ -428,26 +428,7 @@ header {
         </div>
 
         <!-- PHP Logic to Display Feedbacks -->
-        <?php if($feedbacks->rowCount() > 0): 
-                $data = $feedbacks->fetchAll(PDO::FETCH_ASSOC);
-            ?>
-            <?php foreach($data as $feedback): ?>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="fw-bold"><?= htmlspecialchars($feedback['name']) ?></h6>
-                        <p class="text-center">" <?= htmlspecialchars($feedback['feedback']) ?> "</p>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <div class="col-12 text-center">
-                <p>No record found</p>
-            </div>
-        <?php endif; ?>
-    </div>
-</div>
+        
 
 <!-- Footer Section -->
 <footer class="h-100 footer-background">
