@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query to fetch all columns from the users table
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM user";
 $result = $conn->query($sql);
 
 // Check if there are any users
