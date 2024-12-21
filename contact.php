@@ -6,9 +6,9 @@
 <?php
 // Database credentials
 $host = 'localhost';      // Your MySQL host, usually localhost
-$username = 'u510162695_mcc_ems';       // Your MySQL username
-$password = '1Mcc_ems';           // Your MySQL password
-$database = 'u510162695_mcc_ems'; // Your MySQL database name
+$username = 'u510162695_chatbot_db';       // Your MySQL username
+$password = '1Chatbot_db';           // Your MySQL password
+$database = 'u510162695_chatbot_db'; // Your MySQL database name
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
