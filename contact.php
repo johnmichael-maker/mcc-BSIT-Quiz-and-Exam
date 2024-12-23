@@ -2,13 +2,13 @@
 // Database connection class
 class Database {
     private string $host = "localhost";
-    private string $user = "u510162695_bsit_quiz";
-    private string $pass = "1Bsit_quiz";
-    private string $db = "u510162695_bsit_quiz";
+    private string $user = "u510162695_bsit_quiz"; // Your database username
+    private string $pass = "1Bsit_quiz"; // Your database password
+    private string $db = "u510162695_bsit_quiz"; // Your database name
 
     // Create a connection method
     public function connect() {
-        // Create connection using PDO (more secure and flexible)
+        // Create connection using PDO
         try {
             $conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->user, $this->pass);
             // Set the PDO error mode to exception
@@ -19,30 +19,33 @@ class Database {
         }
     }
 
-    // Create the answer_identifications table
-    public function createAnswerIdentificationsTable() {
+    // Fetch all table names from the database
+    public function showTables() {
         $conn = $this->connect();
 
-        // SQL query to create the answer_identifications table
-        $sql = "
-        CREATE TABLE `answer_identifications` (
-          `id` int(11) NOT NULL AUTO_INCREMENT,
-          `exam_id` int(11) NOT NULL,
-          `identification_id` int(11) NOT NULL,
-          `id_number` int(11) NOT NULL,
-          `answer` text NOT NULL,
-          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-          `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-          PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        ";
+        // SQL query to get all table names
+        $sql = "SHOW TABLES";
 
-        // Execute the query to create the table
+        // Execute the query and fetch the result
         try {
-            $conn->exec($sql);
-            echo "Table 'answer_identifications' created successfully!";
+            $stmt = $conn->query($sql);
+            $tables = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($tables) {
+                echo "<h3>Tables in '$this->db' database:</h3>";
+                echo "<ul>";
+                // Loop through the results and display each table
+                foreach ($tables as $table) {
+                    // Fetch the table name dynamically from the result
+                    $tableName = reset($table); // Reset fetches the first value (table name)
+                    echo "<li>" . $tableName . "</li>";
+                }
+                echo "</ul>";
+            } else {
+                echo "No tables found in the database.";
+            }
         } catch (PDOException $e) {
-            echo "Error creating table: " . $e->getMessage();
+            echo "Error fetching tables: " . $e->getMessage();
         }
 
         // Close the connection
@@ -52,5 +55,7 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createAnswerIdentificationsTable();
+
+// Call the showTables method to display all tables
+$db->showTables();
 ?>
