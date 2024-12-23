@@ -19,31 +19,29 @@ class Database {
         }
     }
 
-    // Create the feedbacks table
-    public function createFeedbacksTable() {
+    // Create the identification table
+    public function createIdentificationTable() {
         $conn = $this->connect();
 
         // SQL query to drop the table if it exists and create the new table
         $sql = "
-        DROP TABLE IF EXISTS `feedbacks`;
+        DROP TABLE IF EXISTS `identification`;
         /*!40101 SET @saved_cs_client     = @@character_set_client */;
         /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `feedbacks` (
+        CREATE TABLE `identification` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
-          `id_number` text NOT NULL,
           `exam_id` int(11) NOT NULL,
-          `name` text NOT NULL,
-          `feedback` text NOT NULL,
-          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+          `question` text NOT NULL,
+          `count` int(11) NOT NULL,
           PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         /*!40101 SET character_set_client = @saved_cs_client */;
         ";
 
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'feedbacks' created successfully!";
+            echo "Table 'identification' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -55,5 +53,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createFeedbacksTable();
+$db->createIdentificationTable();
 ?>
