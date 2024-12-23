@@ -19,35 +19,28 @@ class Database {
         }
     }
 
-    // Create the contestants table
-    public function createContestantsTable() {
+    // Create the enumeration table
+    public function createEnumerationTable() {
         $conn = $this->connect();
 
         // SQL query to drop the table if it exists and create the new table
         $sql = "
-        DROP TABLE IF EXISTS `contestants`;
+        DROP TABLE IF EXISTS `enumeration`;
         /*!40101 SET @saved_cs_client     = @@character_set_client */;
         /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `contestants` (
-          `contestant_id` int(11) NOT NULL AUTO_INCREMENT,
-          `id_number` varchar(255) NOT NULL,
-          `fname` text DEFAULT NULL,
-          `lname` text DEFAULT NULL,
-          `mname` text DEFAULT NULL,
-          `year` int(11) DEFAULT NULL,
-          `section` int(11) NOT NULL,
-          `status` int(11) NOT NULL DEFAULT 1,
-          `created_at` timestamp NULL DEFAULT current_timestamp(),
-          `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-          PRIMARY KEY (`contestant_id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        CREATE TABLE `enumeration` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `exam_id` int(11) NOT NULL,
+          `question` text NOT NULL,
+          PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         /*!40101 SET character_set_client = @saved_cs_client */;
         ";
 
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'contestants' created successfully!";
+            echo "Table 'enumeration' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -59,5 +52,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createContestantsTable();
+$db->createEnumerationTable();
 ?>
