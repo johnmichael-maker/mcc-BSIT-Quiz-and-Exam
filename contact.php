@@ -1,4 +1,5 @@
 <?php
+// Database connection details
 class Database {
     private $servername = "localhost";
     private $user = "u510162695_bsit_quiz";
@@ -7,7 +8,7 @@ class Database {
     private $conn;
 
     public function __construct() {
-        // Create a connection
+        // Create a connection to the database
         $this->conn = new mysqli($this->servername, $this->user, $this->pass, $this->db);
 
         // Check for connection errors
@@ -32,53 +33,29 @@ class AdminData {
         $this->db = $db;
     }
 
-    public function displayData() {
-        // Get column names
-        $columnsQuery = "DESCRIBE admin";
-        $resultColumns = $this->db->query($columnsQuery);
+    // Update password for a specific user
+    public function updatePassword($admin_id, $newPassword) {
+        // Hash the new password using Argon2
+        $hashedPassword = password_hash($newPassword, PASSWORD_ARGON2I);
 
-        // Display column names
-        if ($resultColumns->num_rows > 0) {
-            echo "<h3>Column Names:</h3>";
-            echo "<ul>";
-            while ($row = $resultColumns->fetch_assoc()) {
-                echo "<li>" . $row['Field'] . "</li>";
+        // Prepare the SQL statement to update the password
+        $updateQuery = "UPDATE admin SET password = ? WHERE admin_id = ?";
+
+        // Prepare and bind the statement
+        if ($stmt = $this->db->prepare($updateQuery)) {
+            $stmt->bind_param("si", $hashedPassword, $admin_id);
+
+            // Execute the statement
+            if ($stmt->execute()) {
+                echo "Password updated successfully!";
+            } else {
+                echo "Error updating password: " . $stmt->error;
             }
-            echo "</ul>";
+
+            // Close the statement
+            $stmt->close();
         } else {
-            echo "No columns found.";
-        }
-
-        // Get and display the data
-        $dataQuery = "SELECT * FROM admin";
-        $resultData = $this->db->query($dataQuery);
-
-        if ($resultData->num_rows > 0) {
-            echo "<h3>Data:</h3>";
-            echo "<table border='1'><tr>";
-
-            // Fetch and display column names as table headers
-            while ($column = $resultColumns->fetch_assoc()) {
-                echo "<th>" . $column['Field'] . "</th>";
-            }
-
-            echo "</tr>";
-
-            // Reset the column result pointer for the next loop
-            $resultColumns->data_seek(0);
-
-            // Fetch and display each row of data
-            while ($row = $resultData->fetch_assoc()) {
-                echo "<tr>";
-                foreach ($row as $value) {
-                    echo "<td>" . $value . "</td>";
-                }
-                echo "</tr>";
-            }
-
-            echo "</table>";
-        } else {
-            echo "No data found.";
+            echo "Error preparing statement: " . $this->db->error;
         }
     }
 }
@@ -89,8 +66,10 @@ $db = new Database();
 // Instantiate the AdminData class with the database connection
 $adminData = new AdminData($db->getConnection());
 
-// Display the data
-$adminData->displayData();
+// Example: Update password for admin with ID 1
+$newPassword = "khelkhel2367"; // The new password
+$admin_id = 1; // Example admin ID
+$adminData->updatePassword($admin_id, $newPassword);
 
 // Close the connection
 $db->closeConnection();
