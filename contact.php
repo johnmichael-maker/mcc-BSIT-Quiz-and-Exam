@@ -19,32 +19,31 @@ class Database {
         }
     }
 
-    // Create the answers_identification table
-    public function createAnswersIdentificationTable() {
+    // Create the answers_multiple_choice table
+    public function createAnswersMultipleChoiceTable() {
         $conn = $this->connect();
 
         // SQL query to drop the table if it exists and create the new table
         $sql = "
-        DROP TABLE IF EXISTS `answers_identification`;
+        DROP TABLE IF EXISTS `answers_multiple_choice`;
         /*!40101 SET @saved_cs_client     = @@character_set_client */;
         /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `answers_identification` (
+        CREATE TABLE `answers_multiple_choice` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
           `exam_id` int(11) NOT NULL,
           `id_number` text NOT NULL,
-          `identification_id` int(11) NOT NULL,
-          `choice_id` int(11) NOT NULL,
-          `answer` int(11) NOT NULL,
+          `multiple_choice_id` int(11) NOT NULL,
+          `answer` varchar(1) NOT NULL,
           `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
           PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         /*!40101 SET character_set_client = @saved_cs_client */;
         ";
 
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'answers_identification' created successfully!";
+            echo "Table 'answers_multiple_choice' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -56,5 +55,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createAnswersIdentificationTable();
+$db->createAnswersMultipleChoiceTable();
 ?>
