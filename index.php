@@ -1,9 +1,14 @@
 <?php 
      require __DIR__ . '/./vendor/autoload.php';
-     
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+     use App\DatabaseControl;
+
+     $databaseController = new DatabaseControl;
+    $feedbacks = $databaseController->getFeedbacks();
+    
+    ini_set('display_errors', 1);  // Show errors on the page
+    error_reporting(E_ALL);        // Report all errors
+
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -428,7 +433,26 @@ header {
         </div>
 
         <!-- PHP Logic to Display Feedbacks -->
-        
+        <?php if($feedbacks->rowCount() > 0): 
+                $data = $feedbacks->fetchAll(PDO::FETCH_ASSOC);
+            ?>
+            <?php foreach($data as $feedback): ?>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="fw-bold"><?= htmlspecialchars($feedback['name']) ?></h6>
+                        <p class="text-center">" <?= htmlspecialchars($feedback['feedback']) ?> "</p>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="col-12 text-center">
+                <p>No record found</p>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
 
 <!-- Footer Section -->
 <footer class="h-100 footer-background">
