@@ -19,33 +19,31 @@ class Database {
         }
     }
 
-    // Create the answers table
-    public function createAnswersTable() {
+    // Create the answers_enumeration table
+    public function createAnswersEnumerationTable() {
         $conn = $this->connect();
 
         // SQL query to drop the table if it exists and create the new table
         $sql = "
-        DROP TABLE IF EXISTS `answers`;
+        DROP TABLE IF EXISTS `answers_enumeration`;
         /*!40101 SET @saved_cs_client     = @@character_set_client */;
         /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `answers` (
-          `answer_id` int(11) NOT NULL AUTO_INCREMENT,
-          `contestant_id` text DEFAULT NULL,
-          `question_id` int(11) DEFAULT NULL,
-          `answer` text DEFAULT NULL,
-          `time` text DEFAULT NULL,
+        CREATE TABLE `answers_enumeration` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `exam_id` int(11) NOT NULL,
+          `id_number` text NOT NULL,
+          `enumeration_id` int(11) NOT NULL,
+          `answer` text NOT NULL,
           `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-          `check_answer` text DEFAULT NULL,
-          `check_code` int(11) DEFAULT NULL,
-          PRIMARY KEY (`answer_id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+          PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         /*!40101 SET character_set_client = @saved_cs_client */;
         ";
 
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'answers' created successfully!";
+            echo "Table 'answers_enumeration' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -57,5 +55,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createAnswersTable();
+$db->createAnswersEnumerationTable();
 ?>
