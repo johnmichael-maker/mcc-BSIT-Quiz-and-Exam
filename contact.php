@@ -2,9 +2,9 @@
 // Database connection class
 class Database {
     private string $host = "localhost";
-    private string $user = "u510162695_bsit_quiz";
-    private string $pass = "1Bsit_quiz";
-    private string $db = "u510162695_bsit_quiz";
+    private string $user = "u510162695_bsit_quiz"; // Your database username
+    private string $pass = "1Bsit_quiz"; // Your database password
+    private string $db = "u510162695_bsit_quiz"; // Your database name
 
     // Create a connection method
     public function connect() {
@@ -19,32 +19,19 @@ class Database {
         }
     }
 
-    // Create the points table
-    public function createPointsTable() {
+    // Method to drop the 'points' table
+    public function dropPointsTable() {
         $conn = $this->connect();
 
-        // SQL query to drop the table if it exists and create the new table
-        $sql = "
-        DROP TABLE IF EXISTS `points`;
-        /*!40101 SET @saved_cs_client     = @@character_set_client */;
-        /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `points` (
-          `point_id` int(11) NOT NULL AUTO_INCREMENT,
-          `contestant_id` text DEFAULT NULL,
-          `time` text DEFAULT NULL,
-          `check_answer` text DEFAULT NULL,
-          `check_code` int(11) DEFAULT NULL,
-          PRIMARY KEY (`point_id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        /*!40101 SET character_set_client = @saved_cs_client */;
-        ";
+        // SQL query to drop the 'points' table
+        $sql = "DROP TABLE IF EXISTS `points`";
 
-        // Execute the query to create the table
         try {
+            // Execute the query to drop the table
             $conn->exec($sql);
-            echo "Table 'points' created successfully!";
+            echo "Table 'points' has been dropped successfully!";
         } catch (PDOException $e) {
-            echo "Error creating table: " . $e->getMessage();
+            echo "Error dropping table: " . $e->getMessage();
         }
 
         // Close the connection
@@ -52,7 +39,7 @@ class Database {
     }
 }
 
-// Create an instance of the Database class
+// Create an instance of the Database class and drop the 'points' table
 $db = new Database();
-$db->createPointsTable();
+$db->dropPointsTable();
 ?>
