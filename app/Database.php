@@ -6,7 +6,6 @@ use PDO;
 use PDOException;
 use Exception;
 
-
 // private string $user = "u510162695_bsit_quiz";
 // private string $pass = "1Bsit_quiz";
 // private string $db = "u510162695_bsit_quiz";
@@ -23,7 +22,6 @@ class Database
     private string $db = "u510162695_bsit_quiz";
     private ?PDO $conn = null;
 
-    // Returns a PDO connection
     public function getConnection(): PDO
     {
         if ($this->conn == null) {
@@ -36,7 +34,7 @@ class Database
                     PDO::ATTR_EMULATE_PREPARES => false
                 ];
 
-                $this->conn = new PDO($dsn, $this->user, $this->pass, $options);
+                $this->conn = new PDO($dsn, $this->user, $this->pass);
             } catch (PDOException  $e) {
                 throw new Exception('Connection Error: ' . $e->getMessage());
             }
@@ -44,31 +42,6 @@ class Database
         return $this->conn;
     }
 
-    // Prevent dropping of tables
-    public function preventDropTable(string $sql): void
-    {
-        // Check if the SQL query contains 'DROP TABLE' command
-        if (stripos($sql, 'DROP TABLE') !== false) {
-            throw new Exception('Dropping tables is not allowed!');
-        }
-    }
-
-    // Execute SQL statement and check for DROP TABLE
-    public function executeQuery(string $sql): bool
-    {
-        // First, prevent DROP TABLE command
-        $this->preventDropTable($sql);
-
-        // Execute the SQL query if it's safe
-        try {
-            $stmt = $this->getConnection()->prepare($sql);
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            throw new Exception('Query execution failed: ' . $e->getMessage());
-        }
-    }
-
-    // Close the database connection
     public function closeConnection(): void
     {
         $this->conn = null;
