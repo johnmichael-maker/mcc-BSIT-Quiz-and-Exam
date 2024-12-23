@@ -19,22 +19,29 @@ class Database {
         }
     }
 
-    // Create the points table
-    public function createPointsTable() {
+    // Create the questions table
+    public function createQuestionsTable() {
         $conn = $this->connect();
 
         // SQL query to drop the table if it exists and create the new table
         $sql = "
-        DROP TABLE IF EXISTS `points`;
+        DROP TABLE IF EXISTS `questions`;
         /*!40101 SET @saved_cs_client     = @@character_set_client */;
         /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `points` (
-          `point_id` int(11) NOT NULL AUTO_INCREMENT,
-          `contestant_id` text DEFAULT NULL,
-          `time` text DEFAULT NULL,
-          `check_answer` text DEFAULT NULL,
-          `check_code` int(11) DEFAULT NULL,
-          PRIMARY KEY (`point_id`)
+        CREATE TABLE `questions` (
+          `question_id` int(11) NOT NULL AUTO_INCREMENT,
+          `question` text DEFAULT NULL,
+          `A` text DEFAULT NULL,
+          `B` text DEFAULT NULL,
+          `C` text DEFAULT NULL,
+          `D` text DEFAULT NULL,
+          `answer` int(11) DEFAULT NULL,
+          `category` int(11) NOT NULL,
+          `status` int(11) NOT NULL DEFAULT 1,
+          `activation` int(11) DEFAULT NULL,
+          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+          `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+          PRIMARY KEY (`question_id`)
         ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         /*!40101 SET character_set_client = @saved_cs_client */;
         ";
@@ -42,7 +49,7 @@ class Database {
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'points' created successfully!";
+            echo "Table 'questions' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -54,5 +61,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createPointsTable();
+$db->createQuestionsTable();
 ?>
