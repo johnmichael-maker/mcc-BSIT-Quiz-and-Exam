@@ -19,33 +19,35 @@ class Database {
         }
     }
 
-    // Create the ms_365_instructor table
-    public function createMs365InstructorTable() {
+    // Insert data into ms_365_instructor table
+    public function insertMs365InstructorData() {
         $conn = $this->connect();
 
-        // SQL query to drop the table if it exists and create the new table
+        // SQL query to insert data
         $sql = "
-        DROP TABLE IF EXISTS `ms_365_instructor`;
-        /*!40101 SET @saved_cs_client     = @@character_set_client */;
-        /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `ms_365_instructor` (
-          `id` int(11) NOT NULL AUTO_INCREMENT,
-          `first_name` varchar(100) NOT NULL,
-          `last_name` varchar(100) NOT NULL,
-          `username` varchar(100) NOT NULL,
-          `token` varchar(255) NOT NULL,
-          `token_expire` time NOT NULL,
-          PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        /*!40101 SET character_set_client = @saved_cs_client */;
+        LOCK TABLES `ms_365_instructor` WRITE;
+        /*!40000 ALTER TABLE `ms_365_instructor` DISABLE KEYS */;
+        INSERT INTO `ms_365_instructor` (`id`, `first_name`, `last_name`, `username`, `token`, `token_expire`) VALUES
+        (1, 'Alvine', 'Billones', 'Alvine.Billones@mcclawis.edu.ph', '', '00:00:00'),
+        (2, 'Juniel', 'Marfa', 'Juniel.Marfa@mcclawis.edu.ph', '', '00:00:00'),
+        (3, 'Kurt Bryan', 'Alegre', 'KurtBryan.Alegre@mcclawis.edu.ph', '', '00:00:00'),
+        (4, 'Dino', 'Ilustrisimo', 'Dino.Ilustrisimo@mcclawis.edu.ph', '', '00:00:00'),
+        (5, 'Jessica', 'Alcazar', 'Jessica.Alcazar@mcclawis.edu.ph', '', '00:00:00'),
+        (6, 'Jered', 'Cueva', 'Jered.Cueva@mcclawis.edu.ph', '', '00:00:00'),
+        (7, 'Danilo', 'Villarino', 'Danilo.Villarino@mcclawis.edu.ph', '', '00:00:00'),
+        (8, 'Jamaica Fe', 'Carabio', 'jamaicafe.carabio@mcclawis.edu.ph', '', '00:00:00'),
+        (9, 'John Michaelle Piedad', 'Robles', 'johnmichaelle.robles@mcclawis.edu.ph', 'fe7e3ac25fc4711d06d2474ee6948682', '05:31:54'),
+        (10, 'Emily', 'Ilustrisimo', 'Emily.Ilustrisimo@mcclawis.edu.ph', '', '00:00:00');
+        /*!40000 ALTER TABLE `ms_365_instructor` ENABLE KEYS */;
+        UNLOCK TABLES;
         ";
 
-        // Execute the query to create the table
+        // Execute the query to insert data
         try {
             $conn->exec($sql);
-            echo "Table 'ms_365_instructor' created successfully!";
+            echo "Data inserted successfully!";
         } catch (PDOException $e) {
-            echo "Error creating table: " . $e->getMessage();
+            echo "Error inserting data: " . $e->getMessage();
         }
 
         // Close the connection
@@ -55,5 +57,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createMs365InstructorTable();
+$db->insertMs365InstructorData();
 ?>
