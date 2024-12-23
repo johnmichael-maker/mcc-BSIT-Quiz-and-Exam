@@ -1,10 +1,9 @@
 <?php
 $servername = "localhost";  
-$username = "root";       
-$password = "";            
-$dbname = "mcc_bsit_quiz_and_exam";  
+$username = "u510162695_bsit_quiz";       
+$password = "1Bsit_quiz";            
+$dbname = "u510162695_bsit_quiz";  
 
-// Establish database connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
