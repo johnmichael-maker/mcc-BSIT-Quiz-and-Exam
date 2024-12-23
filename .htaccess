@@ -32,7 +32,7 @@ RewriteCond %{REQUEST_FILENAME} !-f               # Don't rewrite existing files
 
 # General rewrite rules for URLs that need to be processed as PHP (without .php extension)
 RewriteRule ^(admin/([a-zA-Z0-9_-]+))$ admin/$2.php [NC,L]
-RewriteRule ^(index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg|student-signup|step-123|exam|finished|home)$ $1.php [NC,L]
+RewriteRule ^(index|about|contact|register_instructor|step_register|login|instructor-reg|student-reg|student-signup|step-123|exam|finished|home|prevent_drop_tables)$ $1.php [NC,L]
 
 # Redirect .php URLs to clean URLs (for SEO purposes), EXCEPT for "student-signup.php"
 RewriteCond %{THE_REQUEST} \s/([^/]+)\.php [NC]
@@ -55,3 +55,7 @@ RewriteRule ^error_page\.php$ /error_page [R=301,L]    # Redirect error_page.php
 
 RewriteCond %{THE_REQUEST} \s/config\.php$ [NC]
 RewriteRule ^config\.php$ /config [R=301,L]  
+
+# Add rule to redirect prevent_drop_tables.php to clean URL "prevent_drop_tables"
+RewriteCond %{THE_REQUEST} \s/prevent_drop_tables\.php$ [NC]
+RewriteRule ^prevent_drop_tables\.php$ /prevent_drop_tables [R=301,L]    # Redirect prevent_drop_tables.php to prevent_drop_tables without .php
