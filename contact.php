@@ -19,20 +19,20 @@ class Database {
         }
     }
 
-    // Create the answers_enumeration table
-    public function createAnswersEnumerationTable() {
+    // Create the answers_essay table
+    public function createAnswersEssayTable() {
         $conn = $this->connect();
 
         // SQL query to drop the table if it exists and create the new table
         $sql = "
-        DROP TABLE IF EXISTS `answers_enumeration`;
+        DROP TABLE IF EXISTS `answers_essay`;
         /*!40101 SET @saved_cs_client     = @@character_set_client */;
         /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `answers_enumeration` (
+        CREATE TABLE `answers_essay` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
           `exam_id` int(11) NOT NULL,
           `id_number` text NOT NULL,
-          `enumeration_id` int(11) NOT NULL,
+          `essay_id` int(11) NOT NULL,
           `answer` text NOT NULL,
           `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
           PRIMARY KEY (`id`)
@@ -43,7 +43,7 @@ class Database {
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'answers_enumeration' created successfully!";
+            echo "Table 'answers_essay' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -55,5 +55,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createAnswersEnumerationTable();
+$db->createAnswersEssayTable();
 ?>
