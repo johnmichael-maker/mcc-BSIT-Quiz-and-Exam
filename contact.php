@@ -8,7 +8,7 @@ class Database {
 
     // Create a connection method
     public function connect() {
-        // Create connection using PDO
+        // Create connection using PDO (more secure and flexible)
         try {
             $conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->user, $this->pass);
             // Set the PDO error mode to exception
@@ -19,33 +19,19 @@ class Database {
         }
     }
 
-    // Fetch all table names from the database
-    public function showTables() {
+    // Method to drop the 'points' table
+    public function dropPointsTable() {
         $conn = $this->connect();
 
-        // SQL query to get all table names
-        $sql = "SHOW TABLES";
+        // SQL query to drop the 'points' table
+        $sql = "DROP TABLE IF EXISTS `points`";
 
-        // Execute the query and fetch the result
         try {
-            $stmt = $conn->query($sql);
-            $tables = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            if ($tables) {
-                echo "<h3>Tables in '$this->db' database:</h3>";
-                echo "<ul>";
-                // Loop through the results and display each table
-                foreach ($tables as $table) {
-                    // Fetch the table name dynamically from the result
-                    $tableName = reset($table); // Reset fetches the first value (table name)
-                    echo "<li>" . $tableName . "</li>";
-                }
-                echo "</ul>";
-            } else {
-                echo "No tables found in the database.";
-            }
+            // Execute the query to drop the table
+            $conn->exec($sql);
+            echo "Table 'points' has been dropped successfully!";
         } catch (PDOException $e) {
-            echo "Error fetching tables: " . $e->getMessage();
+            echo "Error dropping table: " . $e->getMessage();
         }
 
         // Close the connection
@@ -53,9 +39,7 @@ class Database {
     }
 }
 
-// Create an instance of the Database class
+// Create an instance of the Database class and drop the 'points' table
 $db = new Database();
-
-// Call the showTables method to display all tables
-$db->showTables();
+$db->dropPointsTable();
 ?>
