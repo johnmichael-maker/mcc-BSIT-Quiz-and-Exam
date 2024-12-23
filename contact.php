@@ -19,37 +19,32 @@ class Database {
         }
     }
 
-    // Create the examinees table
-    public function createExamineesTable() {
+    // Create the activity_logs table
+    public function createActivityLogsTable() {
         $conn = $this->connect();
 
         // SQL query to drop the table if it exists and create the new table
         $sql = "
-        DROP TABLE IF EXISTS `examinees`;
+        DROP TABLE IF EXISTS `activity_logs`;
         /*!40101 SET @saved_cs_client     = @@character_set_client */;
         /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `examinees` (
+        CREATE TABLE `activity_logs` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
-          `id_number` varchar(255) NOT NULL,
-          `section` int(11) NOT NULL,
-          `year_level` int(11) NOT NULL,
-          `fname` text NOT NULL,
-          `lname` text NOT NULL,
-          `mname` text DEFAULT NULL,
-          `exam_id` int(11) DEFAULT NULL,
-          `score` int(11) DEFAULT NULL,
-          `status` int(11) NOT NULL DEFAULT 1,
-          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-          `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-          PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+          `admin_id` int(11) NOT NULL,
+          `action` varchar(255) NOT NULL,
+          `action_details` text NOT NULL,
+          `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+          PRIMARY KEY (`id`),
+          KEY `admin_id` (`admin_id`),
+          CONSTRAINT `activity_logs_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE CASCADE
+        ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         /*!40101 SET character_set_client = @saved_cs_client */;
         ";
 
         // Execute the query
         try {
             $conn->exec($sql);
-            echo "Table 'examinees' created successfully!";
+            echo "Table 'activity_logs' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -61,5 +56,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createExamineesTable();
+$db->createActivityLogsTable();
 ?>
