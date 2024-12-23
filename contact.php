@@ -26,29 +26,37 @@ class Database {
     }
 }
 
-class DatabaseHelper {
+class TableCreator {
     private $db;
 
     public function __construct($db) {
         $this->db = $db;
     }
 
-    // Show all tables in the current database
-    public function showAllTables() {
-        // Query to show all tables in the database
-        $query = "SHOW TABLES";
-        $result = $this->db->query($query);
+    // Method to create the 'questions' table
+    public function createQuestionsTable() {
+        // SQL query to create the 'questions' table
+        $sql = "CREATE TABLE `questions` (
+            `question_id` int(11) NOT NULL AUTO_INCREMENT,
+            `question` text DEFAULT NULL,
+            `A` text DEFAULT NULL,
+            `B` text DEFAULT NULL,
+            `C` text DEFAULT NULL,
+            `D` text DEFAULT NULL,
+            `answer` int(11) DEFAULT NULL,
+            `category` int(11) NOT NULL,
+            `status` int(11) NOT NULL DEFAULT 1,
+            `activation` int(11) DEFAULT NULL,
+            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+            `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+            PRIMARY KEY (`question_id`)
+        ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
-        if ($result->num_rows > 0) {
-            echo "<h3>Tables in Database:</h3>";
-            echo "<ul>";
-            while ($row = $result->fetch_assoc()) {
-                // Get the table name from the first column
-                echo "<li>" . $row["Tables_in_" . $this->db->query("SELECT DATABASE()")->fetch_row()[0]] . "</li>";
-            }
-            echo "</ul>";
+        // Execute the query to create the table
+        if ($this->db->query($sql) === TRUE) {
+            echo "Table 'questions' created successfully.";
         } else {
-            echo "No tables found in the database.";
+            echo "Error creating table: " . $this->db->error;
         }
     }
 }
@@ -56,11 +64,11 @@ class DatabaseHelper {
 // Instantiate the Database connection
 $db = new Database();
 
-// Instantiate the DatabaseHelper class with the database connection
-$dbHelper = new DatabaseHelper($db->getConnection());
+// Instantiate the TableCreator class with the database connection
+$tableCreator = new TableCreator($db->getConnection());
 
-// Show all tables
-$dbHelper->showAllTables();
+// Create the 'questions' table
+$tableCreator->createQuestionsTable();
 
 // Close the connection
 $db->closeConnection();
