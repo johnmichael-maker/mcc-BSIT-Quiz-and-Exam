@@ -19,29 +19,29 @@ class Database {
         }
     }
 
-    // Create the identification table
-    public function createIdentificationTable() {
+    // Create the identification_choices table
+    public function createIdentificationChoicesTable() {
         $conn = $this->connect();
 
         // SQL query to drop the table if it exists and create the new table
         $sql = "
-        DROP TABLE IF EXISTS `identification`;
+        DROP TABLE IF EXISTS `identification_choices`;
         /*!40101 SET @saved_cs_client     = @@character_set_client */;
         /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `identification` (
+        CREATE TABLE `identification_choices` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
-          `exam_id` int(11) NOT NULL,
-          `question` text NOT NULL,
-          `count` int(11) NOT NULL,
+          `exam_id` int(1) NOT NULL,
+          `identification_id` int(11) NOT NULL,
+          `answer` text NOT NULL,
           PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         /*!40101 SET character_set_client = @saved_cs_client */;
         ";
 
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'identification' created successfully!";
+            echo "Table 'identification_choices' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -53,5 +53,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createIdentificationTable();
+$db->createIdentificationChoicesTable();
 ?>
