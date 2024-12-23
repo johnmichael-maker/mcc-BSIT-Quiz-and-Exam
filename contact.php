@@ -19,32 +19,25 @@ class Database {
         }
     }
 
-    // Create the activity_logs table
-    public function createActivityLogsTable() {
+    // Create the identifications table
+    public function createIdentificationsTable() {
         $conn = $this->connect();
 
-        // SQL query to drop the table if it exists and create the new table
+        // SQL query to create the identifications table
         $sql = "
-        DROP TABLE IF EXISTS `activity_logs`;
-        /*!40101 SET @saved_cs_client     = @@character_set_client */;
-        /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `activity_logs` (
+        CREATE TABLE `identifications` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
-          `admin_id` int(11) NOT NULL,
-          `action` varchar(255) NOT NULL,
-          `action_details` text NOT NULL,
-          `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-          PRIMARY KEY (`id`),
-          KEY `admin_id` (`admin_id`),
-          CONSTRAINT `activity_logs_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE CASCADE
-        ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-        /*!40101 SET character_set_client = @saved_cs_client */;
+          `exam_id` int(11) NOT NULL,
+          `question` text NOT NULL,
+          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+          PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
 
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'activity_logs' created successfully!";
+            echo "Table 'identifications' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -56,5 +49,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createActivityLogsTable();
+$db->createIdentificationsTable();
 ?>
