@@ -19,17 +19,17 @@ class Database {
         }
     }
 
-    // Create the identifications table
-    public function createIdentificationsTable() {
+    // Create the identification_answers table
+    public function createIdentificationAnswersTable() {
         $conn = $this->connect();
 
-        // SQL query to create the identifications table
+        // SQL query to create the identification_answers table
         $sql = "
-        CREATE TABLE `identifications` (
+        CREATE TABLE `identification_answers` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
           `exam_id` int(11) NOT NULL,
-          `question` text NOT NULL,
-          `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+          `identification_id` int(11) NOT NULL,
+          `answer` text NOT NULL,
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         ";
@@ -37,7 +37,7 @@ class Database {
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'identifications' created successfully!";
+            echo "Table 'identification_answers' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -49,5 +49,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createIdentificationsTable();
+$db->createIdentificationAnswersTable();
 ?>
