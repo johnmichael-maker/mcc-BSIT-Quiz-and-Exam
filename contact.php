@@ -1,5 +1,6 @@
+<?php
 class Database {
-    private $servername = "localhost"; 
+    private $servername = "localhost";
     private $user = "u510162695_bsit_quiz";
     private $pass = "1Bsit_quiz";
     private $db = "u510162695_bsit_quiz";
