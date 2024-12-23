@@ -19,33 +19,30 @@ class Database {
         }
     }
 
-    // Create the multiple_choice table
-    public function createMultipleChoiceTable() {
+    // Create the points table
+    public function createPointsTable() {
         $conn = $this->connect();
 
         // SQL query to drop the table if it exists and create the new table
         $sql = "
-        DROP TABLE IF EXISTS `multiple_choice`;
+        DROP TABLE IF EXISTS `points`;
         /*!40101 SET @saved_cs_client     = @@character_set_client */;
         /*!40101 SET character_set_client = utf8 */;
-        CREATE TABLE `multiple_choice` (
-          `id` int(11) NOT NULL AUTO_INCREMENT,
-          `exam_id` int(11) NOT NULL,
-          `question` text NOT NULL,
-          `answer` varchar(1) NOT NULL,
-          `A` text NOT NULL,
-          `B` text NOT NULL,
-          `C` text NOT NULL,
-          `D` text NOT NULL,
-          PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+        CREATE TABLE `points` (
+          `point_id` int(11) NOT NULL AUTO_INCREMENT,
+          `contestant_id` text DEFAULT NULL,
+          `time` text DEFAULT NULL,
+          `check_answer` text DEFAULT NULL,
+          `check_code` int(11) DEFAULT NULL,
+          PRIMARY KEY (`point_id`)
+        ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
         /*!40101 SET character_set_client = @saved_cs_client */;
         ";
 
         // Execute the query to create the table
         try {
             $conn->exec($sql);
-            echo "Table 'multiple_choice' created successfully!";
+            echo "Table 'points' created successfully!";
         } catch (PDOException $e) {
             echo "Error creating table: " . $e->getMessage();
         }
@@ -57,5 +54,5 @@ class Database {
 
 // Create an instance of the Database class
 $db = new Database();
-$db->createMultipleChoiceTable();
+$db->createPointsTable();
 ?>
