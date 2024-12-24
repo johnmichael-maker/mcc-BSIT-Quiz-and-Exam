@@ -185,7 +185,7 @@
         }
 
 
-        input[type="email"].form-control {
+    input[type="email"].form-control {
     border: none;
     border-bottom: 2px solid crimson; /* Black underline */
     outline: none;
