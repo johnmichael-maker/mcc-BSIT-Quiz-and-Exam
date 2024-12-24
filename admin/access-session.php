@@ -187,7 +187,7 @@
 
         input[type="email"].form-control {
     border: none;
-    border-bottom: 2px solid #000; /* Black underline */
+    border-bottom: 2px solid crimson; /* Black underline */
     outline: none;
     padding: 5px 0;
     width: 100%;
