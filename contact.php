@@ -1,95 +1,51 @@
 <?php
-// Database connection settings
-$host = 'localhost';  // Your database host
-$username = 'u510162695_mcclrc';  // Your database username
-$password = '1Mcclrc_pass';  // Your database password
-$database = 'u510162695_mcclrc'; // Your database name
-
-// New Data to update for user with ID 311
-$user_id = 375;  // The user_id of the record to update
-$lastname = 'Robles';
-$firstname = 'john Michaelle';
-$middlename = ''; // Assuming no middlename is provided
-$gender = 'Male';
-$course = 'BSIT';
-$address = 'Malbago, Madridejos, Cebu';
-$cell_no = '09234567352';
-$birthdate = '2000-09-25';
-$email = 'johnmichaelle.robles@mcclawis.edu.ph';
-$year_level = '4th year';
-$student_id_no = '2021-1732';
-
-// New password (the password you want to set)
-$password_plain = 'iloveyou'; // New password
-$hashed_password = password_hash($password_plain, PASSWORD_ARGON2I); // Hash the password using Argon2
-
-$role_as = 'student';
-$status = 'approved';
-$user_added = '2024-10-22 08:43:27';
-$profile_image = '';
-$qr_code = 'b60412e514f3d2709092740f2ca0cfdb';
-$verify_token = '';
-$token_used = 1; // Assuming token is used
-$contact_person = 'Edna Robles';
-$person_cell_no = '09302960381';
-$logs = ''; // Assuming no logs provided
+// Step 1: Database connection details
+$servername = "localhost"; // Database server (usually localhost)
+$username = "u510162695_mcclrc"; // Your username
+$password = "1Mcclrc_pass"; // Your password
+$dbname = "u510162695_mcclrc"; // Your database name
 
 // Create connection
-$conn = new mysqli($host, $username, $password, $database);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to update data in the user table
-$sql = "UPDATE `user` 
-        SET `lastname` = ?, `firstname` = ?, `middlename` = ?, `gender` = ?, `course` = ?, 
-            `address` = ?, `cell_no` = ?, `birthdate` = ?, `email` = ?, `year_level` = ?, 
-            `student_id_no` = ?, `password` = ?, `role_as` = ?, `status` = ?, `user_added` = ?, 
-            `profile_image` = ?, `qr_code` = ?, `verify_token` = ?, `token_used` = ?, 
-            `contact_person` = ?, `person_cell_no` = ?, `logs` = ? 
-        WHERE `user_id` = ?";
+// Step 2: Query to get data from the 'users' table
+$sql = "SELECT * FROM user";  // Change 'users' to your table name if necessary
+$result = $conn->query($sql);
 
-// Prepare the SQL statement
-$stmt = $conn->prepare($sql);
+// Step 3: Display column names and data in a table format
+if ($result->num_rows > 0) {
+    // Start the table
+    echo "<table border='1'>";
+    
+    // Display column names (headers)
+    echo "<tr>";
+    // Get the column names dynamically from the result set
+    $fields = $result->fetch_fields();  // Get the fields (columns) of the result
+    foreach ($fields as $field) {
+        echo "<th>" . htmlspecialchars($field->name) . "</th>";
+    }
+    echo "</tr>";
+    
+    // Output data for each row
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        foreach ($row as $value) {
+            echo "<td>" . htmlspecialchars($value) . "</td>";
+        }
+        echo "</tr>";
+    }
 
-// Bind the parameters
-$stmt->bind_param(
-    "ssssssssssssssssssiisss", 
-    $lastname, 
-    $firstname, 
-    $middlename, 
-    $gender, 
-    $course, 
-    $address, 
-    $cell_no, 
-    $birthdate, 
-    $email, 
-    $year_level, 
-    $student_id_no, 
-    $hashed_password,  // Use the hashed password for the new password
-    $role_as, 
-    $status, 
-    $user_added, 
-    $profile_image, 
-    $qr_code, 
-    $verify_token, 
-    $token_used, 
-    $contact_person, 
-    $person_cell_no, 
-    $logs, 
-    $user_id  // The user_id to identify which record to update
-);
-
-// Execute the query
-if ($stmt->execute()) {
-    echo "Record updated successfully.";
+    // End the table
+    echo "</table>";
 } else {
-    echo "Error updating record: " . $stmt->error;
+    echo "0 results"; // If no records found
 }
 
-// Close the statement and connection
-$stmt->close();
+// Step 4: Close the database connection
 $conn->close();
 ?>
