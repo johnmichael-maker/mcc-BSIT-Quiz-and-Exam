@@ -2,8 +2,8 @@
 class Database {
     // Define the database credentials
     private $servername = "localhost";
-    private $user = "u510162695_Sillon";
-    private $pass = "1Siloon_pass";
+    private $user = "u510162695_sillon";
+    private $pass = "1Sillon_pass";
     private $db = "u510162695_sillon";
     private $conn;
 
