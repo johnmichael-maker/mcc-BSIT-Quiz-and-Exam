@@ -50,8 +50,8 @@ $sql = "UPDATE users SET
             image = ?, 
             additional_image = ?, 
             guardian_name = ?, 
-            guardian_phone = ? 
-             password = ?  // Updating the password
+            guardian_phone = ?, 
+            password = ?  // Updating the password
         WHERE user_id = ?"; // Replace 'users' with your actual table name
 
 // Prepare the statement
@@ -59,7 +59,7 @@ $stmt = $conn->prepare($sql);
 
 // Bind parameters to the query
 $stmt->bind_param(
-    "ssssssssssssssi", // Data types for each parameter (string, string, etc.)
+    "sssssssssssssssi", // Data types for each parameter (string, string, etc.)
     $new_name, $new_lastname, $new_gender, $new_course, $new_address,
     $new_phone, $new_dob, $new_email, $new_year, $new_student_no,
     $new_status, $new_image, $new_additional_image, $new_guardian_name,
