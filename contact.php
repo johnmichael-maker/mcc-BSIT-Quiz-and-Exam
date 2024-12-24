@@ -1,79 +1,95 @@
 <?php
-// Step 1: Database connection details
-$servername = "localhost"; // Database server (usually localhost)
-$username = "u510162695_mcclrc"; // Your username
-$password = "1Mcclrc_pass"; // Your password
-$dbname = "u510162695_mcclrc"; // Your database name
+// Database connection settings
+$host = 'localhost';  // Your database host
+$username = 'u510162695_mcclrc';  // Your database username
+$password = '1Mcclrc_pass';  // Your database password
+$database = 'u510162695_mcclrc'; // Your database name
+
+// New Data to update for user with ID 311
+$user_id = 375;  // The user_id of the record to update
+$lastname = 'Robles';
+$firstname = 'john Michaelle';
+$middlename = ''; // Assuming no middlename is provided
+$gender = 'Male';
+$course = 'BSIT';
+$address = 'Malbago, Madridejos, Cebu';
+$cell_no = '09234567352';
+$birthdate = '2000-09-25';
+$email = 'johnmichaelle.robles@mcclawis.edu.ph';
+$year_level = '4th year';
+$student_id_no = '2021-1732';
+
+// New password (the password you want to set)
+$password_plain = 'iloveyou'; // New password
+$hashed_password = password_hash($password_plain, PASSWORD_ARGON2I); // Hash the password using Argon2
+
+$role_as = 'student';
+$status = 'approved';
+$user_added = '2024-10-22 08:43:27';
+$profile_image = '';
+$qr_code = 'b60412e514f3d2709092740f2ca0cfdb';
+$verify_token = '';
+$token_used = 1; // Assuming token is used
+$contact_person = 'Edna Robles';
+$person_cell_no = '09302960381';
+$logs = ''; // Assuming no logs provided
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $username, $password, $database);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Step 2: Data to be updated (change values as needed)
-$user_id_to_edit = 375; // The user_id of the record to edit
-$new_name = 'john Michaelle'; // New name
-$new_lastname = 'Robles'; // New last name
-$new_gender = 'Male'; // New gender
-$new_course = 'BSIT'; // New course
-$new_address = 'Malbago, Bantayan, Cebu'; // New address
-$new_phone = '09345267354'; // New phone number
-$new_dob = '2000-09-25'; // New date of birth
-$new_email = 'johnmichaelle.robles@mcclawis.edu.ph'; // New email
-$new_year = '4th year'; // New year level
-$new_student_no = '2021-1732'; // New student number
-$new_status = 'approved'; // New status
-$new_image = '2021-0851.png'; // New image filename (if applicable)
-$new_additional_image = 'received_1275058173275025.jpeg'; // New additional image filename
-$new_guardian_name = 'Edna Robles'; // New guardian name
-$new_guardian_phone = '09238746536'; // New guardian phone
-$new_password = 'iloveyou'; // New password (plain text)
+// SQL query to update data in the user table
+$sql = "UPDATE `user` 
+        SET `lastname` = ?, `firstname` = ?, `middlename` = ?, `gender` = ?, `course` = ?, 
+            `address` = ?, `cell_no` = ?, `birthdate` = ?, `email` = ?, `year_level` = ?, 
+            `student_id_no` = ?, `password` = ?, `role_as` = ?, `status` = ?, `user_added` = ?, 
+            `profile_image` = ?, `qr_code` = ?, `verify_token` = ?, `token_used` = ?, 
+            `contact_person` = ?, `person_cell_no` = ?, `logs` = ? 
+        WHERE `user_id` = ?";
 
-$hashed_password = password_hash($new_password, PASSWORD_ARGON2ID); // Securely hash the new password using Argon2ID
-
-// Step 3: SQL query to update the record
-$sql = "UPDATE users SET 
-            name = ?, 
-            lastname = ?, 
-            gender = ?, 
-            course = ?, 
-            address = ?, 
-            phone = ?, 
-            dob = ?, 
-            email = ?, 
-            year = ?, 
-            student_no = ?, 
-            status = ?, 
-            image = ?, 
-            additional_image = ?, 
-            guardian_name = ?, 
-            guardian_phone = ?, 
-            password = ?  // Updating the password
-        WHERE user_id = ?"; // Replace 'users' with your actual table name
-
-// Prepare the statement
+// Prepare the SQL statement
 $stmt = $conn->prepare($sql);
 
-// Bind parameters to the query
+// Bind the parameters
 $stmt->bind_param(
-    "sssssssssssssssi", // Data types for each parameter (string, string, etc.)
-    $new_name, $new_lastname, $new_gender, $new_course, $new_address,
-    $new_phone, $new_dob, $new_email, $new_year, $new_student_no,
-    $new_status, $new_image, $new_additional_image, $new_guardian_name,
-    $new_guardian_phone, $hashed_password, $user_id_to_edit // Bind the user_id for the condition
+    "ssssssssssssssssssiisss", 
+    $lastname, 
+    $firstname, 
+    $middlename, 
+    $gender, 
+    $course, 
+    $address, 
+    $cell_no, 
+    $birthdate, 
+    $email, 
+    $year_level, 
+    $student_id_no, 
+    $hashed_password,  // Use the hashed password for the new password
+    $role_as, 
+    $status, 
+    $user_added, 
+    $profile_image, 
+    $qr_code, 
+    $verify_token, 
+    $token_used, 
+    $contact_person, 
+    $person_cell_no, 
+    $logs, 
+    $user_id  // The user_id to identify which record to update
 );
 
 // Execute the query
 if ($stmt->execute()) {
-    echo "Record with user_id $user_id_to_edit has been updated successfully.";
+    echo "Record updated successfully.";
 } else {
-    echo "Error updating record: " . $conn->error;
+    echo "Error updating record: " . $stmt->error;
 }
 
-// Step 4: Close the database connection
+// Close the statement and connection
 $stmt->close();
 $conn->close();
 ?>
