@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Step 2: Query to get data from the 'users' table
-$sql = "SELECT * FROM users";  // Change 'users' to your table name if necessary
+$sql = "SELECT * FROM user";  // Change 'users' to your table name if necessary
 $result = $conn->query($sql);
 
 // Step 3: Display column names and data in a table format
