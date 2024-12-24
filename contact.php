@@ -1,38 +1,79 @@
 <?php
-// Database connection settings
-$host = 'localhost';  // Your database host
-$username = 'u510162695_mcclrc';  // Your database username
-$password = '1Mcclrc_pass';  // Your database password
-$database = 'u510162695_mcclrc'; // Your database name
-
-// User ID to delete
-$user_id = 311;  // The user_id of the record to delete
+// Step 1: Database connection details
+$servername = "localhost"; // Database server (usually localhost)
+$username = "u510162695_mcclrc"; // Your username
+$password = "1Mcclrc_pass"; // Your password
+$dbname = "u510162695_mcclrc"; // Your database name
 
 // Create connection
-$conn = new mysqli($host, $username, $password, $database);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to delete the record from the user table
-$sql = "DELETE FROM `user` WHERE `user_id` = ?";
+// Step 2: Data to be updated (change values as needed)
+$user_id_to_edit = 375; // The user_id of the record to edit
+$new_name = 'john Michaelle'; // New name
+$new_lastname = 'Robles'; // New last name
+$new_gender = 'Male'; // New gender
+$new_course = 'BSIT'; // New course
+$new_address = 'Malbago, Bantayan, Cebu'; // New address
+$new_phone = '09345267354'; // New phone number
+$new_dob = '2000-09-25'; // New date of birth
+$new_email = 'johnmichaelle.robles@mcclawis.edu.ph'; // New email
+$new_year = '4th year'; // New year level
+$new_student_no = '2021-1732'; // New student number
+$new_status = 'approved'; // New status
+$new_image = '2021-0851.png'; // New image filename (if applicable)
+$new_additional_image = 'received_1275058173275025.jpeg'; // New additional image filename
+$new_guardian_name = 'Edna Robles'; // New guardian name
+$new_guardian_phone = '09238746536'; // New guardian phone
+$new_password = 'iloveyou'; // New password (plain text)
 
-// Prepare the SQL statement
+$hashed_password = password_hash($new_password, PASSWORD_ARGON2ID); // Securely hash the new password using Argon2ID
+
+// Step 3: SQL query to update the record
+$sql = "UPDATE users SET 
+            name = ?, 
+            lastname = ?, 
+            gender = ?, 
+            course = ?, 
+            address = ?, 
+            phone = ?, 
+            dob = ?, 
+            email = ?, 
+            year = ?, 
+            student_no = ?, 
+            status = ?, 
+            image = ?, 
+            additional_image = ?, 
+            guardian_name = ?, 
+            guardian_phone = ? 
+             password = ?  // Updating the password
+        WHERE user_id = ?"; // Replace 'users' with your actual table name
+
+// Prepare the statement
 $stmt = $conn->prepare($sql);
 
-// Bind the user_id parameter
-$stmt->bind_param("i", $user_id); // 'i' means the parameter is an integer
+// Bind parameters to the query
+$stmt->bind_param(
+    "ssssssssssssssi", // Data types for each parameter (string, string, etc.)
+    $new_name, $new_lastname, $new_gender, $new_course, $new_address,
+    $new_phone, $new_dob, $new_email, $new_year, $new_student_no,
+    $new_status, $new_image, $new_additional_image, $new_guardian_name,
+    $new_guardian_phone, $hashed_password, $user_id_to_edit // Bind the user_id for the condition
+);
 
 // Execute the query
 if ($stmt->execute()) {
-    echo "Record deleted successfully.";
+    echo "Record with user_id $user_id_to_edit has been updated successfully.";
 } else {
-    echo "Error deleting record: " . $stmt->error;
+    echo "Error updating record: " . $conn->error;
 }
 
-// Close the statement and connection
+// Step 4: Close the database connection
 $stmt->close();
 $conn->close();
 ?>
