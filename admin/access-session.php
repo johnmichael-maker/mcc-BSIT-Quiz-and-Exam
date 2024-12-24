@@ -184,22 +184,19 @@
             }
         }
 
-        input[type="email"] {
-            width: 100%;
-            padding: 12px 15px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
 
-        input[type="email"]:focus {
-            border-color: #3c8dbc;
-            box-shadow: 0 0 8px rgba(60, 141, 188, 0.5);
-            outline: none;
-        }
+        input[type="email"].form-control {
+    border: none;
+    border-bottom: 2px solid #000; /* Black underline */
+    outline: none;
+    padding: 5px 0;
+    width: 100%;
+}
+
+input[type="email"].form-control:focus {
+    border-bottom: 2px solid #007bff; /* Change color on focus (blue in this case) */
+}
+
     </style>
 </head>
 <body class="hold-transition lockscreen">
