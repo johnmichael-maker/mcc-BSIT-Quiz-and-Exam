@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 $id_to_delete = 637; // Change this to the ID you want to delete
 
 // Step 3: SQL query to delete the record
-$sql = "DELETE FROM users WHERE id = ?"; // Replace 'users' with your actual table name
+$sql = "DELETE FROM user WHERE id = ?"; // Replace 'users' with your actual table name
 
 // Prepare the statement
 $stmt = $conn->prepare($sql);
