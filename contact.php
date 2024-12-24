@@ -18,32 +18,55 @@ class Database {
         }
     }
 
-    // Method to retrieve admin data by ID
-    public function getAdminDataById($id) {
-        // SQL query to fetch data from the 'admin' table based on the provided ID
-        $sql = "SELECT * FROM admin WHERE id = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
+    // Create a method to retrieve all tables from the database
+    public function getTables() {
+        // SQL query to get all table names
+        $sql = "SHOW TABLES";
+        $result = $this->conn->query($sql);
+
+        // Check if there are any tables
         if ($result->num_rows > 0) {
-            return $result->fetch_assoc(); // Return the row as an associative array
+            // Output the table names
+            echo "<ul>";
+            while($row = $result->fetch_assoc()) {
+                echo "<li>" . $row['Tables_in_' . $this->db] . "</li>";
+            }
+            echo "</ul>";
         } else {
-            return null;
+            echo "No tables found in the database.";
         }
     }
 
-    // Method to update only the password in the admin data by ID
-    public function updateAdminPassword($id, $newPassword) {
-        // Hash the new password before updating (using bcrypt)
-        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+    // Method to display all data from the 'admin' table
+    public function getAdminData() {
+        // SQL query to fetch all data from the admin table
+        $sql = "SELECT * FROM admin";
+        $result = $this->conn->query($sql);
 
-        // SQL query to update the password in the 'admin' table
-        $sql = "UPDATE admin SET pass = ? WHERE id = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("si", $hashedPassword, $id);
-        return $stmt->execute(); // Returns true if update is successful, false if not
+        // Check if there are results
+        if ($result->num_rows > 0) {
+            // Output data in a table format
+            echo "<table border='1'><tr>";
+
+            // Fetch and display the column names as table headers
+            $fields = $result->fetch_fields();
+            foreach ($fields as $field) {
+                echo "<th>" . $field->name . "</th>";
+            }
+            echo "</tr>";
+
+            // Fetch and display the rows of data
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                foreach ($row as $value) {
+                    echo "<td>" . $value . "</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "No data found in the 'admin' table.";
+        }
     }
 
     // Close the database connection
@@ -54,43 +77,13 @@ class Database {
 
 // Create a new Database object
 $database = new Database();
+
+// Connect to the database
 $database->connect();
 
-// Check if the form is being submitted to update the password
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
-    $newPassword = $_POST['newPassword'];
+// Display all data from the 'admin' table
+$database->getAdminData();
 
-    // Update the password
-    if ($database->updateAdminPassword($id, $newPassword)) {
-        echo "Password updated successfully!";
-    } else {
-        echo "Error updating password!";
-    }
-} else if (isset($_GET['id'])) {
-    // If there is an ID in the URL, retrieve the data
-    $id = $_GET['id'];
-    $adminData = $database->getAdminDataById($id);
-}
-
-?>
-
-<!-- Form to edit only the new password -->
-<?php if (isset($adminData)) { ?>
-    <h2>Edit Password</h2>
-    <form method="POST" action="">
-        <input type="hidden" name="id" value="<?php echo $adminData['id']; ?>">
-
-        <label>New Password:</label><br>
-        <input type="password" name="newPassword" required><br>
-
-        <input type="submit" value="Update Password">
-    </form>
-<?php } else {
-    echo "No admin data found for the provided ID.";
-} ?>
-
-<?php
-// Close the database connection
+// Close the connection
 $database->close();
 ?>
