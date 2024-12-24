@@ -13,39 +13,26 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Step 2: Query to get data from the 'users' table
-$sql = "SELECT * FROM user";  // Change 'users' to your table name if necessary
-$result = $conn->query($sql);
+// Step 2: user_id of the record you want to delete
+$user_id_to_delete = 637; // Change this to the user_id you want to delete
 
-// Step 3: Display column names and data in a table format
-if ($result->num_rows > 0) {
-    // Start the table
-    echo "<table border='1'>";
-    
-    // Display column names (headers)
-    echo "<tr>";
-    // Get the column names dynamically from the result set
-    $fields = $result->fetch_fields();  // Get the fields (columns) of the result
-    foreach ($fields as $field) {
-        echo "<th>" . htmlspecialchars($field->name) . "</th>";
-    }
-    echo "</tr>";
-    
-    // Output data for each row
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        foreach ($row as $value) {
-            echo "<td>" . htmlspecialchars($value) . "</td>";
-        }
-        echo "</tr>";
-    }
+// Step 3: SQL query to delete the record
+$sql = "DELETE FROM users WHERE user_id = ?"; // Replace 'users' with your actual table name
 
-    // End the table
-    echo "</table>";
+// Prepare the statement
+$stmt = $conn->prepare($sql);
+
+// Bind the parameter to the query
+$stmt->bind_param("i", $user_id_to_delete); // "i" means the user_id is an integer
+
+// Execute the query
+if ($stmt->execute()) {
+    echo "Record with user_id $user_id_to_delete has been deleted successfully.";
 } else {
-    echo "0 results"; // If no records found
+    echo "Error deleting record: " . $conn->error;
 }
 
 // Step 4: Close the database connection
+$stmt->close();
 $conn->close();
 ?>
