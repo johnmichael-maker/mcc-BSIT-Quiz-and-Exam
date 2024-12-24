@@ -13,39 +13,22 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Step 2: Query to get data from the table (replace 'users' with your table name)
-$sql = "SELECT * FROM users";  // Change 'users' to your table name
+// Step 2: Query to get all tables from the database
+$sql = "SHOW TABLES"; // This will return all tables in the database
 $result = $conn->query($sql);
 
-// Step 3: Display data in a table format
+// Step 3: Display table names
 if ($result->num_rows > 0) {
-    // Start the table and dynamically generate the column headers
-    echo "<table border='1'>";
-    
-    // Get the first row of the result to dynamically create table headers
-    $first_row = $result->fetch_assoc();
-    echo "<tr>";
-    foreach ($first_row as $column_name => $value) {
-        echo "<th>" . htmlspecialchars($column_name) . "</th>";
-    }
-    echo "</tr>";
-    
-    // Rewind the result set to the start after fetching the first row for headers
-    $result->data_seek(0);
-    
-    // Output data for each row
+    echo "<h2>Tables in Database '$dbname'</h2>";
+    echo "<ul>"; // Start an unordered list
+    // Loop through each row and display the table name
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        foreach ($row as $value) {
-            echo "<td>" . htmlspecialchars($value) . "</td>";
-        }
-        echo "</tr>";
+        // The table name will be in the first column (index 0)
+        echo "<li>" . htmlspecialchars($row['Tables_in_' . $dbname]) . "</li>";
     }
-
-    // End the table
-    echo "</table>";
+    echo "</ul>"; // End the unordered list
 } else {
-    echo "0 results"; // If no records found
+    echo "No tables found in the database."; // If no tables are found
 }
 
 // Step 4: Close the database connection
