@@ -15,32 +15,13 @@ try {
     // Optionally, you can set the character set to utf8mb4 for better compatibility
     $pdo->exec("SET NAMES 'utf8mb4'");
 
-    // SQL query to drop the table and create the new 'ms_365_users' table
+    // SQL query to insert data into `ms_365_users` table
     $sql = "
-    DROP TABLE IF EXISTS `ms_365_users`;
-    CREATE TABLE `ms_365_users` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `first_name` varchar(100) NOT NULL,
-      `last_name` varchar(100) NOT NULL,
-      `Username` varchar(100) NOT NULL,
-      `token` varchar(2250) NOT NULL,
-      `token_expire` datetime NOT NULL,
-      PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=3629 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
     LOCK TABLES `ms_365_users` WRITE;
     /*!40000 ALTER TABLE `ms_365_users` DISABLE KEYS */;
 
     INSERT INTO `ms_365_users` VALUES
-    (570,'Aaron John tipontipon','Montaño','aaronjohn.montano@mcclawis.edu.ph','','0000-00-00 00:00:00'),
-    (571,'Abbey Mantalaba','Chavez','abbey.chavez@mcclawis.edu.ph','','0000-00-00 00:00:00'),
-    (572,'Abegail','Despi','abegail.despi@mcclawis.edu.ph','','0000-00-00 00:00:00'),
-    (573,'Abegail Santillan','Cabingas','Abegail.Cabingas@mcclawis.edu.ph','','0000-00-00 00:00:00'),
-    (574,'Abegail Sisbreño','Esgana','Abegail.Esgana@mcclawis.edu.ph','','0000-00-00 00:00:00'),
-    (575,'Abegail Son','Pagacita','abegail.pagacita@mcclawis.edu.ph','','0000-00-00 00:00:00'),
-    (576,'Abel Batiancila','Pasicaran','Abel.Pasicaran@mcclawis.edu.ph','','0000-00-00 00:00:00'),
-    (577,'Abigael Siblero','Daguison','abigauel.daguison@mcclawis.edu.ph','','0000-00-00 00:00:00');
-    (578,'Abigail','Alipoyo','abigail.alipoyo@mcclawis.edu.ph','','0000-00-00 00:00:00'),
+   (578,'Abigail','Alipoyo','abigail.alipoyo@mcclawis.edu.ph','','0000-00-00 00:00:00'),
 (579,'Abner Barcelo','Villacarlos Jr.','Abner.Villacarlos@mcclawis.edu.ph','','0000-00-00 00:00:00'),
 (580,'Abraham','Layos Jr','Abraham.LayosJr@mcclawis.edu.ph','','0000-00-00 00:00:00'),
 (581,'Adan Calvario','Visagar','adan.visagar@mcclawis.edu.ph','','0000-00-00 00:00:00'),
@@ -3100,7 +3081,7 @@ try {
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
-    echo "The 'ms_365_users' table has been created and data inserted successfully.";
+    echo "Data has been inserted successfully into 'ms_365_users'.";
 
 } catch (PDOException $e) {
     // If the connection fails or there's an error executing the query, display an error message
