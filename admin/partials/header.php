@@ -7,7 +7,7 @@
     $adminController = new Admin($_POST);
     // $adminController->startSession();
     if ($adminController->checkAdmin()) {
-        header('location:  access-session');
+        header('location: login');
     }
     if ($adminController->isAdminDashboard()) {
         if (!$adminController->isActive()) {
