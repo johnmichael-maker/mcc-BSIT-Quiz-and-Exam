@@ -1,9 +1,9 @@
 <?php
 // Database credentials
-private string $user = "u510162695_bsit_quiz";
-private string $pass = "1Bsit_quiz";
-private string $db = "u510162695_bsit_quiz";
-$servername = "localhost";  // This could be 'localhost' or your database host if different
+$servername = "localhost";  // Database host, usually 'localhost'
+$user = "u510162695_bsit_quiz";  // Your MySQL username
+$pass = "1Bsit_quiz";  // Your MySQL password
+$db = "u510162695_bsit_quiz";  // Your MySQL database name
 
 // Create connection
 $conn = new mysqli($servername, $user, $pass, $db);
@@ -24,7 +24,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show All Tables</title>
+    <title>Show All Tables in Database</title>
     <style>
         table {
             width: 100%;
@@ -53,11 +53,12 @@ $result = $conn->query($sql);
     </tr>
 
     <?php
-    // Display tables from the database
+    // Check if there are tables
     if ($result->num_rows > 0) {
+        // Loop through and display each table name
         while($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row['Tables_in_' . $db] . "</td>";  // Table name is in the field 'Tables_in_<dbname>'
+            echo "<td>" . $row['Tables_in_' . $db] . "</td>";  // Tables_in_<dbname> is the field name
             echo "</tr>";
         }
     } else {
