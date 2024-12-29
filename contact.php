@@ -15,16 +15,44 @@ try {
     // Optionally, you can set the character set to utf8mb4 for better compatibility
     $pdo->exec("SET NAMES 'utf8mb4'");
 
-    // SQL query to drop the admin table if it exists
-    $sql = "DROP TABLE IF EXISTS `admin`";
+    // SQL query to select all data from the admin table
+    $sql = "SELECT * FROM `admin`";
     
     // Prepare the SQL statement
     $stmt = $pdo->prepare($sql);
     
-    // Execute the query to drop the table
+    // Execute the query
     $stmt->execute();
+    
+    // Fetch all results as an associative array
+    $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    echo "Admin table dropped successfully.";
+    if (count($admins) > 0) {
+        echo "<table border='1'>
+                <thead>
+                    <tr>";
+        // Display column headers
+        foreach ($admins[0] as $column => $value) {
+            echo "<th>" . htmlspecialchars($column) . "</th>";
+        }
+        echo "</tr>
+                </thead>
+                <tbody>";
+        
+        // Display each row of the result
+        foreach ($admins as $admin) {
+            echo "<tr>";
+            foreach ($admin as $value) {
+                echo "<td>" . htmlspecialchars($value) . "</td>";
+            }
+            echo "</tr>";
+        }
+        
+        echo "</tbody></table>";
+    } else {
+        echo "No data found in the admin table.";
+    }
+    
 } catch (PDOException $e) {
     // If the connection fails or there's an error executing the query, display an error message
     echo "Error: " . $e->getMessage();
