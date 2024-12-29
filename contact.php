@@ -1,31 +1,43 @@
 <?php
-// Database credentials
-$user = "u510162695_bsit_quiz";
-$pass = "1Bsit_quiz";
-$db = "u510162695_bsit_quiz";
+// db_connection.php
+$host = 'localhost'; // Database host
+$db   = 'u510162695_bsit_quiz'; // Database name
+$user = 'u510162695_bsit_quiz'; // Database username
+$pass = '1Bsit_quiz'; // Database password
 
-// Create a connection to the database
-$conn = new mysqli("localhost", $user, $pass, $db);
+try {
+    // Create a PDO instance to connect to the database
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    
+    // Set the PDO error mode to exception
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Optionally, you can set the character set to utf8mb4 for better compatibility
+    $pdo->exec("SET NAMES 'utf8mb4'");
 
-// Check for connection error
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    // SQL query to drop the table and create the new 'login_attempts' table
+    $sql = "
+    DROP TABLE IF EXISTS `login_attempts`;
+    CREATE TABLE `login_attempts` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+        `attempts` int(11) DEFAULT 0,
+        `last_attempt` datetime DEFAULT NULL,
+        `blocked_until` datetime DEFAULT NULL,
+        `device_info` varchar(255) DEFAULT NULL,
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    ";
+
+    // Prepare and execute the query
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    echo "The 'login_attempts' table has been created successfully.";
+
+} catch (PDOException $e) {
+    // If the connection fails or there's an error executing the query, display an error message
+    echo "Error: " . $e->getMessage();
+    exit;
 }
-
-// Query to retrieve all tables in the database
-$sql = "SHOW TABLES";
-$result = $conn->query($sql);
-
-// Check if there are tables in the database
-if ($result->num_rows > 0) {
-    echo "Tables in the database '$db':<br>";
-    while ($row = $result->fetch_row()) {
-        echo $row[0] . "<br>";
-    }
-} else {
-    echo "No tables found in the database.";
-}
-
-// Close the connection
-$conn->close();
 ?>
