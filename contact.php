@@ -1,61 +1,31 @@
 <?php
-// db_connection.php
-$host = 'localhost'; // Database host
-$db   = 'u510162695_bsit_quiz'; // Database name
-$user = 'u510162695_bsit_quiz'; // Database username
-$pass = '1Bsit_quiz'; // Database password
+// Database credentials
+$user = "u510162695_bsit_quiz";
+$pass = "1Bsit_quiz";
+$db = "u510162695_bsit_quiz";
 
-try {
-    // Create a PDO instance to connect to the database
-    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
-    
-    // Set the PDO error mode to exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Optionally, you can set the character set to utf8mb4 for better compatibility
-    $pdo->exec("SET NAMES 'utf8mb4'");
+// Create a connection to the database
+$conn = new mysqli("localhost", $user, $pass, $db);
 
-    // SQL query to select all data from the admin table
-    $sql = "SELECT * FROM `admin`";
-    
-    // Prepare the SQL statement
-    $stmt = $pdo->prepare($sql);
-    
-    // Execute the query
-    $stmt->execute();
-    
-    // Fetch all results as an associative array
-    $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if (count($admins) > 0) {
-        echo "<table border='1'>
-                <thead>
-                    <tr>";
-        // Display column headers
-        foreach ($admins[0] as $column => $value) {
-            echo "<th>" . htmlspecialchars($column) . "</th>";
-        }
-        echo "</tr>
-                </thead>
-                <tbody>";
-        
-        // Display each row of the result
-        foreach ($admins as $admin) {
-            echo "<tr>";
-            foreach ($admin as $value) {
-                echo "<td>" . htmlspecialchars($value) . "</td>";
-            }
-            echo "</tr>";
-        }
-        
-        echo "</tbody></table>";
-    } else {
-        echo "No data found in the admin table.";
-    }
-    
-} catch (PDOException $e) {
-    // If the connection fails or there's an error executing the query, display an error message
-    echo "Error: " . $e->getMessage();
-    exit;
+// Check for connection error
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Query to retrieve all tables in the database
+$sql = "SHOW TABLES";
+$result = $conn->query($sql);
+
+// Check if there are tables in the database
+if ($result->num_rows > 0) {
+    echo "Tables in the database '$db':<br>";
+    while ($row = $result->fetch_row()) {
+        echo $row[0] . "<br>";
+    }
+} else {
+    echo "No tables found in the database.";
+}
+
+// Close the connection
+$conn->close();
 ?>
