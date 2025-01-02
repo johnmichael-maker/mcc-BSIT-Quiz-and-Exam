@@ -1,95 +1,48 @@
 <?php
-// Database connection settings
-$host = 'localhost';  // Your database host
-$username = 'u510162695_mcclrc';  // Your database username
-$password = '1Mcclrc_pass';  // Your database password
-$database = 'u510162695_mcclrc'; // Your database name
-
-// New Data to update for user with ID 311
-$user_id = 398;  // The user_id of the record to update
-$lastname = 'De La Rama';
-$firstname = 'Ritchel';
-$middlename = 'Maru'; // Assuming no middlename is provided
-$gender = 'Female';
-$course = 'BSBA';
-$address = 'Kaongkod, Madridejos, Cebu';
-$cell_no = '09947163692';
-$birthdate = '2004-01-21';
-$email = 'ritchel.delarama@mcclawis.edu.ph';
-$year_level = '3rd year';
-$student_id_no = '2022-2010';
-
-// New password (the password you want to set)
-$password_plain = 'ritchel200421'; // New password
-$hashed_password = password_hash($password_plain, PASSWORD_ARGON2I); // Hash the password using Argon2
-
-$role_as = 'student';
-$status = 'approved';
-$user_added = '2024-10-22 08:43:27';
-$profile_image = '';
-$qr_code = 'b60412e514f3d2709092740f2ca0cfdb';
-$verify_token = '';
-$token_used = 1; // Assuming token is used
-$contact_person = 'Rosa liza Dela Rama';
-$person_cell_no = '09851703352';
-$logs = ''; // Assuming no logs provided
+// Database connection details
+$servername = "localhost";  // or your host
+$username = "u510162695_mcclrc";
+$password = "1Mcclrc_pass";
+$dbname = "u510162695_mcclrc";
 
 // Create connection
-$conn = new mysqli($host, $username, $password, $database);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to update data in the user table
-$sql = "UPDATE `user` 
-        SET `lastname` = ?, `firstname` = ?, `middlename` = ?, `gender` = ?, `course` = ?, 
-            `address` = ?, `cell_no` = ?, `birthdate` = ?, `email` = ?, `year_level` = ?, 
-            `student_id_no` = ?, `password` = ?, `role_as` = ?, `status` = ?, `user_added` = ?, 
-            `profile_image` = ?, `qr_code` = ?, `verify_token` = ?, `token_used` = ?, 
-            `contact_person` = ?, `person_cell_no` = ?, `logs` = ? 
-        WHERE `user_id` = ?";
+// SQL query to fetch all data from a specific table
+$sql = "SELECT * FROM user";  // replace 'your_table_name' with your actual table name
+$result = $conn->query($sql);
 
-// Prepare the SQL statement
-$stmt = $conn->prepare($sql);
+// Check if there are any results
+if ($result->num_rows > 0) {
+    // Start table
+    echo "<table border='1'><tr>";
 
-// Bind the parameters
-$stmt->bind_param(
-    "ssssssssssssssssssiisss", 
-    $lastname, 
-    $firstname, 
-    $middlename, 
-    $gender, 
-    $course, 
-    $address, 
-    $cell_no, 
-    $birthdate, 
-    $email, 
-    $year_level, 
-    $student_id_no, 
-    $hashed_password,  // Use the hashed password for the new password
-    $role_as, 
-    $status, 
-    $user_added, 
-    $profile_image, 
-    $qr_code, 
-    $verify_token, 
-    $token_used, 
-    $contact_person, 
-    $person_cell_no, 
-    $logs, 
-    $user_id  // The user_id to identify which record to update
-);
+    // Fetch the column names and create table headers
+    $field_info = $result->fetch_fields();
+    foreach ($field_info as $val) {
+        echo "<th>" . $val->name . "</th>";
+    }
 
-// Execute the query
-if ($stmt->execute()) {
-    echo "Record updated successfully.";
+    echo "</tr>";
+
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        foreach ($row as $data) {
+            echo "<td>" . $data . "</td>";
+        }
+        echo "</tr>";
+    }
+    echo "</table>";
 } else {
-    echo "Error updating record: " . $stmt->error;
+    echo "0 results";
 }
 
-// Close the statement and connection
-$stmt->close();
+// Close the connection
 $conn->close();
 ?>
