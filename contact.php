@@ -1,48 +1,39 @@
 <?php
-// Database connection details
-$servername = "localhost";  // or your host
-$username = "u510162695_mcclrc";
-$password = "1Mcclrc_pass";
-$dbname = "u510162695_mcclrc";
+// Database connection settings
+$host = 'localhost';  // Your database host
+$username = 'u510162695_mcclrc';  // Your database username
+$password = '1Mcclrc_pass';  // Your database password
+$database = 'u510162695_mcclrc'; // Your database name
+
+// New Data to update for user with ID 148
+$user_id = 148;  // The user_id of the record to update
+$status = 'approved';  // Set the status to 'approved'
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $username, $password, $database);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to fetch all data from a specific table
-$sql = "SELECT * FROM user";  // replace 'your_table_name' with your actual table name
-$result = $conn->query($sql);
+// SQL query to update only the status column in the user table
+$sql = "UPDATE `user` SET `status` = ? WHERE `user_id` = ?";
 
-// Check if there are any results
-if ($result->num_rows > 0) {
-    // Start table
-    echo "<table border='1'><tr>";
+// Prepare the SQL statement
+$stmt = $conn->prepare($sql);
 
-    // Fetch the column names and create table headers
-    $field_info = $result->fetch_fields();
-    foreach ($field_info as $val) {
-        echo "<th>" . $val->name . "</th>";
-    }
+// Bind the parameters
+$stmt->bind_param("si", $status, $user_id); // 's' for string (status), 'i' for integer (user_id)
 
-    echo "</tr>";
-
-    // Output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        foreach ($row as $data) {
-            echo "<td>" . $data . "</td>";
-        }
-        echo "</tr>";
-    }
-    echo "</table>";
+// Execute the query
+if ($stmt->execute()) {
+    echo "Record updated successfully.";
 } else {
-    echo "0 results";
+    echo "Error updating record: " . $stmt->error;
 }
 
-// Close the connection
+// Close the statement and connection
+$stmt->close();
 $conn->close();
 ?>
