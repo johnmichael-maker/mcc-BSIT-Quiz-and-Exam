@@ -1,6 +1,6 @@
 <?php
 // Database connection details
-$server = "localhost"; // Change if you're using a different host
+$server = "localhost"; // Change to your server if necessary
 $user = "u510162695_mcclrc"; // Database username
 $pass = "1Mcclrc_pass"; // Database password
 $db = "u510162695_mcclrc"; // Database name
@@ -14,28 +14,35 @@ if ($conn->connect_error) {
 }
 
 // SQL query to fetch all data from the 'users' table
-$sql = "SELECT * FROM user; // Assuming your table is named 'users'
+$sql = "SELECT * FROM user"; // Assuming your table is named 'users'
 $result = $conn->query($sql);
 
 // Check if the query returns any rows
 if ($result->num_rows > 0) {
-    // Output data of each row
-    echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Username</th><th>Email</th><th>Other Columns</th></tr>"; // Adjust column names as needed
+    // Start the table
+    echo "<table border='1' cellpadding='5' cellspacing='0'>";
+    
+    // Display the column headers dynamically
+    $fields = $result->fetch_fields();
+    echo "<tr>";
+    foreach ($fields as $field) {
+        echo "<th>" . $field->name . "</th>"; // Display column names as table headers
+    }
+    echo "</tr>";
 
     // Loop through each row and display the data
     while($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>" . $row["id"] . "</td>"; // Replace with your actual column names
-        echo "<td>" . $row["username"] . "</td>"; // Replace with your actual column names
-        echo "<td>" . $row["email"] . "</td>"; // Replace with your actual column names
-        // Add more columns as needed
+        foreach ($fields as $field) {
+            echo "<td>" . $row[$field->name] . "</td>"; // Display data for each column dynamically
+        }
         echo "</tr>";
     }
 
+    // Close the table
     echo "</table>";
 } else {
-    echo "0 results found";
+    echo "No data found in the 'users' table.";
 }
 
 // Close the connection
