@@ -13,8 +13,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the form is submitted
+// Check if form is submitted
 if (isset($_POST['submit'])) {
+    // Get the user ID from the form
+    $user_id = $_POST['user_id'];
+
     // Get the uploaded profile image
     $file = $_FILES['profile_image'];
 
@@ -48,7 +51,20 @@ if (isset($_POST['submit'])) {
 
                 // Move the uploaded file to the target directory
                 if (move_uploaded_file($fileTmpName, $fileDestination)) {
-                    echo "Profile image uploaded successfully!";
+                    // Image uploaded successfully, now update the database with the user_id and image path
+                    $sql = "UPDATE users SET profile_image = ? WHERE user_id = ?";
+
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("si", $fileDestination, $user_id);  // Bind file path and user_id
+
+                    if ($stmt->execute()) {
+                        echo "Profile image uploaded successfully for user ID $user_id!";
+                    } else {
+                        echo "Error: " . $stmt->error;
+                    }
+
+                    // Close the prepared statement
+                    $stmt->close();
                 } else {
                     echo "There was an error uploading the file.";
                 }
@@ -69,6 +85,7 @@ $conn->close();
 
 <!-- HTML Form for Image Upload -->
 <form action="your_php_script.php" method="POST" enctype="multipart/form-data">
+    <input type="number" name="user_id" placeholder="User ID" required>
     <input type="file" name="profile_image" required>
     <button type="submit" name="submit">Upload Image</button>
 </form>
