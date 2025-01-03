@@ -24,36 +24,12 @@ class Database {
         }
     }
 
-    // Method to fetch and display all data and columns from the 'user' table
-    public function displayData($tableName) {
-        // SQL query to select all data from the specified table
-        $sql = "SELECT * FROM $tableName";
-        $result = $this->conn->query($sql);
-
-        // Check if there are any rows returned
-        if ($result->num_rows > 0) {
-            // Output column names as table headers
-            echo "<table border='1'><tr>";
-            
-            // Fetch and display column names
-            $fields = $result->fetch_fields();
-            foreach ($fields as $field) {
-                echo "<th>" . $field->name . "</th>";
-            }
-            echo "</tr>";
-
-            // Fetch and display each row of data
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                foreach ($row as $value) {
-                    echo "<td>" . $value . "</td>";
-                }
-                echo "</tr>";
-            }
-            echo "</table>";
-        } else {
-            echo "No records found.";
-        }
+    // Method to update the user's profile image path in the database
+    public function updateProfileImage($userId, $imagePath) {
+        $sql = "UPDATE user SET profile_image = ? WHERE user_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $imagePath, $userId);
+        return $stmt->execute();
     }
 
     // Method to close the database connection
@@ -62,9 +38,51 @@ class Database {
     }
 }
 
-// Example usage
-$db = new Database();
-$tableName = "user";  // Table name set to 'user'
-$db->displayData($tableName);
-$db->closeConnection();
+// Check if the form is submitted
+if (isset($_POST['submit'])) {
+    // Get the uploaded file
+    $file = $_FILES['profile_image'];
+
+    // Get file details
+    $fileName = $_FILES['profile_image']['name'];
+    $fileTmpName = $_FILES['profile_image']['tmp_name'];
+    $fileSize = $_FILES['profile_image']['size'];
+    $fileError = $_FILES['profile_image']['error'];
+    $fileType = $_FILES['profile_image']['type'];
+
+    // Allow certain file types (e.g., jpg, jpeg, png, gif)
+    $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+    // Check if file type is allowed
+    if (in_array($fileExt, $allowed)) {
+        // Check for upload errors
+        if ($fileError === 0) {
+            // Set a unique name for the uploaded file
+            $newFileName = uniqid('', true) . '.' . $fileExt;
+
+            // Set the target directory to upload the file
+            $fileDestination = 'uploads/' . $newFileName;
+
+            // Move the uploaded file to the target directory
+            if (move_uploaded_file($fileTmpName, $fileDestination)) {
+                // Image uploaded successfully, now update the database
+                $db = new Database();
+                $userId = 398; // Example user ID, change it accordingly
+                if ($db->updateProfileImage($userId, $fileDestination)) {
+                    echo "Profile image uploaded successfully!";
+                } else {
+                    echo "Error updating profile image in the database.";
+                }
+                $db->closeConnection();
+            } else {
+                echo "There was an error uploading the file.";
+            }
+        } else {
+            echo "There was an error uploading the file.";
+        }
+    } else {
+        echo "Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.";
+    }
+}
 ?>
