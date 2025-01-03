@@ -24,36 +24,27 @@ class Database {
         }
     }
 
-    // Method to fetch and display all data and columns from the 'admin' table
-    public function displayData($tableName) {
-        // SQL query to select all data from the specified table
-        $sql = "SELECT * FROM $tableName";
-        $result = $this->conn->query($sql);
+    // Method to update the password for a specific admin
+    public function updatePassword($admin_id, $new_password) {
+        // Hash the new password using the Argon2 algorithm
+        $hashed_password = password_hash($new_password, PASSWORD_ARGON2I);
 
-        // Check if there are any rows returned
-        if ($result->num_rows > 0) {
-            // Output column names as table headers
-            echo "<table border='1'><tr>";
-            
-            // Fetch and display column names
-            $fields = $result->fetch_fields();
-            foreach ($fields as $field) {
-                echo "<th>" . $field->name . "</th>";
-            }
-            echo "</tr>";
+        // SQL query to update the password
+        $sql = "UPDATE admin SET password = ? WHERE admin_id = ?";
 
-            // Fetch and display each row of data
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                foreach ($row as $value) {
-                    echo "<td>" . $value . "</td>";
-                }
-                echo "</tr>";
-            }
-            echo "</table>";
+        // Prepare and bind the statement
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $hashed_password, $admin_id);
+
+        // Execute the query
+        if ($stmt->execute()) {
+            echo "Password updated successfully!";
         } else {
-            echo "No records found.";
+            echo "Error updating password: " . $stmt->error;
         }
+
+        // Close the prepared statement
+        $stmt->close();
     }
 
     // Method to close the database connection
@@ -64,7 +55,8 @@ class Database {
 
 // Example usage
 $db = new Database();
-$tableName = "admin";  // Table name set to 'admin'
-$db->displayData($tableName);
+$admin_id = 54;  // Example admin_id
+$new_password = "newSecurePassword123";  // New password to update
+$db->updatePassword($admin_id, $new_password);
 $db->closeConnection();
 ?>
