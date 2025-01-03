@@ -24,7 +24,7 @@ class Database {
         }
     }
 
-    // Method to fetch and display all data and columns from the table
+    // Method to fetch and display all data and columns from the 'user' table
     public function displayData($tableName) {
         // SQL query to select all data from the specified table
         $sql = "SELECT * FROM $tableName";
@@ -64,7 +64,7 @@ class Database {
 
 // Example usage
 $db = new Database();
-$tableName = "your_table";  // Replace 'your_table' with your actual table name
+$tableName = "user";  // Table name set to 'user'
 $db->displayData($tableName);
 $db->closeConnection();
 ?>
