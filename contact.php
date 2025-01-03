@@ -1,70 +1,85 @@
 <?php
-class Database {
-    // Database connection settings
-    private $servername = "localhost";
-    private $user = "u510162695_mcclrc";
-    private $pass = "1Mcclrc_pass";
-    private $db = "u510162695_mcclrc";
+// Database connection settings
+$servername = "localhost";
+$username = "u510162695_mcclrc";
+$password = "1Mcclrc_pass";
+$dbname = "u510162695_mcclrc";
 
-    // Property to store the connection
-    private $conn;
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Constructor to create the connection
-    public function __construct() {
-        $this->connect();
-    }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-    // Method to establish database connection
-    private function connect() {
-        $this->conn = new mysqli($this->servername, $this->user, $this->pass, $this->db);
+// Check if form is submitted
+if (isset($_POST['submit'])) {
+    // Get form data
+    $lastname = $_POST['lastname'];
+    $firstname = $_POST['firstname'];
+    $middlename = $_POST['middlename'];
+    $gender = $_POST['gender'];
+    $course = $_POST['course'];
+    $address = $_POST['address'];
+    $cell_no = $_POST['cell_no'];
+    $birthdate = $_POST['birthdate'];
+    $email = $_POST['email'];
+    $year_level = $_POST['year_level'];
+    $student_id_no = $_POST['student_id_no'];
 
-        // Check connection
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
-        }
-    }
+    // Get the uploaded profile image
+    $file = $_FILES['profile_image'];
 
-    // Method to fetch and display all data and columns from the 'user' table
-    public function displayData($tableName) {
-        // SQL query to select all data from the specified table
-        $sql = "SELECT * FROM $tableName";
-        $result = $this->conn->query($sql);
+    // Get file details
+    $fileName = $_FILES['profile_image']['name'];
+    $fileTmpName = $_FILES['profile_image']['tmp_name'];
+    $fileSize = $_FILES['profile_image']['size'];
+    $fileError = $_FILES['profile_image']['error'];
+    $fileType = $_FILES['profile_image']['type'];
 
-        // Check if there are any rows returned
-        if ($result->num_rows > 0) {
-            // Output column names as table headers
-            echo "<table border='1'><tr>";
-            
-            // Fetch and display column names
-            $fields = $result->fetch_fields();
-            foreach ($fields as $field) {
-                echo "<th>" . $field->name . "</th>";
-            }
-            echo "</tr>";
+    // Allow certain file types (e.g., jpg, jpeg, png, gif)
+    $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
-            // Fetch and display each row of data
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                foreach ($row as $value) {
-                    echo "<td>" . $value . "</td>";
+    // Check if file type is allowed
+    if (in_array($fileExt, $allowed)) {
+        // Check for upload errors
+        if ($fileError === 0) {
+            // Set a unique name for the uploaded file
+            $newFileName = uniqid('', true) . '.' . $fileExt;
+
+            // Set the target directory to upload the file
+            $fileDestination = 'uploads/' . $newFileName;
+
+            // Move the uploaded file to the target directory
+            if (move_uploaded_file($fileTmpName, $fileDestination)) {
+                // Image uploaded successfully, now update the database with the user info and image path
+                $sql = "INSERT INTO user (lastname, firstname, middlename, gender, course, address, cell_no, birthdate, email, year_level, student_id_no, profile_image)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ssssssssssss", $lastname, $firstname, $middlename, $gender, $course, $address, $cell_no, $birthdate, $email, $year_level, $student_id_no, $fileDestination);
+
+                if ($stmt->execute()) {
+                    echo "Profile image uploaded successfully and user data saved!";
+                } else {
+                    echo "Error: " . $stmt->error;
                 }
-                echo "</tr>";
-            }
-            echo "</table>";
-        } else {
-            echo "No records found.";
-        }
-    }
 
-    // Method to close the database connection
-    public function closeConnection() {
-        $this->conn->close();
+                // Close the prepared statement
+                $stmt->close();
+            } else {
+                echo "There was an error uploading the file.";
+            }
+        } else {
+            echo "There was an error uploading the file.";
+        }
+    } else {
+        echo "Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.";
     }
 }
 
-// Example usage
-$db = new Database();
-$tableName = "user";  // Table name set to 'user'
-$db->displayData($tableName);
-$db->closeConnection();
+// Close the database connection
+$conn->close();
 ?>
