@@ -13,34 +13,21 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to fetch all data from the 'admin' table
-$sql = "SELECT * FROM admin";  // Retrieves all columns from the 'admin' table
-$result = $conn->query($sql);
+// New password
+$newPassword = "new_secure_password"; // Replace with the new password you want to set
+$hashedPassword = password_hash($newPassword, PASSWORD_ARGON2I); // Hash the new password using Argon2i
 
-// Check if there are any rows in the result
-if ($result->num_rows > 0) {
-    // Output data in a table
-    echo "<table border='1' cellpadding='5' cellspacing='0'>";
-    echo "<tr>";
-    
-    // Dynamically fetch column headers (field names)
-    $fields = $result->fetch_fields();
-    foreach ($fields as $field) {
-        echo "<th>" . $field->name . "</th>"; // Display each column name as table header
-    }
-    echo "</tr>";
+// User email or ID to identify the user whose password you want to update
+$userEmail = "diovin.calatero@mcclawis.edu.ph"; // The user's email address or identifier
 
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        foreach ($row as $key => $value) {
-            echo "<td>" . $value . "</td>"; // Display each row value in table cells
-        }
-        echo "</tr>";
-    }
-    echo "</table>";
+// SQL query to update the password for the specific user
+$sql = "UPDATE admin SET password='$hashedPassword' WHERE email='$userEmail'";
+
+// Execute the query
+if ($conn->query($sql) === TRUE) {
+    echo "Password updated successfully for user: " . $userEmail;
 } else {
-    echo "No data found in the admin table.";
+    echo "Error updating password: " . $conn->error;
 }
 
 // Close connection
