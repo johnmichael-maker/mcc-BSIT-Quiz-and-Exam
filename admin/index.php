@@ -96,7 +96,7 @@ $interval_values = json_encode(array_values($time_intervals));
                     <div class="col-lg-4">
                         <div class="card shadow" style="border-left: 6px solid rgba(255, 99, 132, 0.8);">
                             <div class="card-body">
-                                <h5>Quizzes</h5>
+                                <h5><i class="fas fa-question-circle"></i> Quizzes</h5> 
                                 <h1><?= $adminController->getAllQuestionCount() ?></h1>
                             </div>
                         </div>
@@ -104,7 +104,7 @@ $interval_values = json_encode(array_values($time_intervals));
                     <div class="col-lg-4">
                         <div class="card shadow" style="border-left: 6px solid rgba(54, 162, 235, 0.8);">
                             <div class="card-body">
-                                <h5>Exams</h5>
+                              <h5><i class="fas fa-file-alt"></i> Exams</h5>
                                 <h1><?= $adminController->examCount() ?></h1>
                             </div>
                         </div>
@@ -112,7 +112,7 @@ $interval_values = json_encode(array_values($time_intervals));
                     <div class="col-lg-4">
                         <div class="card shadow" style="border-left: 6px solid rgba(255, 206, 86, 0.8);">
                             <div class="card-body">
-                                <h5>Student Contestants</h5>
+                                <h5><i class="fas fa-users"></i> Student Contestants</h5>
                                 <h1><?= $adminController->contestantsCount() ?></h1>
                             </div>
                         </div>
@@ -120,7 +120,7 @@ $interval_values = json_encode(array_values($time_intervals));
                     <div class="col-lg-4">
                         <div class="card shadow" style="border-left: 6px solid rgba(57, 255, 20, 0.8);">
                             <div class="card-body">
-                                <h5>Examinees</h5>
+                                <h5><i class="fas fa-user-check"></i> Examinees</h5>
                                 <h1><?= $adminController->examineesCount() ?></h1>
                             </div>
                         </div>
@@ -128,7 +128,7 @@ $interval_values = json_encode(array_values($time_intervals));
                     <div class="col-lg-4">
                         <div class="card shadow" style="border-left: 6px solid rgba(35, 47, 97, 0.8);">
                             <div class="card-body">
-                                <h5>Instructor</h5>
+                                <h5><i class="fas fa-chalkboard-teacher"></i> Instructor</h5> 
                                 <h1><?= $userType2_count ?></h1>
                             </div>
                         </div>
@@ -136,7 +136,7 @@ $interval_values = json_encode(array_values($time_intervals));
                     <div class="col-lg-4">
                         <div class="card shadow" style="border-left: 6px solid rgba(18, 91, 226, 0.8);">
                             <div class="card-body">
-                                <h5>MS 365 Users</h5>
+                              <h5><i class="fas fa-users-cog"></i> MS 365 Users</h5>
                                 <h1><?= $user_count ?></h1> 
                             </div>
                         </div>
@@ -145,7 +145,7 @@ $interval_values = json_encode(array_values($time_intervals));
                     <div class="col-lg-3">
                         <div class="card shadow">
                             <div class="card-body">
-                                <h6>Scores for <?= date('F Y') ?></h6>
+                                <h6><i class="fas fa-chart-line"></i> Scores for <?= date('F Y') ?></h6>
                                 <canvas id="scoreChart"></canvas>
                             </div>
                         </div>
@@ -153,7 +153,7 @@ $interval_values = json_encode(array_values($time_intervals));
                         <div class="col-lg-6">
                          <div class="card shadow" style="max-width: 1000px; margin: auto; margin-left:50px;"> 
             <div class="card-body">
-                <h6>Exam Completion Times (<?= date('F Y') ?>)</h6>
+                <h6><i class="fas fa-clock"></i> Exam Completion Times (<?= date('F Y') ?>)</h6> 
                 <canvas id="completionChart"></canvas>
             </div>
         </div>
@@ -172,6 +172,7 @@ $interval_values = json_encode(array_values($time_intervals));
         </div>
     </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script>
     // Wave Chart for Exam Completion Times
 const completionCtx = document.getElementById('completionChart').getContext('2d');
