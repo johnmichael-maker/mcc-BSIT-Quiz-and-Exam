@@ -13,20 +13,35 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to fetch data from your table (replace 'your_table' with the actual table name)
+// Query to fetch all data from the admin table
 $sql = "SELECT * FROM admin"; 
 $result = $conn->query($sql);
 
 // Check if there are results
 if ($result->num_rows > 0) {
     // Output data for each row
-    echo "<table border='1'><tr><th>Column1</th><th>Column2</th><th>Column3</th></tr>";
-    while($row = $result->fetch_assoc()) {
-        echo "<tr><td>" . $row["column1"] . "</td><td>" . $row["column2"] . "</td><td>" . $row["column3"] . "</td></tr>";
+    echo "<table border='1'><tr>";
+    
+    // Fetch and display the column names as table headers
+    $fields = $result->fetch_fields();
+    foreach ($fields as $field) {
+        echo "<th>" . $field->name . "</th>";
     }
+    
+    echo "</tr>";
+
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        foreach ($row as $columnValue) {
+            echo "<td>" . $columnValue . "</td>";
+        }
+        echo "</tr>";
+    }
+
     echo "</table>";
 } else {
-    echo "0 results found";
+    echo "No data found";
 }
 
 // Close connection
