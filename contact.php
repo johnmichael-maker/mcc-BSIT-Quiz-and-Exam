@@ -22,14 +22,18 @@ ob_start();
 // Export the database structure and data
 exportDatabase($conn, $db);
 
-// Get the output buffer content and save it to a file
+// Get the output buffer content
 $sqlContent = ob_get_clean();
 
-// Create the SQL backup file
-file_put_contents($backupFile, $sqlContent);
+// Set headers to download the file
+header('Content-Type: application/sql');
+header('Content-Disposition: attachment; filename="' . basename($backupFile) . '"');
+header('Content-Length: ' . strlen($sqlContent));
 
-// Provide feedback to the user
-echo "Backup completed successfully! The backup file is: $backupFile";
+// Output the file content for download
+echo $sqlContent;
+
+$conn->close();
 
 // Function to export the database structure and data
 function exportDatabase($conn, $db) {
@@ -85,6 +89,4 @@ function exportTableData($conn, $table) {
 
     echo "\n";
 }
-
-$conn->close();
 ?>
