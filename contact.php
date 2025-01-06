@@ -11,7 +11,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // SQL query to fetch all data from the admin table
-    $sql = "SELECT * FROM Admin";
+    $sql = "SELECT * FROM user";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
