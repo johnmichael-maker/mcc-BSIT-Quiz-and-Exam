@@ -2,7 +2,7 @@
 // Database connection details
 $host = 'localhost';
 $dbname = 'u510162695_bsit_quiz';
-$username = 'u510162695_Bsit_quiz';
+$username = 'u510162695_bsit_quiz';
 $password = '1Bsit_quiz';
 
 try {
