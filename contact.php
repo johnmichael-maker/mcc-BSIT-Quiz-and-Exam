@@ -1,9 +1,9 @@
 <?php
 // Database connection details
 $host = 'localhost';
-$dbname = 'u510162695_bsitquiz';
-$username = 'u510162695_Bsitquiz';
-$password = '1Bsitquiz_pass';
+$dbname = 'u510162695_bsit_quiz';
+$username = 'u510162695_Bsit_quiz';
+$password = '1Bsit_quiz';
 
 try {
     // Create a PDO instance
