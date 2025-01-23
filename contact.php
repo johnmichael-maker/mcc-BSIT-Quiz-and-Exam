@@ -10,39 +10,24 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // SQL query to fetch all data from the admin table
-    $sql = "SELECT * FROM admin";
+    // ID of the admin you want to update
+    $admin_id = 11; // Replace with the actual admin_id
+    $new_password = 'password'; // Replace with the new password
+
+    // Hash the new password using Argon2
+    $hashed_password = password_hash($new_password, PASSWORD_ARGON2ID);
+
+    // Update query
+    $sql = "UPDATE admin SET password = :password WHERE admin_id = :admin_id";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $stmt->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+    $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
 
-    // Fetch the results
-    $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Check if data exists
-    if ($admins) {
-        // Start the HTML table
-        echo "<table border='1'>";
-        echo "<tr>";
-
-        // Output table headers based on column names
-        foreach (array_keys($admins[0]) as $column) {
-            echo "<th>" . htmlspecialchars($column) . "</th>";
-        }
-
-        echo "</tr>";
-
-        // Loop through the result and display each row
-        foreach ($admins as $admin) {
-            echo "<tr>";
-            foreach ($admin as $value) {
-                echo "<td>" . htmlspecialchars($value) . "</td>";
-            }
-            echo "</tr>";
-        }
-
-        echo "</table>";
+    // Execute the query
+    if ($stmt->execute()) {
+        echo "Password updated successfully for admin_id $admin_id.";
     } else {
-        echo "No data found in the admin table.";
+        echo "Failed to update password.";
     }
 } catch (PDOException $e) {
     // Handle connection error
