@@ -503,7 +503,7 @@ header {
                 <div class="footer-bottom">
                     <div class="container">
                         <div class="text-center">
-                            <span class="footer-copyright">Copyright © 2024 Madridejos Community College created by John Michaelle Robles</span>
+                            <span class="footer-copyright">Copyright © 2025 Madridejos Community College created by John Michaelle Robles</span>
                         </div>
                     </div>
                 </div>
