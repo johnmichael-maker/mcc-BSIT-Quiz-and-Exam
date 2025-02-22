@@ -220,7 +220,7 @@ input[type="email"].form-control:focus {
                 <form id="email-form">
                     <div class="input-group" style="flex-direction: column; align-items: center;">
                         <input type="email" class="form-control" name="email" placeholder="Send Email for Verification " required>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <!--<button type="submit" class="btn btn-primary">Submit</button>-->
 
                     </div>
                 </form>
