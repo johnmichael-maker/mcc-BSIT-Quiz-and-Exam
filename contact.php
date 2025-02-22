@@ -7,19 +7,19 @@ $password = '1Bsit_quiz';
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    $sql = "CREATE TABLE login_attempts (
+
+    $sql = "CREATE TABLE IF NOT EXISTS login_history (
         id INT AUTO_INCREMENT PRIMARY KEY,
         ip_address VARCHAR(45) NOT NULL,
-        attempts INT DEFAULT 0,
-        last_attempt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        blocked_until DATETIME DEFAULT NULL,
-        device_info VARCHAR(255) DEFAULT NULL
+        username VARCHAR(255) NOT NULL,
+        status ENUM('success', 'failure') NOT NULL,
+        reason VARCHAR(255) DEFAULT NULL,
+        attempt_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
     )";
 
     $conn->exec($sql);
-    echo "Table login_attempts created successfully";
-} catch(PDOException $e) {
+    echo "Table login_history created successfully";
+} catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
 
