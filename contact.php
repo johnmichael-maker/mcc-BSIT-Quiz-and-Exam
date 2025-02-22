@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'u510162695_bsit_qui';
+$dbname = 'u510162695_bsit_quiz';
 $username = 'u510162695_bsit_quiz';
 $password = '1Bsit_quiz';
 
