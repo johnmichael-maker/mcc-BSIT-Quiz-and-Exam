@@ -1,4 +1,4 @@
-<!--<?php 
+<?php 
      require __DIR__ . '/./vendor/autoload.php';
      use App\DatabaseControl;
 
@@ -9,7 +9,7 @@
     error_reporting(E_ALL);        // Report all errors
 
     
-?> -->
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -433,7 +433,7 @@ header {
         </div>
 
         <!-- PHP Logic to Display Feedbacks -->
-       <!-- <?php if($feedbacks->rowCount() > 0): 
+        <?php if($feedbacks->rowCount() > 0): 
                 $data = $feedbacks->fetchAll(PDO::FETCH_ASSOC);
             ?>
             <?php foreach($data as $feedback): ?>
@@ -452,7 +452,7 @@ header {
             </div>
         <?php endif; ?>
     </div>
-</div> -->
+</div> 
 
 <!-- Footer Section -->
 <footer class="h-100 footer-background">
