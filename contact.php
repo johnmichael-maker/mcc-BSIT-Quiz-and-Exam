@@ -10,19 +10,22 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // SQL query to fetch all data from the admin table
-    $sql = "SELECT * FROM admin";
+    // Query to get column names from the admin table
+    $sql = "SHOW COLUMNS FROM admin";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
     // Fetch the results
-    $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Display a message
-    if ($admins) {
-        echo "Data retrieved successfully from the admin table.";
+    // Display the column names
+    if ($columns) {
+        echo "Columns in 'admin' table:<br>";
+        foreach ($columns as $column) {
+            echo "- " . $column['Field'] . "<br>";
+        }
     } else {
-        echo "No data found in the admin table.";
+        echo "No columns found in the admin table.";
     }
 } catch (PDOException $e) {
     // Handle connection error
