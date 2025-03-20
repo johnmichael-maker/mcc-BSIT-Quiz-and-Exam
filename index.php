@@ -1,4 +1,4 @@
-<?php 
+<!--<?php 
      require __DIR__ . '/./vendor/autoload.php';
      use App\DatabaseControl;
 
@@ -9,7 +9,7 @@
     error_reporting(E_ALL);        // Report all errors
 
     
-?>
+?> -->
 <!DOCTYPE html>
 <html lang="en">
 
