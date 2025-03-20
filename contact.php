@@ -1,45 +1,31 @@
 <?php
-// Database connection details
-$servername = "localhost"; // Change this to your database server if needed
-$username = "u510162695_bsit_quiz";  // Your database username
-$password = "1Bsit_quiz";            // Your database password
-$dbname = "u510162695_bsit_quiz";    // Your database name
+$servername = "localhost";
+$username = "u510162695_bsit_quiz";
+$password = "1Bsit_quiz";
+$dbname = "u510162695_bsit_quiz";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    $sql = "CREATE TABLE IF NOT EXISTS `admin` (
+        `admin_id` INT(11) NOT NULL AUTO_INCREMENT,
+        `username` VARCHAR(50) DEFAULT NULL,
+        `img` TEXT DEFAULT NULL,
+        `email` VARCHAR(255) NOT NULL,
+        `password` VARCHAR(255) DEFAULT NULL,
+        `verification` VARCHAR(255) DEFAULT NULL,
+        `userType` INT(1) NOT NULL DEFAULT 1,
+        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (`admin_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
+    $conn->exec($sql);
+    echo "Table `admin` created successfully!";
+} catch(PDOException $e) {
+    echo "Error creating table: " . $e->getMessage();
 }
 
-// Get all table names
-$sql = "SHOW TABLES";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    // Loop through each table
-    while($row = $result->fetch_assoc()) {
-        $table_name = $row["Tables_in_" . $dbname];
-        echo "Table: " . $table_name . "<br>";
-
-        // Get columns for each table
-        $columns_sql = "DESCRIBE $table_name";
-        $columns_result = $conn->query($columns_sql);
-
-        if ($columns_result->num_rows > 0) {
-            // Loop through each column in the table
-            while($column = $columns_result->fetch_assoc()) {
-                echo "&nbsp;&nbsp;&nbsp;Column: " . $column["Field"] . " (" . $column["Type"] . ")<br>";
-            }
-        } else {
-            echo "&nbsp;&nbsp;&nbsp;No columns found.<br>";
-        }
-    }
-} else {
-    echo "No tables found in the database.";
-}
-
-// Close the connection
-$conn->close();
+$conn = null;
 ?>
