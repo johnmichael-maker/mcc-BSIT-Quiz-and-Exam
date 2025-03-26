@@ -13,20 +13,20 @@ try {
     ]);
 
     // SQL query to create the table
-    $sql = "CREATE TABLE IF NOT EXISTS `login_attempts` (
+    $sql = "CREATE TABLE IF NOT EXISTS `login_history` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
-        `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-        `attempts` int(11) DEFAULT 0,
-        `last_attempt` datetime DEFAULT NULL,
-        `blocked_until` datetime DEFAULT NULL,
-        `device_info` varchar(255) DEFAULT NULL,
+        `ip_address` varchar(45) NOT NULL,
+        `username` varchar(255) NOT NULL,
+        `status` ENUM('success','failure') NOT NULL,
+        `reason` varchar(255) DEFAULT NULL,
+        `attempt_time` datetime DEFAULT current_timestamp(),
         PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+    ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
     // Execute the query
     $pdo->exec($sql);
 
-    echo "Table `login_attempts` created successfully!";
+    echo "Table `login_history` created successfully!";
 
 } catch (PDOException $e) {
     die("Error creating table: " . $e->getMessage());
