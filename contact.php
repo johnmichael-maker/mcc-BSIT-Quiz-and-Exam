@@ -8,24 +8,28 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // SQL Query to Create Table
-    $sql = "CREATE TABLE IF NOT EXISTS `activity_logs` (
-        `id` INT(11) NOT NULL AUTO_INCREMENT,
-        `admin_id` INT(11) NOT NULL,
-        `action` VARCHAR(255) NOT NULL,
-        `action_details` TEXT NOT NULL,
-        `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-        PRIMARY KEY (`id`),
-        INDEX (`admin_id`),
-        CONSTRAINT `activity_logs_ibfk_1` FOREIGN KEY (`admin_id`) 
-            REFERENCES `admin` (`admin_id`) 
-            ON DELETE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    $sql = "CREATE TABLE IF NOT EXISTS `admin` (
+        `admin_id` int(11) NOT NULL AUTO_INCREMENT,
+        `username` varchar(50) DEFAULT NULL,
+        `img` text DEFAULT NULL,
+        `email` varchar(255) NOT NULL,
+        `password` varchar(255) DEFAULT NULL,
+        `verification` varchar(255) DEFAULT NULL,
+        `userType` int(1) NOT NULL DEFAULT 1,
+        `created_at` timestamp NULL DEFAULT current_timestamp(),
+        `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+        `firstName` varchar(100) NOT NULL,
+        `middleName` varchar(100) NOT NULL,
+        `lastName` varchar(100) NOT NULL,
+        `phone` int(11) NOT NULL,
+        `address` varchar(100) NOT NULL,
+        `expires_at` datetime DEFAULT NULL,
+        PRIMARY KEY (`admin_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
-    // Execute Query
     $pdo->exec($sql);
-    echo "✅ Table `activity_logs` created successfully!";
+    echo "Table 'admin' created successfully!";
 } catch (PDOException $e) {
-    die("❌ Error: " . $e->getMessage());
+    die("Error creating table: " . $e->getMessage());
 }
 ?>
