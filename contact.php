@@ -9,19 +9,12 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
-    $sql = "CREATE TABLE `activity_logs` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `admin_id` int(11) NOT NULL,
-      `action` varchar(255) NOT NULL,
-      `action_details` text NOT NULL,
-      `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-      PRIMARY KEY (`id`),
-      KEY `admin_id` (`admin_id`),
-      CONSTRAINT `activity_logs_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE CASCADE
-    ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
-
-    $pdo->exec($sql);
-    echo "Table `activity_logs` created successfully!";
+    $stmt = $pdo->query("SHOW TABLES;");
+    echo "Tables in database '$db':<br>";
+    
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo $row["Tables_in_$db"] . "<br>";
+    }
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());
 }
