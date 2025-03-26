@@ -172,70 +172,70 @@ require __DIR__ . '/./partials/header.php';
    
         <div class="container pb-5">
 
-            <?php if (!isset($_GET['signup'])) : ?>
-                <div class="choose-div">
-                <div class="card mx-auto choose-card" style="width: 500px;">
-                    <div class="card-body text-center p-4">
-                        <img src="./assets/img/logo.png" alt="Logo" class="animated-image" style="width: 70%;">
-                        <h1>Hello <span class="text-danger fw-bold">Welcome!</span></h1>
-                        <p>What do you want to sign up as?</p>
-                        <div class="d-flex align-items-center gap-2 mt-4">
-                             <a href="?signup=quiz&token=<?php echo urlencode($token); ?>" class="btn btn-danger w-100"><i class="bx bx-question-mark"></i>Pop Quiz</a>
-                            <a href="?signup=exam&token=<?php echo urlencode($token); ?>" class="btn btn-danger w-100"><i class="bx bx-file"></i> Exam</a>
-                        </div>
-                    </div>
+          <?php if (!isset($_GET['signup'])) : ?>
+    <div class="choose-div">
+        <div class="card mx-auto choose-card" style="width: 500px;">
+            <div class="card-body text-center p-4">
+                <img src="./assets/img/logo.png" alt="Logo" class="animated-image" style="width: 70%;">
+                <h1>Hello <span class="text-danger fw-bold">Welcome!</span></h1>
+                <p>What do you want to sign up as?</p>
+                <div class="d-flex align-items-center gap-2 mt-4">
+                    <a href="?signup=quiz" class="btn btn-danger w-100"><i class="bx bx-question-mark"></i>Pop Quiz</a>
+                    <a href="?signup=exam" class="btn btn-danger w-100"><i class="bx bx-file"></i> Exam</a>
                 </div>
+            </div>
+        </div>
+    </div>
+<?php elseif ($_GET['signup'] == 'quiz') : ?>
+    <form name="signup" method="post" class="m-auto" id="signup-card">
+        <div class="card">
+            <div class="card-body">
+                <a href="student-signup.php" class="btn btn-secondary mb-2">
+                    <i class="bx bx-arrow-back"></i>
+                </a>
+                <h3 class="text-center fw-bold my-3"><i class="bx bx-question-mark"></i>Pop Quiz</h3>
+                <h5 class="mb-3">Please sign up first</h5>
+
+                <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
+                
+                <div class="field">
+                    <div class="label">Ms 365 Email</div>
+                    <input type="text" class="form-control my-2" name="Username" id="username" placeholder="MS 365 Email"
+                        value="<?php echo htmlspecialchars($username); ?>" readonly required />
                 </div>
-            <?php elseif ($_GET['signup'] == 'quiz') : ?>
-                <form name="signup" method="post" class="m-auto" id="signup-card">
-                    <div class="card">
-                        <div class="card-body">
-                           <a href="student-signup.php?token=<?php echo urlencode($token); ?>" class="btn btn-secondary mb-2">
-                            <i class="bx bx-arrow-back"></i>
-                            </a>
-                            <h3 class="text-center fw-bold my-3"><i class="bx bx-question-mark"></i>Pop Quiz</h3>
-                            <h5 class="mb-3">Please sign up first</h5>
 
-                            <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
-                            <div class="field">
+                <label for="">ID Number</label>
+                <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732" name="id_number" required pattern="^\d{4}-\d{4}$" id="id_number">
+                <p class="errors d-none alert alert-danger py-1"></p>
 
-                         <div class="label">Ms 365 Email</div>
-                          <input type="text" class="form-control my-2" name="Username" id="username" placeholder="MS 365 Email"
-                        value="<?php echo htmlspecialchars($username); ?>" 
-                      readonly required />
-                  </div>
-                            <label for="">ID Number</label>
-                             <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732" name="id_number" required pattern="^\d{4}-\d{4}$" id="id_number">
-                            <p class="errors d-none alert alert-danger py-1"></p>
+                <label for="">First Name</label>
+                <input type="text" class="form-control my-2" placeholder="First Name" name="fname" required>
+                <p class="errors d-none alert alert-danger py-1"></p>
 
-                            <label for="">First Name</label>
-                            <input type="text" class="form-control my-2" placeholder="First Name" name="fname" required>
-                            <p class="errors d-none alert alert-danger py-1"></p>
+                <label for="">Last Name</label>
+                <input type="text" class="form-control my-2" placeholder="Last Name" name="lname" required>
+                <p class="errors d-none alert alert-danger py-1"></p>
 
-                            <label for="">Last Name</label>
-                            <input type="text" class="form-control my-2" placeholder="Last Name" name="lname" required>
-                            <p class="errors d-none alert alert-danger py-1"></p>
+                <label for="">Middle Name</label>
+                <input type="text" class="form-control my-2" placeholder="Middle Name" name="mname" required>
 
-                            <label for="">Middle Name</label>
-                            <input type="text" class="form-control my-2" placeholder="Middle Name" name="mname" required>
+                <label for="">Year Level</label>
+                <select name="level" class="form-select my-2">
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
 
-                            <label for="">Year Level</label>
-                            <select name="level" class="form-select my-2">
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="3">3rd Year</option>
-                                <option value="4">4th Year</option>
-                            </select>
+                <label for="">Section</label>
+                <select name="section" class="form-select my-2">
+                    <?php 
+                    for($i = 1; $i <= count($databaseController->getSections()); $i++): 
+                    ?>
+                        <option value="<?= $i ?>"><?= $databaseController->getSections()[$i] ?></option>
+                    <?php endfor; ?>
+                </select>
 
-                            <label for="">Section</label>
-                            <select name="section" class="form-select my-2">
-                                <?php 
-                                for($i = 1; $i <= count($databaseController->getSections()) ; $i++): 
-                                    
-                                ?>
-                                    <option value="<?= $i ?>"><?= $databaseController->getSections()[$i] ?></option>
-                                <?php endfor; ?>
-                            </select>
   <div class="form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
     <label class="form-check-label" for="exampleCheck1">
