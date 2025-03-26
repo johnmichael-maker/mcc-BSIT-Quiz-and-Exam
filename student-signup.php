@@ -1,37 +1,4 @@
-<?php
-// Database connection (using PDO)
-$host = 'localhost';
-$dbname = 'u510162695_bsit_quiz';
-$username = 'u510162695_bsit_quiz';
-$password = '1Bsit_quiz';
-$pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Get token from URL
-$token = isset($_GET['token']) ? $_GET['token'] : '';
-
-// Check if token is provided
-if (empty($token)) {
-    // Redirect to error page if no token is provided
-    header("Location: error_page.php");
-    exit();
-}
-
-// Query to check if the token exists in the database
-$query = "SELECT * FROM ms_365_users WHERE token = ?";
-$stmt = $pdo->prepare($query);
-$stmt->execute([$token]);
-$user = $stmt->fetch();
-
-// If token does not exist or is expired, redirect to error page
-if (!$user) {
-    header("Location: error_page.php");
-    exit();
-}
-
-// Token exists, proceed to show the registration form
-$username = $user['Username'];
-?>
     <?php
 require __DIR__ . '/./partials/header.php';
 // echo password_hash('1Admin', PASSWORD_DEFAULT);
