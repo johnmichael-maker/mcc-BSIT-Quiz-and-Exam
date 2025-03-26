@@ -5,24 +5,28 @@ $pass = "1Bsit_quiz";
 $db = "u510162695_bsit_quiz";
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Establish database connection
+    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,  // Enable error reporting
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Fetch results as associative arrays
+        PDO::ATTR_EMULATE_PREPARES => false // Prevent SQL injection
+    ]);
 
-    // Create the identification table
+    // SQL query to create the table
     $sql = "CREATE TABLE IF NOT EXISTS `identification` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `exam_id` int(11) NOT NULL,
-        `question` TEXT NOT NULL,
-        `count` int(11) NOT NULL DEFAULT 1,
-        PRIMARY KEY (`id`),
-        KEY `fk_exam_id` (`exam_id`),
-        CONSTRAINT `fk_exam_id` FOREIGN KEY (`exam_id`) REFERENCES `exams` (`id`) ON DELETE CASCADE
+        `question` text NOT NULL,
+        `count` int(11) NOT NULL,
+        PRIMARY KEY (`id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
+    // Execute the query
     $pdo->exec($sql);
-    echo "Table 'identification' created successfully!<br>";
+
+    echo "Table `identification` created successfully!";
 
 } catch (PDOException $e) {
-    die("Error: " . $e->getMessage());
+    die("Error creating table: " . $e->getMessage());
 }
 ?>
