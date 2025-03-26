@@ -172,7 +172,7 @@ require __DIR__ . '/./partials/header.php';
    
         <div class="container pb-5">
 
-          <?php if (!isset($_GET['signup'])) : ?>
+        <?php if (!isset($_GET['signup'])) : ?>
     <div class="choose-div">
         <div class="card mx-auto choose-card" style="width: 500px;">
             <div class="card-body text-center p-4">
@@ -235,6 +235,7 @@ require __DIR__ . '/./partials/header.php';
                         <option value="<?= $i ?>"><?= $databaseController->getSections()[$i] ?></option>
                     <?php endfor; ?>
                 </select>
+
 
   <div class="form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
@@ -418,14 +419,6 @@ document.getElementById('termsLink').addEventListener('click', function(event) {
 });
 </script>
      <script>
-          // JavaScript for form submission prevention if token is invalid
-     const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-
-        // Ensure the token is present and valid
-        if (!token || token.length !== 32) {
-            window.location.href = "error_page.php";  // Redirect to error page if token is invalid
-        }
          
 document.addEventListener("DOMContentLoaded", function() {
     
