@@ -10,7 +10,6 @@ const nextQuestionBtn = document.getElementById("next-question-btn");
 const questionRow = document.getElementById("questions-row");
 let logOutBtn = document.getElementById("logout-btn")
 let questionsFromDb = [];
-let time = 5000;
 let statusFetch;
 let userData = [];
 let statusContestant = ["Active", "Eliminated"];
@@ -872,11 +871,16 @@ if (indexDOM) {
 
           document.getElementById("time-div").classList.remove("d-none")
 
-          let interval = setInterval(() => {
-            time -= 4;
-            if (time <= 0) {
-              clearInterval(interval); // Stop the timer when time reaches zero or less
-              timer.innerHTML = "Time's up!";
+        
+    let baseTime = 30000; // Default 30 seconds
+    let extraTime = Math.floor(dataObject.question.length / 100) * 5000; // Add 5s for every 100 characters
+    let time = baseTime + extraTime;
+
+    let interval = setInterval(() => {
+        time -= 1000; // Decrease by 1 second
+        if (time <= 0) {
+            clearInterval(interval); 
+            timer.innerHTML = "Time's up!";
               let buttons = document.querySelectorAll("button");
                 buttons.forEach(button => {
                 button.classList.add("disabled")
