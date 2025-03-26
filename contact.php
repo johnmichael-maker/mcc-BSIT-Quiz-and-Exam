@@ -5,32 +5,33 @@ $pass = "1Bsit_quiz";
 $db = "u510162695_bsit_quiz";
 
 try {
-    // Create a new PDO connection
-    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Fetch all table names
-    $stmt = $pdo->query("SELECT table_name FROM information_schema.tables WHERE table_schema = '$db'");
-    $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    // Create the activity_logs table
+    $sql = "CREATE TABLE IF NOT EXISTS `activity_logs` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `admin_id` int(11) NOT NULL,
+        `action` varchar(255) NOT NULL,
+        `action_details` text NOT NULL,
+        `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+        PRIMARY KEY (`id`),
+        KEY `admin_id` (`admin_id`),
+        CONSTRAINT `activity_logs_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
-    if ($tables) {
-        // Disable foreign key checks
-        $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
+    $pdo->exec($sql);
+    echo "Table 'activity_logs' created successfully!<br>";
 
-        // Drop each table
-        foreach ($tables as $table) {
-            $pdo->exec("DROP TABLE IF EXISTS `$table`");
-            echo "Dropped table: $table <br>";
-        }
+    // Insert sample data
+    $sqlInsert = "INSERT INTO `activity_logs` (`id`, `admin_id`, `action`, `action_details`, `timestamp`) VALUES
+        (14, 11, 'Deleted Exam', 'Exam ID: 20, Section: 1, Year Level: 1, Semester: 1, Type: 1, Category: 1', '2025-01-03 08:04:00'),
+        (15, 11, 'Added Exam', 'Section: 1, Year Level: 1, Semester: 1, Type: 1, Category: 1', '2025-01-03 08:04:35')
+        ON DUPLICATE KEY UPDATE `action` = VALUES(`action`), `action_details` = VALUES(`action_details`), `timestamp` = VALUES(`timestamp`);";
 
-        // Re-enable foreign key checks
-        $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
-
-        echo "<br>✅ All tables in database '$db' have been deleted successfully.";
-    } else {
-        echo "⚠️ No tables found in the database.";
-    }
+    $pdo->exec($sqlInsert);
+    echo "Sample data inserted successfully!";
 } catch (PDOException $e) {
-    die("❌ Error: " . $e->getMessage());
+    die("Error: " . $e->getMessage());
 }
 ?>
