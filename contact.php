@@ -9,12 +9,18 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
-    $stmt = $pdo->query("SHOW TABLES;");
-    echo "Tables in database '$db':<br>";
-    
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo $row["Tables_in_$db"] . "<br>";
-    }
+    $sql = "CREATE TABLE IF NOT EXISTS login_history (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+        ip_address VARCHAR(45) NOT NULL,
+        username VARCHAR(255) NOT NULL,
+        status ENUM('success','failure') NOT NULL,
+        reason VARCHAR(255) DEFAULT NULL,
+        attempt_time DATETIME DEFAULT current_timestamp(),
+        PRIMARY KEY (id)
+    ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+
+    $pdo->exec($sql);
+    echo "Table `login_history` created successfully!";
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());
 }
