@@ -29,4 +29,3 @@ try {
     die("Error creating table: " . $e->getMessage());
 }
 ?>
-
