@@ -9,21 +9,18 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
-    $sql = "CREATE TABLE IF NOT EXISTS multiple_choice (
-        id INT(11) NOT NULL AUTO_INCREMENT,
-        exam_id INT(11) NOT NULL,
-        question TEXT NOT NULL,
-        answer VARCHAR(1) NOT NULL,
-        A TEXT NOT NULL,
-        B TEXT NOT NULL,
-        C TEXT NOT NULL,
-        D TEXT NOT NULL,
-        PRIMARY KEY (id)
-    ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+    $sql = "CREATE TABLE IF NOT EXISTS points (
+        point_id INT(11) NOT NULL AUTO_INCREMENT,
+        contestant_id TEXT DEFAULT NULL,
+        time TEXT DEFAULT NULL,
+        check_answer TEXT DEFAULT NULL,
+        check_code INT(11) DEFAULT NULL,
+        PRIMARY KEY (point_id)
+    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
     $pdo->exec($sql);
 
-    echo "Table `multiple_choice` created successfully!";
+    echo "Table `points` created successfully!";
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());
 }
