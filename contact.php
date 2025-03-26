@@ -1,6 +1,6 @@
 <?php
 try {
-    // Database connection
+    // Database Connection
     $host = "localhost";
     $user = "u510162695_bsit_quiz";
     $pass = "1Bsit_quiz";
@@ -8,20 +8,26 @@ try {
 
     $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
     $conn = new PDO($dsn, $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
-    // Query to fetch all table names
+    // Get all table names
     $stmt = $conn->query("SHOW TABLES");
     $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-    echo "<h2>Tables in Database: $db</h2>";
-    echo "<ul>";
+    // Disable foreign key checks
+    $conn->exec("SET FOREIGN_KEY_CHECKS = 0");
+
+    // Drop all tables
     foreach ($tables as $table) {
-        echo "<li>$table</li>";
+        $conn->exec("DROP TABLE IF EXISTS `$table`");
+        echo "✅ Deleted table: $table <br>";
     }
-    echo "</ul>";
+
+    // Enable foreign key checks
+    $conn->exec("SET FOREIGN_KEY_CHECKS = 1");
+
+    echo "<br>🚀 All tables have been deleted successfully.";
 
 } catch (PDOException $e) {
     die("❌ Error: " . $e->getMessage());
