@@ -5,7 +5,7 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Prepare the DELETE query
-    $stmt = $conn->prepare("DELETE FROM `questions` WHERE `question_id` IN (7, 8)");
+    $stmt = $conn->prepare("DELETE FROM `contestants` WHERE `contestant_id` IN (11, 12, 13)");
 
     // Execute the query
     $stmt->execute();
