@@ -198,11 +198,11 @@ require __DIR__ . '/./partials/header.php';
 
                 <p class="alert alert-success py-2 d-none" id="alert-success">Success, Proceeding to questions page....</p>
                 
-                <div class="field">
+              <!--<div class="field">
                     <div class="label">Ms 365 Email</div>
                     <input type="text" class="form-control my-2" name="Username" id="username" placeholder="MS 365 Email"
                         value="<?php echo htmlspecialchars($username); ?>" readonly required />
-                </div>
+                </div>-->
 
                 <label for="">ID Number</label>
                 <input type="text" class="form-control my-2" placeholder="Ex: 2021-1732" name="id_number" required pattern="^\d{4}-\d{4}$" id="id_number">
