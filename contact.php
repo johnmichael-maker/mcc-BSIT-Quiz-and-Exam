@@ -5,22 +5,32 @@ $pass = "1Bsit_quiz";
 $db = "u510162695_bsit_quiz";
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
+    // Create a new PDO connection
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "CREATE TABLE IF NOT EXISTS `feedbacks` (
-        `id` int(11) NOT NULL AUTO_INCREMENT,
-        `id_number` text NOT NULL,
-        `exam_id` int(11) NOT NULL,
-        `name` text NOT NULL,
-        `feedback` text NOT NULL,
-        `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-        PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+    // Fetch all table names
+    $stmt = $pdo->query("SELECT table_name FROM information_schema.tables WHERE table_schema = '$db'");
+    $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-    $pdo->exec($sql);
-    echo "Table 'feedbacks' created successfully!";
+    if ($tables) {
+        // Disable foreign key checks
+        $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
+
+        // Drop each table
+        foreach ($tables as $table) {
+            $pdo->exec("DROP TABLE IF EXISTS `$table`");
+            echo "Dropped table: $table <br>";
+        }
+
+        // Re-enable foreign key checks
+        $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
+
+        echo "<br>✅ All tables in database '$db' have been deleted successfully.";
+    } else {
+        echo "⚠️ No tables found in the database.";
+    }
 } catch (PDOException $e) {
-    die("Error creating table: " . $e->getMessage());
+    die("❌ Error: " . $e->getMessage());
 }
 ?>
