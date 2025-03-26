@@ -15,23 +15,21 @@ try {
     ];
     $conn = new PDO($dsn, $user, $pass, $options);
 
-    // SQL to create the table
-    $sql = "CREATE TABLE IF NOT EXISTS `admin` (
-        `admin_id` INT(11) NOT NULL AUTO_INCREMENT,
-        `username` VARCHAR(50) DEFAULT NULL,
-        `img` TEXT DEFAULT NULL,
-        `email` VARCHAR(255) NOT NULL UNIQUE,
-        `password` VARCHAR(255) DEFAULT NULL,
-        `verification` VARCHAR(255) DEFAULT NULL,
-        `userType` INT(1) NOT NULL DEFAULT 1,
-        `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        PRIMARY KEY (`admin_id`)
+    // SQL to create the login_attempts table
+    $sql = "CREATE TABLE IF NOT EXISTS `login_attempts` (
+        `id` INT(11) NOT NULL AUTO_INCREMENT,
+        `user_id` INT(11) NOT NULL,
+        `ip_address` VARCHAR(45) NOT NULL,
+        `attempt_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `status` ENUM('success', 'failed') NOT NULL,
+        PRIMARY KEY (`id`),
+        INDEX (`user_id`),
+        INDEX (`ip_address`)
     )";
 
     // Execute the query
     $conn->exec($sql);
-    echo "✅ Table `admin` created successfully!";
+    echo "✅ Table `login_attempts` created successfully!";
 } catch (PDOException $e) {
     die("❌ Error creating table: " . $e->getMessage());
 }
