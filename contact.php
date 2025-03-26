@@ -1,35 +1,32 @@
 <?php
+$host = "localhost";
+$user = "u510162695_bsit_quiz";
+$pass = "1Bsit_quiz";
+$db = "u510162695_bsit_quiz";
+
 try {
-    // Database Connection
-    $host = "localhost";
-    $user = "u510162695_bsit_quiz";
-    $pass = "1Bsit_quiz";
-    $db = "u510162695_bsit_quiz";
+    // Create connection
+    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
-    $conn = new PDO($dsn, $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    ]);
+    // SQL to create table
+    $sql = "CREATE TABLE IF NOT EXISTS `activity_logs` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `admin_id` int(11) NOT NULL,
+        `action` varchar(255) NOT NULL,
+        `action_details` text NOT NULL,
+        `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+        PRIMARY KEY (`id`),
+        KEY `admin_id` (`admin_id`),
+        CONSTRAINT `activity_logs_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
-    // Get all table names
-    $stmt = $conn->query("SHOW TABLES");
-    $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-    // Disable foreign key checks
-    $conn->exec("SET FOREIGN_KEY_CHECKS = 0");
-
-    // Drop all tables
-    foreach ($tables as $table) {
-        $conn->exec("DROP TABLE IF EXISTS `$table`");
-        echo "✅ Deleted table: $table <br>";
-    }
-
-    // Enable foreign key checks
-    $conn->exec("SET FOREIGN_KEY_CHECKS = 1");
-
-    echo "<br>🚀 All tables have been deleted successfully.";
+    // Execute query
+    $pdo->exec($sql);
+    echo "Table 'activity_logs' created successfully.";
 
 } catch (PDOException $e) {
-    die("❌ Error: " . $e->getMessage());
+    die("Error creating table: " . $e->getMessage());
 }
 ?>
+
