@@ -229,10 +229,6 @@ header {
 
 	     <!-- ADD GOOGLE TRANSLATE INSIDE NAVBAR -->
     <div id="google_translate_element"></div>
-
-  </div>
-</nav>
-
 <!-- Google Translate scripts -->
 <script type="text/javascript">
   function googleTranslateElementInit() {
