@@ -1,6 +1,6 @@
 <?php
 $mysql_user = "u510162695_foxrock_db";
-$mysql_password = "1Foxrock_db";
+$mysql_password = "1Foxrock";
 $mysql_database = "u510162695_foxrock_db";
 
 // Create connection
