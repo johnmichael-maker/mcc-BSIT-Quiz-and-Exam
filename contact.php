@@ -12,11 +12,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL to delete table
-$sql = "DROP TABLE quiz_questions";
+// SQL to delete admin table
+$table_to_delete = "admin"; // Change this if your admin table is named differently
+$sql = "DROP TABLE `$table_to_delete`";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Table 'quiz_questions' deleted successfully.";
+    echo "Table '$table_to_delete' deleted successfully.";
 } else {
     echo "Error deleting table: " . $conn->error;
 }
