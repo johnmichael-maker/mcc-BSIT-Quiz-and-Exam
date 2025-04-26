@@ -12,14 +12,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL to delete admin table
-$table_to_delete = "admin"; // Change this if your admin table is named differently
-$sql = "DROP TABLE `$table_to_delete`";
+// SQL to get all tables
+$sql = "SHOW TABLES";
+$result = $conn->query($sql);
 
-if ($conn->query($sql) === TRUE) {
-    echo "Table '$table_to_delete' deleted successfully.";
+if ($result->num_rows > 0) {
+    echo "Tables in database '$db':<br>";
+    while($row = $result->fetch_assoc()) {
+        echo $row["Tables_in_$db"] . "<br>";
+    }
 } else {
-    echo "Error deleting table: " . $conn->error;
+    echo "No tables found in the database.";
 }
 
 $conn->close();
