@@ -195,18 +195,16 @@ header {
                 border-right-color: #fff;
             }
         }
+	 #google_translate_element select {
+    background-color: #f8f9fa;
+    color: #343a40;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+  }
 </style>
 </head>
 <body>
-  <div id="google_translate_element"></div>
-
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-  }
-</script>
-
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <nav class="navbar navbar-expand-lg" style="background: #fff;position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
     <div class="container-fluid d-flex align-items-center justify-content-between">
@@ -228,7 +226,22 @@ header {
     </h6>
  </div>
    </div>
-            
+
+	     <!-- ADD GOOGLE TRANSLATE INSIDE NAVBAR -->
+    <div id="google_translate_element"></div>
+
+  </div>
+</nav>
+
+<!-- Google Translate scripts -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+  }
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
        
         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
         style="background-color: #f8f9fa; border-color: #c82333; padding: 8px; border-radius: 4px; margin-top: -8px; margin-right: -6px;">
