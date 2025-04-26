@@ -4,30 +4,26 @@ $user = "u510162695_bsit_quiz";
 $pass = "1Bsit_quiz";
 $db = "u510162695_bsit_quiz";
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    ]);
+// Create connection
+$conn = new mysqli($host, $user, $pass, $db);
 
-    $tables = [
-        "activity_logs",
-        "admin",
-        "examinees",
-        "instructors",
-        "login_history",
-        "ms_365_instructor",
-        "ms_365_users",
-        "multiple_choice",
-        "points",
-        "questions"
-    ];
-
-    foreach ($tables as $table) {
-        $pdo->exec("DROP TABLE IF EXISTS `$table`");
-    }
-
-    echo "All specified tables dropped successfully!";
-} catch (PDOException $e) {
-    die("Error: " . $e->getMessage());
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// SQL to get all tables
+$sql = "SHOW TABLES";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "Tables in database '$db':<br>";
+    while($row = $result->fetch_assoc()) {
+        echo $row["Tables_in_$db"] . "<br>";
+    }
+} else {
+    echo "No tables found in the database.";
+}
+
+$conn->close();
 ?>
