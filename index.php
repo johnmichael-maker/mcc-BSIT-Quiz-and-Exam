@@ -198,7 +198,16 @@ header {
 </style>
 </head>
 <body>
-  
+  <div id="google_translate_element"></div>
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+  }
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
   <nav class="navbar navbar-expand-lg" style="background: #fff;position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       
