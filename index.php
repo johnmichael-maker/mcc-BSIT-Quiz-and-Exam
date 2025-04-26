@@ -6,7 +6,7 @@
     $feedbacks = $databaseController->getFeedbacks();
     
     ini_set('display_errors', 1);  // Show errors on the page
-    error_reporting(E_ALL);        // Report all errors
+    error_reporting(E_ALL);        // Report all errorshttps://github.com/johnmichael-maker/mcc-BSIT-Quiz-and-Exam/edit/main/index.php
 
     
 ?>
@@ -201,7 +201,6 @@ header {
     border: none;
     padding: 5px;
     border-radius: 5px;
-		 padding-left:20px;
   }
 </style>
 </head>
