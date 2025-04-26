@@ -8,23 +8,23 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Create the answer_identifications table
-    $sql = "CREATE TABLE IF NOT EXISTS `answer_identifications` (
-        `id` int(11) NOT NULL AUTO_INCREMENT,
-        `exam_id` int(11) NOT NULL,
-        `identification_id` int(11) NOT NULL,
-        `id_number` varchar(20) NOT NULL,
-        `answer` text NOT NULL,
+    // Create the answers table
+    $sql = "CREATE TABLE IF NOT EXISTS `answers` (
+        `answer_id` int(11) NOT NULL AUTO_INCREMENT,
+        `contestant_id` varchar(50) DEFAULT NULL,
+        `question_id` int(11) DEFAULT NULL,
+        `answer` text DEFAULT NULL,
+        `time` varchar(20) DEFAULT NULL,
         `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-        `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-        PRIMARY KEY (`id`),
-        KEY `exam_id` (`exam_id`),
-        KEY `identification_id` (`identification_id`),
-        KEY `id_number` (`id_number`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+        `check_answer` text DEFAULT NULL,
+        `check_code` int(11) DEFAULT NULL,
+        PRIMARY KEY (`answer_id`),
+        KEY `question_id` (`question_id`),
+        KEY `contestant_id` (`contestant_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
     $pdo->exec($sql);
-    echo "Table 'answer_identifications' created successfully!<br>";
+    echo "Table 'answers' created successfully!<br>";
 
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());
