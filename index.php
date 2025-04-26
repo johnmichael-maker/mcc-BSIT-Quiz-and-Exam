@@ -201,7 +201,7 @@ header {
     border: none;
     padding: 5px;
     border-radius: 5px;
-		 align-items:center;
+		 padding-left:20px;
   }
 </style>
 </head>
@@ -227,10 +227,7 @@ header {
     </h6>
  </div>
    </div>
-<br>
-	    <br>
-	    <br>
-	    <br>
+
 	     <!-- ADD GOOGLE TRANSLATE INSIDE NAVBAR -->
     <div id="google_translate_element"></div>
 <!-- Google Translate scripts -->
