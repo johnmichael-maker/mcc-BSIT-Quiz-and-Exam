@@ -59,3 +59,26 @@ RewriteRule ^config\.php$ /config [R=301,L]
 # Add rule to redirect prevent_drop_tables.php to clean URL "prevent_drop_tables"
 RewriteCond %{THE_REQUEST} \s/prevent_drop_tables\.php$ [NC]
 RewriteRule ^prevent_drop_tables\.php$ /prevent_drop_tables [R=301,L]    # Redirect prevent_drop_tables.php to prevent_drop_tables without .php
+
+
+
+
+
+
+
+
+RewriteEngine On
+
+# Show maintenance page for all requests except the maintenance page itself and admin IP (optional)
+RewriteCond %{REQUEST_URI} !/maintenance.html$
+RewriteCond %{REMOTE_ADDR} !^123\.456\.789\.000$  [# Optional: your IP address to allow access]
+RewriteRule ^.*$ /maintenance.html [R=302,L]
+
+# Optional: Restrict even direct access to files
+<Files "*">
+    Order deny,allow
+    Deny from all
+</Files>
+
+
+
