@@ -67,18 +67,3 @@ RewriteRule ^prevent_drop_tables\.php$ /prevent_drop_tables [R=301,L]    # Redir
 
 
 
-RewriteEngine On
-
-# Show maintenance page for all requests except the maintenance page itself and admin IP (optional)
-RewriteCond %{REQUEST_URI} !/maintenance.html$
-RewriteCond %{REMOTE_ADDR} !^123\.456\.789\.000$  [# Optional: your IP address to allow access]
-RewriteRule ^.*$ /maintenance.html [R=302,L]
-
-# Optional: Restrict even direct access to files
-<Files "*">
-    Order deny,allow
-    Deny from all
-</Files>
-
-
-
