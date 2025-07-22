@@ -6,25 +6,17 @@ use PDO;
 use PDOException;
 use Exception;
 
-// private string $user = "u510162695_bsit_quiz";
-// private string $pass = "1Bsit_quiz";
-// private string $db = "u510162695_bsit_quiz";
-
-// private string $user = "root";
-// private string $pass = "";
-// private string $db = "mcc_bsit_quiz_and_exam";
-
 class Database
 {
-    private string $host = "localhost";
-    private string $user = "mcc_bsit";
-    private string $pass = "if0_39531883";
-    private string $db = "mcc_bsit";
+    private string $host = "sql311.infinityfree.com";
+    private string $user = "if0_39531883";
+    private string $pass = "pnXPy71g6eJn";
+    private string $db = "if0_39531883_mcc_bsit";
     private ?PDO $conn = null;
 
     public function getConnection(): PDO
     {
-        if ($this->conn == null) {
+        if ($this->conn === null) {
             try {
                 $dsn = "mysql:host={$this->host};dbname={$this->db};charset=utf8mb4";
 
@@ -34,11 +26,12 @@ class Database
                     PDO::ATTR_EMULATE_PREPARES => false
                 ];
 
-                $this->conn = new PDO($dsn, $this->user, $this->pass);
-            } catch (PDOException  $e) {
+                $this->conn = new PDO($dsn, $this->user, $this->pass, $options);
+            } catch (PDOException $e) {
                 throw new Exception('Connection Error: ' . $e->getMessage());
             }
         }
+
         return $this->conn;
     }
 
