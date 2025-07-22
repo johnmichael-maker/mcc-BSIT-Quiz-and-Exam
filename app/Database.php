@@ -17,9 +17,9 @@ use Exception;
 class Database
 {
     private string $host = "localhost";
-    private string $user = "u510162695_bsit_quiz";
-    private string $pass = "1Bsit_quiz";
-    private string $db = "u510162695_bsit_quiz";
+    private string $user = "mcc_bsit";
+    private string $pass = "if0_39531883";
+    private string $db = "mcc_bsit";
     private ?PDO $conn = null;
 
     public function getConnection(): PDO
